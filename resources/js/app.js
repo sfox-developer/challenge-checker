@@ -1,4 +1,5 @@
 import './bootstrap';
+import './goal-toggle';
 
 import Alpine from 'alpinejs';
 

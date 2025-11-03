@@ -1,0 +1,21 @@
+// Toast Notification Styles
+.success-toast {
+    @apply fixed top-4 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-2xl z-50;
+    @apply flex items-center space-x-3 transform translate-x-full transition-transform duration-300;
+    
+    &.show {
+        @apply translate-x-0;
+    }
+    
+    &.hide {
+        @apply translate-x-full;
+    }
+    
+    .toast-icon {
+        @apply w-6 h-6;
+    }
+    
+    .toast-message {
+        @apply font-semibold;
+    }
+}

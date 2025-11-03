@@ -1,0 +1,12 @@
+// Import custom components first
+@use 'components/goal-toggle';
+@use 'components/toast';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Global styles
+body {
+    font-family: 'Inter', sans-serif;
+}
