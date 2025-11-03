@@ -20,11 +20,11 @@
                         ✓ Completed
                     </span>
                 @elseif($challenge->started_at && $challenge->is_active)
-                    <span class="px-3 py-1 text-sm font-bold rounded-full shadow-md bg-gradient-to-r from-blue-400 to-blue-500 text-white">
+                    <span class="px-3 py-1 text-sm font-bold rounded-full shadow-md bg-gradient-to-r from-yellow-400 to-orange-500 text-white">
                         🏃 Active
                     </span>
                 @elseif($challenge->started_at && !$challenge->is_active)
-                    <span class="px-3 py-1 text-sm font-bold rounded-full shadow-md bg-gradient-to-r from-yellow-400 to-orange-500 text-white">
+                    <span class="px-3 py-1 text-sm font-bold rounded-full shadow-md bg-gradient-to-r from-purple-400 to-indigo-500 text-white">
                         ⏸️ Paused
                     </span>
                 @else

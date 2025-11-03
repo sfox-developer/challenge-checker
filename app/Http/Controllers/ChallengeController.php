@@ -21,7 +21,14 @@ class ChallengeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('challenges.index', compact('challenges'));
+        // Calculate statistics
+        $totalChallenges = $challenges->count();
+        $activeChallenges = $challenges->where('started_at', '!=', null)
+            ->where('completed_at', null)
+            ->where('is_active', true)
+            ->count();
+
+        return view('challenges.index', compact('challenges', 'totalChallenges', 'activeChallenges'));
     }
 
     /**
