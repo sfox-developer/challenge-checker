@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoalController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,6 +31,10 @@ Route::middleware('auth')->group(function () {
     
     // Goal tracking routes
     Route::post('/goals/{goal}/toggle', [GoalController::class, 'toggle'])->name('goals.toggle');
+    
+    // Admin routes
+    Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/user/{user}', [AdminController::class, 'showUser'])->name('admin.user');
 });
 
 require __DIR__.'/auth.php';

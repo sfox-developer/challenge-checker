@@ -23,6 +23,11 @@
                     <x-nav-link :href="route('challenges.index')" :active="request()->routeIs('challenges.*')">
                         {{ __('Challenges') }}
                     </x-nav-link>
+                    @if(auth()->user()->is_admin)
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
+                            {{ __('Admin') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -81,6 +86,11 @@
             <x-responsive-nav-link :href="route('challenges.index')" :active="request()->routeIs('challenges.*')">
                 {{ __('Challenges') }}
             </x-responsive-nav-link>
+            @if(auth()->user()->is_admin)
+                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
+                    {{ __('Admin') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
