@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
+                    <a href="{{ route('feed.index') }}" class="flex items-center space-x-2">
                         <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
                             <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
@@ -17,11 +17,17 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('feed.index')" :active="request()->routeIs('feed.*')">
+                        {{ __('Feed') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Active') }}
                     </x-nav-link>
                     <x-nav-link :href="route('challenges.index')" :active="request()->routeIs('challenges.*')">
                         {{ __('Challenges') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('users.search')" :active="request()->routeIs('users.*')">
+                        {{ __('Search') }}
                     </x-nav-link>
                     @if(auth()->user()->is_admin)
                         <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
@@ -47,7 +53,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link :href="route('users.show', Auth::user())">
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
@@ -80,11 +86,17 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-gradient-to-r from-blue-700 to-purple-700">
         <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('feed.index')" :active="request()->routeIs('feed.*')">
+                {{ __('Feed') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Active') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('challenges.index')" :active="request()->routeIs('challenges.*')">
                 {{ __('Challenges') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('users.search')" :active="request()->routeIs('users.*')">
+                {{ __('Search') }}
             </x-responsive-nav-link>
             @if(auth()->user()->is_admin)
                 <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">

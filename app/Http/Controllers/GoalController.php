@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Domain\Challenge\Models\Goal;
 use App\Domain\Challenge\Models\DailyProgress;
+use App\Domain\Activity\Services\ActivityService;
 
 class GoalController extends Controller
 {
+    public function __construct(
+        private ActivityService $activityService
+    ) {}
+
     /**
      * Toggle the completion status of a goal for today.
      */
@@ -39,10 +44,18 @@ class GoalController extends Controller
         } else {
             $progress->markCompleted();
             $message = 'Goal completed! Great job!';
+            
+            // Create activity for goal completion
+            $this->activityService->createGoalCompletedActivity($user, $goal->challenge, $goal);
         }
 
         // Check if all goals for today are completed
         $allGoalsCompleted = $this->checkAllGoalsCompletedForToday($goal->challenge_id, $user->id, $today);
+        
+        // Create activity for day completion if all goals done
+        if ($allGoalsCompleted && !$isCompleted) {
+            $this->activityService->createDayCompletedActivity($user, $goal->challenge);
+        }
 
         return response()->json([
             'success' => true,

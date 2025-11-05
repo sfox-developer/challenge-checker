@@ -15,7 +15,7 @@
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+        <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 pb-16 sm:pb-0">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -31,6 +31,9 @@
             <main>
                 {{ $slot }}
             </main>
+            
+            <!-- Bottom Navigation (Mobile Only) -->
+            <x-bottom-nav />
         </div>
     </body>
 </html>

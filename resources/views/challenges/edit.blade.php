@@ -102,6 +102,25 @@
                             @enderror
                         </div>
 
+                        <!-- Public Checkbox -->
+                        <div class="mb-6">
+                            <div class="flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input type="checkbox" name="is_public" id="is_public" value="1" {{ old('is_public', $challenge->is_public) ? 'checked' : '' }}
+                                           class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-200">
+                                </div>
+                                <div class="ml-3">
+                                    <label for="is_public" class="text-sm font-bold text-gray-800 flex items-center space-x-2">
+                                        <svg class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        <span>Make this challenge public</span>
+                                    </label>
+                                    <p class="text-xs text-gray-500 mt-1">Other users will be able to see this challenge in their feed</p>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Existing Goals Section -->
                         @if($challenge->goals->isNotEmpty())
                         <div class="mb-8">

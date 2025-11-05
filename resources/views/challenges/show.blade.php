@@ -27,7 +27,12 @@
                     </a>
                 </div>
 
-                <!-- Action Buttons -->
+                <!-- Action Buttons - Only for owner -->
+                @php
+                    $isOwner = auth()->id() === $challenge->user_id;
+                @endphp
+                
+                @if($isOwner)
                 <div class="flex flex-wrap gap-3">
                     @if(!$challenge->started_at)
                         <!-- Not Started -->
@@ -88,6 +93,7 @@
                         </a>
                     @endif
                 </div>
+                @endif
             </div>
 
             <!-- Success Message -->
@@ -343,7 +349,8 @@
                                 :challenge="$challenge" 
                                 :goals="$challenge->goals" 
                                 :compact="false" 
-                                :show-todays-goals="true" />
+                                :show-todays-goals="true"
+                                :is-owner="$isOwner" />
                         </div>
                     @endif
 

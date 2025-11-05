@@ -6,11 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Domain\Challenge\Models\Challenge;
+use App\Domain\Activity\Services\ActivityService;
 use App\Http\Requests\StoreChallengeRequest;
 use App\Http\Requests\UpdateChallengeRequest;
 
 class ChallengeController extends Controller
 {
+    public function __construct(
+        private ActivityService $activityService
+    ) {}
     /**
      * Display a listing of the user's challenges.
      */
@@ -48,6 +52,7 @@ class ChallengeController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'days_duration' => $request->days_duration,
+            'is_public' => $request->boolean('is_public'),
         ]);
 
         // Create goals
@@ -106,6 +111,7 @@ class ChallengeController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'days_duration' => $request->days_duration,
+            'is_public' => $request->boolean('is_public'),
         ]);
 
         // Redirect back to where user came from (challenge show or challenges index)
@@ -136,6 +142,9 @@ class ChallengeController extends Controller
         $this->authorize('update', $challenge);
 
         $challenge->start();
+        
+        // Create activity
+        $this->activityService->createChallengeStartedActivity($challenge);
 
         return redirect()->route('challenges.show', $challenge)
             ->with('success', 'Challenge started! Good luck!');
@@ -149,6 +158,9 @@ class ChallengeController extends Controller
         $this->authorize('update', $challenge);
 
         $challenge->pause();
+        
+        // Create activity
+        $this->activityService->createChallengePausedActivity($challenge);
 
         return redirect()->route('challenges.show', $challenge)
             ->with('success', 'Challenge paused. You can resume anytime!');
@@ -162,6 +174,9 @@ class ChallengeController extends Controller
         $this->authorize('update', $challenge);
 
         $challenge->resume();
+        
+        // Create activity
+        $this->activityService->createChallengeResumedActivity($challenge);
 
         return redirect()->route('challenges.show', $challenge)
             ->with('success', 'Challenge resumed! Keep going!');
@@ -175,6 +190,9 @@ class ChallengeController extends Controller
         $this->authorize('update', $challenge);
 
         $challenge->complete();
+        
+        // Create activity
+        $this->activityService->createChallengeCompletedActivity($challenge);
 
         return redirect()->route('challenges.show', $challenge)
             ->with('success', 'Congratulations! Challenge completed! 🎉');

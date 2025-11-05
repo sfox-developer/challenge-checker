@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Domain\User\Models\User;
+use App\Domain\Activity\Models\Activity;
 
 class Challenge extends Model
 {
@@ -20,12 +21,14 @@ class Challenge extends Model
         'started_at',
         'completed_at',
         'is_active',
+        'is_public',
     ];
 
     protected $casts = [
         'started_at' => 'datetime',
         'completed_at' => 'datetime',
         'is_active' => 'boolean',
+        'is_public' => 'boolean',
     ];
 
     /**
@@ -50,6 +53,14 @@ class Challenge extends Model
     public function dailyProgress(): HasMany
     {
         return $this->hasMany(DailyProgress::class);
+    }
+
+    /**
+     * Get the activities for the challenge.
+     */
+    public function activities(): HasMany
+    {
+        return $this->hasMany(Activity::class);
     }
 
     /**
@@ -159,5 +170,39 @@ class Challenge extends Model
         $completedGoalDays = $this->dailyProgress()->whereNotNull('completed_at')->count();
 
         return $totalGoalDays > 0 ? ($completedGoalDays / $totalGoalDays) * 100 : 0;
+    }
+
+    /**
+     * Get the count of completed days (days where all goals were completed).
+     */
+    public function getCompletedDaysCount(): int
+    {
+        if (!$this->started_at) {
+            return 0;
+        }
+
+        // Get all unique dates where progress was recorded
+        $dates = $this->dailyProgress()
+            ->whereNotNull('completed_at')
+            ->select('date')
+            ->distinct()
+            ->pluck('date');
+
+        $goalsCount = $this->goals->count();
+        $completedDays = 0;
+
+        // For each date, check if all goals were completed
+        foreach ($dates as $date) {
+            $completedGoalsOnDate = $this->dailyProgress()
+                ->where('date', $date)
+                ->whereNotNull('completed_at')
+                ->count();
+
+            if ($completedGoalsOnDate === $goalsCount) {
+                $completedDays++;
+            }
+        }
+
+        return $completedDays;
     }
 }

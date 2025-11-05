@@ -21,7 +21,8 @@ class ChallengePolicy
      */
     public function view(User $user, Challenge $challenge): bool
     {
-        return $user->id === $challenge->user_id;
+        // Allow viewing if user owns the challenge or if it's public
+        return $user->id === $challenge->user_id || $challenge->is_public;
     }
 
     /**

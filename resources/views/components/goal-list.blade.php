@@ -1,4 +1,4 @@
-@props(['challenge', 'goals', 'compact' => false, 'showTodaysGoals' => false])
+@props(['challenge', 'goals', 'compact' => false, 'showTodaysGoals' => false, 'isOwner' => true])
 
 @php
     $pendingGoals = collect();
@@ -14,7 +14,7 @@
         }
     }
     
-    $canToggle = $challenge->started_at && !$challenge->completed_at && $challenge->is_active;
+    $canToggle = $isOwner && $challenge->started_at && !$challenge->completed_at && $challenge->is_active;
 @endphp
 
 @if($goals->isNotEmpty())
