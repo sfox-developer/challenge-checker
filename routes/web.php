@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Api\QuickGoalsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,6 +23,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/menu', [ProfileController::class, 'menu'])->name('profile.menu');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
@@ -46,6 +48,9 @@ Route::middleware('auth')->group(function () {
     
     // Goal tracking routes
     Route::post('/goals/{goal}/toggle', [GoalController::class, 'toggle'])->name('goals.toggle');
+    
+    // API routes for quick goals
+    Route::get('/api/quick-goals', [QuickGoalsController::class, 'index']);
     
     // Admin routes
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');

@@ -15,7 +15,7 @@
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 pb-16 sm:pb-0">
+        <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 pb-16 sm:pb-0" x-data="quickGoalsModal()" @open-goals.window="open()">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -31,9 +31,103 @@
             <main>
                 {{ $slot }}
             </main>
-            
-            <!-- Bottom Navigation (Mobile Only) -->
-            <x-bottom-nav />
+
+            <!-- Desktop FAB for Quick Goal Completion (Hidden on Mobile and Challenge Detail Page) -->
+            @if(!request()->routeIs('challenges.show'))
+            <button @click="open()" class="hidden sm:flex fixed bottom-8 right-8 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full p-4 shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-200 z-50 items-center justify-center group">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="absolute right-full mr-3 bg-gray-900 text-white px-3 py-2 rounded-lg text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                    Quick Complete Goals
+                </span>
+            </button>
+            @endif
+
+            <!-- Quick Goals Modal -->
+            @if(!request()->routeIs('challenges.show'))
+            <div x-show="isOpen" 
+                 x-cloak
+                 class="fixed inset-0 z-50 overflow-y-auto" 
+                 style="display: none;">
+                <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                    <!-- Background overlay -->
+                    <div x-show="isOpen"
+                         x-transition:enter="ease-out duration-300"
+                         x-transition:enter-start="opacity-0"
+                         x-transition:enter-end="opacity-100"
+                         x-transition:leave="ease-in duration-200"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+                         @click="close()"></div>
+
+                    <!-- Center modal -->
+                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+
+                    <!-- Modal panel -->
+                    <div x-show="isOpen"
+                         x-transition:enter="ease-out duration-300"
+                         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                         x-transition:leave="ease-in duration-200"
+                         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                         class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+                        
+                        <!-- Header -->
+                        <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-bold text-white flex items-center space-x-2">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span>Quick Complete Goals</span>
+                                </h3>
+                                <button @click="close()" class="text-white hover:text-gray-200 transition-colors">
+                                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="px-6 py-4 max-h-96 overflow-y-auto">
+                            <div x-html="content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            <script>
+                function quickGoalsModal() {
+                    return {
+                        isOpen: false,
+                        content: '<div class="text-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div><p class="mt-4 text-gray-600">Loading your active challenges...</p></div>',
+                        
+                        open() {
+                            this.isOpen = true;
+                            this.loadChallenges();
+                        },
+                        
+                        close() {
+                            this.isOpen = false;
+                        },
+                        
+                        async loadChallenges() {
+                            try {
+                                const response = await fetch('/api/quick-goals');
+                                const html = await response.text();
+                                this.content = html;
+                            } catch (error) {
+                                this.content = '<div class="text-center py-8 text-red-600">Error loading challenges. Please try again.</div>';
+                            }
+                        }
+                    }
+                }
+            </script>
         </div>
     </body>
 </html>

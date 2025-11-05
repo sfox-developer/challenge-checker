@@ -21,7 +21,7 @@
         </div>
     </x-slot>
 
-    <div class="py-8">
+    <div class="py-8" x-data="{ activeFilter: 'all' }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <!-- Challenge Statistics -->
     <!-- Overview Cards -->
@@ -119,10 +119,69 @@
         </div>
     </div>
 
+            <!-- Filter Tabs -->
+            <div class="bg-white rounded-lg shadow-md p-1 mb-6">
+                <div class="flex flex-wrap gap-2">
+                    <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
+                        </svg>
+                        <span>All</span>
+                        <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">{{ $totalChallenges }}</span>
+                    </button>
+                    <button @click="activeFilter = 'active'" :class="activeFilter === 'active' ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Active</span>
+                        <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">{{ $activeChallenges }}</span>
+                    </button>
+                    <button @click="activeFilter = 'paused'" :class="activeFilter === 'paused' ? 'bg-gradient-to-r from-purple-400 to-indigo-500 text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Paused</span>
+                        <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">{{ $challenges->where('started_at', '!=', null)->where('completed_at', null)->where('is_active', false)->count() }}</span>
+                    </button>
+                    <button @click="activeFilter = 'completed'" :class="activeFilter === 'completed' ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Completed</span>
+                        <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">{{ $challenges->where('completed_at', '!=', null)->count() }}</span>
+                    </button>
+                    <button @click="activeFilter = 'draft'" :class="activeFilter === 'draft' ? 'bg-gradient-to-r from-gray-500 to-gray-600 text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Draft</span>
+                        <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">{{ $challenges->where('started_at', null)->count() }}</span>
+                    </button>
+                </div>
+            </div>
+
             @if($challenges->isNotEmpty())
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($challenges as $challenge)
-                    <div class="bg-gradient-to-br from-white to-gray-50 overflow-hidden shadow-xl rounded-2xl border border-gray-200 hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+                    @php
+                        $isActive = $challenge->started_at && $challenge->is_active && !$challenge->completed_at;
+                        $isPaused = $challenge->started_at && !$challenge->is_active && !$challenge->completed_at;
+                        $isCompleted = $challenge->completed_at !== null;
+                        $isDraft = !$challenge->started_at;
+                    @endphp
+                    <div 
+                        x-show="activeFilter === 'all' || 
+                                (activeFilter === 'active' && {{ $isActive ? 'true' : 'false' }}) || 
+                                (activeFilter === 'paused' && {{ $isPaused ? 'true' : 'false' }}) || 
+                                (activeFilter === 'completed' && {{ $isCompleted ? 'true' : 'false' }}) || 
+                                (activeFilter === 'draft' && {{ $isDraft ? 'true' : 'false' }})"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 transform scale-95"
+                        x-transition:enter-end="opacity-100 transform scale-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 transform scale-100"
+                        x-transition:leave-end="opacity-0 transform scale-95"
+                        class="bg-gradient-to-br from-white to-gray-50 overflow-hidden shadow-xl rounded-2xl border border-gray-200 hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
                         <div class="p-4 sm:p-6">
                             <div class="flex flex-col sm:flex-row justify-between items-start mb-4 space-y-2 sm:space-y-0">
                                 <h3 class="text-lg sm:text-xl font-bold text-gray-900 pr-2">{{ $challenge->name }}</h3>

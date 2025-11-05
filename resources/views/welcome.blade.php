@@ -34,8 +34,8 @@
                         </div>
                         <div class="flex items-center space-x-4">
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200">
-                                    Dashboard
+                                <a href="{{ route('feed.index') }}" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200">
+                                    Feed
                                 </a>
                             @else
                                 <a href="{{ route('login') }}" class="text-white hover:text-gray-200 px-3 py-2 rounded-md font-medium transition-colors duration-200">
@@ -80,11 +80,11 @@
                     <!-- CTA Buttons -->
                     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 inline-flex items-center justify-center space-x-2">
+                            <a href="{{ route('feed.index') }}" class="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 inline-flex items-center justify-center space-x-2">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
                                 </svg>
-                                <span>Go to Dashboard</span>
+                                <span>Go to Feed</span>
                             </a>
                         @else
                             <a href="{{ route('register') }}" class="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 inline-flex items-center justify-center space-x-2">

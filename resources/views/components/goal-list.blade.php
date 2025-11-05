@@ -4,8 +4,11 @@
     $pendingGoals = collect();
     $completedGoals = collect();
     
+    // Use challenge owner's ID for checking completion status
+    $checkUserId = $challenge->user_id;
+    
     foreach($goals as $goal) {
-        $isCompleted = $goal->isCompletedForDate(today()->toDateString(), auth()->id());
+        $isCompleted = $goal->isCompletedForDate(today()->toDateString(), $checkUserId);
         
         if ($isCompleted) {
             $completedGoals->push($goal);

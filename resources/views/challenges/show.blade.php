@@ -387,7 +387,7 @@
                                                 for ($i = 0; $i < $daysPassed; $i++) {
                                                     $checkDate = $startDate->copy()->addDays($i);
                                                     $completedGoalsForDay = $challenge->dailyProgress()
-                                                        ->where('user_id', auth()->id())
+                                                        ->where('user_id', $challenge->user_id)
                                                         ->where('date', $checkDate->toDateString())
                                                         ->whereNotNull('completed_at')
                                                         ->count();
@@ -425,9 +425,9 @@
                                         $dayNumber = $currentDate->format('j');
                                         $monthName = $currentDate->format('M');
                                         
-                                        // Get completed goals for this day
+                                        // Get completed goals for this day for the challenge owner
                                         $completedGoalsForDay = $challenge->dailyProgress()
-                                            ->where('user_id', auth()->id())
+                                            ->where('user_id', $challenge->user_id)
                                             ->where('date', $currentDate->toDateString())
                                             ->whereNotNull('completed_at')
                                             ->count();

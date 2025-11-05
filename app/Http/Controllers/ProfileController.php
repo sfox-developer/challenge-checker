@@ -12,6 +12,14 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
     /**
+     * Display the mobile menu page.
+     */
+    public function menu(): View
+    {
+        return view('profile.menu');
+    }
+
+    /**
      * Display the user's profile form.
      */
     public function edit(Request $request): View
