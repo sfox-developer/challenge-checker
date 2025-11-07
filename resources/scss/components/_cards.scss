@@ -1,0 +1,24 @@
+// Card Component System
+// Base card styles with variants for different use cases
+
+.card {
+    @apply bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 sm:p-8
+    border border-gray-200 dark:border-gray-700;
+    
+    // Variant: No padding (for custom layouts)
+    &.card-no-padding {
+        @apply p-0;
+    }
+    
+    // Variant: Hover effect
+    &.card-hover {
+        @apply hover:shadow-md transition-shadow duration-200;
+    }
+    
+    // Variant: Interactive card (for links/buttons)
+    &.card-interactive {
+        @apply shadow-md rounded-xl hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02];
+    }
+}
+
+

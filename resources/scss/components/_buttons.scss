@@ -1,0 +1,137 @@
+// ============================================================================
+// BUTTON COMPONENTS
+// ============================================================================
+// Reusable button styles with consistent dark mode support
+// Usage: Add these classes to buttons or links styled as buttons
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// PRIMARY BUTTONS - Main call-to-action buttons
+// ----------------------------------------------------------------------------
+
+.btn-primary {
+    @apply bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500;
+    @apply hover:from-blue-700 hover:to-purple-700 dark:hover:from-blue-600 dark:hover:to-purple-600;
+    @apply text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl;
+    @apply transform hover:scale-105 transition-all duration-200;
+    @apply flex items-center justify-center space-x-2;
+}
+
+// ----------------------------------------------------------------------------
+// SUCCESS BUTTONS - Positive actions (start, continue, submit)
+// ----------------------------------------------------------------------------
+
+.btn-success {
+    @apply bg-gradient-to-r from-green-500 to-green-600 dark:from-green-400 dark:to-green-500;
+    @apply hover:from-green-600 hover:to-green-700 dark:hover:from-green-500 dark:hover:to-green-600;
+    @apply text-white font-bold py-2 px-4 rounded-lg shadow-lg hover:shadow-xl;
+    @apply transform hover:scale-105 transition-all duration-200;
+    @apply flex items-center justify-center space-x-2;
+}
+
+.btn-success-sm {
+    @apply bg-gradient-to-r from-green-500 to-green-600 dark:from-green-400 dark:to-green-500;
+    @apply hover:from-green-600 hover:to-green-700 dark:hover:from-green-500 dark:hover:to-green-600;
+    @apply text-white text-sm font-semibold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg;
+    @apply transform hover:scale-105 transition-all duration-200;
+    @apply flex items-center justify-center space-x-1;
+}
+
+// ----------------------------------------------------------------------------
+// DANGER BUTTONS - Destructive actions (delete, remove)
+// ----------------------------------------------------------------------------
+
+.btn-danger {
+    @apply bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50;
+    @apply text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300;
+    @apply p-2 rounded-lg transition-all duration-200;
+    @apply flex items-center justify-center space-x-1;
+}
+
+// ----------------------------------------------------------------------------
+// SECONDARY BUTTONS - Outlined/ghost buttons for secondary actions
+// ----------------------------------------------------------------------------
+
+.btn-secondary {
+    @apply px-4 py-2 border border-gray-300 dark:border-gray-600;
+    @apply bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-lg;
+    @apply hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200;
+    @apply flex items-center justify-center space-x-2;
+}
+
+// ----------------------------------------------------------------------------
+// BLUE BUTTONS - Standard solid blue buttons
+// ----------------------------------------------------------------------------
+
+.btn-blue {
+    @apply px-6 py-2 bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600;
+    @apply text-white font-semibold rounded-lg transition-colors duration-200;
+    @apply flex items-center justify-center space-x-2;
+}
+
+// ----------------------------------------------------------------------------
+// GRADIENT BUTTONS - Special gradient variants for specific actions
+// ----------------------------------------------------------------------------
+
+.btn-gradient-purple {
+    @apply bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500;
+    @apply hover:from-purple-700 hover:to-pink-700 dark:hover:from-purple-600 dark:hover:to-pink-600;
+    @apply text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl;
+    @apply transform hover:scale-105 transition-all duration-200;
+    @apply flex items-center justify-center space-x-2;
+}
+
+.btn-gradient-pause {
+    @apply bg-gradient-to-r from-purple-500 to-indigo-500 dark:from-purple-400 dark:to-indigo-400;
+    @apply hover:from-purple-600 hover:to-indigo-600 dark:hover:from-purple-500 dark:hover:to-indigo-500;
+    @apply text-white font-bold py-2 px-4 rounded-lg shadow-lg hover:shadow-xl;
+    @apply transform hover:scale-105 transition-all duration-200;
+    @apply flex items-center justify-center space-x-2;
+}
+
+.btn-gradient-complete {
+    @apply bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500;
+    @apply hover:from-blue-600 hover:to-blue-700 dark:hover:from-blue-500 dark:hover:to-blue-600;
+    @apply text-white font-bold py-2 px-4 rounded-lg shadow-lg hover:shadow-xl;
+    @apply transform hover:scale-105 transition-all duration-200;
+    @apply flex items-center justify-center space-x-2;
+}
+
+// ----------------------------------------------------------------------------
+// MODAL BUTTONS - Specific styling for modal dialogs
+// ----------------------------------------------------------------------------
+
+.btn-modal-cancel {
+    @apply px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-100;
+    @apply text-base font-medium rounded-md w-full shadow-sm;
+    @apply hover:bg-gray-400 dark:hover:bg-gray-500;
+    @apply focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500;
+}
+
+.btn-modal-confirm {
+    @apply px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm;
+    @apply hover:bg-blue-700 dark:hover:bg-blue-600;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400;
+}
+
+// ----------------------------------------------------------------------------
+// ACTION BUTTONS - Small inline action buttons for cards/lists
+// ----------------------------------------------------------------------------
+
+.btn-action-sm {
+    @apply bg-green-100 dark:bg-green-900/30 hover:bg-green-200 dark:hover:bg-green-900/50;
+    @apply text-green-800 dark:text-green-400 px-3 py-1 rounded-lg text-sm font-medium;
+    @apply transition-colors duration-200;
+}
+
+.btn-action-pause {
+    @apply bg-yellow-100 dark:bg-yellow-900/30 hover:bg-yellow-200 dark:hover:bg-yellow-900/50;
+    @apply text-yellow-800 dark:text-yellow-400 px-3 py-1 rounded-lg text-sm font-medium;
+    @apply transition-colors duration-200;
+}
+
+.btn-action-complete {
+    @apply bg-blue-100 dark:bg-blue-400/30 hover:bg-blue-200 dark:hover:bg-blue-900/50;
+    @apply text-blue-800 dark:text-blue-400 px-3 py-1 rounded-lg text-sm font-medium;
+    @apply transition-colors duration-200;
+}

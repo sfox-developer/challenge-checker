@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChallengeController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FeedController;
@@ -18,18 +17,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/menu', [ProfileController::class, 'menu'])->name('profile.menu');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile/theme', [ProfileController::class, 'updateTheme'])->name('profile.updateTheme');
     
     // Feed routes
     Route::get('/feed', [FeedController::class, 'index'])->name('feed.index');
     Route::post('/feed/{activity}/like', [FeedController::class, 'toggleLike'])->name('feed.toggleLike');
+    Route::get('/feed/{activity}/likes', [FeedController::class, 'getLikes'])->name('feed.getLikes');
     
     // Social routes
     Route::post('/users/{user}/follow', [SocialController::class, 'follow'])->name('social.follow');

@@ -1,5 +1,12 @@
 import './bootstrap';
-import './goal-toggle';
+
+// Import component registry - follows Facade Pattern
+// Components are organized by domain (theme, activity, modal, goals)
+// following Single Responsibility Principle
+import './components/index.js';
+
+// Import goal toggle system (uses onclick handlers in Blade templates)
+import './goal-toggle.js';
 
 import Alpine from 'alpinejs';
 

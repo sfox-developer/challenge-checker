@@ -1,4 +1,14 @@
-// Modern Todo List Styles
+// ============================================================================
+// TODO/GOAL COMPONENTS
+// ============================================================================
+// Styles for todo list items and goal tracking interface
+// Used in challenge goal lists and todo sections
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// CONTAINER & SECTIONS
+// ----------------------------------------------------------------------------
+
 .todo-container {
     @apply space-y-2;
 }
@@ -7,13 +17,13 @@
     @apply space-y-3;
     
     &.completed-section {
-        @apply mt-6 pt-6 border-t border-gray-200;
+        @apply mt-6 pt-6 border-t border-gray-200 dark:border-gray-700;
         
         .section-header {
-            @apply text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3 flex items-center;
+            @apply text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3 flex items-center;
             
             .count {
-                @apply ml-2 bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs;
+                @apply ml-2 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-1 rounded-full text-xs;
             }
         }
         
@@ -23,15 +33,19 @@
     }
 }
 
+// ----------------------------------------------------------------------------
+// TODO ITEMS
+// ----------------------------------------------------------------------------
+
 .todo-item {
     @apply flex items-start space-x-3 p-3 rounded-lg border transition-all duration-300 ease-out;
-    @apply bg-white border-gray-200 hover:border-gray-300 hover:shadow-sm;
+    @apply bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-sm;
     
     &.interactive {
         @apply cursor-pointer select-none;
         
         &:hover {
-            @apply bg-gray-50 border-blue-200 shadow-md transform translate-y-[-1px];
+            @apply bg-gray-50 dark:bg-gray-700 border-blue-200 dark:border-blue-600 shadow-md transform translate-y-[-1px];
         }
         
         &:active {
@@ -40,7 +54,7 @@
     }
     
     &.completing {
-        @apply bg-green-50 border-green-200 transform scale-[1.02];
+        @apply bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-700 transform scale-[1.02];
         
         .todo-checkbox {
             @apply bg-green-500 border-green-500 text-white;
@@ -48,7 +62,7 @@
     }
     
     &.completed {
-        @apply bg-gray-50 border-gray-200 opacity-75;
+        @apply bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 opacity-75;
         
         .todo-checkbox {
             @apply bg-green-500 border-green-500 text-white;
@@ -56,11 +70,11 @@
         
         .todo-content {
             .todo-title {
-                @apply text-gray-500 line-through;
+                @apply text-gray-500 dark:text-gray-400 line-through;
             }
             
             .todo-description {
-                @apply text-gray-400 line-through;
+                @apply text-gray-400 dark:text-gray-500 line-through;
             }
         }
     }
@@ -72,14 +86,29 @@
             @apply animate-spin;
         }
     }
+    
+    // Animation states
+    &.success-feedback {
+        animation: success-pulse 0.6s ease-out;
+    }
+    
+    &.error-feedback {
+        animation: shake 0.5s ease-in-out;
+        border-color: theme('colors.red.300') !important;
+        background-color: theme('colors.red.50') !important;
+    }
 }
 
+// ----------------------------------------------------------------------------
+// TODO CHECKBOX
+// ----------------------------------------------------------------------------
+
 .todo-checkbox {
-    @apply w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center;
+    @apply w-5 h-5 rounded-full border-2 border-gray-300 dark:border-gray-600 flex items-center justify-center;
     @apply transition-all duration-200 ease-in-out flex-shrink-0 mt-0.5;
     
     &:hover {
-        @apply border-blue-400 bg-blue-50 transform scale-110;
+        @apply border-blue-400 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/30 transform scale-110;
     }
     
     &.checked {
@@ -92,27 +121,35 @@
     }
     
     &.disabled {
-        @apply border-gray-200 bg-gray-100 cursor-not-allowed;
+        @apply border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 cursor-not-allowed;
         
         &:hover {
-            @apply border-gray-200 bg-gray-100 transform scale-100;
+            @apply border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 transform scale-100;
         }
     }
 }
+
+// ----------------------------------------------------------------------------
+// TODO CONTENT
+// ----------------------------------------------------------------------------
 
 .todo-content {
     @apply flex-1 min-w-0;
     
     .todo-title {
-        @apply text-sm font-medium text-gray-900 transition-all duration-300;
+        @apply text-sm font-medium text-gray-800 dark:text-gray-100 transition-all duration-300;
         @apply leading-5 break-words;
     }
     
     .todo-description {
-        @apply text-xs text-gray-600 mt-1 transition-all duration-300;
+        @apply text-xs text-gray-600 dark:text-gray-400 mt-1 transition-all duration-300;
         @apply leading-4 break-words;
     }
 }
+
+// ----------------------------------------------------------------------------
+// TODO STATUS BADGES
+// ----------------------------------------------------------------------------
 
 .todo-status {
     @apply flex-shrink-0 ml-3;
@@ -134,7 +171,10 @@
     }
 }
 
-// Animations
+// ----------------------------------------------------------------------------
+// ANIMATIONS
+// ----------------------------------------------------------------------------
+
 @keyframes checkmark {
     0% {
         background-color: transparent;
@@ -164,39 +204,16 @@
     }
 }
 
-// Animations and Effects
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
 }
 
-.todo-item {
-    &.success-feedback {
-        animation: success-pulse 0.6s ease-out;
-    }
-    
-    &.error-feedback {
-        animation: shake 0.5s ease-in-out;
-        border-color: theme('colors.red.300') !important;
-        background-color: theme('colors.red.50') !important;
-    }
-}
-
 @keyframes success-pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.05); background-color: theme('colors.green.50'); }
     100% { transform: scale(1); }
-}
-
-// Ripple Effect
-.ripple-effect {
-    position: absolute;
-    border-radius: 50%;
-    background-color: theme('colors.blue.400');
-    opacity: 0.3;
-    animation: ripple 0.6s ease-out;
-    pointer-events: none;
 }
 
 @keyframes ripple {
@@ -210,7 +227,35 @@
     }
 }
 
-// Celebration Toast
+@keyframes bounce {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.2); }
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+// ----------------------------------------------------------------------------
+// EFFECTS & VISUAL FEEDBACK
+// ----------------------------------------------------------------------------
+
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background-color: theme('colors.blue.400');
+    opacity: 0.3;
+    animation: ripple 0.6s ease-out;
+    pointer-events: none;
+}
+
 .celebration-toast {
     position: fixed;
     top: 20px;
@@ -254,12 +299,6 @@
     }
 }
 
-@keyframes bounce {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.2); }
-}
-
-// Confetti
 .confetti-piece {
     position: fixed;
     width: 8px;
@@ -270,18 +309,6 @@
     z-index: 999;
 }
 
-@keyframes confetti-fall {
-    0% {
-        transform: translateY(-100vh) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-// Tooltip
 .goal-tooltip {
     position: absolute;
     background-color: theme('colors.gray.800');
@@ -304,7 +331,10 @@
     }
 }
 
-// Completed items slide animation
+// ----------------------------------------------------------------------------
+// TRANSITION EFFECTS
+// ----------------------------------------------------------------------------
+
 .completed-items-enter {
     opacity: 0;
     transform: translateY(-10px);

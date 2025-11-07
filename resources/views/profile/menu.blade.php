@@ -2,18 +2,18 @@
     <div class="py-12">
         <div class="max-w-md mx-auto px-4">
             <!-- Profile Header -->
-            <div class="bg-white overflow-hidden shadow-lg rounded-2xl mb-6">
-                <div class="p-8 text-center">
-                    <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->name }}" class="h-24 w-24 rounded-full mx-auto mb-4 ring-4 ring-white shadow-lg">
-                    <h2 class="text-2xl font-bold text-gray-900">{{ Auth::user()->name }}</h2>
-                    <p class="text-gray-600 mt-1">{{ Auth::user()->email }}</p>
+            <div class="card p-8 rounded-2xl mb-6">
+                <div class="text-center">
+                    <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->name }}" class="h-24 w-24 rounded-full mx-auto mb-4 ring-4 ring-white dark:ring-gray-700 shadow-lg">
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 dark:text-gray-100">{{ Auth::user()->name }}</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-1">{{ Auth::user()->email }}</p>
                 </div>
             </div>
 
             <!-- Menu Options -->
             <div class="space-y-3">
                 <!-- My Profile -->
-                <a href="{{ route('users.show', Auth::user()) }}" class="block bg-white overflow-hidden shadow-md rounded-xl hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02]">
+                <a href="{{ route('users.show', Auth::user()) }}" class="block card card-interactive">
                     <div class="p-5 flex items-center space-x-4">
                         <div class="bg-gradient-to-r from-blue-500 to-purple-500 p-3 rounded-lg">
                             <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -21,17 +21,17 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <h3 class="text-lg font-semibold text-gray-900">My Profile</h3>
-                            <p class="text-sm text-gray-600">View your public profile</p>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">My Profile</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">View your public profile</p>
                         </div>
-                        <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
                     </div>
                 </a>
 
                 <!-- Settings -->
-                <a href="{{ route('profile.edit') }}" class="block bg-white overflow-hidden shadow-md rounded-xl hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02]">
+                <a href="{{ route('profile.edit') }}" class="block card card-interactive">
                     <div class="p-5 flex items-center space-x-4">
                         <div class="bg-gradient-to-r from-green-500 to-teal-500 p-3 rounded-lg">
                             <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -40,19 +40,42 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <h3 class="text-lg font-semibold text-gray-900">Settings</h3>
-                            <p class="text-sm text-gray-600">Edit your profile & preferences</p>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">Settings</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Edit your profile & preferences</p>
                         </div>
-                        <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
                     </div>
                 </a>
 
+                <!-- Theme Toggle -->
+                <button @click="toggleTheme()" class="w-full block card card-interactive">
+                    <div class="p-5 flex items-center space-x-4">
+                        <div class="bg-gradient-to-r from-yellow-500 to-orange-500 p-3 rounded-lg">
+                            <!-- Sun Icon (Light Mode) -->
+                            <svg x-show="getThemeIcon() === 'sun'" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                            <!-- Moon Icon (Dark Mode) -->
+                            <svg x-show="getThemeIcon() === 'moon'" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                            </svg>
+                        </div>
+                        <div class="flex-1 text-left">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">Theme</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400" x-text="theme === 'dark' ? 'Dark Mode' : 'Light Mode'"></p>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </button>
+
                 <!-- Log Out -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="w-full block bg-white overflow-hidden shadow-md rounded-xl hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02]">
+                    <button type="submit" class="w-full block card card-interactive">
                         <div class="p-5 flex items-center space-x-4">
                             <div class="bg-gradient-to-r from-red-500 to-pink-500 p-3 rounded-lg">
                                 <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -60,10 +83,10 @@
                                 </svg>
                             </div>
                             <div class="flex-1 text-left">
-                                <h3 class="text-lg font-semibold text-gray-900">Log Out</h3>
-                                <p class="text-sm text-gray-600">Sign out of your account</p>
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">Log Out</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Sign out of your account</p>
                             </div>
-                            <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                             </svg>
                         </div>

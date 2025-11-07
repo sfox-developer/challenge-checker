@@ -1,10 +1,10 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900">
+        <h2 class="text-lg font-medium text-gray-800 dark:text-gray-100">
             {{ __('Profile Information') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600">
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
             {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
@@ -26,7 +26,7 @@
             }
         }">
             <x-input-label for="avatar" :value="__('Avatar')" />
-            <p class="mt-1 text-sm text-gray-600 mb-3">
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400 mb-3">
                 {{ __("Click on your avatar to change it.") }}
             </p>
             
@@ -41,7 +41,7 @@
                     </div>
                 </button>
                 <div>
-                    <p class="text-sm font-medium text-gray-900">Current Avatar</p>
+                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">Current Avatar</p>
                     <button type="button" @click="showModal = true" class="text-sm text-blue-600 hover:text-blue-700">
                         Change avatar
                     </button>
@@ -66,8 +66,8 @@
                     <!-- Modal panel -->
                     <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-medium text-gray-900">Choose Your Avatar</h3>
-                            <button type="button" @click="showModal = false" class="text-gray-400 hover:text-gray-600">
+                            <h3 class="text-lg font-medium text-gray-800 dark:text-gray-100">Choose Your Avatar</h3>
+                            <button type="button" @click="showModal = false" class="text-gray-400 hover:text-gray-600 dark:text-gray-400">
                                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
@@ -86,7 +86,7 @@
                         </div>
                         
                         <div class="mt-4 flex justify-end">
-                            <button type="button" @click="showModal = false" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors duration-200">
+                            <button type="button" @click="showModal = false" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 dark:text-gray-300 font-semibold rounded-lg transition-colors duration-200">
                                 Close
                             </button>
                         </div>
@@ -113,7 +113,7 @@
                     <p class="text-sm mt-2 text-gray-800">
                         {{ __('Your email address is unverified.') }}
 
-                        <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button form="send-verification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
@@ -128,7 +128,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-app-button variant="primary" type="submit">{{ __('Save') }}</x-app-button>
 
             @if (session('status') === 'profile-updated')
                 <p
@@ -136,7 +136,7 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
+                    class="text-sm text-gray-600 dark:text-gray-400"
                 >{{ __('Saved.') }}</p>
             @endif
         </div>

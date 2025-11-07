@@ -153,13 +153,13 @@ class Activity extends Model
     public function getColorClass(): string
     {
         return match($this->type) {
-            self::TYPE_GOAL_COMPLETED => 'bg-green-100 text-green-800',
-            self::TYPE_DAY_COMPLETED => 'bg-blue-100 text-blue-800',
-            self::TYPE_CHALLENGE_STARTED => 'bg-purple-100 text-purple-800',
-            self::TYPE_CHALLENGE_COMPLETED => 'bg-yellow-100 text-yellow-800',
-            self::TYPE_CHALLENGE_PAUSED => 'bg-orange-100 text-orange-800',
-            self::TYPE_CHALLENGE_RESUMED => 'bg-indigo-100 text-indigo-800',
-            default => 'bg-gray-100 text-gray-800',
+            self::TYPE_GOAL_COMPLETED => 'text-green-800 ',
+            self::TYPE_DAY_COMPLETED => 'text-blue-800 ',
+            self::TYPE_CHALLENGE_STARTED => 'text-purple-800 dark:text-purple-400 ',
+            self::TYPE_CHALLENGE_COMPLETED => 'text-yellow-800 dark:text-yellow-400 ',
+            self::TYPE_CHALLENGE_PAUSED => 'text-orange-800 dark:text-orange-400 ',
+            self::TYPE_CHALLENGE_RESUMED => 'text-indigo-800 dark:text-indigo-400 ',
+            default => 'text-gray-800 dark:text-gray-300 ',
         };
     }
 }

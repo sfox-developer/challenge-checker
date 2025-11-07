@@ -1,34 +1,30 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center space-x-3">
-            <div class="bg-gradient-to-r from-green-500 to-teal-500 p-2 rounded-lg">
+        <x-page-header title="Create New Challenge" gradient="from-green-500 to-teal-500">
+            <x-slot name="icon">
                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
                 </svg>
-            </div>
-            <h2 class="font-bold text-2xl text-gray-800 leading-tight">
-                {{ __('Create New Challenge') }}
-            </h2>
-        </div>
+            </x-slot>
+        </x-page-header>
     </x-slot>
 
     <div class="py-8">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-gradient-to-br from-white to-gray-50 overflow-hidden shadow-xl rounded-2xl border border-gray-200">
-                <div class="p-8">
-                    <form action="{{ route('challenges.store') }}" method="POST" id="challenge-form">
+            <div class="card">
+                <form action="{{ route('challenges.store') }}" method="POST" id="challenge-form">
                         @csrf
                         
                         <!-- Challenge Name -->
                         <div class="mb-6">
-                            <label for="name" class="block text-sm font-bold text-gray-800 mb-2 flex items-center space-x-2">
+                            <label for="name" class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2">
                                 <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V7l-7-5z" clip-rule="evenodd"></path>
                                 </svg>
                                 <span>Challenge Name</span>
                             </label>
                             <input type="text" name="name" id="name" value="{{ old('name') }}" 
-                                   class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-200" 
+                                   class="app-input" 
                                    placeholder="e.g., 30-Day Fitness Challenge" required>
                             @error('name')
                                 <p class="mt-2 text-sm text-red-600 flex items-center space-x-1">
@@ -42,7 +38,7 @@
 
                         <!-- Description -->
                         <div class="mb-6">
-                            <label for="description" class="block text-sm font-bold text-gray-800 mb-2 flex items-center space-x-2">
+                            <label for="description" class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2">
                                 <svg class="w-4 h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
                                 </svg>
@@ -50,7 +46,7 @@
                                 <span class="text-xs text-gray-500 font-normal">(Optional)</span>
                             </label>
                             <textarea name="description" id="description" rows="3" 
-                                      class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition-all duration-200" 
+                                      class="app-input" 
                                       placeholder="Describe what this challenge is about...">{{ old('description') }}</textarea>
                             @error('description')
                                 <p class="mt-2 text-sm text-red-600 flex items-center space-x-1">
@@ -64,7 +60,7 @@
 
                         <!-- Duration -->
                         <div class="mb-6">
-                            <label for="days_duration" class="block text-sm font-bold text-gray-800 mb-2 flex items-center space-x-2">
+                            <label for="days_duration" class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2">
                                 <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                                 </svg>
@@ -73,7 +69,7 @@
                             <div class="relative">
                                 <input type="number" name="days_duration" id="days_duration" value="{{ old('days_duration', 30) }}" 
                                        min="1" max="365"
-                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-all duration-200 pr-16" required>
+                                       class="app-input pr-16" required>
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                     <span class="text-gray-500 text-sm">days</span>
                                 </div>
@@ -96,7 +92,7 @@
                                            class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-200">
                                 </div>
                                 <div class="ml-3">
-                                    <label for="is_public" class="text-sm font-bold text-gray-800 flex items-center space-x-2">
+                                    <label for="is_public" class="text-sm font-bold text-gray-800 dark:text-gray-100 flex items-center space-x-2">
                                         <svg class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
@@ -110,18 +106,20 @@
                         <!-- Goals Section -->
                         <div class="mb-8">
                             <div class="flex justify-between items-center mb-4">
-                                <label class="block text-sm font-bold text-gray-800 flex items-center space-x-2">
+                                <label class="block text-sm font-bold text-gray-800 dark:text-gray-100 flex items-center space-x-2">
                                     <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                                     </svg>
                                     <span>Goals</span>
                                 </label>
-                                <button type="button" onclick="addGoal()" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-sm font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200 flex items-center space-x-2">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span>Add Goal</span>
-                                </button>
+                                <x-app-button variant="success" size="sm" type="button" onclick="addGoal()">
+                                    <x-slot name="icon">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </x-slot>
+                                    Add Goal
+                                </x-app-button>
                             </div>
                             
                             <div id="goals-container">
@@ -135,21 +133,24 @@
 
                         <!-- Submit Buttons -->
                         <div class="flex justify-between space-x-4 pt-6 border-t border-gray-200">
-                            <a href="{{ route('challenges.index') }}" class="bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 font-semibold py-3 px-6 rounded-lg shadow-sm hover:shadow-md transform hover:scale-105 transition-all duration-200 flex items-center space-x-2">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Cancel</span>
-                            </a>
-                            <button type="submit" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center space-x-2">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Create Challenge</span>
-                            </button>
+                            <x-app-button variant="secondary" href="{{ route('challenges.index') }}">
+                                <x-slot name="icon">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </x-slot>
+                                Cancel
+                            </x-app-button>
+                            <x-app-button variant="primary" type="submit">
+                                <x-slot name="icon">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </x-slot>
+                                Create Challenge
+                            </x-app-button>
                         </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -169,7 +170,7 @@
                         </div>
                         <h4 class="text-lg font-bold text-gray-800">Goal ${goalCount + 1}</h4>
                     </div>
-                    <button type="button" onclick="removeGoal(this)" class="bg-red-100 hover:bg-red-200 text-red-600 hover:text-red-700 p-2 rounded-lg transition-all duration-200 flex items-center space-x-1">
+                    <button type="button" onclick="removeGoal(this)" class="btn-danger">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                         </svg>
@@ -178,18 +179,18 @@
                 </div>
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2 flex items-center space-x-2">
+                        <label class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2">
                             <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
                             <span>Goal Name</span>
                         </label>
                         <input type="text" name="goals[${goalCount}][name]" 
-                               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-200" 
+                               class="app-input" 
                                placeholder="e.g., Exercise for 30 minutes" required>
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2 flex items-center space-x-2">
+                        <label class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2">
                             <svg class="w-4 h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
                             </svg>
@@ -197,7 +198,7 @@
                             <span class="text-xs text-gray-500 font-normal">(Optional)</span>
                         </label>
                         <input type="text" name="goals[${goalCount}][description]" 
-                               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition-all duration-200" 
+                               class="app-input" 
                                placeholder="Additional details about this goal">
                     </div>
                 </div>

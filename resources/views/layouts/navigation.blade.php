@@ -26,11 +26,46 @@
                     <x-nav-link :href="route('users.search')" :active="request()->routeIs('users.*')">
                         {{ __('Discover') }}
                     </x-nav-link>
+                    @if(Auth::user()->is_admin)
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
+                            {{ __('Admin') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
+            <!-- Mobile Theme Toggle -->
+            <div class="flex items-center sm:hidden">
+                <button @click="toggleTheme()" 
+                        class="inline-flex items-center p-2 text-white hover:bg-white hover:bg-opacity-20 rounded-md transition ease-in-out duration-150"
+                        title="Toggle theme">
+                    <!-- Sun Icon (Light Mode) -->
+                    <svg x-show="getThemeIcon() === 'sun'" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <!-- Moon Icon (Dark Mode) -->
+                    <svg x-show="getThemeIcon() === 'moon'" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:flex sm:items-center sm:ms-6 sm:space-x-3">
+                <!-- Theme Toggle -->
+                <button @click="toggleTheme()" 
+                        class="inline-flex items-center px-3 py-2 border border-white border-opacity-20 text-sm leading-4 font-medium rounded-md text-white bg-white bg-opacity-10 hover:bg-opacity-20 focus:outline-none transition ease-in-out duration-150"
+                        title="Toggle theme">
+                    <!-- Sun Icon (Light Mode) -->
+                    <svg x-show="getThemeIcon() === 'sun'" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <!-- Moon Icon (Dark Mode) -->
+                    <svg x-show="getThemeIcon() === 'moon'" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-white border-opacity-20 text-sm leading-4 font-medium rounded-md text-white bg-white bg-opacity-10 hover:bg-opacity-20 focus:outline-none transition ease-in-out duration-150">
@@ -72,10 +107,10 @@
 </nav>
 
 <!-- Mobile Bottom Navigation -->
-<nav class="sm:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40">
+<nav class="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 z-40">
     <div class="grid grid-cols-5 h-16">
         <!-- Feed -->
-        <a href="{{ route('feed.index') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('feed.*') ? 'text-blue-600' : 'text-gray-600' }} hover:text-blue-600 transition-colors duration-150">
+        <a href="{{ route('feed.index') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('feed.*') ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400' }} hover:text-blue-600 transition-colors duration-150">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/>
                 <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/>
@@ -84,7 +119,7 @@
         </a>
 
         <!-- My Challenges -->
-        <a href="{{ route('challenges.index') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('challenges.*') ? 'text-blue-600' : 'text-gray-600' }} hover:text-blue-600 transition-colors duration-150">
+        <a href="{{ route('challenges.index') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('challenges.*') ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400' }} hover:text-blue-600 transition-colors duration-150">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
             </svg>
@@ -111,7 +146,7 @@
         @endif
 
         <!-- Discover -->
-        <a href="{{ route('users.search') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('users.search') ? 'text-blue-600' : 'text-gray-600' }} hover:text-blue-600 transition-colors duration-150">
+        <a href="{{ route('users.search') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('users.search') ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400' }} hover:text-blue-600 transition-colors duration-150">
             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
@@ -119,8 +154,8 @@
         </a>
 
         <!-- Profile / Menu -->
-        <a href="{{ route('profile.menu') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('profile.menu') ? 'text-blue-600' : 'text-gray-600' }} hover:text-blue-600 transition-colors duration-150">
-            <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->name }}" class="w-6 h-6 rounded-full ring-2 {{ request()->routeIs('profile.menu') ? 'ring-blue-600' : 'ring-gray-300' }}">
+        <a href="{{ route('profile.menu') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('profile.menu') ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400' }} hover:text-blue-600 transition-colors duration-150">
+            <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->name }}" class="w-6 h-6 rounded-full ring-2 {{ request()->routeIs('profile.menu') ? 'ring-blue-600' : 'ring-gray-300 dark:ring-gray-600' }}">
             <span class="text-xs font-medium">Menu</span>
         </a>
     </div>

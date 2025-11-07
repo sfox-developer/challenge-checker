@@ -1,7 +1,11 @@
-// Import custom components first
-@use 'components/goal-toggle';
+// Import custom components first (SCSS modules must come before @tailwind)
+@use 'components/forms';
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/todos';
 @use 'components/toast';
 
+// Import Tailwind
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="{{ auth()->user()->getThemePreference() === 'dark' ? 'dark' : 'light' }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,14 +13,32 @@
 
         <!-- Scripts -->
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
+        
+        <!-- Dark Mode Script - Must run before page renders -->
+        <script>
+            // Initialize theme immediately to prevent flash
+            (function() {
+                const theme = document.documentElement.dataset.theme || 'light';
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            })();
+        </script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 pb-16 sm:pb-0" x-data="quickGoalsModal()" @open-goals.window="open()">
+        <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 pb-16 sm:pb-0" 
+             x-data="{ 
+                 ...quickGoalsModal(), 
+                 ...themeManager() 
+             }" 
+             @open-goals.window="open()">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white bg-opacity-80 backdrop-blur-sm shadow-sm">
+                <header class="bg-white dark:bg-gray-800 bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm shadow-sm">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -73,7 +91,7 @@
                          x-transition:leave="ease-in duration-200"
                          x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                          x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                         class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+                         class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
                         
                         <!-- Header -->
                         <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
@@ -93,41 +111,13 @@
                         </div>
 
                         <!-- Content -->
-                        <div class="px-6 py-4 max-h-96 overflow-y-auto">
+                        <div class="px-6 py-4 max-h-96 overflow-y-auto bg-white dark:bg-gray-800">
                             <div x-html="content"></div>
                         </div>
                     </div>
                 </div>
             </div>
             @endif
-
-            <script>
-                function quickGoalsModal() {
-                    return {
-                        isOpen: false,
-                        content: '<div class="text-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div><p class="mt-4 text-gray-600">Loading your active challenges...</p></div>',
-                        
-                        open() {
-                            this.isOpen = true;
-                            this.loadChallenges();
-                        },
-                        
-                        close() {
-                            this.isOpen = false;
-                        },
-                        
-                        async loadChallenges() {
-                            try {
-                                const response = await fetch('/api/quick-goals');
-                                const html = await response.text();
-                                this.content = html;
-                            } catch (error) {
-                                this.content = '<div class="text-center py-8 text-red-600">Error loading challenges. Please try again.</div>';
-                            }
-                        }
-                    }
-                }
-            </script>
         </div>
     </body>
 </html>

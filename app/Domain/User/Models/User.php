@@ -28,6 +28,7 @@ class User extends Authenticatable
         'password',
         'is_admin',
         'avatar',
+        'theme_preference',
     ];
 
     /**
@@ -179,5 +180,24 @@ class User extends Authenticatable
     public function getAvatarEmoji(): string
     {
         return $this->getAvatarUrl();
+    }
+
+    /**
+     * Get the user's theme preference.
+     * Returns 'light', 'dark', or 'system'.
+     */
+    public function getThemePreference(): string
+    {
+        return $this->theme_preference ?? 'system';
+    }
+
+    /**
+     * Update the user's theme preference.
+     */
+    public function updateThemePreference(string $theme): void
+    {
+        if (in_array($theme, ['light', 'dark', 'system'])) {
+            $this->update(['theme_preference' => $theme]);
+        }
     }
 }

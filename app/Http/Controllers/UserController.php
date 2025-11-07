@@ -9,7 +9,8 @@ use App\Domain\User\Models\User;
 class UserController extends Controller
 {
     /**
-     * Display user search page.
+     * Display user search/discovery page.
+     * Shows random active users when no search query provided.
      */
     public function search(Request $request): View
     {
@@ -19,6 +20,7 @@ class UserController extends Controller
         $users = collect();
         
         if ($query && strlen($query) >= 2) {
+            // Search mode: find users matching query
             $users = User::where('id', '!=', $currentUser->id)
                 ->where(function ($q) use ($query) {
                     $q->where('name', 'LIKE', "%{$query}%")
@@ -27,6 +29,29 @@ class UserController extends Controller
                 ->withCount(['followers', 'following'])
                 ->limit(20)
                 ->get();
+        } else {
+            // Discovery mode: show random active users
+            // Prioritize users with recent activity and public challenges
+            $users = User::where('id', '!=', $currentUser->id)
+                ->whereHas('activities', function ($q) {
+                    $q->where('created_at', '>=', now()->subDays(30));
+                })
+                ->withCount(['followers', 'following', 'challenges'])
+                ->inRandomOrder()
+                ->limit(12)
+                ->get();
+                
+            // If not enough active users, fill with any users
+            if ($users->count() < 12) {
+                $additionalUsers = User::where('id', '!=', $currentUser->id)
+                    ->whereNotIn('id', $users->pluck('id'))
+                    ->withCount(['followers', 'following', 'challenges'])
+                    ->inRandomOrder()
+                    ->limit(12 - $users->count())
+                    ->get();
+                    
+                $users = $users->merge($additionalUsers);
+            }
         }
 
         return view('users.search', compact('users', 'query'));

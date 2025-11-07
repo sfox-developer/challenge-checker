@@ -1,0 +1,36 @@
+// ============================================================================
+// FORM COMPONENTS
+// ============================================================================
+// Reusable form input styles with consistent dark mode support
+// Usage: Add these classes to form inputs, textareas, and selects
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// TEXT INPUTS - Standard text input fields
+// ----------------------------------------------------------------------------
+
+input.app-input, textarea.app-input {
+    @apply w-full !rounded-md border-gray-300 dark:border-gray-600;
+    @apply bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm;
+    @apply focus:border-blue-500 dark:focus:border-blue-400;
+    @apply focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-opacity-50;
+    @apply transition-all duration-200;
+    @apply placeholder:text-gray-400 dark:placeholder:text-gray-500;
+}
+
+// ----------------------------------------------------------------------------
+// TEXTAREAS - Multi-line text input fields
+// ----------------------------------------------------------------------------
+
+textarea.app-textarea {
+    @apply app-input;
+    @apply resize-none min-h-[100px];
+}
+
+// ----------------------------------------------------------------------------
+// SELECT DROPDOWNS - Select/dropdown fields
+// ----------------------------------------------------------------------------
+
+.app-select {
+    @apply app-input;
+}
