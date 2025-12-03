@@ -6,489 +6,426 @@
                     <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                 </svg>
             </x-slot>
-        </x-page-header>
-    </x-slot>
-
-    <div class="py-8">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            
-            <!-- Navigation and Actions -->
-            <div class="mb-6 flex justify-between items-center">
-                <!-- Back Button -->
-                <div>
-                    <a href="{{ session('challenge_back_url', route('challenges.index')) }}" class="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-800 dark:text-gray-400 transition-colors duration-200">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span class="font-medium">{{ session('challenge_back_url') ? (str_contains(session('challenge_back_url'), 'challenges') && !str_contains(session('challenge_back_url'), 'challenges/') ? 'Back to Challenges' : 'Back') : 'Back to Challenges' }}</span>
-                    </a>
-                </div>
-
-                <!-- Action Buttons - Only for owner -->
-                @php
-                    $isOwner = auth()->id() === $challenge->user_id;
-                @endphp
-                
-                @if($isOwner)
-                <div class="flex flex-wrap gap-3">
-                    @if(!$challenge->started_at)
-                        <!-- Not Started -->
-                        <form method="POST" action="{{ route('challenges.start', $challenge) }}">
-                            @csrf
-                            <x-app-button variant="success" type="submit">
-                                <x-slot name="icon">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                    </svg>
-                                </x-slot>
-                                Start Challenge
-                            </x-app-button>
-                        </form>
-                    @elseif(!$challenge->completed_at)
-                        <!-- Started but not completed -->
-                        @if($challenge->is_active)
-                            <!-- Active - show pause and complete buttons -->
-                            <form method="POST" action="{{ route('challenges.pause', $challenge) }}">
-                                @csrf
-                                <x-app-button variant="gradient-pause" type="submit">
-                                    <x-slot name="icon">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                                        </svg>
-                                    </x-slot>
-                                    Pause
-                                </x-app-button>
-                            </form>
-                            <x-app-button variant="gradient-complete" type="button" onclick="showCompleteModal()">
-                                <x-slot name="icon">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                    </svg>
-                                </x-slot>
-                                Mark Complete
-                            </x-app-button>
-                        @else
-                            <!-- Paused - show resume and complete buttons -->
-                            <form method="POST" action="{{ route('challenges.resume', $challenge) }}">
-                                @csrf
-                                <x-app-button variant="success" type="submit">
-                                    <x-slot name="icon">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                        </svg>
-                                    </x-slot>
-                                    Resume
-                                </x-app-button>
-                            </form>
-                            <x-app-button variant="gradient-complete" type="button" onclick="showCompleteModal()">
-                                <x-slot name="icon">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                    </svg>
-                                </x-slot>
-                                Mark Complete
-                            </x-app-button>
-                        @endif
-                    @endif
-
+            <x-slot name="action">
+                <div class="flex space-x-2">
                     @if(!$challenge->completed_at)
-                        <x-app-button variant="gradient-purple" href="{{ route('challenges.edit', $challenge) }}?back={{ urlencode(request()->url()) }}">
+                        <x-app-button variant="secondary" href="{{ route('challenges.index') }}">
                             <x-slot name="icon">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                                    <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </x-slot>
+                            Back
+                        </x-app-button>
+                        
+                        <x-app-button variant="secondary" href="{{ route('challenges.edit', $challenge) }}">
+                            <x-slot name="icon">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
                                 </svg>
                             </x-slot>
                             Edit
                         </x-app-button>
+                        
+                        @if($challenge->started_at)
+                            @if($challenge->is_active)
+                                <form method="POST" action="{{ route('challenges.pause', $challenge) }}">
+                                    @csrf
+                                    <x-app-button variant="secondary" type="submit">
+                                        <x-slot name="icon">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </x-slot>
+                                        Pause
+                                    </x-app-button>
+                                </form>
+                            @else
+                                <form method="POST" action="{{ route('challenges.resume', $challenge) }}">
+                                    @csrf
+                                    <x-app-button variant="secondary" type="submit">
+                                        <x-slot name="icon">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </x-slot>
+                                        Resume
+                                    </x-app-button>
+                                </form>
+                            @endif
+                            
+                            <x-app-button variant="secondary" type="button" onclick="showCompleteModal()">
+                                <x-slot name="icon">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                </x-slot>
+                                Complete
+                            </x-app-button>
+                        @else
+                            <form method="POST" action="{{ route('challenges.start', $challenge) }}">
+                                @csrf
+                                <x-app-button variant="primary" type="submit">
+                                    <x-slot name="icon">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </x-slot>
+                                    Start Challenge
+                                </x-app-button>
+                            </form>
+                        @endif
+                    @else
+                        <x-app-button variant="secondary" href="{{ route('challenges.index') }}">
+                            <x-slot name="icon">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </x-slot>
+                            Back
+                        </x-app-button>
                     @endif
                 </div>
-                @endif
+            </x-slot>
+        </x-page-header>
+    </x-slot>
+
+    <div class="py-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            
+            <!-- Statistics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <x-stat-card 
+                    label="Duration" 
+                    :value="$challenge->days_duration" 
+                    gradientFrom="blue-500" 
+                    gradientTo="indigo-500">
+                    <x-slot name="icon">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                        </svg>
+                    </x-slot>
+                    <x-slot name="suffix">days</x-slot>
+                </x-stat-card>
+
+                <x-stat-card 
+                    label="Goals" 
+                    :value="$challenge->goals->count()" 
+                    gradientFrom="purple-500" 
+                    gradientTo="pink-500">
+                    <x-slot name="icon">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm3 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm-3 4a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+                        </svg>
+                    </x-slot>
+                </x-stat-card>
+
+                <x-stat-card 
+                    label="Progress" 
+                    :value="number_format($challenge->getProgressPercentage(), 1)" 
+                    gradientFrom="green-500" 
+                    gradientTo="teal-500">
+                    <x-slot name="icon">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                    </x-slot>
+                    <x-slot name="suffix">%</x-slot>
+                </x-stat-card>
+
+                <x-stat-card 
+                    label="Completed" 
+                    :value="$challenge->dailyProgress()->whereNotNull('completed_at')->count()" 
+                    gradientFrom="green-500" 
+                    gradientTo="teal-500">
+                    <x-slot name="icon">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"/>
+                        </svg>
+                    </x-slot>
+                    <x-slot name="suffix">/ {{ $challenge->goals->count() * $challenge->days_duration }}</x-slot>
+                </x-stat-card>
             </div>
 
-            <!-- Success Message -->
-            @if(session('success'))
-                <div class="mb-6 bg-gradient-to-r from-green-50 to-green-100 border border-green-200 rounded-xl p-4 shadow-sm">
-                    <div class="flex items-center space-x-3">
-                        <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                        </svg>
-                        <p class="text-green-800 font-medium">{{ session('success') }}</p>
-                    </div>
-                </div>
-            @endif
-            <!-- Challenge Overview Card -->
-            <div class="card">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="flex-1">
-                            <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4">{{ $challenge->name }}</h1>
-                            @if($challenge->description)
-                                <p class="text-lg text-gray-700 dark:text-gray-100 leading-relaxed">{{ $challenge->description }}</p>
-                            @endif
-                        </div>
-                        <div class="ml-6">
-                            @if($challenge->completed_at)
-                                <span class="bg-gradient-to-r from-green-400 to-green-500 text-white text-lg font-bold px-6 py-3 rounded-full shadow-md">
-                                    ✓ Completed
-                                </span>
-                            @elseif($challenge->started_at && $challenge->is_active)
-                                <span class="bg-gradient-to-r from-blue-400 to-blue-500 text-white text-lg font-bold px-6 py-3 rounded-full shadow-md">
-                                    🏃 In Progress
-                                </span>
-                            @elseif($challenge->started_at && !$challenge->is_active)
-                                <span class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-lg font-bold px-6 py-3 rounded-full shadow-md">
-                                    ⏸️ Paused
-                                </span>
-                            @else
-                                <span class="bg-gradient-to-r from-gray-400 to-gray-500 text-white text-lg font-bold px-6 py-3 rounded-full shadow-md">
-                                    📝 Ready to Start
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <!-- Challenge Stats -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-gradient-to-r from-blue-50 dark:from-blue-900/30 to-purple-50 dark:to-purple-900/30 rounded-xl p-6 text-center">
-                            <div class="text-3xl font-bold text-blue-600 mb-2">{{ $challenge->days_duration }}</div>
-                            <div class="text-gray-700 dark:text-gray-100 font-medium">Total Days</div>
-                        </div>
-                        <div class="bg-gradient-to-r from-green-50 dark:from-green-900/30 to-teal-50 dark:to-teal-900/30 rounded-xl p-6 text-center">
-                            <div class="text-3xl font-bold text-green-600 mb-2">{{ $challenge->goals->count() }}</div>
-                            <div class="text-gray-700 dark:text-gray-100 font-medium">Daily Goals</div>
-                        </div>
+            <!-- Challenge Details and Progress Side by Side -->
+            <div class="grid lg:grid-cols-2 gap-6">
+                <!-- Challenge Details -->
+                <div class="card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Details</h3>
                         @if($challenge->completed_at)
-                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 text-center">
-                                <div class="text-3xl font-bold text-green-600 mb-2">{{ number_format($challenge->getProgressPercentage(), 1) }}%</div>
-                                <div class="text-gray-700 dark:text-gray-100 font-medium">Completed</div>
-                            </div>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200 whitespace-nowrap">
+                                ✓ Completed
+                            </span>
                         @elseif($challenge->started_at && $challenge->is_active)
-                            <div class="bg-gradient-to-r from-purple-50 dark:from-purple-900/30 to-pink-50 dark:to-pink-900/30 rounded-xl p-6 text-center">
-                                <div class="text-3xl font-bold text-purple-600 mb-2">{{ number_format($challenge->getProgressPercentage(), 1) }}%</div>
-                                <div class="text-gray-700 dark:text-gray-100 font-medium">Progress</div>
-                            </div>
-                        @elseif($challenge->started_at && !$challenge->is_active && !$challenge->completed_at)
-                            <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6 text-center">
-                                <div class="text-3xl font-bold text-yellow-600 mb-2">Paused</div>
-                                <div class="text-gray-700 dark:text-gray-100 font-medium">Status</div>
-                            </div>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 whitespace-nowrap">
+                                🏃 Active
+                            </span>
+                        @elseif($challenge->started_at && !$challenge->is_active)
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 whitespace-nowrap">
+                                ⏸️ Paused
+                            </span>
                         @else
-                            <div class="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-6 text-center">
-                                <div class="text-3xl font-bold text-blue-600 mb-2">Ready</div>
-                                <div class="text-gray-700 dark:text-gray-100 font-medium">To Start</div>
-                            </div>
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200 whitespace-nowrap">
+                                📝 Draft
+                            </span>
                         @endif
                     </div>
-
-                    @if($challenge->started_at && !$challenge->completed_at)
-                        <!-- Progress Bar -->
-                        <div class="mb-8">
-                            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-3">
-                                <span class="font-medium">Overall Progress</span>
-                                <span class="font-bold">{{ number_format($challenge->getProgressPercentage(), 1) }}% Complete</span>
+                    
+                    @if($challenge->description)
+                        <p class="text-sm text-gray-700 dark:text-gray-100 mb-4 leading-relaxed">{{ $challenge->description }}</p>
+                    @endif
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
+                            <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Duration:</span>
                             </div>
-                            <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-4 shadow-inner">
-                                <div class="bg-gradient-to-r {{ $challenge->is_active ? 'from-blue-500 to-purple-500' : 'from-gray-400 to-gray-500' }} h-4 rounded-full shadow-sm transition-all duration-500" 
+                            <span class="font-semibold text-gray-900 dark:text-white">{{ $challenge->days_duration }} days</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
+                            <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm3 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm-3 4a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Goals:</span>
+                            </div>
+                            <span class="font-semibold text-gray-900 dark:text-white">{{ $challenge->goals->count() }}</span>
+                        </div>
+                        
+                        @if($challenge->started_at)
+                        <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
+                            <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Started:</span>
+                            </div>
+                            <span class="font-semibold text-gray-900 dark:text-white">{{ $challenge->started_at->format('M d, Y') }}</span>
+                        </div>
+                        @endif
+                        
+                        @if($challenge->end_date)
+                        <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
+                            <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>End Date:</span>
+                            </div>
+                            <span class="font-semibold text-gray-900 dark:text-white">{{ $challenge->end_date->format('M d, Y') }}</span>
+                        </div>
+                        @endif
+                        
+                        @if($challenge->completed_at)
+                        <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
+                            <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Completed:</span>
+                            </div>
+                            <span class="font-semibold text-gray-900 dark:text-white">{{ $challenge->completed_at->diffForHumans() }}</span>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Progress Card -->
+                <div class="card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Progress</h3>
+                    </div>
+                    
+                    @if($challenge->started_at && !$challenge->completed_at)
+                        <!-- Active Progress Bar -->
+                        <div class="mb-6">
+                            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                                <span class="font-medium">Overall Progress</span>
+                                <span class="font-semibold">{{ number_format($challenge->getProgressPercentage(), 1) }}%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                                <div class="bg-teal-500 h-1.5 rounded-full transition-all duration-300" 
                                      style="width: {{ $challenge->getProgressPercentage() }}%"></div>
                             </div>
                             @if(!$challenge->is_active)
-                                <p class="text-sm text-yellow-600 mt-2 flex items-center">
-                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <p class="text-xs text-purple-600 dark:text-purple-400 mt-2 flex items-center">
+                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                                     </svg>
-                                    Challenge is currently paused
+                                    Challenge is paused
                                 </p>
                             @endif
                         </div>
                     @endif
 
-                    <!-- Challenge Completion Results -->
+                    
                     @if($challenge->completed_at)
-                        @php
-                            $progress = $challenge->getProgressPercentage();
-                            $completedDays = $challenge->dailyProgress()->whereNotNull('completed_at')->count();
-                            $totalDays = $challenge->goals->count() * $challenge->days_duration;
-                            $completedOn = $challenge->completed_at->format('M j, Y \a\t g:i A');
-                        @endphp
-                        
-                        <div class="mb-8">
-                            @if($progress >= 90)
-                                <!-- Outstanding Achievement (90%+) -->
-                                <div class="bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 border-2 border-green-300 rounded-2xl p-8 shadow-lg">
-                                    <div class="text-center">
-                                        <div class="mx-auto w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mb-6 shadow-xl">
-                                            <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </div>
-                                        <h3 class="text-3xl font-bold text-green-800 mb-3">🏆 Outstanding Achievement!</h3>
-                                        <p class="text-xl text-green-700 mb-6 font-semibold">Challenge Mastered with Excellence</p>
-                                        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-inner border border-green-200">
-                                            <div class="grid grid-cols-2 gap-6">
-                                                <div class="text-center">
-                                                    <div class="text-4xl font-bold text-green-600">{{ number_format($progress, 1) }}%</div>
-                                                    <div class="text-sm text-green-600 font-medium">Achievement Rate</div>
-                                                </div>
-                                                <div class="text-center">
-                                                    <div class="text-4xl font-bold text-green-600">{{ $completedDays }}/{{ $totalDays }}</div>
-                                                    <div class="text-sm text-green-600 font-medium">Days Completed</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="text-green-700 mt-4 font-medium">You've demonstrated exceptional commitment and consistency. This level of dedication sets you apart! 🌟</p>
-                                        <p class="text-sm text-green-600 mt-2">Completed on {{ $completedOn }}</p>
-                                    </div>
-                                </div>
-                            @elseif($progress >= 75)
-                                <!-- Great Success (75-89%) -->
-                                <div class="bg-gradient-to-br from-blue-50 via-green-50 to-blue-100 border-2 border-blue-300 rounded-2xl p-8 shadow-lg">
-                                    <div class="text-center">
-                                        <div class="mx-auto w-20 h-20 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center mb-6 shadow-xl">
-                                            <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </div>
-                                        <h3 class="text-3xl font-bold text-blue-800 mb-3">🎉 Great Success!</h3>
-                                        <p class="text-xl text-blue-700 mb-6 font-semibold">Challenge Completed Successfully</p>
-                                        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-inner border border-blue-200">
-                                            <div class="grid grid-cols-2 gap-6">
-                                                <div class="text-center">
-                                                    <div class="text-4xl font-bold text-blue-600">{{ number_format($progress, 1) }}%</div>
-                                                    <div class="text-sm text-blue-600 font-medium">Achievement Rate</div>
-                                                </div>
-                                                <div class="text-center">
-                                                    <div class="text-4xl font-bold text-blue-600">{{ $completedDays }}/{{ $totalDays }}</div>
-                                                    <div class="text-sm text-blue-600 font-medium">Days Completed</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="text-blue-700 mt-4 font-medium">You showed strong commitment and achieved excellent results. Well done! 💪</p>
-                                        <p class="text-sm text-blue-600 mt-2">Completed on {{ $completedOn }}</p>
-                                    </div>
-                                </div>
-                            @elseif($progress >= 50)
-                                <!-- Solid Progress (50-74%) -->
-                                <div class="bg-gradient-to-br from-yellow-50 via-orange-50 to-yellow-100 border-2 border-yellow-300 rounded-2xl p-8 shadow-lg">
-                                    <div class="text-center">
-                                        <div class="mx-auto w-20 h-20 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center mb-6 shadow-xl">
-                                            <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </div>
-                                        <h3 class="text-3xl font-bold text-yellow-800 mb-3">👍 Good Effort!</h3>
-                                        <p class="text-xl text-yellow-700 mb-6 font-semibold">Solid Progress Made</p>
-                                        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-inner border border-yellow-200">
-                                            <div class="grid grid-cols-2 gap-6">
-                                                <div class="text-center">
-                                                    <div class="text-4xl font-bold text-yellow-600">{{ number_format($progress, 1) }}%</div>
-                                                    <div class="text-sm text-yellow-600 font-medium">Achievement Rate</div>
-                                                </div>
-                                                <div class="text-center">
-                                                    <div class="text-4xl font-bold text-yellow-600">{{ $completedDays }}/{{ $totalDays }}</div>
-                                                    <div class="text-sm text-yellow-600 font-medium">Days Completed</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="text-yellow-700 mt-4 font-medium">You made meaningful progress! Consider what worked well for your next challenge. 📈</p>
-                                        <p class="text-sm text-yellow-600 mt-2">Completed on {{ $completedOn }}</p>
-                                    </div>
-                                </div>
-                            @elseif($progress >= 25)
-                                <!-- Room for Improvement (25-49%) -->
-                                <div class="bg-gradient-to-br from-orange-50 via-red-50 to-orange-100 border-2 border-orange-300 rounded-2xl p-8 shadow-lg">
-                                    <div class="text-center">
-                                        <div class="mx-auto w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mb-6 shadow-xl">
-                                            <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </div>
-                                        <h3 class="text-3xl font-bold text-orange-800 mb-3">💪 Room for Growth</h3>
-                                        <p class="text-xl text-orange-700 mb-6 font-semibold">Challenge Completed with Learning Opportunities</p>
-                                        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-inner border border-orange-200">
-                                            <div class="grid grid-cols-2 gap-6">
-                                                <div class="text-center">
-                                                    <div class="text-4xl font-bold text-orange-600">{{ number_format($progress, 1) }}%</div>
-                                                    <div class="text-sm text-orange-600 font-medium">Achievement Rate</div>
-                                                </div>
-                                                <div class="text-center">
-                                                    <div class="text-4xl font-bold text-orange-600">{{ $completedDays }}/{{ $totalDays }}</div>
-                                                    <div class="text-sm text-orange-600 font-medium">Days Completed</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="text-orange-700 mt-4 font-medium">Every challenge teaches us something. Use these insights to build stronger habits next time! 🎯</p>
-                                        <p class="text-sm text-orange-600 mt-2">Completed on {{ $completedOn }}</p>
-                                    </div>
-                                </div>
-                            @else
-                                <!-- Early End (0-24%) -->
-                                <div class="bg-gradient-to-br from-red-50 via-pink-50 to-red-100 border-2 border-red-300 rounded-2xl p-8 shadow-lg">
-                                    <div class="text-center">
-                                        <div class="mx-auto w-20 h-20 bg-gradient-to-br from-red-500 to-pink-500 rounded-full flex items-center justify-center mb-6 shadow-xl">
-                                            <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5zM8 16H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V6h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V6h2v2z"></path>
-                                            </svg>
-                                        </div>
-                                        <h3 class="text-3xl font-bold text-red-800 mb-3">🌱 New Beginning</h3>
-                                        <p class="text-xl text-red-700 mb-6 font-semibold">Challenge Ended Early - But That's Part of Learning</p>
-                                        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-inner border border-red-200">
-                                            <div class="grid grid-cols-2 gap-6">
-                                                <div class="text-center">
-                                                    <div class="text-4xl font-bold text-red-600">{{ number_format($progress, 1) }}%</div>
-                                                    <div class="text-sm text-red-600 font-medium">Achievement Rate</div>
-                                                </div>
-                                                <div class="text-center">
-                                                    <div class="text-4xl font-bold text-red-600">{{ $completedDays }}/{{ $totalDays }}</div>
-                                                    <div class="text-sm text-red-600 font-medium">Days Completed</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="text-red-700 mt-4 font-medium">Starting is the hardest part - and you did that! Each attempt builds resilience for future success. 🌟</p>
-                                        <p class="text-sm text-red-600 mt-2">Ended on {{ $completedOn }}</p>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    @endif
-
-                    <!-- Daily Goals Section -->
-                    @if($challenge->goals->isNotEmpty() && !$challenge->completed_at)
-                        <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
-                            <x-goal-list 
-                                :challenge="$challenge" 
-                                :goals="$challenge->goals" 
-                                :compact="false" 
-                                :show-todays-goals="true"
-                                :is-owner="$isOwner" />
-                        </div>
-                    @endif
-
-                    <!-- Daily Progress Statistics -->
-                    @if($challenge->started_at)
-                        <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
-                            <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 flex items-center space-x-3">
-                                <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        <!-- Completion Summary -->
+                        <div class="bg-teal-50 dark:bg-teal-900/20 rounded-lg p-4 border border-teal-200 dark:border-teal-800">
+                            <div class="flex items-start space-x-3">
+                                <svg class="w-5 h-5 text-teal-600 dark:text-teal-400 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                 </svg>
-                                <span>Daily Progress History</span>
-                            </h3>
-
-                            @php
-                                $startDate = $challenge->started_at->startOfDay();
-                                $endDate = $challenge->completed_at ? $challenge->completed_at->startOfDay() : now()->startOfDay();
-                                $daysPassed = $startDate->diffInDays($endDate) + 1;
-                                
-                                // Limit to show only up to 30 days to prevent overwhelming display
-                                $displayDays = min($daysPassed, 30);
-                                $showingPartial = $daysPassed > 30;
-                            @endphp
-
-                            <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 mb-4">
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                                    <div>
-                                        <div class="text-2xl font-bold text-blue-600">{{ $daysPassed }}</div>
-                                        <div class="text-sm text-gray-600 dark:text-gray-400">{{ $daysPassed === 1 ? 'Day' : 'Days' }} Active</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-2xl font-bold text-green-600">
-                                            @php
-                                                $perfectDays = 0;
-                                                for ($i = 0; $i < $daysPassed; $i++) {
-                                                    $checkDate = $startDate->copy()->addDays($i);
-                                                    $completedGoalsForDay = $challenge->dailyProgress()
-                                                        ->where('user_id', $challenge->user_id)
-                                                        ->where('date', $checkDate->toDateString())
-                                                        ->whereNotNull('completed_at')
-                                                        ->count();
-                                                    
-                                                    if ($completedGoalsForDay === $challenge->goals->count()) {
-                                                        $perfectDays++;
-                                                    }
-                                                }
-                                                echo $perfectDays;
-                                            @endphp
-                                        </div>
-                                        <div class="text-sm text-gray-600 dark:text-gray-400">Perfect Days</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-2xl font-bold text-purple-600">
-                                            {{ number_format(($perfectDays / max($daysPassed, 1)) * 100, 1) }}%
-                                        </div>
-                                        <div class="text-sm text-gray-600 dark:text-gray-400">Success Rate</div>
-                                    </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold text-teal-900 dark:text-teal-100">Challenge Completed!</p>
+                                    <p class="text-xs text-teal-700 dark:text-teal-300 mt-1">
+                                        Finished {{ $challenge->completed_at->diffForHumans() }} on {{ $challenge->completed_at->format('M d, Y') }}
+                                    </p>
                                 </div>
                             </div>
-
-                            @if($showingPartial)
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 text-center">
-                                    <em>Showing last 30 days ({{ $daysPassed - 30 }} earlier days not displayed)</em>
-                                </p>
-                            @endif
-
-                            <div class="grid grid-cols-7 gap-2 mb-4">
-                                @for ($i = $showingPartial ? ($daysPassed - 30) : 0; $i < $daysPassed; $i++)
-                                    @php
-                                        $currentDate = $startDate->copy()->addDays($i);
-                                        $isToday = $currentDate->isToday();
-                                        $dayName = $currentDate->format('D');
-                                        $dayNumber = $currentDate->format('j');
-                                        $monthName = $currentDate->format('M');
-                                        
-                                        // Get completed goals for this day for the challenge owner
-                                        $completedGoalsForDay = $challenge->dailyProgress()
-                                            ->where('user_id', $challenge->user_id)
-                                            ->where('date', $currentDate->toDateString())
-                                            ->whereNotNull('completed_at')
-                                            ->count();
-                                        
-                                        $totalGoals = $challenge->goals->count();
-                                        $completionPercentage = $totalGoals > 0 ? ($completedGoalsForDay / $totalGoals) * 100 : 0;
-                                        
-                                        // Determine styling based on completion
-                                        if ($completionPercentage === 100) {
-                                            $bgColor = 'bg-green-500 text-white';
-                                        } elseif ($completionPercentage > 0) {
-                                            $bgColor = 'bg-yellow-400 text-gray-800 dark:text-gray-100';
-                                        } else {
-                                            $bgColor = 'bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-400';
-                                        }
-                                        
-                                        if ($isToday) {
-                                            $bgColor .= ' ring-2 ring-blue-500';
-                                        }
-                                    @endphp
-                                    
-                                    <div class="text-center">
-                                        <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">{{ $dayName }}</div>
-                                        <div class="w-8 h-8 rounded-full {{ $bgColor }} flex items-center justify-center text-xs font-semibold mx-auto relative" title="{{ $currentDate->format('M j, Y') }}: {{ $completedGoalsForDay }}/{{ $totalGoals }} goals completed">
-                                            {{ $dayNumber }}
-                                            @if($isToday)
-                                                <div class="absolute -bottom-1 w-1 h-1 bg-blue-500 rounded-full"></div>
-                                            @endif
-                                        </div>
-                                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ $completedGoalsForDay }}/{{ $totalGoals }}</div>
-                                    </div>
-                                @endfor
-                            </div>
-
-                            <div class="flex items-center justify-center space-x-6 text-xs text-gray-600">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                                    <span>All goals completed</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-                                    <span>Some goals completed</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-3 h-3 rounded-full bg-gray-200 dark:bg-gray-600"></div>
-                                    <span>No goals completed</span>
+                        </div>
+                    @elseif(!$challenge->started_at)
+                        <!-- Not Started Yet -->
+                        <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                            <div class="flex items-start space-x-3">
+                                <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                </svg>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold text-gray-900 dark:text-gray-100">Ready to Start</p>
+                                    <p class="text-xs text-gray-700 dark:text-gray-300 mt-1">
+                                        This challenge hasn't been started yet. Start tracking your progress below!
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     @endif
+                </div>
             </div>
 
+            <!-- Daily Goals Section -->
+            @if($challenge->goals->isNotEmpty())
+                <div class="card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Challenge Goals</h3>
+                        <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+                            {{ $challenge->goals->count() }} {{ Str::plural('goal', $challenge->goals->count()) }}
+                        </span>
+                    </div>
+                    <x-goals-info-list :goals="$challenge->goals" />
+                </div>
+            @endif
 
+            <!-- Daily Progress Statistics -->
+            @if($challenge->started_at)
+                <div class="card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Daily Progress History</h3>
+                    </div>
+
+                    @php
+                        $startDate = $challenge->started_at->startOfDay();
+                        $endDate = $challenge->completed_at ? $challenge->completed_at->startOfDay() : now()->startOfDay();
+                        $daysPassed = $startDate->diffInDays($endDate) + 1;
+                        
+                        // Limit to show only up to 30 days to prevent overwhelming display
+                        $displayDays = min($daysPassed, 30);
+                        $showingPartial = $daysPassed > 30;
+                        
+                        $perfectDays = 0;
+                        for ($i = 0; $i < $daysPassed; $i++) {
+                            $checkDate = $startDate->copy()->addDays($i);
+                            $completedGoalsForDay = $challenge->dailyProgress()
+                                ->where('user_id', $challenge->user_id)
+                                ->where('date', $checkDate->toDateString())
+                                ->whereNotNull('completed_at')
+                                ->count();
+                            
+                            if ($completedGoalsForDay === $challenge->goals->count()) {
+                                $perfectDays++;
+                            }
+                        }
+                    @endphp
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
+                            <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ $daysPassed }}</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">{{ $daysPassed === 1 ? 'Day' : 'Days' }} Active</div>
+                        </div>
+                        <div class="text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
+                            <div class="text-2xl font-bold text-teal-600 dark:text-teal-400">{{ $perfectDays }}</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Perfect Days</div>
+                        </div>
+                        <div class="text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
+                            <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">
+                                {{ number_format(($perfectDays / max($daysPassed, 1)) * 100, 1) }}%
+                            </div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Success Rate</div>
+                        </div>
+                    </div>
+
+                    @if($showingPartial)
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 text-center">
+                            <em>Showing last 30 days ({{ $daysPassed - 30 }} earlier days not displayed)</em>
+                        </p>
+                    @endif
+
+                    <div class="grid grid-cols-7 gap-2 mb-4">
+                        @for ($i = $showingPartial ? ($daysPassed - 30) : 0; $i < $daysPassed; $i++)
+                            @php
+                                $currentDate = $startDate->copy()->addDays($i);
+                                $isToday = $currentDate->isToday();
+                                $dayName = $currentDate->format('D');
+                                $dayNumber = $currentDate->format('j');
+                                
+                                // Get completed goals for this day for the challenge owner
+                                $completedGoalsForDay = $challenge->dailyProgress()
+                                    ->where('user_id', $challenge->user_id)
+                                    ->where('date', $currentDate->toDateString())
+                                    ->whereNotNull('completed_at')
+                                    ->count();
+                                
+                                $totalGoals = $challenge->goals->count();
+                                $completionPercentage = $totalGoals > 0 ? ($completedGoalsForDay / $totalGoals) * 100 : 0;
+                                
+                                // Determine styling based on completion
+                                if ($completionPercentage === 100) {
+                                    $bgColor = 'bg-teal-500 text-white';
+                                } elseif ($completionPercentage > 0) {
+                                    $bgColor = 'bg-yellow-400 text-gray-800 dark:text-gray-100';
+                                } else {
+                                    $bgColor = 'bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-400';
+                                }
+                                
+                                if ($isToday) {
+                                    $bgColor .= ' ring-2 ring-blue-500';
+                                }
+                            @endphp
+                            
+                            <div class="text-center">
+                                <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">{{ $dayName }}</div>
+                                <div class="w-8 h-8 rounded-full {{ $bgColor }} flex items-center justify-center text-xs font-semibold mx-auto relative" title="{{ $currentDate->format('M j, Y') }}: {{ $completedGoalsForDay }}/{{ $totalGoals }} goals completed">
+                                    {{ $dayNumber }}
+                                    @if($isToday)
+                                        <div class="absolute -bottom-1 w-1 h-1 bg-blue-500 rounded-full"></div>
+                                    @endif
+                                </div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ $completedGoalsForDay }}/{{ $totalGoals }}</div>
+                            </div>
+                        @endfor
+                    </div>
+
+                    <div class="flex items-center justify-center space-x-6 text-xs text-gray-600 dark:text-gray-400">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-teal-500"></div>
+                            <span>All goals completed</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                            <span>Some goals completed</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-gray-200 dark:bg-gray-600"></div>
+                            <span>No goals completed</span>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 

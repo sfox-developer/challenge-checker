@@ -70,4 +70,28 @@ class Goal extends Model
             'completed_at' => now(),
         ]);
     }
+
+    /**
+     * Get the current name from the library if available, otherwise use stored name.
+     */
+    public function getCurrentNameAttribute(): string
+    {
+        return $this->library?->name ?? $this->name;
+    }
+
+    /**
+     * Get the current description from the library if available, otherwise use stored description.
+     */
+    public function getCurrentDescriptionAttribute(): ?string
+    {
+        return $this->library?->description ?? $this->description;
+    }
+
+    /**
+     * Get the icon from the library.
+     */
+    public function getIconAttribute(): ?string
+    {
+        return $this->library?->icon;
+    }
 }

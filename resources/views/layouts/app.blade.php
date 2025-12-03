@@ -57,12 +57,12 @@
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                 </svg>
                 <span class="absolute right-full mr-3 bg-gray-900 text-white px-3 py-2 rounded-lg text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                    Quick Complete Goals
+                    Quick Complete
                 </span>
             </button>
             @endif
 
-            <!-- Quick Goals Modal -->
+            <!-- Quick Complete Modal -->
             @if(!request()->routeIs('challenges.show'))
             <div x-show="isOpen" 
                  x-cloak
@@ -100,7 +100,7 @@
                                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                     </svg>
-                                    <span>Quick Complete Goals</span>
+                                    <span>Quick Complete</span>
                                 </h3>
                                 <button @click="close()" class="text-white hover:text-gray-200 transition-colors">
                                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -110,9 +110,37 @@
                             </div>
                         </div>
 
+                        <!-- Tabs -->
+                        <div class="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+                            <nav class="flex -mb-px">
+                                <button @click="switchTab('challenges')" 
+                                        :class="activeTab === 'challenges' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'"
+                                        class="w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors duration-150">
+                                    <span class="flex items-center justify-center gap-2">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                        </svg>
+                                        Challenges
+                                    </span>
+                                </button>
+                                <button @click="switchTab('habits')" 
+                                        :class="activeTab === 'habits' ? 'border-teal-500 text-teal-600 dark:text-teal-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'"
+                                        class="w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors duration-150">
+                                    <span class="flex items-center justify-center gap-2">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        Habits
+                                    </span>
+                                </button>
+                            </nav>
+                        </div>
+
                         <!-- Content -->
                         <div class="px-6 py-4 max-h-96 overflow-y-auto bg-white dark:bg-gray-800">
-                            <div x-html="content"></div>
+                            <div x-show="activeTab === 'challenges'" x-html="challengesContent"></div>
+                            <div x-show="activeTab === 'habits'" x-html="habitsContent" style="display: none;"></div>
                         </div>
                     </div>
                 </div>

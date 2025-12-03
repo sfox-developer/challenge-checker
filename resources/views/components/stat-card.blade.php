@@ -17,8 +17,8 @@
             <div class="text-xs md:text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
                 {{ $label }}
             </div>
-            <div class="text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100 dark:text-gray-100">
-                {{ $value }}
+            <div class="text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100">
+                {{ $value }}{{ $suffix ?? '' }}
             </div>
         </div>
     </div>

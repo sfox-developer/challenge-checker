@@ -142,20 +142,12 @@ class HabitController extends Controller
         $month = request('month', now()->month);
         $calendar = $this->habitService->getMonthlyCalendar($habit, $year, $month);
 
-        // Get recent completions with notes
-        $recentCompletions = $habit->completions()
-            ->whereNotNull('notes')
-            ->latest('date')
-            ->limit(10)
-            ->get();
-
         // Calculate monthly stats
         $monthlyStats = $this->getMonthlyStats($habit, $year, $month);
 
         return view('habits.show', compact(
             'habit',
             'calendar',
-            'recentCompletions',
             'monthlyStats',
             'year',
             'month'
@@ -237,6 +229,22 @@ class HabitController extends Controller
     }
 
     /**
+     * Get today's habits for quick completion.
+     */
+    public function quickHabits(): View
+    {
+        $user = auth()->user();
+        
+        $todaysHabits = $user->habits()
+            ->active()
+            ->with(['goal', 'statistics'])
+            ->get()
+            ->filter(fn($habit) => $habit->isDueToday());
+
+        return view('partials.quick-habits', compact('todaysHabits'));
+    }
+
+    /**
      * Quick toggle completion (AJAX).
      */
     public function toggle(Request $request, Habit $habit): JsonResponse
@@ -259,6 +267,8 @@ class HabitController extends Controller
             'progress' => [
                 'text' => $habit->getProgressText(),
                 'percentage' => $habit->getProgressPercentage(),
+                'current' => $habit->getCompletionCountForPeriod(),
+                'target' => $habit->frequency_count,
             ],
         ]);
     }

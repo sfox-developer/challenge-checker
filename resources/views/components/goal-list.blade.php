@@ -45,10 +45,13 @@
                     <!-- Content -->
                     <div class="todo-content">
                         <div class="todo-title text-lg font-bold">
-                            {{ $goal->name }}
+                            @if($goal->icon)
+                                <span class="mr-2">{{ $goal->icon }}</span>
+                            @endif
+                            {{ $goal->current_name }}
                         </div>
-                        @if($goal->description)
-                            <div class="todo-description">{{ $goal->description }}</div>
+                        @if($goal->current_description)
+                            <div class="todo-description">{{ $goal->current_description }}</div>
                         @endif
                     </div>
                     
@@ -94,10 +97,13 @@
                             <!-- Content -->
                             <div class="todo-content">
                                 <div class="todo-title text-lg font-bold">
-                                    {{ $goal->name }}
+                                    @if($goal->icon)
+                                        <span class="mr-2">{{ $goal->icon }}</span>
+                                    @endif
+                                    {{ $goal->current_name }}
                                 </div>
-                                @if($goal->description)
-                                    <div class="todo-description">{{ $goal->description }}</div>
+                                @if($goal->current_description)
+                                    <div class="todo-description">{{ $goal->current_description }}</div>
                                 @endif
                             </div>
                             

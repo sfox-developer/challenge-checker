@@ -188,13 +188,15 @@ class HabitService
         $calendar = [];
         $currentDate = new \DateTime($startDate);
         $lastDate = new \DateTime($endDate);
+        $today = (new \DateTime())->format('Y-m-d');
 
         while ($currentDate <= $lastDate) {
             $dateKey = $currentDate->format('Y-m-d');
             $calendar[$dateKey] = [
                 'date' => $dateKey,
                 'day' => (int) $currentDate->format('d'),
-                'completed' => isset($completions[$dateKey]),
+                'is_completed' => isset($completions[$dateKey]),
+                'is_today' => $dateKey === $today,
                 'completion' => $completions[$dateKey] ?? null,
             ];
             $currentDate->modify('+1 day');

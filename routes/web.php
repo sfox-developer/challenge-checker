@@ -59,13 +59,15 @@ Route::middleware('auth')->group(function () {
     
     // Goal Library routes
     Route::get('/goals', [GoalLibraryController::class, 'index'])->name('goals.index');
+    Route::get('/goals/{goal}', [GoalLibraryController::class, 'show'])->name('goals.show');
     Route::post('/goals', [GoalLibraryController::class, 'store'])->name('goals.store');
     Route::put('/goals/{goal}', [GoalLibraryController::class, 'update'])->name('goals.update');
     Route::delete('/goals/{goal}', [GoalLibraryController::class, 'destroy'])->name('goals.destroy');
     Route::get('/api/goals/search', [GoalLibraryController::class, 'search'])->name('goals.search');
     
-    // API routes for quick goals
+    // API routes for quick goals and habits
     Route::get('/api/quick-goals', [QuickGoalsController::class, 'index']);
+    Route::get('/api/quick-habits', [HabitController::class, 'quickHabits']);
     
     // Admin routes
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');

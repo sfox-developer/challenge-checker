@@ -9,29 +9,55 @@
 
 /**
  * Quick Goals Modal
- * Displays active challenges for quick goal completion
+ * Displays active challenges and habits for quick completion
  */
 export function createQuickGoalsModal() {
     return {
         isOpen: false,
-        content: '<div class="text-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div><p class="mt-4 text-gray-600 dark:text-gray-400">Loading your active challenges...</p></div>',
+        activeTab: 'challenges',
+        challengesContent: '<div class="text-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div><p class="mt-4 text-gray-600 dark:text-gray-400">Loading challenges...</p></div>',
+        habitsContent: '',
+        challengesLoaded: false,
+        habitsLoaded: false,
         
         open() {
             this.isOpen = true;
-            this.loadChallenges();
+            if (!this.challengesLoaded) {
+                this.loadChallenges();
+            }
         },
         
         close() {
             this.isOpen = false;
         },
         
+        switchTab(tab) {
+            this.activeTab = tab;
+            if (tab === 'habits' && !this.habitsLoaded) {
+                this.loadHabits();
+            }
+        },
+        
         async loadChallenges() {
             try {
                 const response = await fetch('/api/quick-goals');
                 const html = await response.text();
-                this.content = html;
+                this.challengesContent = html;
+                this.challengesLoaded = true;
             } catch (error) {
-                this.content = '<div class="text-center py-8 text-red-600 dark:text-red-400">Error loading challenges. Please try again.</div>';
+                this.challengesContent = '<div class="text-center py-8 text-red-600 dark:text-red-400">Error loading challenges. Please try again.</div>';
+            }
+        },
+        
+        async loadHabits() {
+            this.habitsContent = '<div class="text-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto"></div><p class="mt-4 text-gray-600 dark:text-gray-400">Loading habits...</p></div>';
+            try {
+                const response = await fetch('/api/quick-habits');
+                const html = await response.text();
+                this.habitsContent = html;
+                this.habitsLoaded = true;
+            } catch (error) {
+                this.habitsContent = '<div class="text-center py-8 text-red-600 dark:text-red-400">Error loading habits. Please try again.</div>';
             }
         }
     }

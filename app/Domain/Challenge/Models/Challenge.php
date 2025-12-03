@@ -31,6 +31,10 @@ class Challenge extends Model
         'is_public' => 'boolean',
     ];
 
+    protected $appends = [
+        'end_date',
+    ];
+
     /**
      * Get the user that owns the challenge.
      */
@@ -135,6 +139,44 @@ class Challenge extends Model
     public function isCompleted(): bool
     {
         return $this->completed_at !== null;
+    }
+
+    /**
+     * Check if the challenge duration has expired.
+     */
+    public function hasExpired(): bool
+    {
+        if (!$this->started_at || $this->completed_at) {
+            return false;
+        }
+
+        $endDate = $this->started_at->copy()->addDays($this->days_duration);
+        return now()->greaterThan($endDate);
+    }
+
+    /**
+     * Get the calculated end date of the challenge.
+     */
+    public function getEndDateAttribute()
+    {
+        if (!$this->started_at) {
+            return null;
+        }
+
+        return $this->started_at->copy()->addDays($this->days_duration);
+    }
+
+    /**
+     * Auto-complete the challenge if duration has expired.
+     */
+    public function checkAndAutoComplete(): bool
+    {
+        if ($this->hasExpired() && !$this->completed_at) {
+            $this->complete();
+            return true;
+        }
+
+        return false;
     }
 
     /**

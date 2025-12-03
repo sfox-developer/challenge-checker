@@ -69,10 +69,10 @@
                     @foreach($goals as $goal)
                         <div class="card hover:shadow-lg transition-shadow duration-200" x-data="{ showMenu: false }">
                             <div class="flex items-start justify-between">
-                                <div class="flex items-start space-x-3 flex-1 min-w-0">
+                                <a href="{{ route('goals.show', $goal) }}" class="flex items-start space-x-3 flex-1 min-w-0">
                                     <div class="text-3xl">{{ $goal->icon ?? '🎯' }}</div>
                                     <div class="flex-1 min-w-0">
-                                        <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-1">
+                                        <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-1 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                                             {{ $goal->name }}
                                         </h3>
                                         
@@ -102,7 +102,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
+                                </a>
 
                                 <!-- Actions Menu -->
                                 <div class="relative ml-2" x-data="{ open: false }">
@@ -117,8 +117,17 @@
                                          @click.away="open = false"
                                          x-transition
                                          class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-10">
+                                        <a href="{{ route('goals.show', $goal) }}"
+                                           class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                                            </svg>
+                                            View Details
+                                        </a>
+                                        
                                         <button @click="$dispatch('open-modal', 'edit-goal-{{ $goal->id }}'); open = false"
-                                                class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-t-lg">
+                                                class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
                                             <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
                                                 <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
                                             </svg>

@@ -345,11 +345,285 @@ class GoalToggleManager {
 const goalToggleManager = new GoalToggleManager();
 
 // Global functions for onclick handlers (attached to window for global access)
-window.toggleGoalInstant = function(goalId) {
-    goalToggleManager.toggleGoal(goalId);
+// Quick function for simple goal toggling in FAB
+window.toggleGoalInstant = async function(goalId) {
+    try {
+        const goalCard = document.querySelector(`[data-goal-id="${goalId}"]`);
+        if (!goalCard) return;
+        
+        const button = goalCard.querySelector('button[onclick*="toggleGoalInstant"]');
+        const checkbox = button?.querySelector('div');
+        if (!checkbox) return;
+        
+        // Get current state
+        const isCompleted = checkbox.classList.contains('bg-teal-500');
+        
+        // Optimistic UI update
+        if (isCompleted) {
+            // Mark as incomplete
+            checkbox.classList.remove('bg-teal-500', 'border-teal-500');
+            checkbox.classList.add('border-gray-300', 'dark:border-gray-500');
+            checkbox.innerHTML = '';
+            goalCard.classList.remove('bg-teal-50', 'dark:bg-teal-900/20', 'border-teal-500');
+            goalCard.classList.add('bg-white', 'dark:bg-gray-700', 'border-gray-200', 'dark:border-gray-600');
+            
+            // Update title
+            const title = goalCard.querySelector('h5');
+            if (title) {
+                title.classList.remove('line-through', 'opacity-75');
+            }
+            
+            // Remove done badge
+            const doneBadge = goalCard.querySelector('.flex-shrink-0.text-xs');
+            if (doneBadge && doneBadge.textContent.includes('Done')) {
+                doneBadge.remove();
+            }
+        } else {
+            // Mark as complete
+            checkbox.classList.add('bg-teal-500', 'border-teal-500');
+            checkbox.classList.remove('border-gray-300', 'dark:border-gray-500', 'hover:border-blue-500');
+            checkbox.innerHTML = '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>';
+            goalCard.classList.add('bg-teal-50', 'dark:bg-teal-900/20', 'border-teal-500');
+            goalCard.classList.remove('bg-white', 'dark:bg-gray-700', 'border-gray-200', 'dark:border-gray-600', 'hover:border-blue-300', 'dark:hover:border-blue-700');
+            
+            // Update title
+            const title = goalCard.querySelector('h5');
+            if (title) {
+                title.classList.add('line-through', 'opacity-75');
+            }
+            
+            // Update description styling
+            const description = goalCard.querySelector('p.text-sm');
+            if (description) {
+                description.classList.add('line-through', 'opacity-75', 'text-gray-500', 'dark:text-gray-500');
+                description.classList.remove('text-gray-600', 'dark:text-gray-400');
+            }
+            
+            // Add done badge
+            const content = goalCard.querySelector('.flex-1.min-w-0');
+            if (content && !goalCard.querySelector('.flex-shrink-0.text-xs')) {
+                const badge = document.createElement('span');
+                badge.className = 'flex-shrink-0 text-xs font-semibold text-teal-600 dark:text-teal-400';
+                badge.textContent = '✓ Done';
+                content.parentElement.appendChild(badge);
+            }
+        }
+        
+        // Update progress (find by challenge container)
+        const challengeContainer = goalCard.closest('[data-challenge-id]');
+        if (challengeContainer) {
+            updateChallengeProgress(challengeContainer, isCompleted ? -1 : 1);
+        }
+        
+        // Make API call
+        const response = await fetch(`/goals/${goalId}/toggle`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (!data.success) {
+            // Revert on failure
+            if (!isCompleted) {
+                checkbox.classList.remove('bg-teal-500', 'border-teal-500');
+                checkbox.classList.add('border-gray-300', 'dark:border-gray-500');
+                checkbox.innerHTML = '';
+                goalCard.classList.remove('bg-teal-50', 'dark:bg-teal-900/20', 'border-teal-500');
+                goalCard.classList.add('bg-white', 'dark:bg-gray-700', 'border-gray-200', 'dark:border-gray-600');
+                
+                const title = goalCard.querySelector('h5');
+                if (title) title.classList.remove('line-through', 'opacity-75');
+                
+                const description = goalCard.querySelector('p.text-sm');
+                if (description) {
+                    description.classList.remove('line-through', 'opacity-75', 'text-gray-500', 'dark:text-gray-500');
+                    description.classList.add('text-gray-600', 'dark:text-gray-400');
+                }
+                
+                if (challengeContainer) {
+                    updateChallengeProgress(challengeContainer, -1);
+                }
+            } else {
+                checkbox.classList.add('bg-teal-500', 'border-teal-500');
+                checkbox.classList.remove('border-gray-300', 'dark:border-gray-500');
+                checkbox.innerHTML = '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>';
+                goalCard.classList.add('bg-teal-50', 'dark:bg-teal-900/20', 'border-teal-500');
+                goalCard.classList.remove('bg-white', 'dark:bg-gray-700', 'border-gray-200', 'dark:border-gray-600');
+                
+                const title = goalCard.querySelector('h5');
+                if (title) title.classList.add('line-through', 'opacity-75');
+                
+                if (challengeContainer) {
+                    updateChallengeProgress(challengeContainer, 1);
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Goal toggle error:', error);
+    }
 };
+
+// Helper function to update challenge progress
+function updateChallengeProgress(container, change) {
+    const progressText = container.querySelector('[data-progress-text]');
+    const progressBar = container.querySelector('[data-progress-bar]');
+    const progressHeader = container.querySelector('.rounded-lg.p-4.border-2');
+    
+    if (!progressText) return;
+    
+    // Parse current progress
+    const match = progressText.textContent.match(/(\d+)\/(\d+)/);
+    if (!match) return;
+    
+    const completed = parseInt(match[1]) + change;
+    const total = parseInt(match[2]);
+    const percentage = Math.round((completed / total) * 100);
+    const allCompleted = completed === total;
+    
+    // Update text
+    progressText.textContent = `${completed}/${total} completed`;
+    
+    // Update progress bar
+    if (progressBar) {
+        progressBar.style.width = `${percentage}%`;
+        
+        // Change color when all completed
+        if (allCompleted) {
+            progressBar.className = 'bg-teal-500 h-1.5 rounded-full transition-all duration-300';
+            progressText.classList.remove('text-blue-600', 'dark:text-blue-400');
+            progressText.classList.add('text-teal-600', 'dark:text-teal-400');
+            
+            // Update header border and icon
+            if (progressHeader) {
+                progressHeader.classList.remove('border-blue-200', 'dark:border-blue-800', 'bg-gradient-to-r', 'from-blue-50', 'to-purple-50', 'dark:from-blue-900/20', 'dark:to-purple-900/20');
+                progressHeader.classList.add('border-teal-500', 'bg-teal-50', 'dark:bg-teal-900/20');
+                
+                const icon = progressHeader.querySelector('svg');
+                if (icon) {
+                    icon.classList.remove('text-blue-500');
+                    icon.classList.add('text-teal-500');
+                }
+                
+                // Show celebration message
+                let celebration = progressHeader.querySelector('.mt-2');
+                if (!celebration) {
+                    celebration = document.createElement('div');
+                    celebration.className = 'mt-2 flex items-center gap-2 text-sm font-medium text-teal-600 dark:text-teal-400';
+                    celebration.innerHTML = `
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        Perfect! All goals completed! 🎉
+                    `;
+                    progressHeader.appendChild(celebration);
+                }
+            }
+        } else {
+            progressBar.className = 'bg-teal-500 h-1.5 rounded-full transition-all duration-300';
+            progressText.classList.remove('text-teal-600', 'dark:text-teal-400');
+            progressText.classList.add('text-blue-600', 'dark:text-blue-400');
+            
+            // Update header border and icon
+            if (progressHeader) {
+                progressHeader.classList.remove('border-teal-500', 'bg-teal-50', 'dark:bg-teal-900/20');
+                progressHeader.classList.add('border-blue-200', 'dark:border-blue-800', 'bg-gradient-to-r', 'from-blue-50', 'to-purple-50', 'dark:from-blue-900/20', 'dark:to-purple-900/20');
+                
+                const icon = progressHeader.querySelector('svg');
+                if (icon) {
+                    icon.classList.remove('text-teal-500');
+                    icon.classList.add('text-blue-500');
+                }
+                
+                // Remove celebration message
+                const celebration = progressHeader.querySelector('.mt-2');
+                if (celebration) {
+                    celebration.remove();
+                }
+            }
+        }
+    }
+}
 
 // Legacy support
 window.toggleGoal = function(goalId) {
-    goalToggleManager.toggleGoal(goalId);
+    toggleGoalInstant(goalId);
+};
+
+// Habit Toggle Function
+window.toggleHabit = async function(habitId, date, buttonElement) {
+    try {
+        const habitCard = document.querySelector(`[data-habit-id="${habitId}"]`);
+        if (!habitCard) return;
+        
+        const checkbox = buttonElement.querySelector('div');
+        const progressContainer = habitCard.querySelector('[data-progress-container]');
+        const progressBar = habitCard.querySelector('[data-progress-bar]');
+        const progressText = habitCard.querySelector('[data-progress-text]');
+        
+        // Optimistic UI update
+        const isCompleted = checkbox.classList.contains('bg-teal-500');
+        
+        if (isCompleted) {
+            checkbox.classList.remove('bg-teal-500', 'border-teal-500');
+            checkbox.classList.add('border-gray-300', 'dark:border-gray-500');
+            checkbox.innerHTML = '';
+            habitCard.classList.remove('bg-teal-50', 'dark:bg-teal-900/20', 'border-teal-500');
+            habitCard.classList.add('bg-white', 'dark:bg-gray-700', 'border-gray-200', 'dark:border-gray-600');
+        } else {
+            checkbox.classList.add('bg-teal-500', 'border-teal-500');
+            checkbox.classList.remove('border-gray-300', 'dark:border-gray-500');
+            checkbox.innerHTML = '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>';
+            habitCard.classList.add('bg-teal-50', 'dark:bg-teal-900/20', 'border-teal-500');
+            habitCard.classList.remove('bg-white', 'dark:bg-gray-700', 'border-gray-200', 'dark:border-gray-600');
+        }
+        
+        // Make API call
+        const response = await fetch(`/habits/${habitId}/toggle`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ date })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Update progress bar and text if they exist
+            if (progressBar && progressText && data.progress) {
+                const progressPercentage = Math.min(100, (data.progress.current / data.progress.target) * 100);
+                progressBar.style.width = `${progressPercentage}%`;
+                progressText.textContent = `${data.progress.current}/${data.progress.target}`;
+                
+                // Add success color if target reached
+                if (data.progress.current >= data.progress.target) {
+                    progressText.classList.add('text-teal-600', 'dark:text-teal-400');
+                } else {
+                    progressText.classList.remove('text-teal-600', 'dark:text-teal-400');
+                }
+            }
+        } else {
+            // Revert on failure
+            if (!isCompleted) {
+                checkbox.classList.remove('bg-teal-500', 'border-teal-500');
+                checkbox.classList.add('border-gray-300', 'dark:border-gray-500');
+                checkbox.innerHTML = '';
+                habitCard.classList.remove('bg-teal-50', 'dark:bg-teal-900/20', 'border-teal-500');
+                habitCard.classList.add('bg-white', 'dark:bg-gray-700', 'border-gray-200', 'dark:border-gray-600');
+            } else {
+                checkbox.classList.add('bg-teal-500', 'border-teal-500');
+                checkbox.classList.remove('border-gray-300', 'dark:border-gray-500');
+                checkbox.innerHTML = '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>';
+                habitCard.classList.add('bg-teal-50', 'dark:bg-teal-900/20', 'border-teal-500');
+                habitCard.classList.remove('bg-white', 'dark:bg-gray-700', 'border-gray-200', 'dark:border-gray-600');
+            }
+        }
+    } catch (error) {
+        console.error('Habit toggle error:', error);
+    }
 };

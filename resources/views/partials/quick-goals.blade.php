@@ -3,12 +3,9 @@
         @foreach($activeChallenges as $challenge)
             <div>
                 <h4 class="font-bold text-lg text-gray-800 dark:text-gray-100 mb-3 px-2">{{ $challenge->name }}</h4>
-                <x-goal-list 
+                <x-goals-tracker 
                     :challenge="$challenge" 
-                    :goals="$challenge->goals" 
-                    :compact="true" 
-                    :show-todays-goals="true"
-                    :is-owner="true" />
+                    :goals="$challenge->goals" />
             </div>
         @endforeach
     </div>

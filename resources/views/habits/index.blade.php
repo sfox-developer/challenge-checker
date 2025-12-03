@@ -1,6 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-header title="My Habits" gradient="from-teal-500 to-cyan-500">
+        <x-page-header 
+            title="Habits" 
+            gradient="from-green-500 to-green-500">
             <x-slot name="icon">
                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
@@ -104,170 +106,64 @@
                     </div>
                 </div>
             @else
-                @foreach($groupedHabits as $frequency => $frequencyHabits)
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
-                        <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $frequency }} Habits</h3>
-                        </div>
-                        
-                        <div class="divide-y divide-gray-200 dark:divide-gray-700">
-                            @foreach($frequencyHabits as $habit)
-                                <div class="p-6 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors" x-data="{ showNotes: false }">
-                                    <div class="flex items-start justify-between">
-                                        <div class="flex items-start space-x-4 flex-1">
-                                            <!-- Toggle Checkbox -->
-                                            <div class="flex-shrink-0 pt-1">
-                                                <input 
-                                                    type="checkbox" 
-                                                    @if($habit->isCompletedToday()) checked @endif
-                                                    class="w-5 h-5 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                                                    x-on:change="toggleHabit({{ $habit->id }})"
-                                                >
-                                            </div>
-                                            
-                                            <!-- Habit Info -->
-                                            <div class="flex-1 min-w-0">
-                                                <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                                                    <a href="{{ route('habits.show', $habit) }}" class="hover:text-teal-600 dark:hover:text-teal-400">
-                                                        {{ $habit->goal_name }}
-                                                    </a>
-                                                </h4>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                                                    {{ $habit->getFrequencyDescription() }}
-                                                </p>
-                                                
-                                                <!-- Progress Bar for non-daily habits -->
-                                                @if($habit->frequency_type->value !== 'daily')
-                                                    <div class="mt-2">
-                                                        <div class="flex items-center justify-between text-sm mb-1">
-                                                            <span class="text-gray-600 dark:text-gray-400">{{ $habit->getProgressText() }}</span>
-                                                            <span class="text-gray-600 dark:text-gray-400">{{ $habit->getProgressPercentage() }}%</span>
-                                                        </div>
-                                                        <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
-                                                            <div class="bg-teal-500 h-2 rounded-full transition-all" style="width: {{ $habit->getProgressPercentage() }}%"></div>
-                                                        </div>
-                                                    </div>
-                                                @endif
-
-                                                <!-- Statistics -->
-                                                @if($habit->statistics)
-                                                    <div class="flex items-center space-x-4 mt-3 text-sm">
-                                                        @if($habit->statistics->current_streak > 0)
-                                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200">
-                                                                🔥 {{ $habit->statistics->current_streak }} day streak
-                                                            </span>
-                                                        @endif
-                                                        <span class="text-gray-500 dark:text-gray-400">
-                                                            {{ $habit->statistics->total_completions }} total completions
-                                                        </span>
-                                                    </div>
-                                                @endif
-                                            </div>
-
-                                            <!-- Actions -->
-                                            <div class="flex items-center space-x-2">
-                                                <button 
-                                                    @click="showNotes = !showNotes"
-                                                    class="p-2 text-gray-400 hover:text-teal-600 dark:hover:text-teal-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                                                    title="Add notes">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                                                    </svg>
-                                                </button>
-                                                
-                                                <a href="{{ route('habits.show', $habit) }}" 
-                                                   class="p-2 text-gray-400 hover:text-teal-600 dark:hover:text-teal-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                                                   title="View details">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </div>
+                <div class="space-y-3">
+                    @foreach($habits as $habit)
+                        <a href="{{ route('habits.show', $habit) }}" class="block bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-5 hover:border-teal-300 dark:hover:border-teal-600 transition-all duration-200 group">
+                            <div class="flex items-center gap-4">
+                                <!-- Icon -->
+                                <div class="flex-shrink-0 w-12 h-12 bg-teal-500 rounded-lg flex items-center justify-center text-white text-2xl">
+                                    {{ $habit->goal->icon ?? '✓' }}
+                                </div>
+                                
+                                <!-- Content -->
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-start justify-between gap-3 mb-2">
+                                        <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
+                                            {{ $habit->goal_name }}
+                                        </h4>
+                                        
+                                        <!-- Status Badge -->
+                                        @if($habit->isCompletedToday())
+                                            <span class="flex-shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200">
+                                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                                </svg>
+                                                Done
+                                            </span>
+                                        @endif
                                     </div>
-
-                                    <!-- Notes Form (collapsible) -->
-                                    <div x-show="showNotes" x-transition class="mt-4 pl-9">
-                                        <form @submit.prevent="completeWithNotes({{ $habit->id }})" class="space-y-3">
-                                            <div>
-                                                <textarea 
-                                                    name="notes" 
-                                                    rows="2" 
-                                                    class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 focus:ring-teal-500 focus:border-teal-500"
-                                                    placeholder="Add notes about this completion..."></textarea>
-                                            </div>
-                                            <div class="flex items-center space-x-4">
-                                                <input 
-                                                    type="number" 
-                                                    name="duration_minutes" 
-                                                    placeholder="Duration (min)" 
-                                                    class="w-32 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 focus:ring-teal-500 focus:border-teal-500"
-                                                >
-                                                <select 
-                                                    name="mood" 
-                                                    class="rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 focus:ring-teal-500 focus:border-teal-500">
-                                                    <option value="">How did it feel?</option>
-                                                    <option value="great">🤩 Great</option>
-                                                    <option value="good">😊 Good</option>
-                                                    <option value="neutral">😐 Neutral</option>
-                                                    <option value="tired">😫 Tired</option>
-                                                    <option value="struggling">😣 Struggling</option>
-                                                </select>
-                                                <button type="submit" class="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
-                                                    Save
-                                                </button>
-                                            </div>
-                                        </form>
+                                    
+                                    <!-- Frequency -->
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                                        {{ $habit->getFrequencyDescription() }}
+                                    </p>
+                                    
+                                    <!-- Stats Row -->
+                                    <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+                                        @if($habit->statistics && $habit->statistics->current_streak > 0)
+                                            <span class="flex items-center gap-1 font-medium">
+                                                🔥 {{ $habit->statistics->current_streak }} streak
+                                            </span>
+                                        @endif
+                                        @if($habit->statistics)
+                                            <span>{{ $habit->statistics->total_completions }} completions</span>
+                                        @endif
                                     </div>
                                 </div>
-                            @endforeach
-                        </div>
-                    </div>
-                @endforeach
+                                
+                                <!-- Arrow -->
+                                <div class="flex-shrink-0">
+                                    <svg class="w-5 h-5 text-gray-400 group-hover:text-teal-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
             @endif
         </div>
     </div>
 
-    @push('scripts')
-    <script>
-        function toggleHabit(habitId) {
-            fetch(`/habits/${habitId}/toggle`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Accept': 'application/json',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Optionally reload or update UI
-                    window.location.reload();
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        }
 
-        function completeWithNotes(habitId) {
-            const form = event.target;
-            const formData = new FormData(form);
-            
-            fetch(`/habits/${habitId}/complete`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify(Object.fromEntries(formData)),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.reload();
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        }
-    </script>
-    @endpush
 </x-app-layout>

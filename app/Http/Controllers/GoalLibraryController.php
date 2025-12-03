@@ -42,6 +42,110 @@ class GoalLibraryController extends Controller
     }
 
     /**
+     * Display the specified goal.
+     */
+    public function show(GoalLibrary $goal): View
+    {
+        $this->authorize('view', $goal);
+
+        // Load relationships with counts and eager loading
+        $goal->load([
+            'challengeGoals.challenge' => function ($query) {
+                $query->with('dailyProgress');
+            },
+            'habits.completions',
+            'habits.statistics'
+        ]);
+
+        // Get challenges using this goal
+        $challenges = $goal->challengeGoals
+            ->map(fn($challengeGoal) => $challengeGoal->challenge)
+            ->filter()
+            ->unique('id')
+            ->sortByDesc('created_at');
+
+        // Get habits using this goal
+        $habits = $goal->habits->sortByDesc('created_at');
+
+        // Calculate statistics
+        $stats = [
+            'total_completions' => $this->getTotalCompletions($goal),
+            'success_rate' => $this->getSuccessRate($challenges),
+            'first_used' => $this->getFirstUsed($goal),
+            'last_active' => $this->getLastActive($goal),
+            'active_challenges' => $challenges->where('status', 'active')->count(),
+            'active_habits' => $habits->where('is_archived', false)->count(),
+        ];
+
+        return view('goals.show', compact('goal', 'challenges', 'habits', 'stats'));
+    }
+
+    /**
+     * Get total completions across all challenges and habits.
+     */
+    private function getTotalCompletions(GoalLibrary $goal): int
+    {
+        $challengeCompletions = $goal->challengeGoals->sum(function ($challengeGoal) {
+            return $challengeGoal->is_completed ? 1 : 0;
+        });
+
+        $habitCompletions = $goal->habits->sum(function ($habit) {
+            return $habit->completions->count();
+        });
+
+        return $challengeCompletions + $habitCompletions;
+    }
+
+    /**
+     * Get average success rate across active challenges.
+     */
+    private function getSuccessRate($challenges): float
+    {
+        $activeChallenges = $challenges->where('status', 'active');
+        
+        if ($activeChallenges->isEmpty()) {
+            return 0;
+        }
+
+        $totalProgress = $activeChallenges->sum(function ($challenge) {
+            return $challenge->getProgressPercentage();
+        });
+
+        return round($totalProgress / $activeChallenges->count(), 1);
+    }
+
+    /**
+     * Get first usage date.
+     */
+    private function getFirstUsed(GoalLibrary $goal): ?string
+    {
+        $firstChallenge = $goal->challengeGoals->min('created_at');
+        $firstHabit = $goal->habits->min('created_at');
+
+        $dates = array_filter([$firstChallenge, $firstHabit]);
+        
+        return $dates ? min($dates) : null;
+    }
+
+    /**
+     * Get last activity date.
+     */
+    private function getLastActive(GoalLibrary $goal): ?string
+    {
+        $lastChallengeActivity = $goal->challengeGoals
+            ->flatMap(fn($cg) => $cg->challenge?->dailyProgress ?? [])
+            ->max('date');
+
+        $lastHabitActivity = $goal->habits
+            ->flatMap(fn($h) => $h->completions)
+            ->max('completed_at');
+
+        $dates = array_filter([$lastChallengeActivity, $lastHabitActivity]);
+        
+        return $dates ? max($dates) : null;
+    }
+
+    /**
      * Store a newly created goal in storage.
      */
     public function store(Request $request): RedirectResponse

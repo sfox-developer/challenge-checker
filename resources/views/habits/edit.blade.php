@@ -174,7 +174,7 @@
                                 <label class="cursor-pointer">
                                     <input type="checkbox" name="weekly_days[]" :value="index + 1" 
                                            class="sr-only peer"
-                                           {{ in_array($loop->iteration, $selectedDays) ? 'checked' : '' }}>
+                                           :checked="[{{ implode(',', $selectedDays) }}].includes(index + 1)">
                                     <div class="aspect-square flex items-center justify-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-blue-500 peer-checked:bg-blue-500 peer-checked:text-white font-semibold text-xs transition-all duration-200" x-text="day"></div>
                                 </label>
                             </template>
@@ -210,38 +210,6 @@
                         <a href="{{ route('habits.show', $habit) }}" class="btn-secondary">
                             Cancel
                         </a>
-                    </div>
-
-                    <!-- Danger Zone -->
-                    <div class="mt-6 pt-6 border-t border-red-200 dark:border-red-900">
-                        <h4 class="text-sm font-bold text-red-600 dark:text-red-400 mb-3">Danger Zone</h4>
-                        <div class="flex items-center justify-between">
-                            @if($habit->archived_at)
-                                <div>
-                                    <div class="font-semibold text-gray-900 dark:text-white">Restore Habit</div>
-                                    <div class="text-sm text-gray-600 dark:text-gray-400">Unarchive and resume tracking</div>
-                                </div>
-                                <form action="{{ route('habits.restore', $habit) }}" method="POST" class="inline">
-                                    @csrf
-                                    <button type="submit" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors">
-                                        Restore
-                                    </button>
-                                </form>
-                            @else
-                                <div>
-                                    <div class="font-semibold text-gray-900 dark:text-white">Archive Habit</div>
-                                    <div class="text-sm text-gray-600 dark:text-gray-400">Stop tracking but keep all data</div>
-                                </div>
-                                <form action="{{ route('habits.archive', $habit) }}" method="POST" 
-                                      class="inline"
-                                      onsubmit="return confirm('Archive this habit? You can restore it later.')">
-                                    @csrf
-                                    <button type="submit" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white font-medium rounded-lg transition-colors">
-                                        Archive
-                                    </button>
-                                </form>
-                            @endif
-                        </div>
                     </div>
                 </form>
             </div>

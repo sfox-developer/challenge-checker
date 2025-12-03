@@ -23,6 +23,19 @@ enum FrequencyType: string
     }
 
     /**
+     * Get period label (e.g., "days", "weeks").
+     */
+    public function periodLabel(): string
+    {
+        return match($this) {
+            self::DAILY => 'days',
+            self::WEEKLY => 'weeks',
+            self::MONTHLY => 'months',
+            self::YEARLY => 'years',
+        };
+    }
+
+    /**
      * Get the period description with count.
      */
     public function description(int $count = 1): string

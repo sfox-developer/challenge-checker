@@ -179,7 +179,7 @@ class Activity extends Model
             self::TYPE_CHALLENGE_COMPLETED => 'text-yellow-800 dark:text-yellow-400 ',
             self::TYPE_CHALLENGE_PAUSED => 'text-orange-800 dark:text-orange-400 ',
             self::TYPE_CHALLENGE_RESUMED => 'text-indigo-800 dark:text-indigo-400 ',
-            self::TYPE_HABIT_COMPLETED => 'text-emerald-800 dark:text-emerald-400 ',
+            self::TYPE_HABIT_COMPLETED => 'text-green-600 dark:text-green-400 ',
             self::TYPE_HABIT_STREAK => 'text-red-600 dark:text-red-400 ',
             self::TYPE_HABIT_CREATED => 'text-teal-800 dark:text-teal-400 ',
             default => 'text-gray-800 dark:text-gray-300 ',

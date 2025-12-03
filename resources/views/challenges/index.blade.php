@@ -74,43 +74,25 @@
     </div>
 
             <!-- Filter Tabs -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 mb-6">
-                <div class="flex flex-wrap gap-2">
-                    <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
-                        </svg>
-                        <span>All</span>
-                        <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">{{ $totalChallenges }}</span>
-                    </button>
-                    <button @click="activeFilter = 'active'" :class="activeFilter === 'active' ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white shadow-md' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span>Active</span>
-                        <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">{{ $activeChallenges }}</span>
-                    </button>
-                    <button @click="activeFilter = 'paused'" :class="activeFilter === 'paused' ? 'bg-gradient-to-r from-purple-400 to-indigo-500 text-white shadow-md' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span>Paused</span>
-                        <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">{{ $challenges->where('started_at', '!=', null)->where('completed_at', null)->where('is_active', false)->count() }}</span>
-                    </button>
-                    <button @click="activeFilter = 'completed'" :class="activeFilter === 'completed' ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span>Completed</span>
-                        <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">{{ $challenges->where('completed_at', '!=', null)->count() }}</span>
-                    </button>
-                    <button @click="activeFilter = 'draft'" :class="activeFilter === 'draft' ? 'bg-gradient-to-r from-gray-500 to-gray-600 text-white shadow-md' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'" class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span>Draft</span>
-                        <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">{{ $challenges->where('started_at', null)->count() }}</span>
-                    </button>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                <div class="border-b border-gray-200 dark:border-gray-700">
+                    <nav class="-mb-px flex space-x-8 px-6" aria-label="Tabs">
+                        <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'border-purple-500 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            All
+                        </button>
+                        <button @click="activeFilter = 'active'" :class="activeFilter === 'active' ? 'border-purple-500 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Active
+                        </button>
+                        <button @click="activeFilter = 'paused'" :class="activeFilter === 'paused' ? 'border-purple-500 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Paused
+                        </button>
+                        <button @click="activeFilter = 'completed'" :class="activeFilter === 'completed' ? 'border-purple-500 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Completed
+                        </button>
+                        <button @click="activeFilter = 'draft'" :class="activeFilter === 'draft' ? 'border-purple-500 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Draft
+                        </button>
+                    </nav>
                 </div>
             </div>
 
@@ -140,19 +122,19 @@
                         <div class="flex flex-col sm:flex-row justify-between items-start mb-4 space-y-2 sm:space-y-0">
                             <h3 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-100 pr-2">{{ $challenge->name }}</h3>
                             @if($challenge->completed_at)
-                                <span class="px-3 py-1 text-xs sm:text-sm font-bold rounded-full shadow-md bg-gradient-to-r from-green-400 to-green-500 text-white whitespace-nowrap">
+                                <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200 whitespace-nowrap">
                                     ✓ Completed
                                 </span>
                             @elseif($challenge->started_at && $challenge->is_active)
-                                <span class="px-3 py-1 text-xs sm:text-sm font-bold rounded-full shadow-md bg-gradient-to-r from-yellow-400 to-orange-500 text-white whitespace-nowrap">
+                                <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 whitespace-nowrap">
                                     🏃 Active
                                 </span>
                             @elseif($challenge->started_at && !$challenge->is_active)
-                                <span class="px-3 py-1 text-xs sm:text-sm font-bold rounded-full shadow-md bg-gradient-to-r from-purple-400 to-indigo-500 text-white whitespace-nowrap">
+                                <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 whitespace-nowrap">
                                     ⏸️ Paused
                                 </span>
                             @else
-                                <span class="px-3 py-1 text-xs sm:text-sm font-bold rounded-full shadow-md bg-gradient-to-r from-gray-400 to-gray-500 text-white whitespace-nowrap">
+                                <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200 whitespace-nowrap">
                                     📝 Draft
                                 </span>
                             @endif
@@ -223,13 +205,13 @@
                                 </span>
                             </div>
                             @if($challenge->is_active && !$challenge->completed_at)
-                                <div class="bg-gradient-to-r from-blue-50 dark:from-blue-900/30 to-purple-50 dark:to-purple-900/30 rounded-lg p-3">
+                                <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
                                     <div class="flex justify-between text-sm mb-2">
-                                        <span class="text-gray-700 dark:text-gray-100 font-medium">Progress</span>
-                                        <span class="font-bold text-blue-600">{{ number_format($challenge->getProgressPercentage(), 1) }}%</span>
+                                        <span class="text-gray-700 dark:text-gray-400 font-medium">Progress</span>
+                                        <span class="font-semibold text-teal-600 dark:text-teal-400">{{ number_format($challenge->getProgressPercentage(), 1) }}%</span>
                                     </div>
-                                    <div class="w-full bg-gray-200 rounded-full h-3 shadow-inner">
-                                        <div class="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full shadow-sm transition-all duration-500" style="width: {{ $challenge->getProgressPercentage() }}%"></div>
+                                    <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-1.5">
+                                        <div class="bg-teal-500 h-1.5 rounded-full transition-all duration-300" style="width: {{ $challenge->getProgressPercentage() }}%"></div>
                                     </div>
                                 </div>
                             @endif
