@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Domain\Challenge\Models\Challenge;
 use App\Domain\Activity\Models\Activity;
 use App\Domain\Social\Models\UserFollow;
+use App\Domain\Habit\Models\Habit;
+use App\Domain\Goal\Models\GoalLibrary;
 
 class User extends Authenticatable
 {
@@ -61,6 +63,22 @@ class User extends Authenticatable
     public function challenges(): HasMany
     {
         return $this->hasMany(Challenge::class);
+    }
+
+    /**
+     * Get the habits for the user.
+     */
+    public function habits(): HasMany
+    {
+        return $this->hasMany(Habit::class);
+    }
+
+    /**
+     * Get the goal library for the user.
+     */
+    public function goalsLibrary(): HasMany
+    {
+        return $this->hasMany(GoalLibrary::class);
     }
 
     /**

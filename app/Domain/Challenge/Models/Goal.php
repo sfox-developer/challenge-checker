@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Domain\Goal\Models\GoalLibrary;
 
 class Goal extends Model
 {
@@ -13,6 +14,7 @@ class Goal extends Model
 
     protected $fillable = [
         'challenge_id',
+        'goal_library_id',
         'name',
         'description',
         'order',
@@ -24,6 +26,14 @@ class Goal extends Model
     public function challenge(): BelongsTo
     {
         return $this->belongsTo(Challenge::class);
+    }
+
+    /**
+     * Get the library goal this is based on.
+     */
+    public function library(): BelongsTo
+    {
+        return $this->belongsTo(GoalLibrary::class, 'goal_library_id');
     }
 
     /**
@@ -59,5 +69,29 @@ class Goal extends Model
         ], [
             'completed_at' => now(),
         ]);
+    }
+
+    /**
+     * Get the current name from the library if available, otherwise use stored name.
+     */
+    public function getCurrentNameAttribute(): string
+    {
+        return $this->library?->name ?? $this->name;
+    }
+
+    /**
+     * Get the current description from the library if available, otherwise use stored description.
+     */
+    public function getCurrentDescriptionAttribute(): ?string
+    {
+        return $this->library?->description ?? $this->description;
+    }
+
+    /**
+     * Get the icon from the library.
+     */
+    public function getIconAttribute(): ?string
+    {
+        return $this->library?->icon;
     }
 }

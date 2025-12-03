@@ -16,7 +16,7 @@
             </div>
             <div class="ml-4">
                 @if($challenge->completed_at)
-                    <span class="px-3 py-1 text-sm font-bold rounded-full shadow-md bg-gradient-to-r from-green-400 to-green-500 text-white">
+                    <span class="px-3 py-1 text-sm font-bold rounded-full shadow-md bg-green-500 text-white">
                         ✓ Completed
                     </span>
                 @elseif($challenge->started_at && $challenge->is_active)
@@ -71,11 +71,7 @@
 
         <!-- Goals List -->
         @if(!$challenge->completed_at)
-            <x-goal-list 
-                :challenge="$challenge" 
-                :goals="$challenge->goals" 
-                :compact="$compact" 
-                :show-todays-goals="$showTodaysGoals" />
+            <x-goals-info-list :goals="$challenge->goals" />
         @endif
         
         <!-- Actions -->

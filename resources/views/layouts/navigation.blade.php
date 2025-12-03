@@ -23,6 +23,9 @@
                     <x-nav-link :href="route('challenges.index')" :active="request()->routeIs('challenges.*')">
                         {{ __('My Challenges') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('habits.index')" :active="request()->routeIs('habits.*')">
+                        {{ __('My Habits') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('users.search')" :active="request()->routeIs('users.*')">
                         {{ __('Discover') }}
                     </x-nav-link>
@@ -83,6 +86,10 @@
                     <x-slot name="content">
                         <x-dropdown-link :href="route('users.show', Auth::user())">
                             {{ __('My Profile') }}
+                        </x-dropdown-link>
+                        
+                        <x-dropdown-link :href="route('goals.index')">
+                            {{ __('Goal Library') }}
                         </x-dropdown-link>
                         
                         <x-dropdown-link :href="route('profile.edit')">

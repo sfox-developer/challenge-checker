@@ -1,6 +1,6 @@
 <!-- Bottom Navigation -->
 <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50 sm:hidden">
-    <div class="grid grid-cols-4 h-16">
+    <div class="grid grid-cols-5 h-16">
         <!-- Feed -->
         <a href="{{ route('feed.index') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('feed.*') ? 'text-blue-600' : 'text-gray-600' }} hover:text-blue-600 transition-colors duration-200">
             <svg class="w-6 h-6" fill="{{ request()->routeIs('feed.*') ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24">
@@ -15,6 +15,14 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
             </svg>
             <span class="text-xs font-medium">Challenges</span>
+        </a>
+
+        <!-- Habits -->
+        <a href="{{ route('habits.index') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('habits.*') ? 'text-blue-600' : 'text-gray-600' }} hover:text-blue-600 transition-colors duration-200">
+            <svg class="w-6 h-6" fill="{{ request()->routeIs('habits.*') ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m0 5a1 1 0 102 0 1 1 0 00-2 0zm0 3a1 1 0 102 0 1 1 0 00-2 0zm0 3a1 1 0 102 0 1 1 0 00-2 0z"/>
+            </svg>
+            <span class="text-xs font-medium">Habits</span>
         </a>
 
         <!-- Active (Dashboard) -->

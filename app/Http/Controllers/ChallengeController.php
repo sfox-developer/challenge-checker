@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Domain\Challenge\Models\Challenge;
+use App\Domain\Goal\Models\GoalLibrary;
 use App\Domain\Activity\Services\ActivityService;
 use App\Http\Requests\StoreChallengeRequest;
 use App\Http\Requests\UpdateChallengeRequest;
@@ -25,6 +26,11 @@ class ChallengeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        // Check and auto-complete expired challenges
+        foreach ($challenges as $challenge) {
+            $challenge->checkAndAutoComplete();
+        }
+
         // Calculate statistics
         $totalChallenges = $challenges->count();
         $activeChallenges = $challenges->where('started_at', '!=', null)
@@ -40,7 +46,11 @@ class ChallengeController extends Controller
      */
     public function create(): View
     {
-        return view('challenges.create');
+        $goalsLibrary = auth()->user()->goalsLibrary()
+            ->orderBy('name')
+            ->get();
+
+        return view('challenges.create', compact('goalsLibrary'));
     }
 
     /**
@@ -55,13 +65,39 @@ class ChallengeController extends Controller
             'is_public' => $request->boolean('is_public'),
         ]);
 
-        // Create goals
-        if ($request->has('goals')) {
-            foreach ($request->goals as $index => $goalData) {
+        // Create goals from library or new goals
+        if ($request->has('goal_library_ids')) {
+            foreach ($request->goal_library_ids as $index => $goalLibraryId) {
+                $goalLibrary = GoalLibrary::find($goalLibraryId);
+                if ($goalLibrary) {
+                    $challenge->goals()->create([
+                        'goal_library_id' => $goalLibrary->id,
+                        'name' => $goalLibrary->name,
+                        'description' => $goalLibrary->description,
+                        'order' => $index + 1,
+                    ]);
+                }
+            }
+        }
+        
+        // Create new goals that will be added to library
+        if ($request->has('new_goals')) {
+            foreach ($request->new_goals as $index => $newGoalData) {
+                // Create in goal library first
+                $goalLibrary = GoalLibrary::create([
+                    'user_id' => auth()->id(),
+                    'name' => $newGoalData['name'],
+                    'description' => $newGoalData['description'] ?? null,
+                    'icon' => $newGoalData['icon'] ?? null,
+                    'category' => $newGoalData['category'] ?? null,
+                ]);
+                
+                // Then link to challenge
                 $challenge->goals()->create([
-                    'name' => $goalData['name'],
-                    'description' => $goalData['description'] ?? null,
-                    'order' => $index + 1,
+                    'goal_library_id' => $goalLibrary->id,
+                    'name' => $goalLibrary->name,
+                    'description' => $goalLibrary->description,
+                    'order' => count($request->goal_library_ids ?? []) + $index + 1,
                 ]);
             }
         }
@@ -76,6 +112,11 @@ class ChallengeController extends Controller
     public function show(Challenge $challenge): View
     {
         $this->authorize('view', $challenge);
+
+        // Check and auto-complete if expired
+        if ($challenge->checkAndAutoComplete()) {
+            $challenge->refresh();
+        }
 
         // Store current URL as potential back URL for edit
         session(['challenge_back_url' => url()->previous()]);

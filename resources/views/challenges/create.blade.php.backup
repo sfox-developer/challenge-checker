@@ -12,7 +12,7 @@
     <div class="py-8">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="card">
-                <form action="{{ route('challenges.store') }}" method="POST" id="challenge-form" x-data="challengeForm()">
+                <form action="{{ route('challenges.store') }}" method="POST" id="challenge-form">
                         @csrf
                         
                         <!-- Challenge Name -->
@@ -85,7 +85,7 @@
                         </div>
 
                         <!-- Public Checkbox -->
-                        <div class="mb-8">
+                        <div class="mb-6">
                             <div class="flex items-start">
                                 <div class="flex items-center h-5">
                                     <input type="checkbox" name="is_public" id="is_public" value="1" {{ old('is_public') ? 'checked' : '' }}
@@ -104,7 +104,7 @@
                         </div>
 
                         <!-- Goals Section -->
-                        <div class="mb-6">
+                        <div class="mb-8">
                             <div class="flex justify-between items-center mb-4">
                                 <label class="block text-sm font-bold text-gray-800 dark:text-gray-100 flex items-center space-x-2">
                                     <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
@@ -112,114 +112,27 @@
                                     </svg>
                                     <span>Goals</span>
                                 </label>
-                                <div class="flex space-x-2">
-                                    <a href="{{ route('goals.index') }}" class="text-sm text-purple-600 dark:text-purple-400 hover:underline flex items-center space-x-1">
+                                <x-app-button variant="success" size="sm" type="button" onclick="addGoal()">
+                                    <x-slot name="icon">
                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"/>
+                                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
                                         </svg>
-                                        <span>Manage Library</span>
-                                    </a>
-                                </div>
+                                    </x-slot>
+                                    Add Goal
+                                </x-app-button>
                             </div>
-
-                            <!-- Select from Library -->
-                            @if($goalsLibrary->count() > 0)
-                            <div class="mb-4 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                                <div class="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-3">Select from Your Library:</div>
-                                <div class="space-y-2 max-h-64 overflow-y-auto">
-                                    @foreach($goalsLibrary as $goal)
-                                        <label class="flex items-start p-3 bg-white dark:bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                            <input type="checkbox" 
-                                                   name="goal_library_ids[]" 
-                                                   value="{{ $goal->id }}"
-                                                   class="mt-1 rounded border-gray-300 text-purple-600 focus:ring-purple-500">
-                                            <div class="ml-3 flex-1">
-                                                <div class="flex items-center space-x-2">
-                                                    @if($goal->icon)
-                                                        <span class="text-xl">{{ $goal->icon }}</span>
-                                                    @endif
-                                                    <span class="font-semibold text-gray-900 dark:text-white">{{ $goal->name }}</span>
-                                                </div>
-                                                @if($goal->description)
-                                                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ $goal->description }}</p>
-                                                @endif
-                                            </div>
-                                        </label>
-                                    @endforeach
-                                </div>
+                            
+                            <div id="goals-container">
+                                <!-- Goals will be added dynamically -->
                             </div>
-                            @endif
-
-                            <!-- Add New Goals -->
-                            <div>
-                                <button type="button" 
-                                        @click="addNewGoal()"
-                                        class="w-full py-3 px-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-gray-600 dark:text-gray-400 hover:border-green-500 hover:text-green-600 dark:hover:text-green-400 transition-colors flex items-center justify-center space-x-2">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
-                                    </svg>
-                                    <span class="font-medium">Add New Goal (will be saved to library)</span>
-                                </button>
-                            </div>
-
-                            <!-- New Goals Container -->
-                            <div x-show="newGoals.length > 0" class="mt-4 space-y-3">
-                                <template x-for="(goal, index) in newGoals" :key="index">
-                                    <div class="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-2 border-green-200 dark:border-green-700">
-                                        <div class="flex justify-between items-start mb-3">
-                                            <div class="font-semibold text-gray-900 dark:text-white">New Goal</div>
-                                            <button type="button" 
-                                                    @click="removeNewGoal(index)"
-                                                    class="text-red-600 hover:text-red-700">
-                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <div class="space-y-3">
-                                            <input type="text" 
-                                                   :name="`new_goals[${index}][name]`"
-                                                   x-model="goal.name"
-                                                   class="app-input text-sm" 
-                                                   placeholder="Goal name"
-                                                   required>
-                                            <div class="grid grid-cols-2 gap-3">
-                                                <input type="text" 
-                                                       :name="`new_goals[${index}][icon]`"
-                                                       x-model="goal.icon"
-                                                       class="app-input text-sm" 
-                                                       placeholder="Icon (emoji)"
-                                                       maxlength="10">
-                                                <select :name="`new_goals[${index}][category]`" 
-                                                        x-model="goal.category"
-                                                        class="app-input text-sm">
-                                                    <option value="">Category</option>
-                                                    <option value="health">Health</option>
-                                                    <option value="fitness">Fitness</option>
-                                                    <option value="learning">Learning</option>
-                                                    <option value="productivity">Productivity</option>
-                                                    <option value="mindfulness">Mindfulness</option>
-                                                    <option value="social">Social</option>
-                                                    <option value="other">Other</option>
-                                                </select>
-                                            </div>
-                                            <textarea :name="`new_goals[${index}][description]`"
-                                                      x-model="goal.description"
-                                                      rows="2" 
-                                                      class="app-input text-sm" 
-                                                      placeholder="Description (optional)"></textarea>
-                                        </div>
-                                    </div>
-                                </template>
-                            </div>
-
-                            @error('goal_library_ids')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            
+                            @error('goals')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <!-- Submit Buttons -->
-                        <div class="flex justify-between space-x-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+                        <div class="flex justify-between space-x-4 pt-6 border-t border-gray-200">
                             <x-app-button variant="secondary" href="{{ route('challenges.index') }}">
                                 <x-slot name="icon">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -243,23 +156,91 @@
     </div>
 
     <script>
-        function challengeForm() {
-            return {
-                newGoals: [],
-                
-                addNewGoal() {
-                    this.newGoals.push({
-                        name: '',
-                        icon: '',
-                        category: '',
-                        description: ''
-                    });
-                },
-                
-                removeNewGoal(index) {
-                    this.newGoals.splice(index, 1);
-                }
-            }
+        let goalCount = 0;
+
+        function addGoal() {
+            const container = document.getElementById('goals-container');
+            const goalDiv = document.createElement('div');
+            goalDiv.className = 'goal-item mb-6 p-6 border-2 border-dashed border-gray-300 rounded-xl bg-gradient-to-br from-gray-50 to-white hover:border-blue-400 transition-all duration-200';
+            goalDiv.innerHTML = `
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="bg-gradient-to-r from-blue-500 to-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">
+                            ${goalCount + 1}
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-800">Goal ${goalCount + 1}</h4>
+                    </div>
+                    <button type="button" onclick="removeGoal(this)" class="btn-danger">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-sm">Remove</span>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Goal Name</span>
+                        </label>
+                        <input type="text" name="goals[${goalCount}][name]" 
+                               class="app-input" 
+                               placeholder="e.g., Exercise for 30 minutes" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Description</span>
+                            <span class="text-xs text-gray-500 font-normal">(Optional)</span>
+                        </label>
+                        <input type="text" name="goals[${goalCount}][description]" 
+                               class="app-input" 
+                               placeholder="Additional details about this goal">
+                    </div>
+                </div>
+            `;
+            container.appendChild(goalDiv);
+            goalCount++;
+            updateGoalNumbers();
         }
+
+        function removeGoal(button) {
+            button.closest('.goal-item').remove();
+            updateGoalNumbers();
+        }
+
+        function updateGoalNumbers() {
+            const goalItems = document.querySelectorAll('.goal-item');
+            goalItems.forEach((item, index) => {
+                const title = item.querySelector('h4');
+                title.textContent = `Goal ${index + 1}`;
+                
+                // Update input names to maintain proper indexing
+                const nameInput = item.querySelector('input[name*="[name]"]');
+                const descInput = item.querySelector('input[name*="[description]"]');
+                
+                nameInput.name = `goals[${index}][name]`;
+                descInput.name = `goals[${index}][description]`;
+            });
+        }
+
+        // Add initial goal on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            addGoal();
+        });
+
+        // Add validation before form submission
+        document.getElementById('challenge-form').addEventListener('submit', function(e) {
+            const goalItems = document.querySelectorAll('.goal-item');
+            if (goalItems.length === 0) {
+                e.preventDefault();
+                alert('Please add at least one goal to your challenge.');
+                return false;
+            }
+        });
     </script>
 </x-app-layout>
