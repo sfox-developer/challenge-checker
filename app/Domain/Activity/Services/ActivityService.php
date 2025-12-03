@@ -165,4 +165,25 @@ class ActivityService
 
         return true; // Liked
     }
+
+    /**
+     * Create a generic activity (for habits and other uses).
+     */
+    public function createActivity(
+        User $user,
+        string $type,
+        ?int $challengeId = null,
+        ?int $goalId = null,
+        ?int $habitId = null,
+        array $data = []
+    ): ?Activity {
+        return Activity::create([
+            'user_id' => $user->id,
+            'challenge_id' => $challengeId,
+            'goal_id' => $goalId,
+            'habit_id' => $habitId,
+            'type' => $type,
+            'data' => $data,
+        ]);
+    }
 }

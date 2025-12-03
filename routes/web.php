@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HabitController;
+use App\Http\Controllers\GoalLibraryController;
 use App\Http\Controllers\Api\QuickGoalsController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +48,21 @@ Route::middleware('auth')->group(function () {
     
     // Goal tracking routes
     Route::post('/goals/{goal}/toggle', [GoalController::class, 'toggle'])->name('goals.toggle');
+    
+    // Habit routes
+    Route::get('/habits/today', [HabitController::class, 'today'])->name('habits.today');
+    Route::resource('habits', HabitController::class);
+    Route::post('/habits/{habit}/toggle', [HabitController::class, 'toggle'])->name('habits.toggle');
+    Route::post('/habits/{habit}/complete', [HabitController::class, 'complete'])->name('habits.complete');
+    Route::post('/habits/{habit}/archive', [HabitController::class, 'archive'])->name('habits.archive');
+    Route::post('/habits/{habit}/restore', [HabitController::class, 'restore'])->name('habits.restore');
+    
+    // Goal Library routes
+    Route::get('/goals', [GoalLibraryController::class, 'index'])->name('goals.index');
+    Route::post('/goals', [GoalLibraryController::class, 'store'])->name('goals.store');
+    Route::put('/goals/{goal}', [GoalLibraryController::class, 'update'])->name('goals.update');
+    Route::delete('/goals/{goal}', [GoalLibraryController::class, 'destroy'])->name('goals.destroy');
+    Route::get('/api/goals/search', [GoalLibraryController::class, 'search'])->name('goals.search');
     
     // API routes for quick goals
     Route::get('/api/quick-goals', [QuickGoalsController::class, 'index']);

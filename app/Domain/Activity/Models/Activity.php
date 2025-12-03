@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Domain\User\Models\User;
 use App\Domain\Challenge\Models\Challenge;
 use App\Domain\Challenge\Models\Goal;
+use App\Domain\Habit\Models\Habit;
 
 class Activity extends Model
 {
@@ -18,6 +19,7 @@ class Activity extends Model
         'user_id',
         'challenge_id',
         'goal_id',
+        'habit_id',
         'type',
         'data',
     ];
@@ -34,6 +36,9 @@ class Activity extends Model
     const TYPE_CHALLENGE_COMPLETED = 'challenge_completed';
     const TYPE_CHALLENGE_PAUSED = 'challenge_paused';
     const TYPE_CHALLENGE_RESUMED = 'challenge_resumed';
+    const TYPE_HABIT_COMPLETED = 'habit_completed';
+    const TYPE_HABIT_STREAK = 'habit_streak';
+    const TYPE_HABIT_CREATED = 'habit_created';
 
     /**
      * Get the user that owns the activity.
@@ -57,6 +62,14 @@ class Activity extends Model
     public function goal(): BelongsTo
     {
         return $this->belongsTo(Goal::class);
+    }
+
+    /**
+     * Get the habit associated with the activity.
+     */
+    public function habit(): BelongsTo
+    {
+        return $this->belongsTo(Habit::class);
     }
 
     /**
@@ -119,6 +132,7 @@ class Activity extends Model
     {
         $challengeName = $this->challenge ? "<strong>{$this->challenge->name}</strong>" : "a challenge";
         $goalName = $this->goal ? "<strong>{$this->goal->name}</strong>" : "a goal";
+        $habitName = $this->habit ? "<strong>{$this->habit->goal_name}</strong>" : "a habit";
         
         return match($this->type) {
             self::TYPE_GOAL_COMPLETED => "completed the goal {$goalName} in {$challengeName}",
@@ -127,6 +141,9 @@ class Activity extends Model
             self::TYPE_CHALLENGE_COMPLETED => "successfully completed {$challengeName}! 🏆",
             self::TYPE_CHALLENGE_PAUSED => "paused {$challengeName}",
             self::TYPE_CHALLENGE_RESUMED => "resumed {$challengeName} - back on track!",
+            self::TYPE_HABIT_COMPLETED => "completed {$habitName}" . ($this->data['notes'] ?? false ? ": \"{$this->data['notes']}\"" : ""),
+            self::TYPE_HABIT_STREAK => "reached {$this->data['days']}-day streak for {$habitName}! 🔥",
+            self::TYPE_HABIT_CREATED => "started tracking {$habitName}",
             default => "performed an activity",
         };
     }
@@ -143,6 +160,9 @@ class Activity extends Model
             self::TYPE_CHALLENGE_COMPLETED => '🏆',
             self::TYPE_CHALLENGE_PAUSED => '⏸️',
             self::TYPE_CHALLENGE_RESUMED => '▶️',
+            self::TYPE_HABIT_COMPLETED => '✅',
+            self::TYPE_HABIT_STREAK => '🔥',
+            self::TYPE_HABIT_CREATED => '🌱',
             default => '📌',
         };
     }
@@ -159,6 +179,9 @@ class Activity extends Model
             self::TYPE_CHALLENGE_COMPLETED => 'text-yellow-800 dark:text-yellow-400 ',
             self::TYPE_CHALLENGE_PAUSED => 'text-orange-800 dark:text-orange-400 ',
             self::TYPE_CHALLENGE_RESUMED => 'text-indigo-800 dark:text-indigo-400 ',
+            self::TYPE_HABIT_COMPLETED => 'text-emerald-800 dark:text-emerald-400 ',
+            self::TYPE_HABIT_STREAK => 'text-red-600 dark:text-red-400 ',
+            self::TYPE_HABIT_CREATED => 'text-teal-800 dark:text-teal-400 ',
             default => 'text-gray-800 dark:text-gray-300 ',
         };
     }
