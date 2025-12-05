@@ -22,9 +22,13 @@ import { createThemeManager } from './theme.js';
 import { createActivityCard } from './activity.js';
 import { createQuickGoalsModal } from './modal.js';
 import { createGoalToggleManager } from './goals.js';
+import { createHabitForm, createHabitFormWithGoalToggle, createHabitEditForm } from './habit.js';
 
 // Register components globally for Alpine.js to access
 window.themeManager = createThemeManager;
 window.activityCard = createActivityCard;
 window.quickGoalsModal = createQuickGoalsModal;
 window.goalToggleManager = createGoalToggleManager;
+window.habitForm = createHabitForm;
+window.habitFormWithGoalToggle = createHabitFormWithGoalToggle;
+window.habitEditForm = createHabitEditForm;
