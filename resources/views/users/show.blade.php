@@ -72,78 +72,12 @@
                 </div>
             </div>
 
-            <!-- Tabs -->
-            <div x-data="{ activeTab: 'activity' }">
-                <!-- Tab Navigation -->
-                <div class="card card-no-padding mb-4">
-                    <nav class="flex -mb-px">
-                        <button @click="activeTab = 'activity'" 
-                                :class="activeTab === 'activity' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:text-gray-100 hover:border-gray-300 dark:border-gray-600'"
-                                class="w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors duration-150">
-                            Recent Activity
-                            <span class="ml-2 px-2 py-1 text-xs rounded-full" :class="activeTab === 'activity' ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600 dark:text-gray-400'">
-                                {{ $activities->total() }}
-                            </span>
-                        </button>
-                        <button @click="activeTab = 'challenges'" 
-                                :class="activeTab === 'challenges' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:text-gray-100 hover:border-gray-300 dark:border-gray-600'"
-                                class="w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors duration-150">
-                            Public Challenges
-                            <span class="ml-2 px-2 py-1 text-xs rounded-full" :class="activeTab === 'challenges' ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600 dark:text-gray-400'">
-                                {{ $publicChallenges->total() }}
-                            </span>
-                        </button>
-                    </nav>
-                </div>
-
-                <!-- Recent Activity Tab -->
-                <div x-show="activeTab === 'activity'" class="space-y-4">
-                    @forelse($activities as $activity)
-                        <x-activity-card :activity="$activity" />
-                    @empty
-                        <div class="p-12 text-center">
-                            <div class="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                                <svg class="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
-                                </svg>
-                            </div>
-                            <h3 class="text-lg font-medium text-gray-800 dark:text-gray-100 dark:text-gray-100 mb-2">No activities yet</h3>
-                            <p class="text-gray-600 dark:text-gray-400">{{ $user->name }} hasn't logged any activities yet.</p>
-                        </div>
-                    @endforelse
-
-                    <!-- Pagination -->
-                    @if($activities->hasPages())
-                        <div class="mt-6">
-                            {{ $activities->links('pagination::tailwind', ['pageName' => 'activities_page']) }}
-                        </div>
-                    @endif
-                </div>
-
-                <!-- Public Challenges Tab -->
-                <div x-show="activeTab === 'challenges'" class="space-y-4" style="display: none;">
-                    @forelse($publicChallenges as $challenge)
-                        <x-challenge-list-item :challenge="$challenge" />
-                    @empty
-                        <div class="p-12 text-center">
-                            <div class="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                                <svg class="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                                </svg>
-                            </div>
-                            <h3 class="text-lg font-medium text-gray-800 dark:text-gray-100 dark:text-gray-100 mb-2">No public challenges</h3>
-                            <p class="text-gray-600 dark:text-gray-400">{{ $user->name }} hasn't shared any public challenges yet.</p>
-                        </div>
-                    @endforelse
-
-                    <!-- Pagination -->
-                    @if($publicChallenges->hasPages())
-                        <div class="mt-6">
-                            {{ $publicChallenges->links('pagination::tailwind', ['pageName' => 'challenges_page']) }}
-                        </div>
-                    @endif
-                </div>
-            </div>
+            <!-- User Content Tabs -->
+            <x-user-content-tabs 
+                :user="$user" 
+                :challenges="$publicChallenges" 
+                :activities="$activities"
+                defaultTab="activity" />
         </div>
     </div>
 </x-app-layout>

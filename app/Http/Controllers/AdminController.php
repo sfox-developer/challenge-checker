@@ -42,10 +42,6 @@ class AdminController extends Controller
      */
     public function showUser(User $user): View
     {
-        $user->load(['challenges.goals.dailyProgress' => function ($query) {
-            $query->orderBy('date', 'desc');
-        }]);
-
         $user->loadCount([
             'followers', 
             'following', 
@@ -54,7 +50,19 @@ class AdminController extends Controller
             'activities'
         ]);
 
-        return view('admin.user-details', compact('user'));
+        // Get user's activities with pagination
+        $activities = $user->activities()
+            ->with(['user'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10, ['*'], 'activities_page');
+
+        // Get user's challenges with pagination
+        $challenges = $user->challenges()
+            ->with(['goals'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10, ['*'], 'challenges_page');
+
+        return view('admin.user-details', compact('user', 'activities', 'challenges'));
     }
 
     /**
