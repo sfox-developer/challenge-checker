@@ -21,10 +21,13 @@
                         {{ __('Feed') }}
                     </x-nav-link>
                     <x-nav-link :href="route('challenges.index')" :active="request()->routeIs('challenges.*')">
-                        {{ __('My Challenges') }}
+                        {{ __('Challenges') }}
                     </x-nav-link>
                     <x-nav-link :href="route('habits.index')" :active="request()->routeIs('habits.*')">
-                        {{ __('My Habits') }}
+                        {{ __('Habits') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('goals.index')" :active="request()->routeIs('goals.*')">
+                        {{ __('Goals') }}
                     </x-nav-link>
                     <x-nav-link :href="route('users.search')" :active="request()->routeIs('users.*')">
                         {{ __('Discover') }}
@@ -88,10 +91,6 @@
                             {{ __('My Profile') }}
                         </x-dropdown-link>
                         
-                        <x-dropdown-link :href="route('goals.index')">
-                            {{ __('Goal Library') }}
-                        </x-dropdown-link>
-                        
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Settings') }}
                         </x-dropdown-link>
@@ -152,12 +151,12 @@
         </div>
         @endif
 
-        <!-- Discover -->
-        <a href="{{ route('users.search') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('users.search') ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400' }} hover:text-blue-600 transition-colors duration-150">
+        <!-- My Habits -->
+        <a href="{{ route('habits.index') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('habits.*') ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400' }} hover:text-blue-600 transition-colors duration-150">
             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
             </svg>
-            <span class="text-xs font-medium">Discover</span>
+            <span class="text-xs font-medium">Habits</span>
         </a>
 
         <!-- Profile / Menu -->

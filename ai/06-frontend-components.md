@@ -25,6 +25,9 @@ resources/
 │   └── utils/
 │       └── ui.js                # Utility functions
 ├── views/
+│   ├── layouts/
+│   │   ├── navigation.blade.php # Main navigation (desktop & mobile)
+│   │   └── app.blade.php        # Main layout
 │   └── components/              # Blade components
 │       ├── activity-card.blade.php
 │       ├── challenge-card.blade.php
@@ -32,6 +35,64 @@ resources/
 │       └── ...
 └── scss/                        # Custom SCSS
 ```
+
+---
+
+## Navigation Structure
+
+### Desktop Navigation
+**File:** `resources/views/layouts/navigation.blade.php`
+
+**Primary Navigation Links:**
+- Feed - Activity feed from followed users
+- Challenges - User's challenges list
+- Habits - User's habits list
+- Goals - Goals library management
+- Discover - User search and discovery
+- Admin - Admin dashboard (visible only to admins)
+
+**User Dropdown Menu:**
+- My Profile - View public profile
+- Settings - Edit profile & preferences
+- Log Out - Sign out
+
+**Features:**
+- Theme toggle button (sun/moon icon)
+- Active route highlighting
+- Alpine.js theme manager integration
+- Responsive design
+
+### Mobile Navigation
+**File:** `resources/views/layouts/navigation.blade.php`
+
+**Bottom Navigation Bar (5 items):**
+1. **Feed** - Activity feed icon
+2. **Challenges** - Challenge badge icon
+3. **Quick Goals** - Center prominent button (quick goal completion)
+   - Disabled on challenge detail pages
+   - Gradient background, elevated design
+4. **Habits** - Clipboard checklist icon
+5. **Menu** - User avatar, opens menu page
+
+**Profile Menu Page** (`resources/views/profile/menu.blade.php`):
+- My Profile - View public profile
+- Goals - Goals library management
+- Discover - Find and follow users
+- Settings - Edit profile & preferences
+- Theme Toggle - Switch between light/dark mode
+- Log Out - Sign out
+
+**Mobile Navigation Design:**
+- Fixed bottom bar (z-index: 40)
+- Icon + label for each item
+- Active state highlighting (blue)
+- Grid layout (5 columns)
+- Dark mode support
+
+**User Flow:**
+- Primary actions (Feed, Challenges, Habits) are in bottom nav for quick access
+- Secondary features (Goals, Discover) are in the Menu page
+- Quick Goals button for fast goal completion from anywhere
 
 ---
 
