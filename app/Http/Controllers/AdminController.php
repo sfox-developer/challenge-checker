@@ -48,4 +48,44 @@ class AdminController extends Controller
 
         return view('admin.user-details', compact('user'));
     }
+
+    /**
+     * Delete a user and all their data permanently
+     */
+    public function deleteUser(User $user)
+    {
+        // Prevent admin from deleting themselves
+        if ($user->id === auth()->id()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You cannot delete your own account.'
+            ], 403);
+        }
+
+        // Prevent deletion of other admin users
+        if ($user->is_admin) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot delete admin users.'
+            ], 403);
+        }
+
+        try {
+            $userName = $user->name;
+            
+            // Laravel will cascade delete related records based on foreign key constraints
+            // This includes: challenges, habits, activities, goal library, follows, activity likes, etc.
+            $user->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => "User '{$userName}' and all their data have been permanently deleted."
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while deleting the user. Please try again.'
+            ], 500);
+        }
+    }
 }

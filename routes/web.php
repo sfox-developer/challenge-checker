@@ -72,6 +72,7 @@ Route::middleware('auth')->group(function () {
     // Admin routes
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/user/{user}', [AdminController::class, 'showUser'])->name('admin.user');
+    Route::delete('/admin/user/{user}', [AdminController::class, 'deleteUser'])->name('admin.user.delete');
 });
 
 require __DIR__.'/auth.php';
