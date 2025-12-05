@@ -11,6 +11,13 @@ export default {
 
     darkMode: 'class', // Enable dark mode with class strategy
 
+    safelist: [
+        // Gradient classes for stat-card component
+        {
+            pattern: /^(from|to)-(blue|indigo|green|emerald|yellow|orange|gray|red|pink|purple|teal|cyan)-(400|500|600|700)$/,
+        },
+    ],
+
     theme: {
         extend: {
             fontFamily: {
