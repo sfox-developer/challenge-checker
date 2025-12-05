@@ -134,33 +134,33 @@
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                             <label class="cursor-pointer">
                                 <input type="radio" name="frequency_type" value="daily" x-model="frequencyType" class="sr-only peer" checked>
-                                <div class="p-4 text-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-teal-500 peer-checked:bg-teal-50 dark:peer-checked:bg-teal-900/20 transition-all duration-200">
+                                <div class="p-4 text-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-teal-500 peer-checked:bg-teal-50 dark:peer-checked:bg-teal-500/10 transition-all duration-200">
                                     <div class="text-2xl mb-1">📅</div>
-                                    <div class="text-sm font-semibold">Daily</div>
+                                    <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">Daily</div>
                                 </div>
                             </label>
                             
                             <label class="cursor-pointer">
                                 <input type="radio" name="frequency_type" value="weekly" x-model="frequencyType" class="sr-only peer">
-                                <div class="p-4 text-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-teal-500 peer-checked:bg-teal-50 dark:peer-checked:bg-teal-900/20 transition-all duration-200">
+                                <div class="p-4 text-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-teal-500 peer-checked:bg-teal-50 dark:peer-checked:bg-teal-500/10 transition-all duration-200">
                                     <div class="text-2xl mb-1">📆</div>
-                                    <div class="text-sm font-semibold">Weekly</div>
+                                    <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">Weekly</div>
                                 </div>
                             </label>
                             
                             <label class="cursor-pointer">
                                 <input type="radio" name="frequency_type" value="monthly" x-model="frequencyType" class="sr-only peer">
-                                <div class="p-4 text-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-teal-500 peer-checked:bg-teal-50 dark:peer-checked:bg-teal-900/20 transition-all duration-200">
+                                <div class="p-4 text-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-teal-500 peer-checked:bg-teal-50 dark:peer-checked:bg-teal-500/10 transition-all duration-200">
                                     <div class="text-2xl mb-1">🗓️</div>
-                                    <div class="text-sm font-semibold">Monthly</div>
+                                    <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">Monthly</div>
                                 </div>
                             </label>
                             
                             <label class="cursor-pointer">
                                 <input type="radio" name="frequency_type" value="yearly" x-model="frequencyType" class="sr-only peer">
-                                <div class="p-4 text-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-teal-500 peer-checked:bg-teal-50 dark:peer-checked:bg-teal-900/20 transition-all duration-200">
+                                <div class="p-4 text-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-teal-500 peer-checked:bg-teal-50 dark:peer-checked:bg-teal-500/10 transition-all duration-200">
                                     <div class="text-2xl mb-1">📖</div>
-                                    <div class="text-sm font-semibold">Yearly</div>
+                                    <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">Yearly</div>
                                 </div>
                             </label>
                         </div>
@@ -187,7 +187,7 @@
                             <template x-for="i in 7" :key="i">
                                 <label class="cursor-pointer">
                                     <input type="radio" name="frequency_count" :value="i" x-model="frequencyCount" class="sr-only peer" :checked="i === 1">
-                                    <div class="aspect-square flex items-center justify-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-teal-500 peer-checked:bg-teal-500 peer-checked:text-white font-bold text-lg transition-all duration-200" x-text="i"></div>
+                                    <div class="aspect-square flex items-center justify-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-teal-500 peer-checked:bg-teal-500 peer-checked:text-white font-bold text-lg text-gray-900 dark:text-gray-100 transition-all duration-200" x-text="i"></div>
                                 </label>
                             </template>
                         </div>
@@ -223,7 +223,7 @@
                             <template x-for="(day, index) in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="index">
                                 <label class="cursor-pointer">
                                     <input type="checkbox" name="weekly_days[]" :value="index + 1" class="sr-only peer">
-                                    <div class="aspect-square flex items-center justify-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-blue-500 peer-checked:bg-blue-500 peer-checked:text-white font-semibold text-xs transition-all duration-200" x-text="day"></div>
+                                    <div class="aspect-square flex items-center justify-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-blue-500 peer-checked:bg-blue-500 peer-checked:text-white font-semibold text-xs text-gray-900 dark:text-gray-100 transition-all duration-200" x-text="day"></div>
                                 </label>
                             </template>
                         </div>

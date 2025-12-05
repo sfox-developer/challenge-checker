@@ -213,7 +213,7 @@
                                 @if($day['day'])
                                     <div class="w-full h-full rounded flex items-center justify-center text-xs font-medium
                                         {{ $day['is_completed'] ? 'bg-teal-500 text-white' : '' }}
-                                        {{ $day['is_today'] ? 'ring-2 ring-teal-500' : '' }}
+                                        {{ $day['is_today'] ? 'ring-2 ring-teal-500 text-gray-900 dark:text-gray-100' : '' }}
                                         {{ !$day['is_completed'] && !$day['is_today'] ? 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300' : '' }}">
                                         {{ $day['day'] }}
                                     </div>
