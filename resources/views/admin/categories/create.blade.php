@@ -34,30 +34,11 @@
 
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    Icon (emoji)
-                                </label>
-                                <select name="icon" class="app-input">
-                                    <option value="">No icon</option>
-                                    <option value="❤️" {{ old('icon') === '❤️' ? 'selected' : '' }}>❤️ Heart</option>
-                                    <option value="💪" {{ old('icon') === '💪' ? 'selected' : '' }}>💪 Flexed Biceps</option>
-                                    <option value="📚" {{ old('icon') === '📚' ? 'selected' : '' }}>📚 Books</option>
-                                    <option value="⚡" {{ old('icon') === '⚡' ? 'selected' : '' }}>⚡ Lightning</option>
-                                    <option value="🧘" {{ old('icon') === '🧘' ? 'selected' : '' }}>🧘 Meditation</option>
-                                    <option value="👥" {{ old('icon') === '👥' ? 'selected' : '' }}>👥 People</option>
-                                    <option value="🎯" {{ old('icon') === '🎯' ? 'selected' : '' }}>🎯 Target</option>
-                                    <option value="🏃" {{ old('icon') === '🏃' ? 'selected' : '' }}>🏃 Running</option>
-                                    <option value="🍎" {{ old('icon') === '🍎' ? 'selected' : '' }}>🍎 Apple</option>
-                                    <option value="💼" {{ old('icon') === '💼' ? 'selected' : '' }}>💼 Briefcase</option>
-                                    <option value="🎨" {{ old('icon') === '🎨' ? 'selected' : '' }}>🎨 Art</option>
-                                    <option value="🌱" {{ old('icon') === '🌱' ? 'selected' : '' }}>🌱 Seedling</option>
-                                    <option value="✨" {{ old('icon') === '✨' ? 'selected' : '' }}>✨ Sparkles</option>
-                                    <option value="🔥" {{ old('icon') === '🔥' ? 'selected' : '' }}>🔥 Fire</option>
-                                    <option value="🌟" {{ old('icon') === '🌟' ? 'selected' : '' }}>🌟 Star</option>
-                                </select>
-                                @error('icon')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <x-emoji-picker 
+                                    id="category-icon"
+                                    name="icon" 
+                                    :value="old('icon')"
+                                    label="Icon (emoji)" />
                             </div>
 
                             <div>

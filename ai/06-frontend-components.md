@@ -222,6 +222,40 @@ window.challengeForm = createChallengeForm;
 - `toggleLike()` - Like/unlike activity
 - `showLikers()` - Show modal with list of users who liked
 
+#### 5. emojiPicker
+**File:** `resources/js/components/emojiPicker.js`
+
+**Purpose:** Provide user-friendly emoji selection for icon inputs
+
+**State:**
+- `inputId` - ID of the associated input field
+- `showPicker` - Boolean, picker popover visibility
+- `commonEmojis` - Array of frequently used emojis
+
+**Methods:**
+- `init()` - Set up click-outside listener
+- `togglePicker()` - Show/hide picker popover
+- `selectEmoji(emoji)` - Set selected emoji in input
+- `clearEmoji()` - Clear the input value
+- `buttonText` - Computed property showing current emoji or default
+
+**Usage:**
+```blade
+<div x-data="emojiPicker('myInput')">
+    <input type="text" id="myInput" />
+    <button @click="togglePicker()" x-text="buttonText"></button>
+</div>
+```
+
+**Blade Component:**
+```blade
+<x-emoji-picker 
+    id="goal-icon"
+    name="icon" 
+    :value="$goal->icon"
+    label="Icon (emoji)" />
+```
+
 ---
 
 ## Blade Components
@@ -371,6 +405,47 @@ window.challengeForm = createChallengeForm;
     </x-slot>
 </x-modal>
 ```
+
+#### x-emoji-picker
+**File:** `resources/views/components/emoji-picker.blade.php`
+
+**Props:**
+- `id` - Input field ID (auto-generated if not provided)
+- `name` - Form field name (default: 'icon')
+- `value` - Current emoji value
+- `placeholder` - Placeholder emoji (default: '🎯')
+- `label` - Label text (default: 'Icon (emoji)')
+- `maxlength` - Maximum characters (default: '2')
+- `disabled` - Boolean, disable the input
+- `required` - Boolean, mark as required
+
+**Features:**
+- Text input for direct emoji entry
+- Picker button showing current emoji (defaults to 🎯 when empty)
+- Popover with grid of common emojis (56 emojis)
+- Categorized emojis: goals, health, learning, productivity, etc.
+- Click-outside to close
+- Clear button to remove emoji
+- Full dark mode support
+- Alpine.js powered interactions
+
+**Usage:**
+```blade
+<x-emoji-picker 
+    id="goal-icon"
+    name="icon" 
+    :value="$goal->icon"
+    placeholder="🎯"
+    label="Icon (emoji)"
+    required />
+```
+
+**Used in:**
+- Goals library create/edit modals (`resources/views/goals/index.blade.php`)
+- Habit creation form (`resources/views/habits/create.blade.php`)
+- Category management (`resources/views/admin/categories/`)
+
+**Alpine.js Component:** `emojiPicker(inputId)` in `resources/js/components/emojiPicker.js`
 
 ---
 

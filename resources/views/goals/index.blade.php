@@ -181,16 +181,12 @@
 
                                         <div class="grid grid-cols-2 gap-3">
                                             <div>
-                                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                                                    Icon (emoji)
-                                                </label>
-                                                <input type="text" 
-                                                       name="icon" 
-                                                       value="{{ $goal->icon }}"
-                                                       maxlength="10"
-                                                       class="app-input">
+                                                <x-emoji-picker 
+                                                    :id="'edit-goal-icon-' . $goal->id"
+                                                    name="icon" 
+                                                    :value="$goal->icon"
+                                                    label="Icon (emoji)" />
                                             </div>
-
                                             <div>
                                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
                                                     Category
@@ -288,15 +284,12 @@
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                                Icon (emoji)
-                            </label>
-                            <input type="text" 
-                                   name="icon" 
-                                   value="{{ old('icon') }}"
-                                   maxlength="10"
-                                   class="app-input"
-                                   placeholder="🎯">
+                            <x-emoji-picker 
+                                id="create-goal-icon"
+                                name="icon" 
+                                :value="old('icon')"
+                                placeholder="🎯"
+                                label="Icon (emoji)" />
                         </div>
 
                         <div>

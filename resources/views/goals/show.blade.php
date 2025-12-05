@@ -278,14 +278,12 @@
                     </div>
 
                     <div>
-                        <label for="edit-icon-{{ $goal->id }}" class="app-label">Icon (emoji)</label>
-                        <input type="text" 
-                               id="edit-icon-{{ $goal->id }}" 
-                               name="icon" 
-                               value="{{ $goal->icon }}"
-                               class="app-input" 
-                               maxlength="10"
-                               placeholder="🎯">
+                        <x-emoji-picker 
+                            :id="'edit-icon-' . $goal->id"
+                            name="icon" 
+                            :value="$goal->icon"
+                            label="Icon (emoji)"
+                            placeholder="🎯" />
                     </div>
                 </div>
             </div>

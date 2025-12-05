@@ -184,12 +184,48 @@
                                                    placeholder="Goal name"
                                                    required>
                                             <div class="grid grid-cols-2 gap-3">
-                                                <input type="text" 
-                                                       :name="`new_goals[${index}][icon]`"
-                                                       x-model="goal.icon"
-                                                       class="app-input text-sm" 
-                                                       placeholder="Icon (emoji)"
-                                                       maxlength="10">
+                                                <div class="relative">
+                                                    <div class="flex gap-1">
+                                                        <input type="text" 
+                                                               :name="`new_goals[${index}][icon]`"
+                                                               x-model="goal.icon"
+                                                               class="app-input text-sm flex-1" 
+                                                               placeholder="😀"
+                                                               maxlength="2">
+                                                        <button 
+                                                            type="button"
+                                                            @click="$refs['picker' + index].classList.toggle('hidden')"
+                                                            class="px-2 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-lg rounded transition-colors"
+                                                            title="Choose emoji">
+                                                            <span x-text="goal.icon || '😀'"></span>
+                                                        </button>
+                                                    </div>
+                                                    <!-- Emoji Picker Popover -->
+                                                    <div 
+                                                        :x-ref="'picker' + index"
+                                                        class="hidden absolute right-0 mt-1 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50 p-3"
+                                                        @click.outside="$el.classList.add('hidden')">
+                                                        <div class="mb-2 flex justify-between items-center">
+                                                            <h4 class="text-xs font-semibold text-gray-700 dark:text-gray-300">Choose Emoji</h4>
+                                                            <button 
+                                                                type="button"
+                                                                @click="goal.icon = ''; $refs['picker' + index].classList.add('hidden')"
+                                                                class="text-xs text-gray-500 hover:text-red-600">
+                                                                Clear
+                                                            </button>
+                                                        </div>
+                                                        <div class="grid grid-cols-6 gap-1 max-h-40 overflow-y-auto">
+                                                            <template x-for="(emoji, emojiIndex) in ['🎯', '🏆', '⭐', '✨', '🌟', '💫', '❤️', '💪', '🏃', '🧘', '🍎', '🥗', '📚', '📖', '✏️', '📝', '⚡', '💼', '🧠', '💤', '🌱', '🌿', '☕', '💧', '👥', '🤝', '🎨', '🎭', '🎵', '🎪', '🌈', '🌸', '🌺', '🔥', '💎', '🎁', '⚽', '🏀', '🏋️', '🚴', '🏊', '⛰️', '🥑', '🥤', '🍵', '🌮', '🥗', '🍓']" :key="emojiIndex">
+                                                                <button 
+                                                                    type="button"
+                                                                    @click="goal.icon = emoji; $refs['picker' + index].classList.add('hidden')"
+                                                                    class="text-lg hover:bg-gray-100 dark:hover:bg-gray-700 rounded p-1"
+                                                                    x-text="emoji">
+                                                                </button>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <select :name="`new_goals[${index}][category_id]`" 
                                                         x-model="goal.category_id"
                                                         class="app-input text-sm">

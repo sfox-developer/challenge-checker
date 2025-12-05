@@ -87,14 +87,13 @@
 
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
-                                        <input type="text" 
-                                               name="new_goal_icon" 
-                                               id="new_goal_icon" 
-                                               class="app-input" 
-                                               placeholder="Icon (emoji)"
-                                               maxlength="2"
-                                               :disabled="useExisting"
-                                               value="{{ old('new_goal_icon') }}">
+                                        <x-emoji-picker 
+                                            id="new_goal_icon"
+                                            name="new_goal_icon" 
+                                            :value="old('new_goal_icon')"
+                                            placeholder="Icon (emoji)"
+                                            label=""
+                                            x-bind:disabled="useExisting" />
                                     </div>
                                     <div>
                                         <select name="new_goal_category_id" id="new_goal_category_id" class="app-input" :disabled="useExisting">
