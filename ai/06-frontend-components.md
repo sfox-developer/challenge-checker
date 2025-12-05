@@ -538,6 +538,81 @@ showToast('Warning message', 'warning');
 
 ---
 
+## Footer Component
+
+**File:** `resources/views/components/footer.blade.php`
+
+**Purpose:**
+Provides consistent footer across all authenticated pages with useful links and copyright information.
+
+**Location:**
+- Included in `resources/views/layouts/app.blade.php`
+- Positioned after main content, before FAB and Quick Complete modal
+- Responsive design with mobile-optimized layout
+
+**Content:**
+- Copyright notice with dynamic year and app name
+- Changelog link (route: `changelog`)
+- Privacy Policy link (placeholder)
+- Terms of Service link (placeholder)
+
+**Styling:**
+- Top border to separate from content
+- Dark mode support
+- Centered on mobile, flex layout on desktop
+- Link hover effects with color transitions
+
+**Usage in Layout:**
+```blade
+<!-- Page Content -->
+<main>
+    {{ $slot }}
+</main>
+
+<!-- Footer -->
+<x-footer />
+```
+
+---
+
+## Changelog Pages
+
+### Public Changelog View
+**File:** `resources/views/changelog.blade.php`
+
+**Purpose:**
+Displays published changelog entries to all authenticated users.
+
+**Features:**
+- Shows version, title, release date, description, changes
+- Major releases highlighted with purple badge
+- Paginated list (10 per page)
+- Ordered by release date (newest first)
+- Empty state with icon and message
+
+**Access:**
+- Route: `/changelog`
+- Available via footer link
+
+### Admin Changelog Management
+**Files:**
+- Index: `resources/views/admin/changelogs/index.blade.php`
+- Create: `resources/views/admin/changelogs/create.blade.php`
+- Edit: `resources/views/admin/changelogs/edit.blade.php`
+
+**Features:**
+- CRUD operations for changelog entries
+- Draft/Published status management
+- Major release flagging
+- Markdown support in changes field
+- Version and release date tracking
+
+**Admin Access:**
+- Routes: `/admin/changelogs/*`
+- Link in admin dashboard "Manage Changelogs" card
+
+---
+
 ## Tailwind CSS Configuration
 
 ### File: `tailwind.config.js`

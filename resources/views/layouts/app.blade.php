@@ -28,7 +28,7 @@
         </script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 pb-16 sm:pb-0" 
+        <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 pb-16 sm:pb-0 flex flex-col" 
              x-data="{ 
                  ...quickGoalsModal(), 
                  ...themeManager() 
@@ -46,9 +46,12 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="flex-grow">
                 {{ $slot }}
             </main>
+
+            <!-- Footer -->
+            <x-footer />
 
             <!-- Desktop FAB for Quick Goal Completion (Hidden on Mobile and Challenge Detail Page) -->
             @if(!request()->routeIs('challenges.show'))

@@ -26,6 +26,20 @@
                         </div>
                     </div>
                 </a>
+                
+                <a href="{{ route('admin.changelogs.index') }}" class="card card-interactive p-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-gradient-to-r from-indigo-500 to-purple-500 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Manage Changelogs</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Create and publish changelog entries</p>
+                        </div>
+                    </div>
+                </a>
             </div>
 
             <!-- Total Users Stats -->

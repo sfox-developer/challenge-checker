@@ -298,6 +298,19 @@ Route::resource('admin/categories', CategoryController::class)->names([
     'update' => 'admin.categories.update',
     'destroy' => 'admin.categories.destroy',
 ]);
+
+// Changelog Management
+Route::get('admin/changelogs', [ChangelogController::class, 'adminIndex'])->name('admin.changelogs.index');
+Route::get('admin/changelogs/create', [ChangelogController::class, 'create'])->name('admin.changelogs.create');
+Route::post('admin/changelogs', [ChangelogController::class, 'store'])->name('admin.changelogs.store');
+Route::get('admin/changelogs/{changelog}/edit', [ChangelogController::class, 'edit'])->name('admin.changelogs.edit');
+Route::put('admin/changelogs/{changelog}', [ChangelogController::class, 'update'])->name('admin.changelogs.update');
+Route::delete('admin/changelogs/{changelog}', [ChangelogController::class, 'destroy'])->name('admin.changelogs.destroy');
+```
+
+**Public Changelog Route:**
+```php
+Route::get('/changelog', [ChangelogController::class, 'index'])->name('changelog');
 ```
 
 **Additional Middleware:**
@@ -308,7 +321,7 @@ All admin routes include a check: `if (!auth()->user()->is_admin) abort(403);`
   - System statistics
   - Recent users
   - Total counts
-  - Quick action: "Manage Categories" link
+  - Quick actions: "Manage Categories", "Manage Changelogs"
 - `showUser(User $user)` - Admin user detail view
   - Shows ALL user data (including private)
   - Can delete user
@@ -355,6 +368,49 @@ All admin routes include a check: `if (!auth()->user()->is_admin) abort(403);`
   - Checks if category is in use (has goals)
   - Prevents deletion if in use
   - Deletes and redirects with message
+
+**ChangelogController Methods:**
+**Location:** `app/Http/Controllers/Admin/ChangelogController.php`
+
+- `index()` - Public changelog view
+  - Shows only published changelogs
+  - Ordered by release_date descending
+  - Paginated (10 per page)
+  - Accessible to all authenticated users
+  
+- `adminIndex()` - Admin changelog management view
+  - Shows all changelogs (published and drafts)
+  - Ordered by release_date descending
+  - Paginated (20 per page)
+  - Shows version, title, release date, status (published/draft)
+  - Actions: Edit, Delete
+  
+- `create()` - Show changelog creation form
+  - Fields: version, title, description, changes, release_date, is_published, is_major
+  - Default release_date: today
+  - Changes field uses textarea with markdown support
+  
+- `store()` - Save new changelog
+  - Validates input
+  - Checkboxes: is_published, is_major (default: false)
+  - Redirects to admin.changelogs.index with success toast
+  - Flash message: 'Changelog created successfully!'
+  
+- `edit(Changelog $changelog)` - Show edit form
+  - Pre-fills all fields
+  - Shows current published status
+  - Shows major release flag
+  
+- `update(Changelog $changelog)` - Update changelog
+  - Validates input
+  - Updates all fields
+  - Redirects to admin.changelogs.index with success toast
+  - Flash message: 'Changelog updated successfully!'
+  
+- `destroy(Changelog $changelog)` - Delete changelog
+  - No dependency checks needed (standalone model)
+  - Deletes and redirects with success message
+  - Flash message: 'Changelog deleted successfully!'
 
 ---
 

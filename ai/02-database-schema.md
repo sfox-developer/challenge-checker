@@ -273,6 +273,36 @@ Likes on activities.
 
 ---
 
+## Admin Domain
+
+### changelogs
+Changelog entries managed by admins, displayed to users.
+
+**Columns:**
+- `id` - Primary key
+- `version` - Version string (e.g., "v1.2.0") - varchar(50)
+- `title` - Changelog title - varchar(255)
+- `description` - Optional brief summary - text, nullable
+- `changes` - Detailed list of changes - text
+- `release_date` - Release date - date
+- `is_published` - Boolean, whether visible to users (default: false)
+- `is_major` - Boolean, marks major releases (default: false)
+- `created_at`, `updated_at` - Timestamps
+
+**Indexes:**
+- `release_date` - For ordering by date
+- `is_published` - For filtering published entries
+
+**Relationships:**
+- None (standalone table)
+
+**Purpose:**
+- Admin-managed changelog system
+- Public view shows only published entries
+- Supports major release highlighting
+
+---
+
 ## Supporting Tables
 
 ### password_reset_tokens
@@ -319,3 +349,4 @@ Laravel's queue jobs table (if using database queue).
 - Unique constraints prevent duplicates
 - Nullable fields where appropriate
 - Default values for boolean flags
+

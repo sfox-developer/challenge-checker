@@ -369,6 +369,48 @@ getGoalsCountAttribute(): int
 
 ---
 
+## Changelog Model
+
+**Location:** `app/Domain/Admin/Models/Changelog.php`
+
+**Extends:** `Illuminate\Database\Eloquent\Model`
+
+**Traits:** `HasFactory`
+
+### Table Name
+- `changelogs`
+
+### Fillable Attributes
+- `version`, `title`, `description`, `changes`, `release_date`, `is_published`, `is_major`
+
+### Casts
+- `release_date` → date
+- `is_published` → boolean
+- `is_major` → boolean
+
+### Relationships
+- None (standalone model)
+
+### Scopes
+
+```php
+scopePublished($query)
+  // Only published changelogs (is_published = true)
+  
+scopeLatest($query)
+  // Order by release_date descending
+  
+scopeMajor($query)
+  // Only major releases (is_major = true)
+```
+
+### Purpose
+- Changelog entries managed by admins
+- Public view shows only published entries
+- Supports version tracking and major release highlighting
+
+---
+
 ## GoalLibrary Model
 
 **Location:** `app/Domain/Goal/Models/GoalLibrary.php`
