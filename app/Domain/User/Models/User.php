@@ -189,6 +189,16 @@ class User extends Authenticatable
      */
     public function getAvatarUrl(): string
     {
+        if (!$this->avatar) {
+            return asset('avatars/default.svg');
+        }
+        
+        $avatarPath = public_path('avatars/' . $this->avatar . '.svg');
+        
+        if (!file_exists($avatarPath)) {
+            return asset('avatars/default.svg');
+        }
+        
         return asset('avatars/' . $this->avatar . '.svg');
     }
 

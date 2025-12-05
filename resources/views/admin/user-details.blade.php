@@ -44,16 +44,134 @@
 
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <!-- User Email Info -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
-                <div class="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                    </svg>
-                    <span>{{ $user->email }}</span>
-                    <span class="text-gray-300 dark:text-gray-600">•</span>
-                    <span>Member since {{ $user->created_at->format('M j, Y') }}</span>
+            <!-- User Details Card -->
+            <div class="card">
+                <div class="flex items-start space-x-6">
+                    <!-- Avatar -->
+                    <div class="flex-shrink-0">
+                        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-1">
+                            <div class="w-full h-full rounded-full bg-white dark:bg-gray-800 flex items-center justify-center overflow-hidden">
+                                <img src="{{ $user->getAvatarUrl() }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Info -->
+                    <div class="flex-1 min-w-0">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Left Column -->
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Email</label>
+                                    <div class="mt-1 flex items-center space-x-2">
+                                        <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                                        </svg>
+                                        <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $user->email }}</span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Account Status</label>
+                                    <div class="mt-1 flex items-center space-x-2">
+                                        @if($user->email_verified_at)
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400">
+                                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                                </svg>
+                                                Verified
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-400">
+                                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                                </svg>
+                                                Unverified
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Theme Preference</label>
+                                    <div class="mt-1 flex items-center space-x-2">
+                                        @php
+                                            $theme = $user->getThemePreference();
+                                            $themeIcons = [
+                                                'light' => '<path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>',
+                                                'dark' => '<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>',
+                                                'system' => '<path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd"></path>'
+                                            ];
+                                        @endphp
+                                        <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                            {!! $themeIcons[$theme] !!}
+                                        </svg>
+                                        <span class="text-sm font-medium text-gray-900 dark:text-gray-100 capitalize">{{ $theme }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Member Since</label>
+                                    <div class="mt-1 flex items-center space-x-2">
+                                        <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $user->created_at->format('F j, Y') }}</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">({{ $user->created_at->diffForHumans() }})</span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Social Stats</label>
+                                    <div class="mt-1 flex items-center space-x-4">
+                                        <div class="flex items-center space-x-1">
+                                            <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+                                            </svg>
+                                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $user->followers_count }}</span>
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">followers</span>
+                                        </div>
+                                        <div class="flex items-center space-x-1">
+                                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $user->following_count }}</span>
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">following</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Activity</label>
+                                    <div class="mt-1 flex items-center space-x-4">
+                                        <div class="flex items-center space-x-1">
+                                            <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                                                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $user->habits_count }}</span>
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">habits</span>
+                                        </div>
+                                        <div class="flex items-center space-x-1">
+                                            <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
+                                            </svg>
+                                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $user->goals_library_count }}</span>
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">goals</span>
+                                        </div>
+                                        <div class="flex items-center space-x-1">
+                                            <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $user->activities_count }}</span>
+                                            <span class="text-xs text-gray-500 dark:text-gray-400">posts</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

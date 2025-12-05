@@ -46,6 +46,14 @@ class AdminController extends Controller
             $query->orderBy('date', 'desc');
         }]);
 
+        $user->loadCount([
+            'followers', 
+            'following', 
+            'habits',
+            'goalsLibrary',
+            'activities'
+        ]);
+
         return view('admin.user-details', compact('user'));
     }
 
