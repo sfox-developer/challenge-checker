@@ -180,7 +180,7 @@
                             <svg class="w-4 h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                             </svg>
-                            <span>How many times per <span x-text="frequencyType"></span>?</span>
+                            <span>How many times per <span x-text="frequencyPeriod"></span>?</span>
                         </label>
                         
                         <div class="grid grid-cols-7 gap-2">
@@ -196,7 +196,7 @@
                             <p class="text-sm text-gray-600 dark:text-gray-400 text-center" x-show="frequencyCount > 0">
                                 <span class="font-semibold text-teal-600 dark:text-teal-400" x-text="frequencyCount"></span>
                                 time<span x-show="frequencyCount > 1">s</span> per 
-                                <span x-text="frequencyType"></span>
+                                <span x-text="frequencyPeriod"></span>
                             </p>
                         </div>
                         
@@ -252,7 +252,16 @@
                 useExisting: {{ count($goalsLibrary) > 0 ? 'true' : 'false' }},
                 selectedGoalId: '',
                 frequencyType: 'daily',
-                frequencyCount: 1
+                frequencyCount: 1,
+                get frequencyPeriod() {
+                    const periods = {
+                        'daily': 'day',
+                        'weekly': 'week',
+                        'monthly': 'month',
+                        'yearly': 'year'
+                    };
+                    return periods[this.frequencyType] || this.frequencyType;
+                }
             }
         }
     </script>
