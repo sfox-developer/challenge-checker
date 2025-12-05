@@ -84,7 +84,9 @@ class HabitController extends Controller
             'new_goal_category' => 'nullable|string|max:255',
             'new_goal_icon' => 'nullable|string|max:10',
             'frequency_type' => 'required|in:daily,weekly,monthly,yearly',
-            'frequency_count' => 'required|integer|min:1|max:100',
+            'frequency_count' => $request->input('frequency_type') === 'daily' 
+                ? 'required|integer|in:1' 
+                : 'required|integer|min:1|max:100',
             'weekly_days' => 'nullable|array',
             'weekly_days.*' => 'integer|min:1|max:7',
         ]);
@@ -179,7 +181,9 @@ class HabitController extends Controller
 
         $validated = $request->validate([
             'frequency_type' => 'required|in:daily,weekly,monthly,yearly',
-            'frequency_count' => 'required|integer|min:1|max:100',
+            'frequency_count' => $request->input('frequency_type') === 'daily' 
+                ? 'required|integer|in:1' 
+                : 'required|integer|min:1|max:100',
             'is_active' => 'boolean',
         ]);
 

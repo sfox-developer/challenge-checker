@@ -31,6 +31,17 @@ export function createHabitForm(initialFrequencyType = 'daily', initialFrequency
                 'yearly': 'year'
             };
             return periods[this.frequencyType] || this.frequencyType;
+        },
+        
+        /**
+         * Initialize watcher to auto-set frequency_count to 1 for daily habits
+         */
+        init() {
+            this.$watch('frequencyType', value => {
+                if (value === 'daily') {
+                    this.frequencyCount = 1;
+                }
+            });
         }
     };
 }
