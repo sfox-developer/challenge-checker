@@ -43,7 +43,7 @@
 
                         <!-- Existing Goal Selection -->
                         <div x-show="useExisting" x-transition>
-                            <select name="goal_library_id" id="goal_library_id" class="app-input" x-model="selectedGoalId">
+                            <select name="goal_library_id" id="goal_library_id" class="app-input" x-model="selectedGoalId" :disabled="!useExisting">
                                 <option value="">Select a goal...</option>
                                 @foreach($goalsLibrary as $goal)
                                     <option value="{{ $goal->id }}">
