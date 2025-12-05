@@ -123,7 +123,8 @@ Route::post('/challenges/{challenge}/complete', [ChallengeController::class, 'co
   - Validates input
   - Creates Challenge record
   - Creates Goal records
-  - Redirects to show page
+  - Redirects to show page with success toast
+  - Flash message: 'Challenge created successfully!'
 - `show(Challenge $challenge)` - Display challenge details
   - Authorization via ChallengePolicy
   - Eager loads: goals.dailyProgress, user, activities
@@ -133,7 +134,9 @@ Route::post('/challenges/{challenge}/complete', [ChallengeController::class, 'co
 - `update(Challenge $challenge)` - Update challenge
   - Validates input
   - Updates challenge
-  - Syncs goals
+  - Redirects to show page with success toast
+  - Flash message: 'Challenge updated successfully!'
+  - Returns user to detail view after editing
 - `destroy(Challenge $challenge)` - Delete challenge
   - Authorization via policy
   - Cascade deletes goals and progress
@@ -198,12 +201,19 @@ Route::post('/habits/{habit}/restore', [HabitController::class, 'restore'])->nam
   - Creates Habit record
   - Creates HabitStatistic record
   - Creates activity
+  - Redirects to show page with success toast
+  - Flash message: 'Habit created successfully!'
 - `show(Habit $habit)` - Display habit details
   - Shows completion calendar
   - Shows statistics
   - Shows frequency progress
 - `edit(Habit $habit)` - Show edit form
 - `update(Habit $habit)` - Update habit
+  - Validates input
+  - Updates record
+  - Redirects to show page with success toast
+  - Flash message: 'Habit updated successfully!'
+  - Returns user to detail view after editing
 - `destroy(Habit $habit)` - Delete habit
 
 **Action Methods:**
@@ -243,8 +253,13 @@ Route::get('/api/goals/search', [GoalLibraryController::class, 'search'])->name(
 - `store()` - Create new library goal
   - Validates input
   - Creates GoalLibrary record
+  - Redirects to show (detail) page with success toast
+  - Flash message: 'Goal added to your library!'
 - `update(GoalLibrary $goal)` - Update library goal
   - Updates record
+  - Redirects to show (detail) page with success toast
+  - Flash message: 'Goal updated successfully!'
+  - Note: doesn't retroactively update linked goals
   - Note: doesn't retroactively update linked goals
 - `destroy(GoalLibrary $goal)` - Delete library goal
   - Sets goal_library_id to null in linked records
@@ -321,7 +336,8 @@ All admin routes include a check: `if (!auth()->user()->is_admin) abort(403);`
   - Validates input
   - Auto-generates slug using `Str::slug()`
   - Default values: order=0, is_active=true
-  - Redirects to index with success message
+  - Redirects to index page with success toast
+  - Flash message: 'Category created successfully!'
   
 - `edit(Category $category)` - Show edit form
   - Pre-fills all fields
@@ -332,7 +348,8 @@ All admin routes include a check: `if (!auth()->user()->is_admin) abort(403);`
   - Validates input
   - Regenerates slug if name changed
   - Updates all fields
-  - Redirects to index with success message
+  - Redirects to index page with success toast
+  - Flash message: 'Category updated successfully!'
   
 - `destroy(Category $category)` - Delete category
   - Checks if category is in use (has goals)
@@ -441,16 +458,49 @@ return response()->json([
 
 ### Redirect Responses
 ```php
-// With success message
+// With success message (shows toast notification)
 return redirect()
     ->route('challenges.show', $challenge)
-    ->with('success', 'Challenge started!');
+    ->with('success', 'Challenge created successfully!');
 
-// With error
+// With error (shows error toast)
 return back()
-    ->withErrors(['error' => 'Something went wrong'])
+    ->with('error', 'Something went wrong')
     ->withInput();
 ```
+
+**Flash Message Types:**
+- `success` - Green toast notification
+- `error` - Red toast notification
+- `info` - Blue toast notification
+- `warning` - Yellow toast notification
+
+**Toast Notification System:**
+Flash messages are automatically displayed as toast notifications via:
+- **JavaScript**: `resources/js/toast.js`
+- **Styles**: `resources/scss/_toast.scss`
+- **Layout Integration**: Flash messages passed via data attributes in `resources/views/layouts/app.blade.php`
+
+The toast appears at the bottom-right of the screen (bottom-left on mobile above navigation bar) and auto-dismisses after 3 seconds with a smooth fade-out animation.
+
+**Manual Toast Usage:**
+```javascript
+// Available globally
+showToast('Your message here', 'success'); // or 'error', 'info', 'warning'
+```
+
+**Redirect Pattern After Create/Update:**
+All resource create and update methods follow this pattern:
+1. **Create**: Redirect to show/detail page (view the created resource)
+2. **Update**: Redirect to show/detail page (view the updated resource)
+3. **Delete**: Redirect to index page
+4. **Exception**: Categories redirect to index (no detail view exists)
+
+This pattern improves UX by:
+- Showing the result immediately after saving
+- Providing immediate feedback via toast notifications
+- Allowing users to see their changes in context
+- User can navigate to edit if needed
 
 ---
 

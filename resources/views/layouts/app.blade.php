@@ -147,5 +147,14 @@
             </div>
             @endif
         </div>
+
+        <!-- Flash Messages Data for Toast System -->
+        @if(session()->has('success') || session()->has('error') || session()->has('info') || session()->has('warning'))
+        <div id="flash-messages" 
+             data-message="{{ session('success') ?? session('error') ?? session('info') ?? session('warning') }}"
+             data-type="@if(session()->has('success'))success @elseif(session()->has('error'))error @elseif(session()->has('info'))info @else warning @endif"
+             style="display: none;">
+        </div>
+        @endif
     </body>
 </html>

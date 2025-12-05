@@ -57,7 +57,7 @@ class CategoryController extends Controller
             $counter++;
         }
 
-        Category::create($validated);
+        $category = Category::create($validated);
 
         return redirect()->route('admin.categories.index')
             ->with('success', 'Category created successfully!');

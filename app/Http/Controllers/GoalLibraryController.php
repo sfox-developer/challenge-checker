@@ -164,7 +164,7 @@ class GoalLibraryController extends Controller
             ...$validated
         ]);
 
-        return redirect()->route('goals.index')
+        return redirect()->route('goals.show', $goal)
             ->with('success', 'Goal added to your library!');
     }
 
@@ -184,7 +184,7 @@ class GoalLibraryController extends Controller
 
         $goal->update($validated);
 
-        return redirect()->route('goals.index')
+        return redirect()->route('goals.show', $goal)
             ->with('success', 'Goal updated successfully!');
     }
 

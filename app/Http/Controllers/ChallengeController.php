@@ -159,10 +159,7 @@ class ChallengeController extends Controller
             'is_public' => $request->boolean('is_public'),
         ]);
 
-        // Redirect back to where user came from (challenge show or challenges index)
-        $backUrl = $request->input('back', route('challenges.show', $challenge));
-        
-        return redirect($backUrl)
+        return redirect()->route('challenges.show', $challenge)
             ->with('success', 'Challenge updated successfully!');
     }
 

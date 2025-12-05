@@ -13,6 +13,7 @@
 resources/
 ├── js/
 │   ├── app.js                    # Entry point
+│   ├── toast.js                  # Toast notification system
 │   ├── components/               # Alpine.js components
 │   │   ├── index.js             # Component registry
 │   │   ├── theme.js             # Theme management
@@ -21,6 +22,7 @@ resources/
 │   │   ├── challenge.js         # Challenge forms
 │   │   ├── habit.js             # Habit forms
 │   │   ├── goals.js             # Goal management
+│   │   ├── emojiPicker.js       # Emoji selection
 │   │   └── habitToggle.js       # Habit completion
 │   └── utils/
 │       └── ui.js                # Utility functions
@@ -34,6 +36,8 @@ resources/
 │       ├── stat-card.blade.php
 │       └── ...
 └── scss/                        # Custom SCSS
+    ├── app.scss                 # Main stylesheet
+    └── _toast.scss              # Toast notification styles
 ```
 
 ---
@@ -454,7 +458,9 @@ window.challengeForm = createChallengeForm;
 ### File: `resources/js/utils/ui.js`
 
 **Functions:**
-- `showToast(message, type)` - Show toast notification
+- `showToast(message, type, duration)` - Show toast notification
+  - Types: 'success', 'error', 'info', 'warning'
+  - Duration: milliseconds (default: 3000)
 - `showError(message)` - Show error toast
 - `showSuccess(message)` - Show success toast
 - `getCsrfToken()` - Get CSRF token from meta tag
@@ -471,6 +477,63 @@ async function saveData() {
         showSuccess('Saved!');
     }
 }
+```
+
+### Toast Notification System
+
+**Files:**
+- JavaScript: `resources/js/toast.js`
+- Styles: `resources/scss/_toast.scss`
+- Layout Integration: `resources/views/layouts/app.blade.php`
+
+**Automatic Flash Message Display:**
+Flash messages from Laravel are automatically converted to toast notifications. The layout checks for session flash messages and passes them via data attributes to the JavaScript toast system.
+
+```html
+<!-- In app.blade.php -->
+<div id="flash-messages" 
+     data-message="{{ session('success') }}"
+     data-type="success">
+</div>
+```
+
+**JavaScript Implementation:**
+```javascript
+// Auto-initializes on DOM ready
+export function showToast(message, type = 'success', duration = 3000) {
+    // Creates and displays toast notification
+}
+
+// Globally available
+window.showToast = showToast;
+```
+
+**Toast Types & Styling:**
+- `success` - Green background (#10b981)
+- `error` - Red background (#ef4444)
+- `info` - Blue background (#3b82f6)
+- `warning` - Yellow background (#f59e0b)
+
+**Toast Behavior:**
+- Position: Bottom-right on desktop, bottom-left on mobile (above nav bar)
+- Duration: 3 seconds auto-dismiss
+- Animation: Smooth fade-in/fade-out with CSS transitions
+- Z-index: 9999 (appears above all other elements)
+- Responsive: Adjusts position for mobile navigation
+
+**Controller Usage:**
+```php
+return redirect()->route('resource.show', $resource)
+    ->with('success', 'Resource updated successfully!');
+```
+
+**Manual JavaScript Usage:**
+```javascript
+// In browser console or custom scripts
+showToast('Your message here', 'success');
+showToast('Error occurred', 'error');
+showToast('Information', 'info');
+showToast('Warning message', 'warning');
 ```
 
 ---
