@@ -8,6 +8,61 @@
  */
 
 /**
+ * Generic modal utility functions
+ * Used for simple show/hide modals with overlay and escape key handling
+ */
+
+/**
+ * Shows a modal by ID
+ * @param {string} modalId - The ID of the modal element to show
+ */
+export function showModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+}
+
+/**
+ * Hides a modal by ID
+ * @param {string} modalId - The ID of the modal element to hide
+ */
+export function hideModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+}
+
+/**
+ * Initializes modal event listeners for overlay click and escape key
+ * @param {string} modalId - The ID of the modal element
+ * @param {Function} hideCallback - The function to call when hiding (optional)
+ */
+export function initModalListeners(modalId, hideCallback = null) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+
+    const hideFunc = hideCallback || (() => hideModal(modalId));
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            hideFunc();
+        }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            hideFunc();
+        }
+    });
+}
+
+/**
  * Quick Goals Modal
  * Displays active challenges and habits for quick completion
  */

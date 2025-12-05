@@ -7,6 +7,8 @@
  * @module components/theme
  */
 
+import { createHeaders } from '../utils/ui.js';
+
 export function createThemeManager() {
     return {
         // Get initial theme from server-side rendered value
@@ -36,11 +38,7 @@ export function createThemeManager() {
             try {
                 const response = await fetch('/profile/theme', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
-                        'Accept': 'application/json'
-                    },
+                    headers: createHeaders({ 'Accept': 'application/json' }),
                     body: JSON.stringify({ theme: this.theme })
                 });
                 

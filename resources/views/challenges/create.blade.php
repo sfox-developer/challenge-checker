@@ -242,24 +242,4 @@
         </div>
     </div>
 
-    <script>
-        function challengeForm() {
-            return {
-                newGoals: [],
-                
-                addNewGoal() {
-                    this.newGoals.push({
-                        name: '',
-                        icon: '',
-                        category: '',
-                        description: ''
-                    });
-                },
-                
-                removeNewGoal(index) {
-                    this.newGoals.splice(index, 1);
-                }
-            }
-        }
-    </script>
 </x-app-layout>

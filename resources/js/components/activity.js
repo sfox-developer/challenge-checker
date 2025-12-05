@@ -7,6 +7,8 @@
  * @module components/activity
  */
 
+import { createHeaders } from '../utils/ui.js';
+
 export function createActivityCard(initialLiked, initialLikesCount, activityId, toggleLikeUrl) {
     return {
         showDeleteModal: false,
@@ -25,11 +27,7 @@ export function createActivityCard(initialLiked, initialLikesCount, activityId, 
             try {
                 const response = await fetch(toggleLikeUrl, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
-                        'Accept': 'application/json'
-                    }
+                    headers: createHeaders({ 'Accept': 'application/json' })
                 });
 
                 if (response.ok) {

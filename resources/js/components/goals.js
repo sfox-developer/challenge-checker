@@ -7,6 +7,8 @@
  * @module components/goals
  */
 
+import { createHeaders } from '../utils/ui.js';
+
 export function createGoalToggleManager() {
     return {
         pendingRequests: new Set(),
@@ -37,10 +39,7 @@ export function createGoalToggleManager() {
                 // Make API call
                 const response = await fetch(`/goals/${goalId}/toggle`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    }
+                    headers: createHeaders()
                 });
 
                 const data = await response.json();

@@ -274,28 +274,13 @@
     </div>
 
     <script>
-        function showArchiveModal() {
-            document.getElementById('archiveModal').classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-        }
-
-        function hideArchiveModal() {
-            document.getElementById('archiveModal').classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('archiveModal')?.addEventListener('click', function(e) {
-            if (e.target === this) {
-                hideArchiveModal();
-            }
-        });
-
-        // Close modal on Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                hideArchiveModal();
-            }
+        // Modal functions are now global
+        window.showArchiveModal = () => showModal('archiveModal');
+        window.hideArchiveModal = () => hideModal('archiveModal');
+        
+        // Initialize modal listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            initModalListeners('archiveModal', hideArchiveModal);
         });
     </script>
 </x-app-layout>

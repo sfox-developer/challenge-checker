@@ -20,9 +20,12 @@
 
 import { createThemeManager } from './theme.js';
 import { createActivityCard } from './activity.js';
-import { createQuickGoalsModal } from './modal.js';
+import { createQuickGoalsModal, showModal, hideModal, initModalListeners } from './modal.js';
 import { createGoalToggleManager } from './goals.js';
 import { createHabitForm, createHabitFormWithGoalToggle, createHabitEditForm } from './habit.js';
+import { createChallengeForm } from './challenge.js';
+import { toggleHabit, completeWithNotes } from './habitToggle.js';
+import { showToast, showError, showSuccess, showInfo, showWarning, getCsrfToken, createHeaders, post } from '../utils/ui.js';
 
 // Register components globally for Alpine.js to access
 window.themeManager = createThemeManager;
@@ -32,3 +35,23 @@ window.goalToggleManager = createGoalToggleManager;
 window.habitForm = createHabitForm;
 window.habitFormWithGoalToggle = createHabitFormWithGoalToggle;
 window.habitEditForm = createHabitEditForm;
+window.challengeForm = createChallengeForm;
+
+// Register modal utility functions globally
+window.showModal = showModal;
+window.hideModal = hideModal;
+window.initModalListeners = initModalListeners;
+
+// Register habit toggle functions globally
+window.toggleHabit = toggleHabit;
+window.completeWithNotes = completeWithNotes;
+
+// Register UI utility functions globally
+window.showToast = showToast;
+window.showError = showError;
+window.showSuccess = showSuccess;
+window.showInfo = showInfo;
+window.showWarning = showWarning;
+window.getCsrfToken = getCsrfToken;
+window.createHeaders = createHeaders;
+window.post = post;

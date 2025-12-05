@@ -463,29 +463,13 @@
 
     <script>
         // Goal toggle functionality is now handled by goal-toggle.js
-
-        function showCompleteModal() {
-            document.getElementById('completeModal').classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-        }
-
-        function hideCompleteModal() {
-            document.getElementById('completeModal').classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('completeModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                hideCompleteModal();
-            }
-        });
-
-        // Close modal on Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                hideCompleteModal();
-            }
+        // Modal functions are now global
+        window.showCompleteModal = () => showModal('completeModal');
+        window.hideCompleteModal = () => hideModal('completeModal');
+        
+        // Initialize modal listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            initModalListeners('completeModal', hideCompleteModal);
         });
     </script>
 </x-app-layout>

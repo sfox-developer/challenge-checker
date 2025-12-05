@@ -70,7 +70,7 @@
                                     <label class="cursor-pointer">
                                         <input type="checkbox" 
                                                :checked="isCompleted"
-                                               @change="toggleHabit($event, {{ $habit->id }})"
+                                               @change="toggleHabitToday($event, {{ $habit->id }})"
                                                class="w-6 h-6 rounded border-2 border-gray-300 text-teal-600 focus:ring-2 focus:ring-teal-500 transition-all duration-200">
                                     </label>
                                 </div>
@@ -146,7 +146,7 @@
                                          x-transition:enter-end="opacity-100 transform translate-y-0"
                                          class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                                         
-                                        <form @submit.prevent="completeWithNotes({{ $habit->id }})"
+                                        <form @submit.prevent="completeWithNotesToday({{ $habit->id }})"
                                               class="space-y-3">
                                             
                                             <div>
@@ -222,95 +222,10 @@
     </div>
 
     <script>
-        function toggleHabit(event, habitId) {
-            const checkbox = event.target;
-            const isChecked = checkbox.checked;
-
-            fetch(`/habits/${habitId}/toggle`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify({
-                    date: '{{ now()->toDateString() }}'
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Update UI
-                    const habitCard = checkbox.closest('[x-data]');
-                    Alpine.$data(habitCard).isCompleted = data.is_completed;
-                    
-                    // Show toast or update stats
-                    if (data.is_completed) {
-                        showToast('✅ Habit completed!');
-                    }
-                    
-                    // Refresh page to update progress
-                    setTimeout(() => location.reload(), 500);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                checkbox.checked = !isChecked;
-                showToast('❌ Something went wrong', 'error');
-            });
-        }
-
-        function completeWithNotes(habitId) {
-            const habitCard = event.target.closest('[x-data]');
-            const alpineData = Alpine.$data(habitCard);
-            
-            fetch(`/habits/${habitId}/complete`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify({
-                    date: '{{ now()->toDateString() }}',
-                    notes: alpineData.notes || null,
-                    duration_minutes: alpineData.duration ? parseInt(alpineData.duration) : null,
-                    mood: alpineData.mood || null
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showToast('✅ Habit completed with notes!');
-                    alpineData.isCompleted = true;
-                    alpineData.showNotes = false;
-                    
-                    // Reset form
-                    alpineData.notes = '';
-                    alpineData.duration = '';
-                    alpineData.mood = '';
-                    
-                    // Refresh page to update stats
-                    setTimeout(() => location.reload(), 500);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showToast('❌ Something went wrong', 'error');
-            });
-        }
-
-        function showToast(message, type = 'success') {
-            // Simple toast notification (you can enhance this)
-            const toast = document.createElement('div');
-            toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white ${
-                type === 'success' ? 'bg-green-500' : 'bg-red-500'
-            } z-50 transition-opacity duration-300`;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
+        // Habit toggle functions are now global and imported from habitToggle.js
+        // Create wrapper functions that pass the current date
+        window.toggleHabitToday = (event, habitId) => toggleHabit(event, habitId, '{{ now()->toDateString() }}');
+        window.completeWithNotesToday = (habitId) => completeWithNotes(habitId, '{{ now()->toDateString() }}');
+        // showToast is already global
     </script>
 </x-app-layout>
