@@ -231,7 +231,8 @@
                 :user="$user" 
                 :challenges="$challenges" 
                 :activities="$activities"
-                defaultTab="challenges" />
+                defaultTab="challenges"
+                :adminView="true" />
         </div>
     </div>
 

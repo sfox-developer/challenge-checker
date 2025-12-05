@@ -2,7 +2,8 @@
     'user',
     'challenges',
     'activities',
-    'defaultTab' => 'activity'
+    'defaultTab' => 'activity',
+    'adminView' => false
 ])
 
 <div x-data="{ activeTab: '{{ $defaultTab }}' }">
@@ -61,7 +62,7 @@
     <!-- Challenges Tab -->
     <div x-show="activeTab === 'challenges'" class="space-y-4" style="display: none;" x-cloak>
         @forelse($challenges as $challenge)
-            <x-challenge-list-item :challenge="$challenge" />
+            <x-challenge-list-item :challenge="$challenge" :adminView="$adminView" />
         @empty
             <div class="card">
                 <div class="text-center py-8">

@@ -215,6 +215,24 @@ class Challenge extends Model
     }
 
     /**
+     * Get the current day number of the challenge.
+     */
+    public function getCurrentDay(): int
+    {
+        if (!$this->started_at) {
+            return 0;
+        }
+
+        if ($this->completed_at) {
+            return $this->days_duration;
+        }
+
+        $currentDay = now()->diffInDays($this->started_at) + 1;
+        
+        return min($currentDay, $this->days_duration);
+    }
+
+    /**
      * Get the count of completed days (days where all goals were completed).
      */
     public function getCompletedDaysCount(): int

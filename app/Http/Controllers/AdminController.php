@@ -66,6 +66,18 @@ class AdminController extends Controller
     }
 
     /**
+     * Show challenge details for admin view
+     */
+    public function showChallenge(Challenge $challenge): View
+    {
+        $challenge->load(['user', 'goals.dailyProgress' => function ($query) {
+            $query->orderBy('date', 'desc');
+        }]);
+
+        return view('admin.challenge-details', compact('challenge'));
+    }
+
+    /**
      * Delete a user and all their data permanently
      */
     public function deleteUser(User $user)

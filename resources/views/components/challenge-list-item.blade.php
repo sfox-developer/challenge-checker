@@ -1,4 +1,4 @@
-@props(['challenge'])
+@props(['challenge', 'adminView' => false])
 
 <div class="card card-hover">
     <!-- Challenge Header -->
@@ -9,7 +9,8 @@
                 <p class="text-gray-700 dark:text-gray-100 mb-3">{{ Str::limit($challenge->description, 150) }}</p>
             @endif
         </div>
-        <a href="{{ route('challenges.show', $challenge) }}" class="ml-4 text-blue-600 hover:text-blue-500 font-medium whitespace-nowrap">
+        <a href="{{ $adminView ? route('admin.challenge', $challenge) : route('challenges.show', $challenge) }}" 
+           class="ml-4 text-blue-600 hover:text-blue-500 font-medium whitespace-nowrap">
             View →
         </a>
     </div>

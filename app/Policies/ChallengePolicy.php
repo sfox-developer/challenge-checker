@@ -20,7 +20,7 @@ class ChallengePolicy
      * Determine whether the user can view the model.
      */
     public function view(User $user, Challenge $challenge): bool
-    {
+    {        
         // Allow viewing if user owns the challenge or if it's public
         return $user->id === $challenge->user_id || $challenge->is_public;
     }
