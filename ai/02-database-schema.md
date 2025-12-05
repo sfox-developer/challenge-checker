@@ -158,6 +158,33 @@ Aggregate statistics per habit.
 
 ## Goal Library
 
+### categories
+Central category management table for organizing goals.
+
+**Columns:**
+- `id` - Primary key
+- `name` - Category name (e.g., "Health", "Fitness")
+- `slug` - URL-friendly identifier (auto-generated from name)
+- `icon` - Emoji icon for visual representation (nullable)
+- `color` - Color identifier for UI theming (nullable)
+- `description` - Description of the category (nullable)
+- `order` - Display order (default 0, lower numbers first)
+- `is_active` - Boolean flag for active categories (default true)
+- `created_at`, `updated_at` - Timestamps
+
+**Indexes:**
+- `order` - For efficient ordered queries
+- `is_active` - For filtering active categories
+- Unique: `slug` - Ensures unique identifiers
+
+**Scopes:**
+- `active()` - Filter only active categories
+- `ordered()` - Order by `order` ASC
+
+**Usage:**
+- Referenced by `goals_library.category_id`
+- Admin CRUD interface for management
+
 ### goals_library
 Reusable goal templates.
 
@@ -166,12 +193,13 @@ Reusable goal templates.
 - `user_id` - Foreign key to users (cascade delete)
 - `name` - Goal name
 - `description` - Optional description
-- `category` - Optional category (nullable)
-- `icon` - Optional icon identifier (nullable)
+- `category_id` - Foreign key to categories (nullable, set null on delete)
+- `icon` - Optional icon identifier (nullable, deprecated - use category icon)
 - `created_at`, `updated_at` - Timestamps
 
 **Index:**
 - Composite: `(user_id, name)` for fast searches
+- `category_id` - For filtering by category
 
 **Usage:**
 - Referenced by `goals.goal_library_id`

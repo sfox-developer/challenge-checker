@@ -11,6 +11,23 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Quick Actions -->
+            <div class="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <a href="{{ route('admin.categories.index') }}" class="card card-interactive p-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Manage Categories</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Create and edit goal categories</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
             <!-- Total Users Stats -->
             <div class="mb-6">
                 <x-stat-card 

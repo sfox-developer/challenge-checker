@@ -326,6 +326,49 @@ incrementCompletions(): void   // Increment total_completions
 
 ---
 
+## Category Model
+
+**Location:** `app/Domain/Goal/Models/Category.php`
+
+**Extends:** `Illuminate\Database\Eloquent\Model`
+
+**Traits:** `HasFactory`
+
+### Table Name
+- `categories`
+
+### Fillable Attributes
+- `name`, `slug`, `icon`, `color`, `description`, `order`, `is_active`
+
+### Casts
+- `is_active` → boolean
+- `order` → integer
+
+### Relationships
+
+```php
+goalsLibrary(): HasMany        // Goals in this category
+```
+
+### Scopes
+
+```php
+scopeActive($query)
+  // Only active categories (is_active = true)
+  
+scopeOrdered($query)
+  // Order by 'order' column ascending
+```
+
+### Computed Attributes
+
+```php
+getGoalsCountAttribute(): int
+  // Count of goals in this category
+```
+
+---
+
 ## GoalLibrary Model
 
 **Location:** `app/Domain/Goal/Models/GoalLibrary.php`
@@ -338,12 +381,13 @@ incrementCompletions(): void   // Increment total_completions
 - `goals_library` (specified explicitly)
 
 ### Fillable Attributes
-- `user_id`, `name`, `description`, `category`, `icon`
+- `user_id`, `name`, `description`, `category_id`, `icon`
 
 ### Relationships
 
 ```php
 user(): BelongsTo              // Owner
+category(): BelongsTo          // Category relationship (nullable)
 challengeGoals(): HasMany      // Goals referencing this library entry
 habits(): HasMany              // Habits using this goal
 ```
@@ -354,8 +398,8 @@ habits(): HasMany              // Habits using this goal
 scopeSearch($query, string $search)
   // Search by name or description
   
-scopeByCategory($query, ?string $category)
-  // Filter by category
+scopeByCategory($query, ?int $categoryId)
+  // Filter by category_id
 ```
 
 ### Computed Attributes

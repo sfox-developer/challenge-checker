@@ -11,6 +11,7 @@ use App\Domain\Habit\Models\HabitCompletion;
 use App\Domain\Habit\Services\HabitService;
 use App\Domain\Habit\Enums\FrequencyType;
 use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Category;
 
 class HabitController extends Controller
 {
@@ -64,12 +65,14 @@ class HabitController extends Controller
     public function create(): View
     {
         $goalsLibrary = auth()->user()->goalsLibrary()
+            ->with('category')
             ->orderBy('name')
             ->get();
 
+        $categories = Category::active()->ordered()->get();
         $frequencyTypes = FrequencyType::options();
 
-        return view('habits.create', compact('goalsLibrary', 'frequencyTypes'));
+        return view('habits.create', compact('goalsLibrary', 'categories', 'frequencyTypes'));
     }
 
     /**
@@ -81,7 +84,7 @@ class HabitController extends Controller
             'goal_library_id' => 'required_without:new_goal_name|exists:goals_library,id',
             'new_goal_name' => 'required_without:goal_library_id|string|max:255',
             'new_goal_description' => 'nullable|string',
-            'new_goal_category' => 'nullable|string|max:255',
+            'new_goal_category_id' => 'nullable|exists:categories,id',
             'new_goal_icon' => 'nullable|string|max:10',
             'frequency_type' => 'required|in:daily,weekly,monthly,yearly',
             'frequency_count' => $request->input('frequency_type') === 'daily' 
@@ -97,7 +100,7 @@ class HabitController extends Controller
                 'user_id' => auth()->id(),
                 'name' => $validated['new_goal_name'],
                 'description' => $validated['new_goal_description'] ?? null,
-                'category' => $validated['new_goal_category'] ?? null,
+                'category_id' => $validated['new_goal_category_id'] ?? null,
                 'icon' => $validated['new_goal_icon'] ?? null,
             ]);
             $validated['goal_library_id'] = $goalLibrary->id;

@@ -40,8 +40,8 @@
                         <select name="category" class="app-input">
                             <option value="">All Categories</option>
                             @foreach($categories as $cat)
-                                <option value="{{ $cat }}" {{ $category === $cat ? 'selected' : '' }}>
-                                    {{ ucfirst($cat) }}
+                                <option value="{{ $cat->id }}" {{ $categoryId == $cat->id ? 'selected' : '' }}>
+                                    {{ $cat->icon }} {{ $cat->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -55,7 +55,7 @@
                         <span class="hidden sm:inline">Search</span>
                     </button>
 
-                    @if($search || $category)
+                    @if($search || $categoryId)
                         <a href="{{ route('goals.index') }}" class="btn-secondary sm:w-auto">
                             Clear
                         </a>
@@ -85,7 +85,7 @@
                                         <div class="flex flex-wrap items-center gap-2 mt-2">
                                             @if($goal->category)
                                                 <span class="px-2 py-1 text-xs font-medium rounded-full bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">
-                                                    {{ ucfirst($goal->category) }}
+                                                    {{ $goal->category->icon }} {{ $goal->category->name }}
                                                 </span>
                                             @endif
 
@@ -195,15 +195,13 @@
                                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
                                                     Category
                                                 </label>
-                                                <select name="category" class="app-input">
+                                                <select name="category_id" class="app-input">
                                                     <option value="">None</option>
-                                                    <option value="health" {{ $goal->category === 'health' ? 'selected' : '' }}>Health</option>
-                                                    <option value="fitness" {{ $goal->category === 'fitness' ? 'selected' : '' }}>Fitness</option>
-                                                    <option value="learning" {{ $goal->category === 'learning' ? 'selected' : '' }}>Learning</option>
-                                                    <option value="productivity" {{ $goal->category === 'productivity' ? 'selected' : '' }}>Productivity</option>
-                                                    <option value="mindfulness" {{ $goal->category === 'mindfulness' ? 'selected' : '' }}>Mindfulness</option>
-                                                    <option value="social" {{ $goal->category === 'social' ? 'selected' : '' }}>Social</option>
-                                                    <option value="other" {{ $goal->category === 'other' ? 'selected' : '' }}>Other</option>
+                                                    @foreach($categories as $cat)
+                                                        <option value="{{ $cat->id }}" {{ $goal->category_id == $cat->id ? 'selected' : '' }}>
+                                                            {{ $cat->icon }} {{ $cat->name }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -238,23 +236,25 @@
                 <div class="card text-center py-12">
                     <div class="text-6xl mb-4">📚</div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                        @if($search || $category)
+                        @if($search || $categoryId)
                             No goals found
                         @else
                             Your goal library is empty
                         @endif
                     </h3>
                     <p class="text-gray-600 dark:text-gray-400 mb-6">
-                        @if($search || $category)
+                        @if($search || $categoryId)
                             Try adjusting your search or filters.
                         @else
                             Create reusable goals to use in your habits and challenges.
                         @endif
                     </p>
-                    @if(!$search && !$category)
-                        <x-app-button variant="primary" @click="$dispatch('open-modal', 'create-goal')">
-                            Add Your First Goal
-                        </x-app-button>
+                    @if(!$search && !$categoryId)
+                        <div class="flex justify-center">
+                            <x-app-button variant="primary" @click="$dispatch('open-modal', 'create-goal')">
+                                Add Your First Goal
+                            </x-app-button>
+                        </div>
                     @endif
                 </div>
             @endif
@@ -303,15 +303,13 @@
                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
                                 Category
                             </label>
-                            <select name="category" class="app-input">
+                            <select name="category_id" class="app-input">
                                 <option value="">None</option>
-                                <option value="health">Health</option>
-                                <option value="fitness">Fitness</option>
-                                <option value="learning">Learning</option>
-                                <option value="productivity">Productivity</option>
-                                <option value="mindfulness">Mindfulness</option>
-                                <option value="social">Social</option>
-                                <option value="other">Other</option>
+                                @foreach($categories as $cat)
+                                    <option value="{{ $cat->id }}">
+                                        {{ $cat->icon }} {{ $cat->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

@@ -273,6 +273,16 @@ Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboa
 Route::get('/admin/user/{user}', [AdminController::class, 'showUser'])->name('admin.user');
 Route::delete('/admin/user/{user}', [AdminController::class, 'deleteUser'])->name('admin.user.delete');
 Route::get('/admin/challenge/{challenge}', [AdminController::class, 'showChallenge'])->name('admin.challenge');
+
+// Category Management
+Route::resource('admin/categories', CategoryController::class)->names([
+    'index' => 'admin.categories.index',
+    'create' => 'admin.categories.create',
+    'store' => 'admin.categories.store',
+    'edit' => 'admin.categories.edit',
+    'update' => 'admin.categories.update',
+    'destroy' => 'admin.categories.destroy',
+]);
 ```
 
 **Additional Middleware:**
@@ -283,6 +293,7 @@ All admin routes include a check: `if (!auth()->user()->is_admin) abort(403);`
   - System statistics
   - Recent users
   - Total counts
+  - Quick action: "Manage Categories" link
 - `showUser(User $user)` - Admin user detail view
   - Shows ALL user data (including private)
   - Can delete user
@@ -293,6 +304,40 @@ All admin routes include a check: `if (!auth()->user()->is_admin) abort(403);`
   - Shows full challenge details
   - Shows owner information
   - Different layout than public view
+
+**CategoryController Methods (Admin):**
+**Location:** `app/Http/Controllers/Admin/CategoryController.php`
+
+- `index()` - List all categories
+  - Shows order, icon, name, slug, goals count, status
+  - Eager loads goalsLibrary relationship for counts
+  - Actions: Edit, Delete (if not in use)
+  
+- `create()` - Show category creation form
+  - Fields: name, icon (emoji), color dropdown, order, description, is_active
+  - Auto-generates slug from name
+  
+- `store()` - Save new category
+  - Validates input
+  - Auto-generates slug using `Str::slug()`
+  - Default values: order=0, is_active=true
+  - Redirects to index with success message
+  
+- `edit(Category $category)` - Show edit form
+  - Pre-fills all fields
+  - Shows current slug
+  - Shows warning if category is in use
+  
+- `update(Category $category)` - Update category
+  - Validates input
+  - Regenerates slug if name changed
+  - Updates all fields
+  - Redirects to index with success message
+  
+- `destroy(Category $category)` - Delete category
+  - Checks if category is in use (has goals)
+  - Prevents deletion if in use
+  - Deletes and redirects with message
 
 ---
 

@@ -190,17 +190,13 @@
                                                        class="app-input text-sm" 
                                                        placeholder="Icon (emoji)"
                                                        maxlength="10">
-                                                <select :name="`new_goals[${index}][category]`" 
-                                                        x-model="goal.category"
+                                                <select :name="`new_goals[${index}][category_id]`" 
+                                                        x-model="goal.category_id"
                                                         class="app-input text-sm">
                                                     <option value="">Category</option>
-                                                    <option value="health">Health</option>
-                                                    <option value="fitness">Fitness</option>
-                                                    <option value="learning">Learning</option>
-                                                    <option value="productivity">Productivity</option>
-                                                    <option value="mindfulness">Mindfulness</option>
-                                                    <option value="social">Social</option>
-                                                    <option value="other">Other</option>
+                                                    @foreach($categories as $cat)
+                                                        <option value="{{ $cat->id }}">{{ $cat->icon }} {{ $cat->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <textarea :name="`new_goals[${index}][description]`"

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
@@ -74,6 +75,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/user/{user}', [AdminController::class, 'showUser'])->name('admin.user');
     Route::delete('/admin/user/{user}', [AdminController::class, 'deleteUser'])->name('admin.user.delete');
     Route::get('/admin/challenge/{challenge}', [AdminController::class, 'showChallenge'])->name('admin.challenge');
+    
+    // Admin Category Management
+    Route::resource('admin/categories', CategoryController::class)->names([
+        'index' => 'admin.categories.index',
+        'create' => 'admin.categories.create',
+        'store' => 'admin.categories.store',
+        'edit' => 'admin.categories.edit',
+        'update' => 'admin.categories.update',
+        'destroy' => 'admin.categories.destroy',
+    ]);
 });
 
 require __DIR__.'/auth.php';

@@ -40,7 +40,7 @@
                         <div class="flex flex-wrap items-center gap-2">
                             @if($goal->category)
                                 <span class="px-3 py-1 text-sm font-medium rounded-full bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">
-                                    {{ ucfirst($goal->category) }}
+                                    {{ $goal->category->icon }} {{ $goal->category->name }}
                                 </span>
                             @endif
 
@@ -265,12 +265,16 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label for="edit-category-{{ $goal->id }}" class="app-label">Category</label>
-                        <input type="text" 
-                               id="edit-category-{{ $goal->id }}" 
-                               name="category" 
-                               value="{{ $goal->category }}"
-                               class="app-input" 
-                               placeholder="e.g., health, learning">
+                        <select id="edit-category-{{ $goal->id }}"
+                                name="category_id" 
+                                class="app-input">
+                            <option value="">None</option>
+                            @foreach($categories as $cat)
+                                <option value="{{ $cat->id }}" {{ $goal->category_id == $cat->id ? 'selected' : '' }}>
+                                    {{ $cat->icon }} {{ $cat->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div>
