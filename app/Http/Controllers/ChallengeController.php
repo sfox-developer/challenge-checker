@@ -62,10 +62,19 @@ class ChallengeController extends Controller
      */
     public function store(StoreChallengeRequest $request): RedirectResponse
     {
+        // Build frequency config
+        $frequencyConfig = [];
+        if ($request->frequency_type === 'weekly' && $request->has('weekly_days')) {
+            $frequencyConfig['days'] = $request->weekly_days;
+        }
+
         $challenge = auth()->user()->challenges()->create([
             'name' => $request->name,
             'description' => $request->description,
             'days_duration' => $request->days_duration,
+            'frequency_type' => $request->frequency_type,
+            'frequency_count' => $request->frequency_count,
+            'frequency_config' => $frequencyConfig,
             'is_public' => $request->boolean('is_public'),
         ]);
 
@@ -152,10 +161,19 @@ class ChallengeController extends Controller
     {
         $this->authorize('update', $challenge);
 
+        // Build frequency config
+        $frequencyConfig = [];
+        if ($request->frequency_type === 'weekly' && $request->has('weekly_days')) {
+            $frequencyConfig['days'] = $request->weekly_days;
+        }
+
         $challenge->update([
             'name' => $request->name,
             'description' => $request->description,
             'days_duration' => $request->days_duration,
+            'frequency_type' => $request->frequency_type,
+            'frequency_count' => $request->frequency_count,
+            'frequency_config' => $frequencyConfig,
             'is_public' => $request->boolean('is_public'),
         ]);
 

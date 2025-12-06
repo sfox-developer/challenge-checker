@@ -150,10 +150,21 @@
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                                     </svg>
+                                    <span>Frequency:</span>
+                                </div>
+                                <span class="font-semibold text-gray-800 dark:text-gray-100">{{ $challenge->getFrequencyDescription() }}</span>
+                            </div>
+                            @if($challenge->days_duration)
+                            <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
+                                <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                                    </svg>
                                     <span>Duration:</span>
                                 </div>
-                                <span class="font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">{{ $challenge->days_duration }} days</span>
+                                <span class="font-semibold text-gray-800 dark:text-gray-100">{{ $challenge->days_duration }} days</span>
                             </div>
+                            @endif
                             <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
                                 <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -161,7 +172,7 @@
                                     </svg>
                                     <span>Goals:</span>
                                 </div>
-                                <span class="font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">{{ $challenge->goals->count() }}</span>
+                                <span class="font-semibold text-gray-800 dark:text-gray-100">{{ $challenge->goals->count() }}</span>
                             </div>
                             @if($challenge->started_at)
                                 <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
@@ -181,8 +192,8 @@
                                     </svg>
                                     <span>End Date:</span>
                                 </div>
-                                <span class="font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">
-                                    @if($challenge->started_at)
+                                <span class="font-semibold text-gray-800 dark:text-gray-100">
+                                    @if($challenge->started_at && $challenge->days_duration)
                                         {{ $challenge->started_at->addDays($challenge->days_duration - 1)->format('M j, Y') }}
                                     @else
                                         -

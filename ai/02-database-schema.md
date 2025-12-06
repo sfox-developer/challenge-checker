@@ -41,7 +41,10 @@ Time-bound challenges created by users.
 - `user_id` - Foreign key to users (cascade delete)
 - `name` - Challenge title
 - `description` - Optional challenge description
-- `days_duration` - Total days for the challenge (e.g., 30, 60)
+- `days_duration` - Total days for the challenge (optional, nullable - for challenges with end date)
+- `frequency_type` - Enum: daily, weekly, monthly, yearly (default: daily)
+- `frequency_count` - Integer 1-7, how many times per period (default: 1)
+- `frequency_config` - JSON, additional config (e.g., weekly days)
 - `started_at` - When challenge was started (nullable)
 - `completed_at` - When challenge was completed (nullable)
 - `is_active` - Boolean, currently active
@@ -57,6 +60,14 @@ Time-bound challenges created by users.
 - Active: `started_at` is set, `is_active` true, `completed_at` null
 - Paused: `started_at` is set, `is_active` false, `completed_at` null
 - Completed: `completed_at` is set
+
+**Frequency System:**
+Similar to habits, challenges now support flexible frequency tracking:
+- Daily: Track completion every day (frequency_count always 1)
+- Weekly: Track N times per week (e.g., 3 times/week)
+- Monthly: Track N times per month (e.g., 4 times/month)
+- Yearly: Track N times per year (e.g., 12 times/year)
+- `frequency_config` stores additional settings like specific days for weekly challenges
 
 ### goals
 Individual goals within a challenge.

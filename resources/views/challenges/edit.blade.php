@@ -50,18 +50,27 @@
                             optional
                             rows="3" />
 
+                        <!-- Frequency Selection -->
+                        <div x-data="habitEditForm('{{ $challenge->frequency_type?->value ?? 'daily' }}', {{ $challenge->frequency_count ?? 1 }})">
+                            <x-frequency-selector 
+                                :frequency-type="$challenge->frequency_type?->value ?? 'daily'"
+                                :frequency-count="$challenge->frequency_count ?? 1"
+                                :selected-days="$challenge->frequency_config['days'] ?? []"
+                            />
+                        </div>
+
                         <!-- Duration -->
                         <div class="mb-6">
                             <label for="days_duration" class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2">
                                 <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                                 </svg>
-                                <span>Duration (Days)</span>
+                                <span>Duration (Days) <span class="text-xs text-gray-500 font-normal">(Optional - leave blank for ongoing)</span></span>
                             </label>
                             <div class="relative">
                                 <input type="number" name="days_duration" id="days_duration" value="{{ old('days_duration', $challenge->days_duration) }}" 
                                        min="1" max="365"
-                                       class="app-input pr-16" required>
+                                       class="app-input pr-16" placeholder="30">
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                     <span class="text-gray-500 text-sm">days</span>
                                 </div>

@@ -728,6 +728,144 @@ Form components provide reusable, consistent form field patterns across the appl
 6. **Maintainability** - Change styling in one place affects all forms
 7. **Developer Experience** - Simple props interface, less boilerplate
 
+---
+
+## Frequency Selection Components
+
+### x-frequency-selector
+**File:** `resources/views/components/frequency-selector.blade.php`
+
+**Purpose:** Shared frequency selection UI for both habits and challenges
+
+**Props:**
+- `frequencyType` (string, default: 'daily') - Current frequency type
+- `frequencyCount` (integer, default: 1) - How many times per period
+- `selectedDays` (array, default: []) - Selected weekdays for weekly frequency
+
+**Features:**
+- Visual radio button grid for frequency type (daily/weekly/monthly/yearly)
+- Dynamic count selector (1-7) that hides for daily
+- Weekly day selector with checkboxes
+- Responsive design with Tailwind CSS
+- Dark mode support
+- Integrates with Alpine.js `habitForm()` component
+
+**Usage in Habit Forms:**
+```blade
+<form x-data="habitForm('{{ $habit->frequency_type->value }}', {{ $habit->frequency_count }})">
+    <x-frequency-selector 
+        :frequency-type="$habit->frequency_type->value"
+        :frequency-count="$habit->frequency_count"
+        :selected-days="$habit->frequency_config['days'] ?? []"
+    />
+</form>
+```
+
+**Usage in Challenge Forms:**
+```blade
+<form x-data="{ ...challengeForm(), ...habitForm() }">
+    <x-frequency-selector />
+</form>
+```
+
+### x-habit-frequency-form
+**File:** `resources/views/components/habit-frequency-form.blade.php`
+
+**Purpose:** Wrapper component that delegates to `x-frequency-selector` for backward compatibility
+
+**Props:**
+- Same as `x-frequency-selector`
+
+**Implementation:**
+```blade
+<x-frequency-selector 
+    :frequency-type="$frequencyType"
+    :frequency-count="$frequencyCount"
+    :selected-days="$selectedDays"
+/>
+```
+
+**Usage:**
+```blade
+<x-habit-frequency-form />  <!-- Uses defaults -->
+<x-habit-frequency-form 
+    :frequency-type="'weekly'"
+    :frequency-count="3"
+    :selected-days="[1,3,5]"  <!-- Mon, Wed, Fri -->
+/>
+```
+
+### Alpine.js habitForm Component
+**File:** `resources/js/components/habit.js`
+
+**Purpose:** Reactive state management for frequency selection
+
+**Exported Functions:**
+- `createHabitForm(initialFrequencyType, initialFrequencyCount)` - Base form manager
+- `createHabitFormWithGoalToggle(hasGoalsInLibrary)` - For create view
+- `createHabitEditForm(frequencyType, frequencyCount)` - For edit view
+
+**State:**
+```javascript
+{
+    frequencyType: 'daily',      // Current selection
+    frequencyCount: 1,           // Times per period
+    frequencyPeriod: computed    // 'day', 'week', 'month', 'year'
+}
+```
+
+**Methods:**
+```javascript
+init() {
+    // Auto-set frequency_count to 1 for daily habits
+    this.$watch('frequencyType', value => {
+        if (value === 'daily') {
+            this.frequencyCount = 1;
+        }
+    });
+}
+```
+
+**Usage in Blade:**
+```blade
+<div x-data="habitForm('weekly', 3)">
+    <p x-text="frequencyType"></p>      <!-- 'weekly' -->
+    <p x-text="frequencyPeriod"></p>    <!-- 'week' -->
+    <p x-text="frequencyCount"></p>     <!-- 3 -->
+</div>
+```
+
+### Frequency System Architecture
+
+**Shared Between Habits & Challenges:**
+- Both use `FrequencyType` enum (daily/weekly/monthly/yearly)
+- Both store `frequency_count` (1-7)
+- Both use `frequency_config` JSON for additional settings
+- Both use the same UI component (`x-frequency-selector`)
+- Both use the same Alpine.js logic (`habitForm()`)
+
+**Database Fields:**
+```php
+// habits table
+frequency_type: enum('daily', 'weekly', 'monthly', 'yearly')
+frequency_count: integer (1-7)
+frequency_config: json  // e.g., {"days": [1,3,5]}
+
+// challenges table (same structure)
+frequency_type: enum('daily', 'weekly', 'monthly', 'yearly')
+frequency_count: integer (1-7)
+frequency_config: json
+```
+
+**Model Methods:**
+```php
+// Both Habit and Challenge models use FrequencyType enum
+$habit->getFrequencyDescription();     // "3 times per week"
+$challenge->getFrequencyDescription(); // "Daily"
+```
+
+---
+
 ### Form Component Usage Patterns
 
 **Goal Forms** (modals in `/goals/index.blade.php`):
@@ -781,7 +919,7 @@ Form components provide reusable, consistent form field patterns across the appl
 
 **Challenge Forms** (`/challenges/create.blade.php`):
 ```blade
-<form action="{{ route('challenges.store') }}" method="POST">
+<form action="{{ route('challenges.store') }}" method="POST" x-data="{ ...challengeForm(), ...habitForm() }">
     @csrf
     
     <x-form-input
@@ -797,6 +935,9 @@ Form components provide reusable, consistent form field patterns across the appl
         icon='<path d="..."/>'
         iconColor="purple"
         optional />
+    
+    <!-- Frequency Selection (shared component with habits) -->
+    <x-frequency-selector />
 
     <x-form-checkbox
         name="is_public"

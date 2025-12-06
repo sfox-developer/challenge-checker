@@ -77,6 +77,7 @@ getFollowersCountAttribute(): int   // Count of followers
 
 ### Fillable Attributes
 - `user_id`, `name`, `description`, `days_duration`
+- `frequency_type`, `frequency_count`, `frequency_config`
 - `started_at`, `completed_at`, `is_active`, `is_public`
 
 ### Casts
@@ -84,6 +85,9 @@ getFollowersCountAttribute(): int   // Count of followers
 - `completed_at` → datetime
 - `is_active` → boolean
 - `is_public` → boolean
+- `frequency_type` → FrequencyType (enum: daily, weekly, monthly, yearly)
+- `frequency_count` → integer
+- `frequency_config` → array
 
 ### Appends
 - `end_date` - Calculated end date based on start + duration
@@ -119,8 +123,10 @@ hasExpired(): bool             // Duration exceeded
 ### Calculated Attributes
 
 ```php
-getEndDateAttribute()          // start + days_duration
-getStatusAttribute(): string   // 'draft', 'active', 'paused', 'completed'
+getEndDateAttribute()              // start + days_duration (or getDuration())
+getStatusAttribute(): string       // 'draft', 'active', 'paused', 'completed'
+getFrequencyDescription(): string  // Human-readable frequency (e.g., "Daily", "3 times per week")
+getDuration(): int                 // Returns days_duration or default (30)
 ```
 
 ### Progress Methods
@@ -131,6 +137,19 @@ getCurrentDay(): int                // Current day number (1-based)
 getCompletedDaysCount(): int        // Days with all goals completed
 checkAndAutoComplete(): bool        // Auto-complete if expired
 ```
+
+### Frequency System
+
+Challenges now support the same frequency system as habits:
+- **Daily:** Complete goals every day (frequency_count = 1)
+- **Weekly:** Complete goals N times per week (e.g., 3x/week)
+- **Monthly:** Complete goals N times per month (e.g., 4x/month)
+- **Yearly:** Complete goals N times per year (e.g., 12x/year)
+
+The `frequency_config` JSON field stores additional settings:
+- For weekly: `{"days": [1,3,5]}` (Monday, Wednesday, Friday)
+
+**Backward Compatibility:** Old challenges using only `days_duration` will continue to work. New challenges use both frequency settings AND optional duration.
 
 ---
 
