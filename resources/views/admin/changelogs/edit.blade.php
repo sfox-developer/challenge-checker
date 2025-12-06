@@ -27,119 +27,65 @@
                     @csrf
                     @method('PUT')
                     
-                    <div class="space-y-6">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    Version *
-                                </label>
-                                <input type="text" 
-                                       name="version" 
-                                       value="{{ old('version', $changelog->version) }}"
-                                       class="app-input" 
-                                       required
-                                       placeholder="e.g., v1.2.0">
-                                @error('version')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <x-form-input
+                            name="version"
+                            label="Version *"
+                            :value="$changelog->version"
+                            placeholder="e.g., v1.2.0"
+                            required />
 
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    Release Date *
-                                </label>
-                                <input type="date" 
-                                       name="release_date" 
-                                       value="{{ old('release_date', $changelog->release_date->format('Y-m-d')) }}"
-                                       class="app-input" 
-                                       required>
-                                @error('release_date')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                Title *
-                            </label>
-                            <input type="text" 
-                                   name="title" 
-                                   value="{{ old('title', $changelog->title) }}"
-                                   class="app-input" 
-                                   required
-                                   placeholder="e.g., New Features and Bug Fixes">
-                            @error('title')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                Description
-                            </label>
-                            <textarea name="description" 
-                                      rows="2" 
-                                      class="app-input"
-                                      placeholder="Brief summary of this release">{{ old('description', $changelog->description) }}</textarea>
-                            @error('description')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                Changes *
-                            </label>
-                            <textarea name="changes" 
-                                      rows="8" 
-                                      class="app-input font-mono text-sm"
-                                      required
-                                      placeholder="List changes here, one per line:&#10;- Added new feature X&#10;- Fixed bug Y&#10;- Improved performance of Z">{{ old('changes', $changelog->changes) }}</textarea>
-                            @error('changes')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                            <p class="mt-1 text-xs text-gray-500">Use markdown syntax for formatting. Each change should start with a dash (-) or bullet point.</p>
-                        </div>
-
-                        <div class="flex items-center space-x-6">
-                            <div class="flex items-center">
-                                <input type="checkbox" 
-                                       name="is_published" 
-                                       id="is_published"
-                                       class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                                       {{ old('is_published', $changelog->is_published) ? 'checked' : '' }}>
-                                <label for="is_published" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
-                                    Publish
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input type="checkbox" 
-                                       name="is_major" 
-                                       id="is_major"
-                                       class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
-                                       {{ old('is_major', $changelog->is_major) ? 'checked' : '' }}>
-                                <label for="is_major" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
-                                    Major release
-                                </label>
-                            </div>
-                        </div>
+                        <x-form-input
+                            name="release_date"
+                            type="date"
+                            label="Release Date *"
+                            :value="$changelog->release_date->format('Y-m-d')"
+                            required />
                     </div>
 
-                    <div class="mt-8 flex justify-end space-x-3">
-                        <x-app-button variant="secondary" :href="route('admin.changelogs.index')">
-                            Cancel
-                        </x-app-button>
-                        <x-app-button variant="primary" type="submit">
-                            <x-slot name="icon">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                </svg>
-                            </x-slot>
-                            Update Changelog
-                        </x-app-button>
+                    <x-form-input
+                        name="title"
+                        label="Title *"
+                        :value="$changelog->title"
+                        placeholder="e.g., New Features and Bug Fixes"
+                        required />
+
+                    <x-form-textarea
+                        name="description"
+                        label="Description"
+                        :value="$changelog->description"
+                        placeholder="Brief summary of this release"
+                        rows="2"
+                        optional />
+
+                    <x-form-textarea
+                        name="changes"
+                        label="Changes *"
+                        :value="$changelog->changes"
+                        placeholder="List changes here, one per line:&#10;- Added new feature X&#10;- Fixed bug Y&#10;- Improved performance of Z"
+                        hint="Use markdown syntax for formatting. Each change should start with a dash (-) or bullet point."
+                        rows="8"
+                        required
+                        class="font-mono text-sm" />
+
+                    <div class="flex items-center space-x-6 mb-6">
+                        <x-form-checkbox
+                            name="is_published"
+                            label="Publish"
+                            :checked="$changelog->is_published"
+                            class="mb-0" />
+
+                        <x-form-checkbox
+                            name="is_major"
+                            label="Major release"
+                            :checked="$changelog->is_major"
+                            class="mb-0" />
                     </div>
+
+                    <x-form-actions
+                        :cancelRoute="route('admin.changelogs.index')"
+                        submitText="Update Changelog"
+                        class="mt-8" />
                 </form>
             </div>
         </div>

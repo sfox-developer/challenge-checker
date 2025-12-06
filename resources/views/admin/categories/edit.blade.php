@@ -16,102 +16,66 @@
                     @csrf
                     @method('PUT')
                     
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                Category Name *
-                            </label>
-                            <input type="text" 
-                                   name="name" 
-                                   value="{{ old('name', $category->name) }}"
-                                   class="app-input" 
-                                   required
-                                   placeholder="e.g., Health, Fitness">
-                            @error('name')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                            <p class="mt-1 text-xs text-gray-500">Current slug: {{ $category->slug }}</p>
-                        </div>
+                    <x-form-input
+                        name="name"
+                        label="Category Name *"
+                        :value="$category->name"
+                        placeholder="e.g., Health, Fitness"
+                        hint="Current slug: {{ $category->slug }}"
+                        required />
 
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <x-emoji-picker 
-                                    id="category-icon-edit"
-                                    name="icon" 
-                                    :value="old('icon', $category->icon)"
-                                    label="Icon (emoji)" />
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    Color
-                                </label>
-                                <select name="color" class="app-input">
-                                    <option value="">Default</option>
-                                    <option value="red" {{ old('color', $category->color) === 'red' ? 'selected' : '' }}>Red</option>
-                                    <option value="orange" {{ old('color', $category->color) === 'orange' ? 'selected' : '' }}>Orange</option>
-                                    <option value="yellow" {{ old('color', $category->color) === 'yellow' ? 'selected' : '' }}>Yellow</option>
-                                    <option value="green" {{ old('color', $category->color) === 'green' ? 'selected' : '' }}>Green</option>
-                                    <option value="blue" {{ old('color', $category->color) === 'blue' ? 'selected' : '' }}>Blue</option>
-                                    <option value="indigo" {{ old('color', $category->color) === 'indigo' ? 'selected' : '' }}>Indigo</option>
-                                    <option value="purple" {{ old('color', $category->color) === 'purple' ? 'selected' : '' }}>Purple</option>
-                                    <option value="pink" {{ old('color', $category->color) === 'pink' ? 'selected' : '' }}>Pink</option>
-                                    <option value="gray" {{ old('color', $category->color) === 'gray' ? 'selected' : '' }}>Gray</option>
-                                </select>
-                                @error('color')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                Order
-                            </label>
-                            <input type="number" 
-                                   name="order" 
-                                   value="{{ old('order', $category->order) }}"
-                                   min="0"
-                                   class="app-input"
-                                   placeholder="0">
-                            @error('order')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                            <p class="mt-1 text-xs text-gray-500">Lower numbers appear first</p>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                Description
-                            </label>
-                            <textarea name="description" 
-                                      rows="3" 
-                                      class="app-input"
-                                      placeholder="Brief description of this category">{{ old('description', $category->description) }}</textarea>
-                            @error('description')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div class="flex items-center">
-                            <input type="checkbox" 
-                                   name="is_active" 
-                                   id="is_active"
-                                   class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                                   {{ old('is_active', $category->is_active) ? 'checked' : '' }}>
-                            <label for="is_active" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
-                                Active (visible to users)
-                            </label>
-                        </div>
-
-                        @if($category->goalsLibrary()->count() > 0)
-                            <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                                <p class="text-sm text-blue-800 dark:text-blue-200">
-                                    <strong>Note:</strong> This category is currently used by {{ $category->goalsLibrary()->count() }} goal(s).
-                                </p>
-                            </div>
-                        @endif
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <x-emoji-picker 
+                            id="category-icon-edit"
+                            name="icon" 
+                            :value="old('icon', $category->icon)"
+                            label="Icon (emoji)" />
+                        
+                        <x-form-select
+                            name="color"
+                            label="Color"
+                            :value="$category->color"
+                            placeholder="Default">
+                            <option value="red" {{ old('color', $category->color) === 'red' ? 'selected' : '' }}>Red</option>
+                            <option value="orange" {{ old('color', $category->color) === 'orange' ? 'selected' : '' }}>Orange</option>
+                            <option value="yellow" {{ old('color', $category->color) === 'yellow' ? 'selected' : '' }}>Yellow</option>
+                            <option value="green" {{ old('color', $category->color) === 'green' ? 'selected' : '' }}>Green</option>
+                            <option value="blue" {{ old('color', $category->color) === 'blue' ? 'selected' : '' }}>Blue</option>
+                            <option value="indigo" {{ old('color', $category->color) === 'indigo' ? 'selected' : '' }}>Indigo</option>
+                            <option value="purple" {{ old('color', $category->color) === 'purple' ? 'selected' : '' }}>Purple</option>
+                            <option value="pink" {{ old('color', $category->color) === 'pink' ? 'selected' : '' }}>Pink</option>
+                            <option value="gray" {{ old('color', $category->color) === 'gray' ? 'selected' : '' }}>Gray</option>
+                        </x-form-select>
                     </div>
+
+                    <x-form-input
+                        name="order"
+                        type="number"
+                        label="Order"
+                        :value="$category->order"
+                        min="0"
+                        placeholder="0"
+                        hint="Lower numbers appear first" />
+
+                    <x-form-textarea
+                        name="description"
+                        label="Description"
+                        :value="$category->description"
+                        placeholder="Brief description of this category"
+                        rows="3" />
+
+                    <x-form-checkbox
+                        name="is_active"
+                        label="Active (visible to users)"
+                        :checked="$category->is_active" />
+
+                    @if($category->goalsLibrary()->count() > 0)
+                        <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg mb-6">
+                            <p class="text-sm text-blue-800 dark:text-blue-200">
+                                <strong>Note:</strong> This category is currently used by {{ $category->goalsLibrary()->count() }} goal(s).
+                            </p>
+                        </div>
+                    @endif
 
                     <div class="flex justify-end space-x-3 mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                         <a href="{{ route('admin.categories.index') }}" class="btn-secondary">

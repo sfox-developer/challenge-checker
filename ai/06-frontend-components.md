@@ -453,6 +453,361 @@ window.challengeForm = createChallengeForm;
 
 ---
 
+## Form Components
+
+Form components provide reusable, consistent form field patterns across the application. They eliminate code duplication in create and edit forms while maintaining consistent styling, validation display, and dark mode support.
+
+### x-form-field
+**File:** `resources/views/components/form-field.blade.php`
+
+**Purpose:** Base wrapper component for form fields with label, icon, error handling
+
+**Props:**
+- `label` - Field label text (optional)
+- `name` - Field name for error lookup (optional)
+- `icon` - SVG path string for label icon (optional)
+- `iconColor` - Icon color variant (default: 'blue')
+- `optional` - Show "(Optional)" text (default: false)
+- `hint` - Helper text below field (optional)
+- `error` - Manual error message override (optional)
+
+**Slot:** Field input element
+
+**Features:**
+- Auto-displays validation errors from `$errors->first($name)`
+- Consistent label styling with icon support
+- Error icon and message display
+- Optional/required indicator
+- Helper hint text
+- Dark mode support
+
+**Usage:**
+```blade
+<x-form-field 
+    label="Email Address" 
+    name="email"
+    icon='<path d="..."/>'
+    iconColor="purple"
+    hint="We'll never share your email">
+    <input type="email" name="email" class="app-input" />
+</x-form-field>
+```
+
+### x-form-input
+**File:** `resources/views/components/form-input.blade.php`
+
+**Purpose:** Text/number input field with label and validation
+
+**Props:**
+- `label` - Field label (optional)
+- `name` - Input name attribute
+- `type` - Input type (default: 'text')
+- `value` - Field value (optional)
+- `placeholder` - Placeholder text (optional)
+- `required` - Mark as required (default: false)
+- `icon` - SVG path for label icon (optional)
+- `iconColor` - Icon color (default: 'blue')
+- `optional` - Show optional indicator (default: false)
+- `hint` - Helper text (optional)
+- `min` - Min value for number inputs (optional)
+- `max` - Max value for number inputs (optional)
+
+**Features:**
+- Wraps `x-form-field` component
+- `old()` value persistence on validation errors
+- Consistent `app-input` styling
+- All HTML5 input types supported
+
+**Usage:**
+```blade
+<x-form-input
+    name="challenge_name"
+    label="Challenge Name"
+    icon='<path d="..."/>'
+    iconColor="blue"
+    placeholder="e.g., 30-Day Fitness"
+    required />
+
+<x-form-input
+    name="duration"
+    type="number"
+    label="Duration (Days)"
+    :value="30"
+    min="1"
+    max="365"
+    required />
+```
+
+### x-form-textarea
+**File:** `resources/views/components/form-textarea.blade.php`
+
+**Purpose:** Multiline textarea field with label and validation
+
+**Props:**
+- `label` - Field label (optional)
+- `name` - Textarea name attribute
+- `value` - Field value (optional)
+- `placeholder` - Placeholder text (optional)
+- `rows` - Number of rows (default: 3)
+- `required` - Mark as required (default: false)
+- `icon` - SVG path for label icon (optional)
+- `iconColor` - Icon color (default: 'purple')
+- `optional` - Show optional indicator (default: true)
+- `hint` - Helper text (optional)
+
+**Features:**
+- Wraps `x-form-field` component
+- `old()` value persistence
+- Consistent styling with inputs
+- Auto-resizing via CSS
+
+**Usage:**
+```blade
+<x-form-textarea
+    name="description"
+    label="Description"
+    placeholder="Describe your goal..."
+    rows="4"
+    optional />
+```
+
+### x-form-select
+**File:** `resources/views/components/form-select.blade.php`
+
+**Purpose:** Dropdown select field with label and validation
+
+**Props:**
+- `label` - Field label (optional)
+- `name` - Select name attribute
+- `value` - Selected value (optional)
+- `options` - Associative array of value => label (optional)
+- `required` - Mark as required (default: false)
+- `icon` - SVG path for label icon (optional)
+- `iconColor` - Icon color (default: 'blue')
+- `optional` - Show optional indicator (default: false)
+- `hint` - Helper text (optional)
+- `placeholder` - Default empty option text (default: 'Select an option...')
+
+**Slot:** Option elements (if not using `options` prop)
+
+**Features:**
+- Wraps `x-form-field` component
+- `old()` value persistence
+- Auto-selects based on value
+- Supports both slot and prop-based options
+- Empty placeholder option
+
+**Usage with slot:**
+```blade
+<x-form-select
+    name="category_id"
+    label="Category"
+    placeholder="Choose a category">
+    @foreach($categories as $cat)
+        <option value="{{ $cat->id }}">
+            {{ $cat->icon }} {{ $cat->name }}
+        </option>
+    @endforeach
+</x-form-select>
+```
+
+**Usage with options prop:**
+```blade
+<x-form-select
+    name="color"
+    label="Color"
+    :value="old('color', $category->color)"
+    :options="[
+        'red' => 'Red',
+        'blue' => 'Blue',
+        'green' => 'Green',
+    ]" />
+```
+
+### x-form-checkbox
+**File:** `resources/views/components/form-checkbox.blade.php`
+
+**Purpose:** Checkbox field with label and description
+
+**Props:**
+- `label` - Checkbox label text
+- `name` - Checkbox name attribute
+- `value` - Checkbox value (default: '1')
+- `checked` - Checked state (default: false)
+- `description` - Helper text below label (optional)
+- `icon` - SVG path for label icon (optional)
+- `iconColor` - Icon color (default: 'blue')
+
+**Features:**
+- `old()` state persistence
+- Consistent checkbox styling
+- Label click to toggle
+- Optional description text
+- Icon support in label
+- Dark mode support
+
+**Usage:**
+```blade
+<x-form-checkbox
+    name="is_public"
+    label="Make this public"
+    description="Everyone can see this content"
+    :checked="true" />
+
+<x-form-checkbox
+    name="is_active"
+    label="Active"
+    icon='<path d="..."/>'
+    iconColor="green"
+    :checked="$category->is_active" />
+```
+
+### x-form-actions
+**File:** `resources/views/components/form-actions.blade.php`
+
+**Purpose:** Standardized form submit/cancel button group
+
+**Props:**
+- `cancelRoute` - URL for cancel button (optional)
+- `cancelText` - Cancel button text (default: 'Cancel')
+- `submitText` - Submit button text (default: 'Submit')
+- `submitIcon` - Custom SVG for submit button (optional)
+- `submitVariant` - Submit button variant (default: 'primary')
+- `reverse` - Reverse button order (default: false)
+
+**Slot:** Custom button content (overrides default buttons)
+
+**Features:**
+- Consistent border-top separator
+- Default checkmark icon for submit
+- Back arrow icon for cancel
+- Flexible button ordering
+- Integrates with `x-app-button` component
+- Customizable via slot
+
+**Usage (default buttons):**
+```blade
+<x-form-actions
+    :cancelRoute="route('challenges.index')"
+    cancelText="Back"
+    submitText="Create Challenge"
+    submitVariant="primary" />
+```
+
+**Usage (reversed order):**
+```blade
+<x-form-actions
+    :cancelRoute="route('goals.index')"
+    submitText="Update Goal"
+    submitVariant="gradient-purple"
+    reverse />
+```
+
+**Usage (custom buttons via slot):**
+```blade
+<x-form-actions>
+    <button type="button" class="btn-secondary">
+        Cancel
+    </button>
+    <button type="submit" class="btn-danger">
+        Delete
+    </button>
+    <button type="submit" class="btn-primary" name="action" value="save">
+        Save
+    </button>
+</x-form-actions>
+```
+
+### Form Component Benefits
+
+1. **Consistency** - All forms use same styling and structure
+2. **DRY Principle** - No duplicated label/error/icon markup
+3. **Validation** - Auto-displays Laravel validation errors
+4. **Accessibility** - Proper label associations and ARIA attributes
+5. **Dark Mode** - All components support dark mode out of the box
+6. **Maintainability** - Change styling in one place affects all forms
+7. **Developer Experience** - Simple props interface, less boilerplate
+
+### Form Component Usage Patterns
+
+**Goal Forms** (modals in `/goals/index.blade.php`):
+```blade
+<form action="{{ route('goals.store') }}" method="POST">
+    @csrf
+    
+    <x-form-input
+        name="name"
+        label="Goal Name"
+        placeholder="e.g., Exercise"
+        required />
+
+    <x-form-select
+        name="category_id"
+        label="Category"
+        placeholder="None">
+        @foreach($categories as $cat)
+            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+        @endforeach
+    </x-form-select>
+
+    <x-form-textarea
+        name="description"
+        label="Description"
+        optional />
+</form>
+```
+
+**Category Forms** (`/admin/categories/create.blade.php`):
+```blade
+<form action="{{ route('admin.categories.store') }}" method="POST">
+    @csrf
+    
+    <x-form-input
+        name="name"
+        label="Category Name *"
+        hint="Slug will be auto-generated"
+        required />
+
+    <x-form-checkbox
+        name="is_active"
+        label="Active (visible to users)"
+        :checked="true" />
+
+    <x-form-actions
+        :cancelRoute="route('admin.categories.index')"
+        submitText="Create Category" />
+</form>
+```
+
+**Challenge Forms** (`/challenges/create.blade.php`):
+```blade
+<form action="{{ route('challenges.store') }}" method="POST">
+    @csrf
+    
+    <x-form-input
+        name="name"
+        label="Challenge Name"
+        icon='<path d="..."/>'
+        iconColor="blue"
+        required />
+
+    <x-form-textarea
+        name="description"
+        label="Description"
+        icon='<path d="..."/>'
+        iconColor="purple"
+        optional />
+
+    <x-form-checkbox
+        name="is_public"
+        label="Make this challenge public"
+        description="Other users will see this"
+        icon='<path d="..."/>' />
+</form>
+```
+
+---
+
 ## Utility Functions
 
 ### File: `resources/js/utils/ui.js`

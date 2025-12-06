@@ -16,47 +16,23 @@
                         @csrf
                         
                         <!-- Challenge Name -->
-                        <div class="mb-6">
-                            <label for="name" class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2">
-                                <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V7l-7-5z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Challenge Name</span>
-                            </label>
-                            <input type="text" name="name" id="name" value="{{ old('name') }}" 
-                                   class="app-input" 
-                                   placeholder="e.g., 30-Day Fitness Challenge" required>
-                            @error('name')
-                                <p class="mt-2 text-sm text-red-600 flex items-center space-x-1">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span>{{ $message }}</span>
-                                </p>
-                            @enderror
-                        </div>
+                        <x-form-input
+                            name="name"
+                            label="Challenge Name"
+                            icon='<path fill-rule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V7l-7-5z" clip-rule="evenodd"></path>'
+                            iconColor="blue"
+                            placeholder="e.g., 30-Day Fitness Challenge"
+                            required />
 
                         <!-- Description -->
-                        <div class="mb-6">
-                            <label for="description" class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2">
-                                <svg class="w-4 h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Description</span>
-                                <span class="text-xs text-gray-500 font-normal">(Optional)</span>
-                            </label>
-                            <textarea name="description" id="description" rows="3" 
-                                      class="app-input" 
-                                      placeholder="Describe what this challenge is about...">{{ old('description') }}</textarea>
-                            @error('description')
-                                <p class="mt-2 text-sm text-red-600 flex items-center space-x-1">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span>{{ $message }}</span>
-                                </p>
-                            @enderror
-                        </div>
+                        <x-form-textarea
+                            name="description"
+                            label="Description"
+                            icon='<path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>'
+                            iconColor="purple"
+                            placeholder="Describe what this challenge is about..."
+                            optional
+                            rows="3" />
 
                         <!-- Duration -->
                         <div class="mb-6">
@@ -85,23 +61,13 @@
                         </div>
 
                         <!-- Public Checkbox -->
-                        <div class="mb-8">
-                            <div class="flex items-start">
-                                <div class="flex items-center h-5">
-                                    <input type="checkbox" name="is_public" id="is_public" value="1" {{ old('is_public') ? 'checked' : '' }}
-                                           class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-200">
-                                </div>
-                                <div class="ml-3">
-                                    <label for="is_public" class="text-sm font-bold text-gray-800 dark:text-gray-100 flex items-center space-x-2">
-                                        <svg class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                        <span>Make this challenge public</span>
-                                    </label>
-                                    <p class="text-xs text-gray-500 mt-1">Other users will be able to see this challenge in their feed</p>
-                                </div>
-                            </div>
-                        </div>
+                        <x-form-checkbox
+                            name="is_public"
+                            label="Make this challenge public"
+                            description="Other users will be able to see this challenge in their feed"
+                            icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'
+                            :checked="old('is_public', false)"
+                            class="mb-8" />
 
                         <!-- Goals Section -->
                         <div class="mb-6">

@@ -167,50 +167,39 @@
                                     @csrf
                                     @method('PUT')
                                     
-                                    <div class="space-y-4">
-                                        <div>
-                                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                                                Goal Name
-                                            </label>
-                                            <input type="text" 
-                                                   name="name" 
-                                                   value="{{ $goal->name }}"
-                                                   class="app-input" 
-                                                   required>
-                                        </div>
+                                    <x-form-input
+                                        name="name"
+                                        label="Goal Name"
+                                        :value="$goal->name"
+                                        required
+                                        class="mb-4" />
 
-                                        <div class="grid grid-cols-2 gap-3">
-                                            <div>
-                                                <x-emoji-picker 
-                                                    :id="'edit-goal-icon-' . $goal->id"
-                                                    name="icon" 
-                                                    :value="$goal->icon"
-                                                    label="Icon (emoji)" />
-                                            </div>
-                                            <div>
-                                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                                                    Category
-                                                </label>
-                                                <select name="category_id" class="app-input">
-                                                    <option value="">None</option>
-                                                    @foreach($categories as $cat)
-                                                        <option value="{{ $cat->id }}" {{ $goal->category_id == $cat->id ? 'selected' : '' }}>
-                                                            {{ $cat->icon }} {{ $cat->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                                                Description
-                                            </label>
-                                            <textarea name="description" 
-                                                      rows="3" 
-                                                      class="app-input">{{ $goal->description }}</textarea>
-                                        </div>
+                                    <div class="grid grid-cols-2 gap-3 mb-4">
+                                        <x-emoji-picker 
+                                            :id="'edit-goal-icon-' . $goal->id"
+                                            name="icon" 
+                                            :value="$goal->icon"
+                                            label="Icon (emoji)" />
+                                        
+                                        <x-form-select
+                                            name="category_id"
+                                            label="Category"
+                                            :value="$goal->category_id"
+                                            placeholder="None">
+                                            @foreach($categories as $cat)
+                                                <option value="{{ $cat->id }}" {{ $goal->category_id == $cat->id ? 'selected' : '' }}>
+                                                    {{ $cat->icon }} {{ $cat->name }}
+                                                </option>
+                                            @endforeach
+                                        </x-form-select>
                                     </div>
+
+                                    <x-form-textarea
+                                        name="description"
+                                        label="Description"
+                                        :value="$goal->description"
+                                        rows="3"
+                                        class="mb-4" />
 
                                     <div class="flex justify-end space-x-3 mt-6">
                                         <button type="button" 
@@ -266,57 +255,40 @@
             <form action="{{ route('goals.store') }}" method="POST">
                 @csrf
                 
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                            Goal Name
-                        </label>
-                        <input type="text" 
-                               name="name" 
-                               value="{{ old('name') }}"
-                               class="app-input" 
-                               placeholder="e.g., Exercise, Read, Meditate"
-                               required>
-                        @error('name')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
+                <x-form-input
+                    name="name"
+                    label="Goal Name"
+                    placeholder="e.g., Exercise, Read, Meditate"
+                    required
+                    class="mb-4" />
 
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <x-emoji-picker 
-                                id="create-goal-icon"
-                                name="icon" 
-                                :value="old('icon')"
-                                placeholder="🎯"
-                                label="Icon (emoji)" />
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                                Category
-                            </label>
-                            <select name="category_id" class="app-input">
-                                <option value="">None</option>
-                                @foreach($categories as $cat)
-                                    <option value="{{ $cat->id }}">
-                                        {{ $cat->icon }} {{ $cat->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                            Description <span class="text-xs text-gray-500 font-normal">(Optional)</span>
-                        </label>
-                        <textarea name="description" 
-                                  rows="3" 
-                                  class="app-input"
-                                  placeholder="What is this goal about?">{{ old('description') }}</textarea>
-                    </div>
+                <div class="grid grid-cols-2 gap-3 mb-4">
+                    <x-emoji-picker 
+                        id="create-goal-icon"
+                        name="icon" 
+                        :value="old('icon')"
+                        placeholder="🎯"
+                        label="Icon (emoji)" />
+                    
+                    <x-form-select
+                        name="category_id"
+                        label="Category"
+                        placeholder="None">
+                        @foreach($categories as $cat)
+                            <option value="{{ $cat->id }}">
+                                {{ $cat->icon }} {{ $cat->name }}
+                            </option>
+                        @endforeach
+                    </x-form-select>
                 </div>
+
+                <x-form-textarea
+                    name="description"
+                    label="Description"
+                    placeholder="What is this goal about?"
+                    rows="3"
+                    optional
+                    class="mb-4" />
 
                 <div class="flex justify-end space-x-3 mt-6">
                     <button type="button" 

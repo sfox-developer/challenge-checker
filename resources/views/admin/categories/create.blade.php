@@ -15,94 +15,55 @@
                 <form action="{{ route('admin.categories.store') }}" method="POST">
                     @csrf
                     
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                Category Name *
-                            </label>
-                            <input type="text" 
-                                   name="name" 
-                                   value="{{ old('name') }}"
-                                   class="app-input" 
-                                   required
-                                   placeholder="e.g., Health, Fitness">
-                            @error('name')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                            <p class="mt-1 text-xs text-gray-500">Slug will be auto-generated from name</p>
-                        </div>
+                    <x-form-input
+                        name="name"
+                        label="Category Name *"
+                        placeholder="e.g., Health, Fitness"
+                        hint="Slug will be auto-generated from name"
+                        required />
 
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <x-emoji-picker 
-                                    id="category-icon"
-                                    name="icon" 
-                                    :value="old('icon')"
-                                    label="Icon (emoji)" />
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    Color
-                                </label>
-                                <select name="color" class="app-input">
-                                    <option value="">Default</option>
-                                    <option value="red">Red</option>
-                                    <option value="orange">Orange</option>
-                                    <option value="yellow">Yellow</option>
-                                    <option value="green">Green</option>
-                                    <option value="blue">Blue</option>
-                                    <option value="indigo">Indigo</option>
-                                    <option value="purple">Purple</option>
-                                    <option value="pink">Pink</option>
-                                    <option value="gray">Gray</option>
-                                </select>
-                                @error('color')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                Order
-                            </label>
-                            <input type="number" 
-                                   name="order" 
-                                   value="{{ old('order', 0) }}"
-                                   min="0"
-                                   class="app-input"
-                                   placeholder="0">
-                            @error('order')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                            <p class="mt-1 text-xs text-gray-500">Lower numbers appear first</p>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                Description
-                            </label>
-                            <textarea name="description" 
-                                      rows="3" 
-                                      class="app-input"
-                                      placeholder="Brief description of this category">{{ old('description') }}</textarea>
-                            @error('description')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div class="flex items-center">
-                            <input type="checkbox" 
-                                   name="is_active" 
-                                   id="is_active"
-                                   class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                                   {{ old('is_active', true) ? 'checked' : '' }}>
-                            <label for="is_active" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
-                                Active (visible to users)
-                            </label>
-                        </div>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <x-emoji-picker 
+                            id="category-icon"
+                            name="icon" 
+                            :value="old('icon')"
+                            label="Icon (emoji)" />
+                        
+                        <x-form-select
+                            name="color"
+                            label="Color"
+                            placeholder="Default">
+                            <option value="red">Red</option>
+                            <option value="orange">Orange</option>
+                            <option value="yellow">Yellow</option>
+                            <option value="green">Green</option>
+                            <option value="blue">Blue</option>
+                            <option value="indigo">Indigo</option>
+                            <option value="purple">Purple</option>
+                            <option value="pink">Pink</option>
+                            <option value="gray">Gray</option>
+                        </x-form-select>
                     </div>
+
+                    <x-form-input
+                        name="order"
+                        type="number"
+                        label="Order"
+                        :value="0"
+                        min="0"
+                        placeholder="0"
+                        hint="Lower numbers appear first" />
+
+                    <x-form-textarea
+                        name="description"
+                        label="Description"
+                        placeholder="Brief description of this category"
+                        rows="3" />
+
+                    <x-form-checkbox
+                        name="is_active"
+                        label="Active (visible to users)"
+                        :checked="true" />
 
                     <div class="flex justify-end space-x-3 mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                         <a href="{{ route('admin.categories.index') }}" class="btn-secondary">

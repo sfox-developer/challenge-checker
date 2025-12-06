@@ -243,48 +243,41 @@
                 Edit Goal
             </h2>
 
-            <div class="space-y-4">
-                <div>
-                    <label for="edit-name-{{ $goal->id }}" class="app-label">Goal Name *</label>
-                    <input type="text" 
-                           id="edit-name-{{ $goal->id }}" 
-                           name="name" 
-                           value="{{ $goal->name }}"
-                           class="app-input" 
-                           required>
-                </div>
+            <x-form-input
+                name="name"
+                label="Goal Name *"
+                :value="$goal->name"
+                required
+                class="mb-4" />
+
+            <x-form-textarea
+                name="description"
+                label="Description"
+                :value="$goal->description"
+                rows="3"
+                optional
+                class="mb-4" />
+
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <x-form-select
+                    name="category_id"
+                    label="Category"
+                    :value="$goal->category_id"
+                    placeholder="None">
+                    @foreach($categories as $cat)
+                        <option value="{{ $cat->id }}" {{ $goal->category_id == $cat->id ? 'selected' : '' }}>
+                            {{ $cat->icon }} {{ $cat->name }}
+                        </option>
+                    @endforeach
+                </x-form-select>
 
                 <div>
-                    <label for="edit-description-{{ $goal->id }}" class="app-label">Description</label>
-                    <textarea id="edit-description-{{ $goal->id }}" 
-                              name="description" 
-                              rows="3" 
-                              class="app-input">{{ $goal->description }}</textarea>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label for="edit-category-{{ $goal->id }}" class="app-label">Category</label>
-                        <select id="edit-category-{{ $goal->id }}"
-                                name="category_id" 
-                                class="app-input">
-                            <option value="">None</option>
-                            @foreach($categories as $cat)
-                                <option value="{{ $cat->id }}" {{ $goal->category_id == $cat->id ? 'selected' : '' }}>
-                                    {{ $cat->icon }} {{ $cat->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div>
-                        <x-emoji-picker 
-                            :id="'edit-icon-' . $goal->id"
-                            name="icon" 
-                            :value="$goal->icon"
-                            label="Icon (emoji)"
-                            placeholder="🎯" />
-                    </div>
+                    <x-emoji-picker 
+                        :id="'edit-icon-' . $goal->id"
+                        name="icon" 
+                        :value="$goal->icon"
+                        label="Icon (emoji)"
+                        placeholder="🎯" />
                 </div>
             </div>
 
