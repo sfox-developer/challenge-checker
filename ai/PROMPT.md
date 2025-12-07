@@ -11,7 +11,7 @@ Read ai/README.md and follow the standard AI agent workflow for this project.
 
 Before starting any work:
 1. Read ai/README.md to understand the workflow
-2. Read all documentation files in ai/ folder (01-06)
+2. Read all documentation files in ai/ folder (01-07)
 3. Understand the project architecture and patterns
 
 Task: [DESCRIBE YOUR TASK HERE]
