@@ -3,20 +3,25 @@
     'gradient' => 'from-blue-500 to-purple-500',
 ])
 
-<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
-    <div class="flex items-center space-x-3">
+@php
+    // Convert "from-blue-500 to-purple-500" to "blue-purple"
+    $gradientClass = preg_replace('/from-(\w+)-\d+\s+to-(\w+)-\d+/', '$1-$2', $gradient);
+@endphp
+
+<div class="page-header">
+    <div class="page-header-content">
         @isset($icon)
-            <div class="bg-gradient-to-r {{ $gradient }} p-2 rounded-lg flex-shrink-0">
+            <div class="page-header-icon gradient-{{ $gradientClass }}">
                 {{ $icon }}
             </div>
         @endisset
-        <h2 class="font-bold text-xl sm:text-2xl text-gray-800 dark:text-gray-100 leading-tight">
+        <h2 class="page-header-title">
             {{ $title }}
         </h2>
     </div>
     
     @isset($action)
-        <div class="w-full sm:w-auto">
+        <div class="page-header-actions">
             {{ $action }}
         </div>
     @endisset

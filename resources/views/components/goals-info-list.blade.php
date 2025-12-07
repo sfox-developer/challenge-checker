@@ -3,15 +3,15 @@
 @if($goals->isNotEmpty())
     <div class="space-y-3">
         @foreach($goals as $index => $goal)
-            <div class="flex items-start gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            <div class="goal-info-item">
                 <!-- Number Badge -->
-                <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                <div class="numbered-badge">
                     {{ $index + 1 }}
                 </div>
                 
                 <!-- Goal Content -->
-                <div class="flex-1 min-w-0">
-                    <h4 class="font-semibold text-gray-900 dark:text-white">
+                <div class="goal-info-content">
+                    <h4 class="goal-info-title">
                         @if($goal->icon)
                             <span class="mr-2">{{ $goal->icon }}</span>
                         @endif
@@ -19,7 +19,7 @@
                     </h4>
                     
                     @if($goal->description)
-                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        <p class="goal-info-description">
                             {{ $goal->description }}
                         </p>
                     @endif

@@ -1,4 +1,4 @@
-<footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 mt-auto">
+<footer class="app-footer">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div class="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
             <div class="text-center sm:text-left">

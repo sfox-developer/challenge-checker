@@ -160,9 +160,14 @@
 
                         <!-- Edit Modal for this goal -->
                         <x-modal name="edit-goal-{{ $goal->id }}" :show="false">
-                            <div class="p-6">
-                                <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Edit Goal</h2>
-                                
+                            <div class="modal-header">
+                                <div class="modal-header-title">
+                                    <h3>Edit Goal</h3>
+                                    <button type="button" @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')" class="text-white hover:text-gray-200 text-2xl font-bold leading-none">&times;</button>
+                                </div>
+                            </div>
+                            
+                            <div class="modal-content">
                                 <form action="{{ route('goals.update', $goal) }}" method="POST">
                                     @csrf
                                     @method('PUT')
@@ -249,9 +254,14 @@
 
     <!-- Create Goal Modal -->
     <x-modal name="create-goal" :show="$errors->any()">
-        <div class="p-6">
-            <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Add New Goal</h2>
-            
+        <div class="modal-header">
+            <div class="modal-header-title">
+                <h3>Add New Goal</h3>
+                <button type="button" @click="$dispatch('close-modal', 'create-goal')" class="text-white hover:text-gray-200 text-2xl font-bold leading-none">&times;</button>
+            </div>
+        </div>
+        
+        <div class="modal-content">
             <form action="{{ route('goals.store') }}" method="POST">
                 @csrf
                 

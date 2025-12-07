@@ -21,7 +21,7 @@
                                         {{ $changelog->version }}
                                     </h2>
                                     @if($changelog->is_major)
-                                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-sm">
+                                        <span class="badge-gradient-purple">
                                             🚀 Major Release
                                         </span>
                                     @endif

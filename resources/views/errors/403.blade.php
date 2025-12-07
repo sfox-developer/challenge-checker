@@ -25,28 +25,28 @@
         </script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center px-4 py-12">
-            <div class="max-w-md w-full text-center">
+        <div class="error-page-container">
+            <div class="error-page-content">
 
                 <!-- Icon -->
-                <div class="mb-6">
-                    <div class="mx-auto w-24 h-24 bg-gradient-to-br from-red-100 to-pink-100 dark:from-red-900/20 dark:to-pink-900/20 rounded-full flex items-center justify-center">
-                        <svg class="w-12 h-12 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="error-page-icon-wrapper">
+                    <div class="error-page-icon error-icon-403">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
                     </div>
                 </div>
 
                 <!-- Message -->
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                <h1 class="error-page-title">
                     Access Forbidden
                 </h1>
-                <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+                <p class="error-page-message">
                     Sorry, you don't have permission to access this resource. If you believe this is an error, please contact support.
                 </p>
 
             <!-- Actions -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <div class="error-page-actions">
                 <x-app-button variant="blue" href="{{ url()->previous() }}">
                     <x-slot name="icon">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

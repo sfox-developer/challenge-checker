@@ -39,16 +39,16 @@
 
                         <div class="flex flex-wrap items-center gap-2">
                             @if($goal->category)
-                                <span class="px-3 py-1 text-sm font-medium rounded-full bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">
+                                <span class="badge-purple">
                                     {{ $goal->category->icon }} {{ $goal->category->name }}
                                 </span>
                             @endif
 
-                            <span class="px-3 py-1 text-sm font-medium rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                            <span class="count-badge">
                                 {{ $challenges->count() }} Challenge{{ $challenges->count() !== 1 ? 's' : '' }}
                             </span>
 
-                            <span class="px-3 py-1 text-sm font-medium rounded-full bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200">
+                            <span class="count-badge-teal">
                                 {{ $habits->count() }} Habit{{ $habits->count() !== 1 ? 's' : '' }}
                             </span>
                         </div>
@@ -235,13 +235,17 @@
 
     <!-- Edit Goal Modal -->
     <x-modal name="edit-goal-{{ $goal->id }}" maxWidth="2xl">
-        <form method="POST" action="{{ route('goals.update', $goal) }}" class="p-6">
-            @csrf
-            @method('PUT')
-
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-                Edit Goal
-            </h2>
+        <div class="modal-header">
+            <div class="modal-header-title">
+                <h3>Edit Goal</h3>
+                <button type="button" @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')" class="text-white hover:text-gray-200 text-2xl font-bold leading-none">&times;</button>
+            </div>
+        </div>
+        
+        <div class="modal-content">
+            <form method="POST" action="{{ route('goals.update', $goal) }}">
+                @csrf
+                @method('PUT')
 
             <x-form-input
                 name="name"
@@ -281,16 +285,18 @@
                 </div>
             </div>
 
-            <div class="mt-6 flex justify-end gap-3">
-                <button type="button" 
-                        @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')" 
-                        class="btn-secondary">
-                    Cancel
-                </button>
-                <button type="submit" class="btn-primary">
-                    Update Goal
-                </button>
-            </div>
+                <div class="mt-6 flex justify-end gap-3">
+                    <button type="button" 
+                            @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')" 
+                            class="btn-secondary">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        Update Goal
+                    </button>
+                </div>
+            </form>
+        </div>
         </form>
     </x-modal>
 </x-app-layout>

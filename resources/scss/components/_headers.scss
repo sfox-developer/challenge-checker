@@ -1,0 +1,189 @@
+// ============================================================================
+// HEADER COMPONENTS
+// ============================================================================
+// Page headers, section headers, and title patterns
+// Used for consistent header styling across the application
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// APP HEADER - Main page header wrapper (in app.blade.php)
+// ----------------------------------------------------------------------------
+
+.app-header {
+    @apply bg-white dark:bg-gray-800;
+    @apply bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm shadow-sm;
+}
+
+.app-header-container {
+    @apply max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8;
+}
+
+// ----------------------------------------------------------------------------
+// PAGE HEADERS - For individual page headings
+// ----------------------------------------------------------------------------
+
+.page-header {
+    @apply flex flex-col sm:flex-row justify-between items-start sm:items-center;
+    @apply space-y-4 sm:space-y-0;
+}
+
+.page-header-content {
+    @apply flex items-center space-x-3;
+}
+
+.page-header-icon {
+    @apply p-2 rounded-lg flex-shrink-0;
+    
+    // Default gradient
+    &.gradient-blue-purple {
+        @apply bg-gradient-to-r from-blue-500 to-purple-500;
+    }
+    
+    &.gradient-blue-indigo {
+        @apply bg-gradient-to-r from-blue-500 to-indigo-500;
+    }
+    
+    &.gradient-green-green {
+        @apply bg-gradient-to-r from-green-500 to-green-600;
+    }
+    
+    &.gradient-green-teal {
+        @apply bg-gradient-to-r from-green-500 to-teal-500;
+    }
+    
+    &.gradient-orange-red {
+        @apply bg-gradient-to-r from-orange-500 to-red-500;
+    }
+    
+    &.gradient-teal-cyan {
+        @apply bg-gradient-to-r from-teal-500 to-cyan-500;
+    }
+    
+    &.gradient-purple-pink {
+        @apply bg-gradient-to-r from-purple-500 to-pink-500;
+    }
+    
+    &.gradient-red-pink {
+        @apply bg-gradient-to-r from-red-500 to-pink-500;
+    }
+    
+    &.gradient-indigo-purple {
+        @apply bg-gradient-to-r from-indigo-500 to-purple-500;
+    }
+}
+
+.page-header-title {
+    @apply font-bold text-xl sm:text-2xl text-gray-800 dark:text-gray-100 leading-tight;
+}
+
+.page-header-subtitle {
+    @apply text-sm text-gray-600 dark:text-gray-400 mt-1;
+}
+
+.page-header-actions {
+    @apply w-full sm:w-auto;
+}
+
+// ----------------------------------------------------------------------------
+// SECTION HEADER - Headers within cards/containers
+// ----------------------------------------------------------------------------
+
+.section-header {
+    @apply text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4;
+    
+    &.section-header-sm {
+        @apply text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3;
+        @apply flex items-center;
+    }
+    
+    &.section-header-md {
+        @apply text-base font-semibold text-gray-800 dark:text-gray-200 mb-3;
+    }
+}
+
+// Section header with icon
+.section-header-with-icon {
+    @apply flex items-center space-x-2;
+    
+    svg {
+        @apply w-5 h-5 flex-shrink-0;
+    }
+}
+
+// Section header with count badge
+.section-header-with-count {
+    @apply flex items-center space-x-2;
+    
+    .count {
+        @apply ml-2 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300;
+        @apply px-2 py-1 rounded-full text-xs;
+    }
+}
+
+// ----------------------------------------------------------------------------
+// TAB HEADERS - For tabbed interfaces
+// ----------------------------------------------------------------------------
+
+.tab-header {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm;
+}
+
+.tab-nav {
+    @apply -mb-px flex space-x-8 px-6;
+    @apply border-b border-gray-200 dark:border-gray-700;
+}
+
+.tab-button {
+    @apply whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm;
+    @apply transition-colors duration-150;
+    
+    &.active {
+        @apply border-blue-500 text-blue-600 dark:text-blue-400;
+    }
+    
+    &:not(.active) {
+        @apply border-transparent text-gray-500 dark:text-gray-400;
+        @apply hover:text-gray-700 dark:hover:text-gray-100;
+        @apply hover:border-gray-300 dark:hover:border-gray-600;
+    }
+}
+
+// Tab color variants
+.tab-header-purple .tab-button.active {
+    @apply border-purple-500 text-purple-600 dark:text-purple-400;
+}
+
+.tab-header-teal .tab-button.active {
+    @apply border-teal-500 text-teal-600 dark:text-teal-400;
+}
+
+.tab-header-green .tab-button.active {
+    @apply border-green-500 text-green-600 dark:text-green-400;
+}
+
+.tab-header-orange .tab-button.active {
+    @apply border-orange-500 text-orange-600 dark:text-orange-400;
+}
+
+// Tab button with count badge
+.tab-button-with-count {
+    .count-badge {
+        @apply ml-2;
+    }
+}
+
+// ----------------------------------------------------------------------------
+// CARD HEADER - Header within a card component
+// ----------------------------------------------------------------------------
+
+.card-header {
+    @apply flex items-start justify-between mb-4;
+    
+    .card-title {
+        @apply text-lg font-semibold text-gray-800 dark:text-gray-100;
+    }
+    
+    .card-subtitle {
+        @apply text-sm text-gray-600 dark:text-gray-400 mt-1;
+    }
+}

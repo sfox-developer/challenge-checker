@@ -25,28 +25,28 @@
         </script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center px-4 py-12">
-            <div class="max-w-md w-full text-center">
+        <div class="error-page-container">
+            <div class="error-page-content">
 
                 <!-- Icon -->
-                <div class="mb-6">
-                    <div class="mx-auto w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full flex items-center justify-center">
-                        <svg class="w-12 h-12 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="error-page-icon-wrapper">
+                    <div class="error-page-icon error-icon-404">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
                 </div>
 
                 <!-- Message -->
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                <h1 class="error-page-title">
                     Page Not Found
                 </h1>
-                <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+                <p class="error-page-message">
                     Oops! The page you're looking for doesn't exist. It might have been moved or deleted.
                 </p>
 
             <!-- Actions -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <div class="error-page-actions">
                 <x-app-button variant="blue" href="{{ url()->previous() }}">
                     <x-slot name="icon">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -1,22 +1,22 @@
-<nav class="bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg">
+<nav class="nav-main">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
+    <div class="nav-container">
+        <div class="nav-wrapper">
+            <div class="nav-left">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
+                <div class="nav-logo">
                     <a href="{{ route('feed.index') }}" class="flex items-center space-x-2">
                         <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
                             <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
                         </div>
-                        <span class="text-white font-bold text-lg">Challenge Checker</span>
+                        <span class="nav-logo-text">Challenge Checker</span>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="nav-links-desktop">
                     <x-nav-link :href="route('feed.index')" :active="request()->routeIs('feed.*')">
                         {{ __('Feed') }}
                     </x-nav-link>
@@ -33,11 +33,11 @@
                         {{ __('Discover') }}
                     </x-nav-link>
                     @if(Auth::user()->is_admin)
-                        <div class="hidden sm:flex sm:items-center sm:ms-6" x-data="{ open: false }">
+                        <div class="nav-admin-wrapper" x-data="{ open: false }">
                             <button @click="open = !open" 
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white hover:text-gray-200 focus:outline-none transition ease-in-out duration-150 {{ request()->routeIs('admin.*') ? 'bg-white bg-opacity-20' : '' }}">
+                                    class="nav-admin-button {{ request()->routeIs('admin.*') ? 'active' : '' }}">
                                 <span>{{ __('Admin') }}</span>
-                                <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
                             </button>
@@ -51,34 +51,26 @@
                                  x-transition:leave="transition ease-in duration-75"
                                  x-transition:leave-start="opacity-100 scale-100"
                                  x-transition:leave-end="opacity-0 scale-95"
-                                 class="absolute top-full mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5"
+                                 class="nav-dropdown"
                                  style="display: none;">
-                                <div class="py-1">
-                                    <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                        <div class="flex items-center">
-                                            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                            </svg>
-                                            Dashboard
-                                        </div>
-                                    </a>
-                                    <a href="{{ route('admin.categories.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                        <div class="flex items-center">
-                                            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
-                                            </svg>
-                                            Categories
-                                        </div>
-                                    </a>
-                                    <a href="{{ route('admin.changelogs.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                        <div class="flex items-center">
-                                            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
-                                            </svg>
-                                            Changelogs
-                                        </div>
-                                    </a>
-                                </div>
+                                <a href="{{ route('admin.dashboard') }}" class="nav-dropdown-item">
+                                    <svg fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>Dashboard</span>
+                                </a>
+                                <a href="{{ route('admin.categories.index') }}" class="nav-dropdown-item">
+                                    <svg fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
+                                    </svg>
+                                    <span>Categories</span>
+                                </a>
+                                <a href="{{ route('admin.changelogs.index') }}" class="nav-dropdown-item">
+                                    <svg fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>Changelogs</span>
+                                </a>
                             </div>
                         </div>
                     @endif
@@ -88,7 +80,7 @@
             <!-- Mobile Theme Toggle -->
             <div class="flex items-center sm:hidden">
                 <button @click="toggleTheme()" 
-                        class="inline-flex items-center p-2 text-white hover:bg-white hover:bg-opacity-20 rounded-md transition ease-in-out duration-150"
+                        class="nav-button-mobile"
                         title="Toggle theme">
                     <!-- Sun Icon (Light Mode) -->
                     <svg x-show="getThemeIcon() === 'sun'" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -102,10 +94,10 @@
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6 sm:space-x-3">
+            <div class="nav-settings">
                 <!-- Theme Toggle -->
                 <button @click="toggleTheme()" 
-                        class="inline-flex items-center px-3 py-2 border border-white border-opacity-20 text-sm leading-4 font-medium rounded-md text-white bg-white bg-opacity-10 hover:bg-opacity-20 focus:outline-none transition ease-in-out duration-150"
+                        class="nav-button"
                         title="Toggle theme">
                     <!-- Sun Icon (Light Mode) -->
                     <svg x-show="getThemeIcon() === 'sun'" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -119,12 +111,12 @@
 
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-white border-opacity-20 text-sm leading-4 font-medium rounded-md text-white bg-white bg-opacity-10 hover:bg-opacity-20 focus:outline-none transition ease-in-out duration-150">
-                            <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->name }}" class="h-8 w-8 rounded-full mr-2">
+                        <button class="nav-user-trigger">
+                            <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->name }}">
                             <div>{{ Auth::user()->name }}</div>
 
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
                             </div>
@@ -158,38 +150,38 @@
 </nav>
 
 <!-- Mobile Bottom Navigation -->
-<nav class="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 z-40">
-    <div class="grid grid-cols-5 h-16">
+<nav class="bottom-nav">
+    <div class="bottom-nav-grid">
         <!-- Feed -->
-        <a href="{{ route('feed.index') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('feed.*') ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400' }} hover:text-blue-600 transition-colors duration-150">
+        <a href="{{ route('feed.index') }}" class="bottom-nav-item {{ request()->routeIs('feed.*') ? 'active' : '' }}">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/>
                 <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/>
             </svg>
-            <span class="text-xs font-medium">Feed</span>
+            <span>Feed</span>
         </a>
 
         <!-- My Challenges -->
-        <a href="{{ route('challenges.index') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('challenges.*') ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400' }} hover:text-blue-600 transition-colors duration-150">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+        <a href="{{ route('challenges.index') }}" class="bottom-nav-item {{ request()->routeIs('challenges.*') ? 'active' : '' }}">
+            <svg fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
             </svg>
-            <span class="text-xs font-medium">Challenges</span>
+            <span>Challenges</span>
         </a>
 
         <!-- Quick Goals (Center, Prominent) - Hidden on Challenge Detail Page -->
         @if(!request()->routeIs('challenges.show'))
-        <button @click="$dispatch('open-goals')" class="flex flex-col items-center justify-center -mt-6">
-            <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-full p-4 shadow-lg hover:shadow-xl transition-shadow duration-150">
-                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+        <div class="bottom-nav-center">
+            <button @click="$dispatch('open-goals')">
+                <svg fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                 </svg>
-            </div>
-        </button>
+            </button>
+        </div>
         @else
-        <div class="flex flex-col items-center justify-center -mt-6">
-            <div class="bg-gradient-to-r from-gray-400 to-gray-500 rounded-full p-4 shadow-lg opacity-50 cursor-not-allowed">
-                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+        <div class="bottom-nav-center disabled">
+            <div class="button-wrapper">
+                <svg fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                 </svg>
             </div>
@@ -197,17 +189,17 @@
         @endif
 
         <!-- My Habits -->
-        <a href="{{ route('habits.index') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('habits.*') ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400' }} hover:text-blue-600 transition-colors duration-150">
+        <a href="{{ route('habits.index') }}" class="bottom-nav-item {{ request()->routeIs('habits.*') ? 'active' : '' }}">
             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
             </svg>
-            <span class="text-xs font-medium">Habits</span>
+            <span>Habits</span>
         </a>
 
         <!-- Profile / Menu -->
-        <a href="{{ route('profile.menu') }}" class="flex flex-col items-center justify-center space-y-1 {{ request()->routeIs('profile.menu') ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400' }} hover:text-blue-600 transition-colors duration-150">
-            <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->name }}" class="w-6 h-6 rounded-full ring-2 {{ request()->routeIs('profile.menu') ? 'ring-blue-600' : 'ring-gray-300 dark:ring-gray-600' }}">
-            <span class="text-xs font-medium">Menu</span>
+        <a href="{{ route('profile.menu') }}" class="bottom-nav-item {{ request()->routeIs('profile.menu') ? 'active' : '' }}">
+            <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->name }}">
+            <span>Menu</span>
         </a>
     </div>
 </nav>
