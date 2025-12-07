@@ -153,45 +153,59 @@
                                                    placeholder="Goal name"
                                                    required>
                                             <div class="grid grid-cols-2 gap-3">
-                                                <div class="relative">
-                                                    <div class="flex gap-1">
+                                                <div x-data="{ showPicker: false, emojis: ['🎯', '🏆', '⭐', '✨', '🌟', '💫', '❤️', '💪', '🏃', '🧘', '🍎', '🥗', '📚', '📖', '✏️', '📝', '⚡', '💼', '🧠', '💤', '🌱', '🌿', '☕', '💧', '👥', '🤝', '🎨', '🎭', '🎵', '🎪', '🌈', '🌸', '🌺', '🔥', '💎', '🎁', '⚽', '🏀', '🏋️', '🚴', '🏊', '⛰️', '🥑', '🥤', '🍵', '🌮', '🍇', '🍓'] }" class="relative">
+                                                    <div class="relative">
                                                         <input type="text" 
                                                                :name="`new_goals[${index}][icon]`"
                                                                x-model="goal.icon"
-                                                               class="app-input text-sm flex-1" 
-                                                               placeholder="😀"
+                                                               class="app-input text-sm pr-12" 
+                                                               placeholder="🎯"
                                                                maxlength="2">
                                                         <button 
                                                             type="button"
-                                                            @click="$refs['picker' + index].classList.toggle('hidden')"
-                                                            class="px-2 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-lg rounded transition-colors"
+                                                            @click="showPicker = !showPicker"
+                                                            class="absolute right-2 top-1/2 -translate-y-1/2 px-2 py-1 text-2xl hover:scale-110 transition-transform duration-200 rounded"
+                                                            :class="{ 'ring-2 ring-blue-500': showPicker }"
                                                             title="Choose emoji">
-                                                            <span x-text="goal.icon || '😀'"></span>
+                                                            <span x-text="goal.icon || '🎯'"></span>
                                                         </button>
                                                     </div>
                                                     <!-- Emoji Picker Popover -->
                                                     <div 
-                                                        :x-ref="'picker' + index"
-                                                        class="hidden absolute right-0 mt-1 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50 p-3"
-                                                        @click.outside="$el.classList.add('hidden')">
-                                                        <div class="mb-2 flex justify-between items-center">
-                                                            <h4 class="text-xs font-semibold text-gray-700 dark:text-gray-300">Choose Emoji</h4>
+                                                        x-show="showPicker"
+                                                        @click.outside="showPicker = false"
+                                                        x-transition:enter="transition ease-out duration-100"
+                                                        x-transition:enter-start="opacity-0 scale-95"
+                                                        x-transition:enter-end="opacity-100 scale-100"
+                                                        x-transition:leave="transition ease-in duration-75"
+                                                        x-transition:leave-start="opacity-100 scale-100"
+                                                        x-transition:leave-end="opacity-0 scale-95"
+                                                        class="absolute left-0 right-0 sm:left-auto sm:right-0 mt-2 w-full sm:w-72 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50 p-4"
+                                                        style="display: none;"
+                                                        @click.stop>
+                                                        <div class="mb-3 flex justify-between items-center">
+                                                            <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300">Choose Emoji</h4>
                                                             <button 
                                                                 type="button"
-                                                                @click="goal.icon = ''; $refs['picker' + index].classList.add('hidden')"
-                                                                class="text-xs text-gray-500 hover:text-red-600">
+                                                                @click="goal.icon = ''; showPicker = false"
+                                                                class="text-xs text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400">
                                                                 Clear
                                                             </button>
                                                         </div>
-                                                        <div class="grid grid-cols-6 gap-1 max-h-40 overflow-y-auto">
-                                                            <template x-for="(emoji, emojiIndex) in ['🎯', '🏆', '⭐', '✨', '🌟', '💫', '❤️', '💪', '🏃', '🧘', '🍎', '🥗', '📚', '📖', '✏️', '📝', '⚡', '💼', '🧠', '💤', '🌱', '🌿', '☕', '💧', '👥', '🤝', '🎨', '🎭', '🎵', '🎪', '🌈', '🌸', '🌺', '🔥', '💎', '🎁', '⚽', '🏀', '🏋️', '🚴', '🏊', '⛰️', '🥑', '🥤', '🍵', '🌮', '🥗', '🍓']" :key="emojiIndex">
+                                                        <div class="grid grid-cols-6 sm:grid-cols-8 gap-2 max-h-60 overflow-y-auto">
+                                                            <template x-for="(emoji, emojiIndex) in emojis" :key="emojiIndex">
                                                                 <button 
                                                                     type="button"
-                                                                    @click="goal.icon = emoji; $refs['picker' + index].classList.add('hidden')"
-                                                                    class="text-lg hover:bg-gray-100 dark:hover:bg-gray-700 rounded p-1"
+                                                                    @click="goal.icon = emoji; showPicker = false"
+                                                                    class="text-2xl hover:bg-gray-100 dark:hover:bg-gray-700 rounded p-2 transition-colors duration-150"
                                                                     x-text="emoji">
                                                                 </button>
                                                             </template>
+                                                        </div>
+                                                        <div class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+                                                            <p class="text-xs text-gray-500 dark:text-gray-400 text-center">
+                                                                Or type any emoji directly in the field
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>

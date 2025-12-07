@@ -260,6 +260,38 @@ window.challengeForm = createChallengeForm;
     label="Icon (emoji)" />
 ```
 
+**Inline Pattern (for Alpine.js loops):**
+When using emoji picker within an Alpine.js `x-for` loop (e.g., challenge form's dynamic goal creation), use the inline pattern since the Blade component requires unique IDs:
+
+```blade
+<div x-data="{ showPicker: false, emojis: ['🎯', '🏆', '⭐', ...] }" class="relative">
+    <div class="relative">
+        <input type="text" 
+               x-model="goal.icon"
+               class="app-input pr-12" 
+               placeholder="🎯"
+               maxlength="2">
+        <button 
+            type="button"
+            @click="showPicker = !showPicker"
+            class="absolute right-2 top-1/2 -translate-y-1/2 text-2xl">
+            <span x-text="goal.icon || '🎯'"></span>
+        </button>
+    </div>
+    <div x-show="showPicker" @click.outside="showPicker = false" 
+         class="absolute mt-2 w-72 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50 p-4">
+        <div class="grid grid-cols-8 gap-2">
+            <template x-for="emoji in emojis">
+                <button @click="goal.icon = emoji; showPicker = false" 
+                        x-text="emoji"></button>
+            </template>
+        </div>
+    </div>
+</div>
+```
+
+This pattern is used in `resources/views/challenges/create.blade.php` for dynamic goal creation.
+
 ---
 
 ## Blade Components
