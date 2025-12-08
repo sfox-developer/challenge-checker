@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Category;
 
 class GoalLibraryController extends Controller
 {
@@ -16,29 +17,26 @@ class GoalLibraryController extends Controller
     public function index(Request $request): View
     {
         $search = $request->get('search');
-        $category = $request->get('category');
+        $categoryId = $request->get('category');
 
         $query = auth()->user()->goalsLibrary()
+            ->with('category')
             ->withCount(['challengeGoals', 'habits']);
 
         if ($search) {
             $query->search($search);
         }
 
-        if ($category) {
-            $query->byCategory($category);
+        if ($categoryId) {
+            $query->byCategory($categoryId);
         }
 
         $goals = $query->orderBy('name')->get();
 
-        // Get all unique categories
-        $categories = auth()->user()->goalsLibrary()
-            ->whereNotNull('category')
-            ->distinct()
-            ->pluck('category')
-            ->sort();
+        // Get active categories from database
+        $categories = Category::active()->ordered()->get();
 
-        return view('goals.index', compact('goals', 'categories', 'search', 'category'));
+        return view('goals.index', compact('goals', 'categories', 'search', 'categoryId'));
     }
 
     /**
@@ -50,6 +48,7 @@ class GoalLibraryController extends Controller
 
         // Load relationships with counts and eager loading
         $goal->load([
+            'category',
             'challengeGoals.challenge' => function ($query) {
                 $query->with('dailyProgress');
             },
@@ -77,7 +76,10 @@ class GoalLibraryController extends Controller
             'active_habits' => $habits->where('is_archived', false)->count(),
         ];
 
-        return view('goals.show', compact('goal', 'challenges', 'habits', 'stats'));
+        // Get active categories from database for edit modal
+        $categories = Category::active()->ordered()->get();
+
+        return view('goals.show', compact('goal', 'challenges', 'habits', 'stats', 'categories'));
     }
 
     /**
@@ -153,7 +155,7 @@ class GoalLibraryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'category' => 'nullable|string|max:255',
+            'category_id' => 'nullable|exists:categories,id',
             'icon' => 'nullable|string|max:10',
         ]);
 
@@ -162,7 +164,7 @@ class GoalLibraryController extends Controller
             ...$validated
         ]);
 
-        return redirect()->route('goals.index')
+        return redirect()->route('goals.show', $goal)
             ->with('success', 'Goal added to your library!');
     }
 
@@ -176,13 +178,13 @@ class GoalLibraryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'category' => 'nullable|string|max:255',
+            'category_id' => 'nullable|exists:categories,id',
             'icon' => 'nullable|string|max:10',
         ]);
 
         $goal->update($validated);
 
-        return redirect()->route('goals.index')
+        return redirect()->route('goals.show', $goal)
             ->with('success', 'Goal updated successfully!');
     }
 

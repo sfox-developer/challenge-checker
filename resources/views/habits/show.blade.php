@@ -145,7 +145,7 @@
                                 </svg>
                                 <span>Category:</span>
                             </div>
-                            <span class="font-semibold text-gray-900 dark:text-white capitalize">{{ $habit->goal->category }}</span>
+                            <span class="font-semibold text-gray-900 dark:text-white">{{ $habit->goal->category->icon }} {{ $habit->goal->category->name }}</span>
                         </div>
                         @endif
                         

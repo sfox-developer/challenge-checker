@@ -26,6 +26,7 @@ import { createHabitForm, createHabitFormWithGoalToggle, createHabitEditForm } f
 import { createChallengeForm } from './challenge.js';
 import { toggleHabit, completeWithNotes } from './habitToggle.js';
 import { showToast, showError, showSuccess, showInfo, showWarning, getCsrfToken, createHeaders, post } from '../utils/ui.js';
+import { createEmojiPicker } from './emojiPicker.js';
 
 // Register components globally for Alpine.js to access
 window.themeManager = createThemeManager;
@@ -36,6 +37,7 @@ window.habitForm = createHabitForm;
 window.habitFormWithGoalToggle = createHabitFormWithGoalToggle;
 window.habitEditForm = createHabitEditForm;
 window.challengeForm = createChallengeForm;
+window.emojiPicker = createEmojiPicker;
 
 // Register modal utility functions globally
 window.showModal = showModal;

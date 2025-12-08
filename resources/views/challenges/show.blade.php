@@ -97,7 +97,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <x-stat-card 
                     label="Duration" 
-                    :value="$challenge->days_duration" 
+                    :value="$challenge->getDuration()" 
                     gradientFrom="blue-500" 
                     gradientTo="indigo-500">
                     <x-slot name="icon">
@@ -143,7 +143,7 @@
                             <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"/>
                         </svg>
                     </x-slot>
-                    <x-slot name="suffix">/ {{ $challenge->goals->count() * $challenge->days_duration }}</x-slot>
+                    <x-slot name="suffix">/ {{ $challenge->goals->count() * $challenge->getDuration() }}</x-slot>
                 </x-stat-card>
             </div>
 
@@ -180,12 +180,24 @@
                         <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
                             <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Frequency:</span>
+                            </div>
+                            <span class="font-semibold text-gray-900 dark:text-white">{{ $challenge->getFrequencyDescription() }}</span>
+                        </div>
+                        
+                        @if($challenge->days_duration)
+                        <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
+                            <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
                                 </svg>
                                 <span>Duration:</span>
                             </div>
                             <span class="font-semibold text-gray-900 dark:text-white">{{ $challenge->days_duration }} days</span>
                         </div>
+                        @endif
                         
                         <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
                             <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
@@ -311,61 +323,126 @@
                 </div>
             @endif
 
-            <!-- Daily Progress Statistics -->
+            <!-- Progress History -->
             @if($challenge->started_at)
                 <div class="card">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Daily Progress History</h3>
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                            @php
+                                $periodName = match($challenge->frequency_type?->value ?? 'daily') {
+                                    'daily' => 'Daily',
+                                    'weekly' => 'Weekly',
+                                    'monthly' => 'Monthly',
+                                    'yearly' => 'Yearly',
+                                    default => 'Daily'
+                                };
+                            @endphp
+                            {{ $periodName }} Progress History
+                        </h3>
                     </div>
 
                     @php
                         $startDate = $challenge->started_at->startOfDay();
                         $endDate = $challenge->completed_at ? $challenge->completed_at->startOfDay() : now()->startOfDay();
                         $daysPassed = $startDate->diffInDays($endDate) + 1;
+                        $frequencyType = $challenge->frequency_type?->value ?? 'daily';
                         
-                        // Limit to show only up to 30 days to prevent overwhelming display
-                        $displayDays = min($daysPassed, 30);
-                        $showingPartial = $daysPassed > 30;
+                        // Calculate perfect periods based on frequency type
+                        $perfectPeriods = 0;
+                        $totalPeriods = 0;
                         
-                        $perfectDays = 0;
-                        for ($i = 0; $i < $daysPassed; $i++) {
-                            $checkDate = $startDate->copy()->addDays($i);
-                            $completedGoalsForDay = $challenge->dailyProgress()
-                                ->where('user_id', $challenge->user_id)
-                                ->where('date', $checkDate->toDateString())
-                                ->whereNotNull('completed_at')
-                                ->count();
-                            
-                            if ($completedGoalsForDay === $challenge->goals->count()) {
-                                $perfectDays++;
+                        if ($frequencyType === 'daily') {
+                            // Daily: Show individual days
+                            $totalPeriods = $daysPassed;
+                            for ($i = 0; $i < $daysPassed; $i++) {
+                                $checkDate = $startDate->copy()->addDays($i);
+                                $completedGoalsForDay = $challenge->dailyProgress()
+                                    ->where('user_id', $challenge->user_id)
+                                    ->where('date', $checkDate->toDateString())
+                                    ->whereNotNull('completed_at')
+                                    ->count();
+                                
+                                if ($completedGoalsForDay === $challenge->goals->count()) {
+                                    $perfectPeriods++;
+                                }
                             }
+                            $periodLabel = $totalPeriods === 1 ? 'Day' : 'Days';
+                            $displayDays = min($daysPassed, 30);
+                            $showingPartial = $daysPassed > 30;
+                        } else {
+                            // Weekly/Monthly/Yearly: Calculate completed periods
+                            $currentDate = $startDate->copy();
+                            $frequencyEnum = $challenge->frequency_type;
+                            $requiredCompletions = $challenge->frequency_count ?? 1;
+                            
+                            while ($currentDate->lte($endDate)) {
+                                $periodStart = $frequencyEnum->periodStart($currentDate);
+                                $periodEnd = $frequencyEnum->periodEnd($currentDate);
+                                
+                                // Count total completions in this period across all goals
+                                $completionsInPeriod = $challenge->dailyProgress()
+                                    ->where('user_id', $challenge->user_id)
+                                    ->whereBetween('date', [$periodStart->format('Y-m-d'), $periodEnd->format('Y-m-d')])
+                                    ->whereNotNull('completed_at')
+                                    ->count();
+                                
+                                $expectedCompletions = $challenge->goals->count() * $requiredCompletions;
+                                if ($completionsInPeriod >= $expectedCompletions) {
+                                    $perfectPeriods++;
+                                }
+                                
+                                $totalPeriods++;
+                                
+                                // Move to next period
+                                $currentDate = match($frequencyType) {
+                                    'weekly' => $currentDate->addWeek(),
+                                    'monthly' => $currentDate->addMonth(),
+                                    'yearly' => $currentDate->addYear(),
+                                    default => $currentDate->addDay(),
+                                };
+                            }
+                            
+                            $periodLabel = match($frequencyType) {
+                                'weekly' => $totalPeriods === 1 ? 'Week' : 'Weeks',
+                                'monthly' => $totalPeriods === 1 ? 'Month' : 'Months',
+                                'yearly' => $totalPeriods === 1 ? 'Year' : 'Years',
+                                default => 'Periods'
+                            };
+                            $displayDays = min($totalPeriods, 12); // Show max 12 periods for non-daily
+                            $showingPartial = $totalPeriods > 12;
                         }
                     @endphp
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div class="text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ $daysPassed }}</div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">{{ $daysPassed === 1 ? 'Day' : 'Days' }} Active</div>
+                            <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ $totalPeriods }}</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">{{ $periodLabel }} Active</div>
                         </div>
                         <div class="text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-teal-600 dark:text-teal-400">{{ $perfectDays }}</div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">Perfect Days</div>
+                            <div class="text-2xl font-bold text-teal-600 dark:text-teal-400">{{ $perfectPeriods }}</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Perfect {{ $periodLabel }}</div>
                         </div>
                         <div class="text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
                             <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">
-                                {{ number_format(($perfectDays / max($daysPassed, 1)) * 100, 1) }}%
+                                {{ number_format(($perfectPeriods / max($totalPeriods, 1)) * 100, 1) }}%
                             </div>
                             <div class="text-sm text-gray-600 dark:text-gray-400">Success Rate</div>
                         </div>
                     </div>
 
-                    @if($showingPartial)
+                    @if($showingPartial && $frequencyType === 'daily')
                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 text-center">
                             <em>Showing last 30 days ({{ $daysPassed - 30 }} earlier days not displayed)</em>
                         </p>
+                    @elseif($showingPartial)
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 text-center">
+                            <em>Showing last 12 periods ({{ $totalPeriods - 12 }} earlier periods not displayed)</em>
+                        </p>
                     @endif
 
-                    <div class="grid grid-cols-7 gap-2 mb-4">
+                    @if($frequencyType === 'daily')
+                        {{-- Daily view: Show calendar grid --}}
+                        <div class="grid grid-cols-7 gap-2 mb-4">
                         @for ($i = $showingPartial ? ($daysPassed - 30) : 0; $i < $daysPassed; $i++)
                             @php
                                 $currentDate = $startDate->copy()->addDays($i);
@@ -408,8 +485,76 @@
                                 <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ $completedGoalsForDay }}/{{ $totalGoals }}</div>
                             </div>
                         @endfor
-                    </div>
-
+                        </div>
+                    @else
+                        {{-- Period view: Show progress bars for each period --}}
+                        <div class="space-y-3 mb-4">
+                            @php
+                                $currentDate = $startDate->copy();
+                                $frequencyEnum = $challenge->frequency_type;
+                                $requiredCompletions = $challenge->frequency_count ?? 1;
+                                $periodsToShow = [];
+                                $periodIndex = 0;
+                                
+                                while ($currentDate->lte($endDate) && $periodIndex < ($showingPartial ? 12 : 999)) {
+                                    $periodStart = $frequencyEnum->periodStart($currentDate);
+                                    $periodEnd = $frequencyEnum->periodEnd($currentDate);
+                                    $isCurrentPeriod = now()->between($periodStart, $periodEnd);
+                                    
+                                    // Count completions in this period
+                                    $completionsInPeriod = $challenge->dailyProgress()
+                                        ->where('user_id', $challenge->user_id)
+                                        ->whereBetween('date', [$periodStart->format('Y-m-d'), $periodEnd->format('Y-m-d')])
+                                        ->whereNotNull('completed_at')
+                                        ->count();
+                                    
+                                    $expectedCompletions = $challenge->goals->count() * $requiredCompletions;
+                                    $percentage = $expectedCompletions > 0 ? min(100, ($completionsInPeriod / $expectedCompletions) * 100) : 0;
+                                    
+                                    $periodsToShow[] = [
+                                        'start' => $periodStart,
+                                        'end' => $periodEnd,
+                                        'completions' => $completionsInPeriod,
+                                        'expected' => $expectedCompletions,
+                                        'percentage' => $percentage,
+                                        'isCurrentPeriod' => $isCurrentPeriod,
+                                    ];
+                                    
+                                    $periodIndex++;
+                                    
+                                    // Move to next period
+                                    $currentDate = match($frequencyType) {
+                                        'weekly' => $currentDate->addWeek(),
+                                        'monthly' => $currentDate->addMonth(),
+                                        'yearly' => $currentDate->addYear(),
+                                        default => $currentDate->addDay(),
+                                    };
+                                }
+                                
+                                // Show in reverse (most recent first)
+                                $periodsToShow = array_reverse($periodsToShow);
+                            @endphp
+                            
+                            @foreach($periodsToShow as $period)
+                                <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 {{ $period['isCurrentPeriod'] ? 'ring-2 ring-blue-500' : '' }}">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="text-sm font-semibold text-gray-900 dark:text-white">
+                                            {{ $period['start']->format('M j') }} - {{ $period['end']->format('M j, Y') }}
+                                            @if($period['isCurrentPeriod'])
+                                                <span class="ml-2 px-2 py-0.5 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded">Current</span>
+                                            @endif
+                                        </div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">
+                                            {{ $period['completions'] }}/{{ $period['expected'] }}
+                                        </div>
+                                    </div>
+                                    <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                                        <div class="h-2 rounded-full transition-all {{ $period['percentage'] >= 100 ? 'bg-teal-500' : 'bg-blue-500' }}" style="width: {{ $period['percentage'] }}%"></div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif                    @if($frequencyType === 'daily')
                     <div class="flex items-center justify-center space-x-6 text-xs text-gray-600 dark:text-gray-400">
                         <div class="flex items-center space-x-2">
                             <div class="w-3 h-3 rounded-full bg-teal-500"></div>
@@ -424,6 +569,11 @@
                             <span>No goals completed</span>
                         </div>
                     </div>
+                    @else
+                    <div class="text-center text-xs text-gray-600 dark:text-gray-400">
+                        <p>Progress bars show completion for each {{ strtolower($periodLabel) }}. Target: {{ $challenge->frequency_count ?? 1 }}x per {{ strtolower(rtrim($periodLabel, 's')) }} for each goal.</p>
+                    </div>
+                    @endif
                 </div>
             @endif
         </div>

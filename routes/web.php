@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ChangelogController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
@@ -25,6 +27,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/theme', [ProfileController::class, 'updateTheme'])->name('profile.updateTheme');
+    
+    // Changelog (public)
+    Route::get('/changelog', [ChangelogController::class, 'index'])->name('changelog');
+    
+    // Static pages
+    Route::view('/privacy-policy', 'privacy-policy')->name('privacy.policy');
+    Route::view('/terms-of-service', 'terms-of-service')->name('terms.service');
     
     // Feed routes
     Route::get('/feed', [FeedController::class, 'index'])->name('feed.index');
@@ -74,6 +83,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/user/{user}', [AdminController::class, 'showUser'])->name('admin.user');
     Route::delete('/admin/user/{user}', [AdminController::class, 'deleteUser'])->name('admin.user.delete');
     Route::get('/admin/challenge/{challenge}', [AdminController::class, 'showChallenge'])->name('admin.challenge');
+    
+    // Admin Category Management
+    Route::resource('admin/categories', CategoryController::class)->names([
+        'index' => 'admin.categories.index',
+        'create' => 'admin.categories.create',
+        'store' => 'admin.categories.store',
+        'edit' => 'admin.categories.edit',
+        'update' => 'admin.categories.update',
+        'destroy' => 'admin.categories.destroy',
+    ]);
+    
+    // Admin Changelog Management (admin check in controller constructor)
+    Route::get('admin/changelogs', [ChangelogController::class, 'adminIndex'])->name('admin.changelogs.index');
+    Route::get('admin/changelogs/create', [ChangelogController::class, 'create'])->name('admin.changelogs.create');
+    Route::post('admin/changelogs', [ChangelogController::class, 'store'])->name('admin.changelogs.store');
+    Route::get('admin/changelogs/{changelog}/edit', [ChangelogController::class, 'edit'])->name('admin.changelogs.edit');
+    Route::put('admin/changelogs/{changelog}', [ChangelogController::class, 'update'])->name('admin.changelogs.update');
+    Route::delete('admin/changelogs/{changelog}', [ChangelogController::class, 'destroy'])->name('admin.changelogs.destroy');
 });
 
 require __DIR__.'/auth.php';

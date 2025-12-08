@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Domain\User\Models\User;
 use App\Domain\Activity\Models\Activity;
+use App\Domain\Habit\Enums\FrequencyType;
 
 class Challenge extends Model
 {
@@ -18,6 +19,9 @@ class Challenge extends Model
         'name',
         'description',
         'days_duration',
+        'frequency_type',
+        'frequency_count',
+        'frequency_config',
         'started_at',
         'completed_at',
         'is_active',
@@ -29,6 +33,9 @@ class Challenge extends Model
         'completed_at' => 'datetime',
         'is_active' => 'boolean',
         'is_public' => 'boolean',
+        'frequency_type' => FrequencyType::class,
+        'frequency_count' => 'integer',
+        'frequency_config' => 'array',
     ];
 
     protected $appends = [
@@ -150,7 +157,8 @@ class Challenge extends Model
             return false;
         }
 
-        $endDate = $this->started_at->copy()->addDays($this->days_duration);
+        $duration = $this->days_duration ?? $this->getDuration();
+        $endDate = $this->started_at->copy()->addDays($duration);
         return now()->greaterThan($endDate);
     }
 
@@ -163,7 +171,9 @@ class Challenge extends Model
             return null;
         }
 
-        return $this->started_at->copy()->addDays($this->days_duration);
+        // Use days_duration for backward compatibility or getDuration() for new challenges
+        $duration = $this->days_duration ?? $this->getDuration();
+        return $this->started_at->copy()->addDays($duration);
     }
 
     /**
@@ -200,6 +210,34 @@ class Challenge extends Model
     }
 
     /**
+     * Get the frequency description (e.g., "Daily", "3 times per week").
+     */
+    public function getFrequencyDescription(): string
+    {
+        if (!$this->frequency_type) {
+            // Fallback for old challenges using days_duration
+            return $this->days_duration . ' days';
+        }
+        
+        return $this->frequency_type->description($this->frequency_count);
+    }
+
+    /**
+     * Get the duration in the appropriate unit based on frequency type.
+     */
+    public function getDuration(): int
+    {
+        // For backward compatibility, use days_duration if set
+        if ($this->days_duration) {
+            return $this->days_duration;
+        }
+        
+        // Otherwise, calculate based on frequency
+        // Default to 30 days for new challenges
+        return 30;
+    }
+
+    /**
      * Get the progress percentage for the challenge.
      */
     public function getProgressPercentage(): float
@@ -208,7 +246,8 @@ class Challenge extends Model
             return 0;
         }
 
-        $totalGoalDays = $this->goals->count() * $this->days_duration;
+        $duration = $this->days_duration ?? $this->getDuration();
+        $totalGoalDays = $this->goals->count() * $duration;
         $completedGoalDays = $this->dailyProgress()->whereNotNull('completed_at')->count();
 
         return $totalGoalDays > 0 ? ($completedGoalDays / $totalGoalDays) * 100 : 0;
@@ -224,12 +263,14 @@ class Challenge extends Model
         }
 
         if ($this->completed_at) {
-            return $this->days_duration;
+            $duration = $this->days_duration ?? $this->getDuration();
+            return $duration;
         }
 
         $currentDay = now()->diffInDays($this->started_at) + 1;
+        $duration = $this->days_duration ?? $this->getDuration();
         
-        return min($currentDay, $this->days_duration);
+        return min($currentDay, $duration);
     }
 
     /**

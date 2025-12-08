@@ -1,0 +1,179 @@
+// ============================================================================
+// BADGE COMPONENTS
+// ============================================================================
+// Status badges, pills, and label indicators
+// Used for challenge/habit status, counts, and notifications
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// BASE BADGE
+// ----------------------------------------------------------------------------
+
+.badge {
+    @apply inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full;
+    @apply transition-colors duration-200;
+    
+    // Size variants
+    &.badge-sm {
+        @apply px-2 py-0.5 text-xs;
+    }
+    
+    &.badge-md {
+        @apply px-3 py-1 text-sm;
+    }
+    
+    &.badge-lg {
+        @apply px-4 py-1.5 text-sm;
+    }
+}
+
+// ----------------------------------------------------------------------------
+// COLOR VARIANTS - Status Badges
+// ----------------------------------------------------------------------------
+
+// Success/Completed - Green
+.badge-success {
+    @apply bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400;
+}
+
+// Active/In Progress - Orange/Blue
+.badge-active {
+    @apply bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400;
+}
+
+// Paused/Warning - Yellow
+.badge-paused {
+    @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400;
+}
+
+// Draft/Pending - Gray
+.badge-draft {
+    @apply bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200;
+}
+
+// Archived - Gray (muted)
+.badge-archived {
+    @apply bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400;
+}
+
+// Info/Primary - Blue
+.badge-info {
+    @apply bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400;
+}
+
+// Teal (for habits)
+.badge-teal {
+    @apply bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200;
+}
+
+// Purple
+.badge-purple {
+    @apply bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400;
+}
+
+// Danger/Error - Red
+.badge-danger {
+    @apply bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400;
+}
+
+// ----------------------------------------------------------------------------
+// SEMANTIC BADGE CLASSES - Challenge States
+// ----------------------------------------------------------------------------
+
+.badge-completed {
+    @apply badge badge-success;
+}
+
+.badge-challenge-active {
+    @apply badge badge-active;
+}
+
+.badge-challenge-paused {
+    @apply badge badge-paused;
+}
+
+.badge-challenge-draft {
+    @apply badge badge-draft;
+}
+
+// ----------------------------------------------------------------------------
+// SEMANTIC BADGE CLASSES - Habit States
+// ----------------------------------------------------------------------------
+
+.badge-habit-active {
+    @apply badge badge-teal;
+}
+
+.badge-habit-archived {
+    @apply badge badge-archived;
+}
+
+.badge-habit-completed-today {
+    @apply badge badge-success;
+}
+
+// ----------------------------------------------------------------------------
+// COUNT BADGES - For tabs, sections
+// ----------------------------------------------------------------------------
+
+.count-badge {
+    @apply inline-flex items-center justify-center px-2 py-1 text-xs font-medium rounded-full;
+    @apply bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300;
+    @apply min-w-[1.5rem] text-center;
+}
+
+.count-badge-active {
+    @apply bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400;
+}
+
+.count-badge-teal {
+    @apply bg-teal-100 dark:bg-teal-900 text-teal-600 dark:text-teal-400;
+}
+
+// ----------------------------------------------------------------------------
+// STREAK BADGE - Special styling for streak counters
+// ----------------------------------------------------------------------------
+
+.streak-badge {
+    @apply badge-sm;
+    @apply bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200;
+    @apply font-semibold;
+    
+    &::before {
+        content: '🔥 ';
+    }
+}
+
+// ----------------------------------------------------------------------------
+// GRADIENT BADGES - Special highlight badges
+// ----------------------------------------------------------------------------
+
+.badge-gradient-purple {
+    @apply inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full;
+    @apply bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-sm;
+}
+
+// ----------------------------------------------------------------------------
+// NUMBERED BADGES - Goal/item numbers with gradient
+// ----------------------------------------------------------------------------
+
+.numbered-badge {
+    @apply flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center;
+    @apply bg-gradient-to-br from-blue-500 to-purple-500 text-white text-sm font-bold;
+}
+
+// ----------------------------------------------------------------------------
+// DYNAMIC TAB COUNT BADGES
+// ----------------------------------------------------------------------------
+
+.tab-count-badge {
+    @apply ml-2 px-2 py-1 text-xs rounded-full transition-colors;
+    
+    &.active {
+        @apply bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400;
+    }
+    
+    &.inactive {
+        @apply bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400;
+    }
+}

@@ -39,16 +39,16 @@
 
                         <div class="flex flex-wrap items-center gap-2">
                             @if($goal->category)
-                                <span class="px-3 py-1 text-sm font-medium rounded-full bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">
-                                    {{ ucfirst($goal->category) }}
+                                <span class="badge-purple">
+                                    {{ $goal->category->icon }} {{ $goal->category->name }}
                                 </span>
                             @endif
 
-                            <span class="px-3 py-1 text-sm font-medium rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                            <span class="count-badge">
                                 {{ $challenges->count() }} Challenge{{ $challenges->count() !== 1 ? 's' : '' }}
                             </span>
 
-                            <span class="px-3 py-1 text-sm font-medium rounded-full bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200">
+                            <span class="count-badge-teal">
                                 {{ $habits->count() }} Habit{{ $habits->count() !== 1 ? 's' : '' }}
                             </span>
                         </div>
@@ -235,67 +235,68 @@
 
     <!-- Edit Goal Modal -->
     <x-modal name="edit-goal-{{ $goal->id }}" maxWidth="2xl">
-        <form method="POST" action="{{ route('goals.update', $goal) }}" class="p-6">
-            @csrf
-            @method('PUT')
+        <div class="modal-header">
+            <div class="modal-header-title">
+                <h3>Edit Goal</h3>
+                <button type="button" @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')" class="text-white hover:text-gray-200 text-2xl font-bold leading-none">&times;</button>
+            </div>
+        </div>
+        
+        <div class="modal-content">
+            <form method="POST" action="{{ route('goals.update', $goal) }}">
+                @csrf
+                @method('PUT')
 
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-                Edit Goal
-            </h2>
+            <x-form-input
+                name="name"
+                label="Goal Name *"
+                :value="$goal->name"
+                required
+                class="mb-4" />
 
-            <div class="space-y-4">
+            <x-form-textarea
+                name="description"
+                label="Description"
+                :value="$goal->description"
+                rows="3"
+                optional
+                class="mb-4" />
+
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <x-form-select
+                    name="category_id"
+                    label="Category"
+                    :value="$goal->category_id"
+                    placeholder="None">
+                    @foreach($categories as $cat)
+                        <option value="{{ $cat->id }}" {{ $goal->category_id == $cat->id ? 'selected' : '' }}>
+                            {{ $cat->icon }} {{ $cat->name }}
+                        </option>
+                    @endforeach
+                </x-form-select>
+
                 <div>
-                    <label for="edit-name-{{ $goal->id }}" class="app-label">Goal Name *</label>
-                    <input type="text" 
-                           id="edit-name-{{ $goal->id }}" 
-                           name="name" 
-                           value="{{ $goal->name }}"
-                           class="app-input" 
-                           required>
-                </div>
-
-                <div>
-                    <label for="edit-description-{{ $goal->id }}" class="app-label">Description</label>
-                    <textarea id="edit-description-{{ $goal->id }}" 
-                              name="description" 
-                              rows="3" 
-                              class="app-input">{{ $goal->description }}</textarea>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label for="edit-category-{{ $goal->id }}" class="app-label">Category</label>
-                        <input type="text" 
-                               id="edit-category-{{ $goal->id }}" 
-                               name="category" 
-                               value="{{ $goal->category }}"
-                               class="app-input" 
-                               placeholder="e.g., health, learning">
-                    </div>
-
-                    <div>
-                        <label for="edit-icon-{{ $goal->id }}" class="app-label">Icon (emoji)</label>
-                        <input type="text" 
-                               id="edit-icon-{{ $goal->id }}" 
-                               name="icon" 
-                               value="{{ $goal->icon }}"
-                               class="app-input" 
-                               maxlength="10"
-                               placeholder="🎯">
-                    </div>
+                    <x-emoji-picker 
+                        :id="'edit-icon-' . $goal->id"
+                        name="icon" 
+                        :value="$goal->icon"
+                        label="Icon (emoji)"
+                        placeholder="🎯" />
                 </div>
             </div>
 
-            <div class="mt-6 flex justify-end gap-3">
-                <button type="button" 
-                        @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')" 
-                        class="btn-secondary">
-                    Cancel
-                </button>
-                <button type="submit" class="btn-primary">
-                    Update Goal
-                </button>
-            </div>
+                <div class="mt-6 flex justify-end gap-3">
+                    <button type="button" 
+                            @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')" 
+                            class="btn-secondary">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        Update Goal
+                    </button>
+                </div>
+            </form>
+        </div>
         </form>
     </x-modal>
 </x-app-layout>

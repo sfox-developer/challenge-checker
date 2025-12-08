@@ -2,13 +2,23 @@
 @use 'components/forms';
 @use 'components/buttons';
 @use 'components/cards';
+@use 'components/badges';
+@use 'components/navigation';
+@use 'components/headers';
+@use 'components/empty-states';
+@use 'components/links';
+@use 'components/layout';
+@use 'components/list-items';
 @use 'components/todos';
 @use 'components/toast';
 
 // Import Tailwind
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+// Custom components
+@import 'toast';
 
 // Global styles
 body {

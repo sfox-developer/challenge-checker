@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Domain\Challenge\Models\Challenge;
 use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Category;
 use App\Domain\Activity\Services\ActivityService;
 use App\Http\Requests\StoreChallengeRequest;
 use App\Http\Requests\UpdateChallengeRequest;
@@ -47,10 +48,13 @@ class ChallengeController extends Controller
     public function create(): View
     {
         $goalsLibrary = auth()->user()->goalsLibrary()
+            ->with('category')
             ->orderBy('name')
             ->get();
 
-        return view('challenges.create', compact('goalsLibrary'));
+        $categories = Category::active()->ordered()->get();
+
+        return view('challenges.create', compact('goalsLibrary', 'categories'));
     }
 
     /**
@@ -58,10 +62,19 @@ class ChallengeController extends Controller
      */
     public function store(StoreChallengeRequest $request): RedirectResponse
     {
+        // Build frequency config
+        $frequencyConfig = [];
+        if ($request->frequency_type === 'weekly' && $request->has('weekly_days')) {
+            $frequencyConfig['days'] = $request->weekly_days;
+        }
+
         $challenge = auth()->user()->challenges()->create([
             'name' => $request->name,
             'description' => $request->description,
             'days_duration' => $request->days_duration,
+            'frequency_type' => $request->frequency_type,
+            'frequency_count' => $request->frequency_count,
+            'frequency_config' => $frequencyConfig,
             'is_public' => $request->boolean('is_public'),
         ]);
 
@@ -89,7 +102,7 @@ class ChallengeController extends Controller
                     'name' => $newGoalData['name'],
                     'description' => $newGoalData['description'] ?? null,
                     'icon' => $newGoalData['icon'] ?? null,
-                    'category' => $newGoalData['category'] ?? null,
+                    'category_id' => $newGoalData['category_id'] ?? null,
                 ]);
                 
                 // Then link to challenge
@@ -148,17 +161,23 @@ class ChallengeController extends Controller
     {
         $this->authorize('update', $challenge);
 
+        // Build frequency config
+        $frequencyConfig = [];
+        if ($request->frequency_type === 'weekly' && $request->has('weekly_days')) {
+            $frequencyConfig['days'] = $request->weekly_days;
+        }
+
         $challenge->update([
             'name' => $request->name,
             'description' => $request->description,
             'days_duration' => $request->days_duration,
+            'frequency_type' => $request->frequency_type,
+            'frequency_count' => $request->frequency_count,
+            'frequency_config' => $frequencyConfig,
             'is_public' => $request->boolean('is_public'),
         ]);
 
-        // Redirect back to where user came from (challenge show or challenges index)
-        $backUrl = $request->input('back', route('challenges.show', $challenge));
-        
-        return redirect($backUrl)
+        return redirect()->route('challenges.show', $challenge)
             ->with('success', 'Challenge updated successfully!');
     }
 

@@ -39,8 +39,8 @@
 
                             <!-- Streak badge -->
                             @if($habit->statistics && $habit->statistics->current_streak > 0)
-                                <span class="flex-shrink-0 px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200">
-                                    🔥 {{ $habit->statistics->current_streak }}
+                                <span class="streak-badge flex-shrink-0">
+                                    {{ $habit->statistics->current_streak }}
                                 </span>
                             @endif
                         </div>
@@ -68,19 +68,22 @@
         @endforeach
     </div>
 @else
-    <div class="text-center py-8">
-        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-        </svg>
-        <h3 class="text-lg font-medium text-gray-800 dark:text-gray-100 mb-2">No habits due today</h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-4">You're all caught up! 🎉</p>
-        <x-app-button variant="primary" href="{{ route('habits.create') }}" class="inline-flex">
-            <x-slot name="icon">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
-                </svg>
-            </x-slot>
-            Create Your First Habit
-        </x-app-button>
-    </div>
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <svg class="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+            </svg>
+        </div>
+        <h3 class="empty-state-title">No habits due today</h3>
+        <p class="empty-state-message">You're all caught up! 🎉</p>
+        <div class="empty-state-action">
+            <x-app-button href="{{ route('habits.create') }}">
+                <x-slot name="icon">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                    </svg>
+                </x-slot>
+                Create Your First Habit
+            </x-app-button>
+        </div>
 @endif

@@ -1,0 +1,119 @@
+// ============================================================================
+// LINK COMPONENTS
+// ============================================================================
+// Interactive link styles and patterns
+// Used for text links, icon links, and action links
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// BASE LINK STYLES
+// ----------------------------------------------------------------------------
+
+.link {
+    @apply text-blue-600 dark:text-blue-400;
+    @apply hover:text-blue-700 dark:hover:text-blue-300;
+    @apply transition-colors duration-150;
+    
+    &:hover {
+        @apply underline;
+    }
+}
+
+// ----------------------------------------------------------------------------
+// LINK VARIANTS
+// ----------------------------------------------------------------------------
+
+// Link with icon (icon + text)
+.link-with-icon {
+    @apply inline-flex items-center space-x-2;
+    @apply text-blue-600 dark:text-blue-400;
+    @apply hover:text-blue-700 dark:hover:text-blue-300;
+    @apply transition-colors duration-150;
+    
+    svg {
+        @apply w-4 h-4 flex-shrink-0;
+    }
+    
+    &:hover {
+        @apply underline;
+    }
+}
+
+// Subtle link (gray)
+.link-subtle {
+    @apply text-gray-600 dark:text-gray-400;
+    @apply hover:text-gray-900 dark:hover:text-gray-100;
+    @apply transition-colors duration-150;
+    
+    &:hover {
+        @apply underline;
+    }
+}
+
+// Danger link (red)
+.link-danger {
+    @apply text-red-600 dark:text-red-400;
+    @apply hover:text-red-700 dark:hover:text-red-300;
+    @apply transition-colors duration-150;
+    
+    &:hover {
+        @apply underline;
+    }
+}
+
+// Arrow link (commonly used for "View →" type links)
+.link-arrow {
+    @apply text-blue-600 hover:text-blue-500 font-medium whitespace-nowrap;
+    @apply transition-colors duration-150;
+    
+    &::after {
+        content: ' →';
+    }
+}
+
+// ----------------------------------------------------------------------------
+// ACTION LINKS - For inline actions
+// ----------------------------------------------------------------------------
+
+.action-link {
+    @apply text-sm font-medium;
+    @apply text-blue-600 dark:text-blue-400;
+    @apply hover:text-blue-700 dark:hover:text-blue-300;
+    @apply transition-colors duration-150;
+    @apply cursor-pointer;
+}
+
+.action-link-subtle {
+    @apply text-sm font-medium;
+    @apply text-gray-600 dark:text-gray-400;
+    @apply hover:text-gray-900 dark:hover:text-gray-100;
+    @apply transition-colors duration-150;
+    @apply cursor-pointer;
+}
+
+// ----------------------------------------------------------------------------
+// CARD LINK - Make entire card clickable
+// ----------------------------------------------------------------------------
+
+.card-link {
+    @apply block transition-all duration-200;
+    @apply hover:shadow-md transform hover:scale-[1.01];
+    
+    &:focus {
+        @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+    }
+}
+
+// ----------------------------------------------------------------------------
+// LIST ITEM LINK - Interactive list items
+// ----------------------------------------------------------------------------
+
+.list-item-link {
+    @apply block p-4 rounded-lg border border-gray-200 dark:border-gray-700;
+    @apply hover:bg-gray-50 dark:hover:bg-gray-700/50;
+    @apply transition-colors duration-200;
+    
+    &:focus {
+        @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+    }
+}

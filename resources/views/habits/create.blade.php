@@ -49,7 +49,7 @@
                                     <option value="{{ $goal->id }}">
                                         {{ $goal->icon }} {{ $goal->name }}
                                         @if($goal->category)
-                                            ({{ ucfirst($goal->category) }})
+                                            ({{ $goal->category->name }})
                                         @endif
                                     </option>
                                 @endforeach
@@ -87,25 +87,22 @@
 
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
-                                        <input type="text" 
-                                               name="new_goal_icon" 
-                                               id="new_goal_icon" 
-                                               class="app-input" 
-                                               placeholder="Icon (emoji)"
-                                               maxlength="2"
-                                               :disabled="useExisting"
-                                               value="{{ old('new_goal_icon') }}">
+                                        <x-emoji-picker 
+                                            id="new_goal_icon"
+                                            name="new_goal_icon" 
+                                            :value="old('new_goal_icon')"
+                                            placeholder="Icon (emoji)"
+                                            label=""
+                                            x-bind:disabled="useExisting" />
                                     </div>
                                     <div>
-                                        <select name="new_goal_category" id="new_goal_category" class="app-input" :disabled="useExisting">
+                                        <select name="new_goal_category_id" id="new_goal_category_id" class="app-input" :disabled="useExisting">
                                             <option value="">Category (optional)</option>
-                                            <option value="health">Health</option>
-                                            <option value="fitness">Fitness</option>
-                                            <option value="learning">Learning</option>
-                                            <option value="productivity">Productivity</option>
-                                            <option value="mindfulness">Mindfulness</option>
-                                            <option value="social">Social</option>
-                                            <option value="other">Other</option>
+                                            @foreach($categories as $cat)
+                                                <option value="{{ $cat->id }}">
+                                                    {{ $cat->icon }} {{ $cat->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

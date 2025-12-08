@@ -16,21 +16,13 @@
             </div>
             <div class="ml-4">
                 @if($challenge->completed_at)
-                    <span class="px-3 py-1 text-sm font-bold rounded-full shadow-md bg-green-500 text-white">
-                        ✓ Completed
-                    </span>
+                    <span class="badge-completed">✓ Completed</span>
                 @elseif($challenge->started_at && $challenge->is_active)
-                    <span class="px-3 py-1 text-sm font-bold rounded-full shadow-md bg-gradient-to-r from-yellow-400 to-orange-500 text-white">
-                        🏃 Active
-                    </span>
+                    <span class="badge-challenge-active">🏃 Active</span>
                 @elseif($challenge->started_at && !$challenge->is_active)
-                    <span class="px-3 py-1 text-sm font-bold rounded-full shadow-md bg-gradient-to-r from-purple-400 to-indigo-500 text-white">
-                        ⏸️ Paused
-                    </span>
+                    <span class="badge-challenge-paused">⏸️ Paused</span>
                 @else
-                    <span class="px-3 py-1 text-sm font-bold rounded-full shadow-md bg-gradient-to-r from-gray-400 to-gray-500 text-white">
-                        📝 Draft
-                    </span>
+                    <span class="badge-challenge-draft">📝 Draft</span>
                 @endif
             </div>
         </div>

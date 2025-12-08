@@ -7,11 +7,13 @@ use Illuminate\Http\JsonResponse;
 use App\Domain\Challenge\Models\Goal;
 use App\Domain\Challenge\Models\DailyProgress;
 use App\Domain\Activity\Services\ActivityService;
+use App\Domain\Challenge\Services\ChallengeService;
 
 class GoalController extends Controller
 {
     public function __construct(
-        private ActivityService $activityService
+        private ActivityService $activityService,
+        private ChallengeService $challengeService
     ) {}
 
     /**
@@ -27,58 +29,77 @@ class GoalController extends Controller
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
-        // Find or create daily progress entry
-        $progress = DailyProgress::firstOrCreate([
+        $challenge = $goal->challenge;
+
+        // Find existing progress entry for today
+        $progress = DailyProgress::where([
             'user_id' => $user->id,
             'challenge_id' => $goal->challenge_id,
             'goal_id' => $goal->id,
             'date' => $today,
-        ]);
+        ])->first();
 
-        // Toggle completion status
-        $isCompleted = $progress->isCompleted();
+        // Check if already completed
+        $isCompleted = $progress && $progress->isCompleted();
         
         if ($isCompleted) {
+            // Undo completion
             $progress->markUncompleted();
             $message = 'Goal marked as not completed';
+            $completed = false;
         } else {
+            // Check if we can complete based on frequency limits
+            if (!$this->challengeService->canCompleteGoal($challenge, $goal, new \DateTime($today))) {
+                $frequencyDesc = $challenge->getFrequencyDescription();
+                return response()->json([
+                    'error' => true,
+                    'message' => "You've reached the limit for this period ({$frequencyDesc}). Great work!"
+                ], 422);
+            }
+
+            // Create or update progress entry
+            if (!$progress) {
+                $progress = DailyProgress::create([
+                    'user_id' => $user->id,
+                    'challenge_id' => $goal->challenge_id,
+                    'goal_id' => $goal->id,
+                    'date' => $today,
+                ]);
+            }
+            
             $progress->markCompleted();
             $message = 'Goal completed! Great job!';
+            $completed = true;
             
             // Create activity for goal completion
-            $this->activityService->createGoalCompletedActivity($user, $goal->challenge, $goal);
+            $this->activityService->createGoalCompletedActivity($user, $challenge, $goal);
         }
 
-        // Check if all goals for today are completed
-        $allGoalsCompleted = $this->checkAllGoalsCompletedForToday($goal->challenge_id, $user->id, $today);
+        // Check if all goals are completed for current period
+        $allGoalsCompleted = $this->challengeService->areAllGoalsCompletedForPeriod($challenge, new \DateTime($today));
         
-        // Create activity for day completion if all goals done
-        if ($allGoalsCompleted && !$isCompleted) {
-            $this->activityService->createDayCompletedActivity($user, $goal->challenge);
+        // Create activity for period completion if all goals done
+        if ($allGoalsCompleted && $completed) {
+            $periodName = $challenge->frequency_type?->label() ?? 'day';
+            $this->activityService->createDayCompletedActivity($user, $challenge);
         }
+
+        // Get progress for current period
+        $progressText = $this->challengeService->getProgressText($challenge, $goal);
+        $progressPercentage = $this->challengeService->getProgressPercentage($challenge, $goal);
 
         return response()->json([
             'success' => true,
-            'completed' => !$isCompleted,
+            'completed' => $completed,
             'message' => $message,
             'all_goals_completed' => $allGoalsCompleted,
-            'celebration' => $allGoalsCompleted ? 'All goals completed for today! 🎉' : null
+            'celebration' => $allGoalsCompleted ? 'All goals completed for this period! 🎉' : null,
+            'progress' => [
+                'text' => $progressText,
+                'percentage' => $progressPercentage,
+                'current' => $this->challengeService->getCompletionCountForPeriod($challenge, $goal, new \DateTime($today)),
+                'target' => $challenge->frequency_count ?? 1,
+            ],
         ]);
-    }
-
-    /**
-     * Check if all goals for a challenge are completed for today.
-     */
-    private function checkAllGoalsCompletedForToday(int $challengeId, int $userId, string $date): bool
-    {
-        $totalGoals = Goal::where('challenge_id', $challengeId)->count();
-        
-        $completedGoals = DailyProgress::where('user_id', $userId)
-            ->where('challenge_id', $challengeId)
-            ->where('date', $date)
-            ->whereNotNull('completed_at')
-            ->count();
-
-        return $totalGoals > 0 && $completedGoals === $totalGoals;
     }
 }

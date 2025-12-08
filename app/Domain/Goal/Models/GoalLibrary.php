@@ -19,7 +19,7 @@ class GoalLibrary extends Model
         'user_id',
         'name',
         'description',
-        'category',
+        'category_id',
         'icon',
     ];
 
@@ -29,6 +29,14 @@ class GoalLibrary extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the category for this goal.
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 
     /**
@@ -67,10 +75,10 @@ class GoalLibrary extends Model
     /**
      * Scope to filter by category.
      */
-    public function scopeByCategory($query, ?string $category)
+    public function scopeByCategory($query, $categoryId)
     {
-        if ($category) {
-            return $query->where('category', $category);
+        if ($categoryId) {
+            return $query->where('category_id', $categoryId);
         }
         return $query;
     }

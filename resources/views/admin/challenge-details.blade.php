@@ -48,21 +48,13 @@
                             <span class="text-sm text-gray-600 dark:text-gray-400">Current Status:</span>
                             <div class="mt-1">
                                 @if($challenge->completed_at)
-                                    <span class="px-3 py-1 text-sm font-bold rounded-full bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400">
-                                        ✓ Completed
-                                    </span>
+                                    <span class="badge-completed">✓ Completed</span>
                                 @elseif($challenge->started_at && $challenge->is_active)
-                                    <span class="px-3 py-1 text-sm font-bold rounded-full bg-orange-100 dark:bg-orange-900/20 text-orange-800 dark:text-orange-400">
-                                        🏃 Active
-                                    </span>
+                                    <span class="badge-challenge-active">🏃 Active</span>
                                 @elseif($challenge->started_at && !$challenge->is_active)
-                                    <span class="px-3 py-1 text-sm font-bold rounded-full bg-purple-100 dark:bg-purple-900/20 text-purple-800 dark:text-purple-400">
-                                        ⏸️ Paused
-                                    </span>
+                                    <span class="badge-challenge-paused">⏸️ Paused</span>
                                 @else
-                                    <span class="px-3 py-1 text-sm font-bold rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-400">
-                                        📝 Draft
-                                    </span>
+                                    <span class="badge-challenge-draft">📝 Draft</span>
                                 @endif
                             </div>
                         </div>
@@ -71,13 +63,9 @@
                             <span class="text-sm text-gray-600 dark:text-gray-400">Visibility:</span>
                             <div class="mt-1">
                                 @if($challenge->is_public)
-                                    <span class="px-3 py-1 text-sm font-medium rounded-full bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400">
-                                        🌐 Public
-                                    </span>
+                                    <span class="badge-info">🌐 Public</span>
                                 @else
-                                    <span class="px-3 py-1 text-sm font-medium rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-400">
-                                        🔒 Private
-                                    </span>
+                                    <span class="badge-draft">🔒 Private</span>
                                 @endif
                             </div>
                         </div>

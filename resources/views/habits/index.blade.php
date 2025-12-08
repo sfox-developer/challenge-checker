@@ -67,34 +67,34 @@
             </div>
 
             <!-- Filter Tabs -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-                <div class="border-b border-gray-200 dark:border-gray-700">
-                    <nav class="-mb-px flex space-x-8 px-6" aria-label="Tabs">
-                        <a href="{{ route('habits.index', ['filter' => 'active']) }}" 
-                           class="@if($filter === 'active') border-teal-500 text-teal-600 dark:text-teal-400 @else border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 @endif whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            Active
-                        </a>
-                        <a href="{{ route('habits.index', ['filter' => 'all']) }}" 
-                           class="@if($filter === 'all') border-teal-500 text-teal-600 dark:text-teal-400 @else border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 @endif whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            All
-                        </a>
-                        <a href="{{ route('habits.index', ['filter' => 'archived']) }}" 
-                           class="@if($filter === 'archived') border-teal-500 text-teal-600 dark:text-teal-400 @else border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 @endif whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            Archived
-                        </a>
-                    </nav>
-                </div>
+            <div class="tab-header tab-header-teal">
+                <nav class="tab-nav">
+                    <a href="{{ route('habits.index', ['filter' => 'active']) }}" 
+                       class="@if($filter === 'active') tab-button active @else tab-button @endif">
+                        Active
+                    </a>
+                    <a href="{{ route('habits.index', ['filter' => 'all']) }}" 
+                       class="@if($filter === 'all') tab-button active @else tab-button @endif">
+                        All
+                    </a>
+                    <a href="{{ route('habits.index', ['filter' => 'archived']) }}" 
+                       class="@if($filter === 'archived') tab-button active @else tab-button @endif">
+                        Archived
+                    </a>
+                </nav>
             </div>
 
             <!-- Habits List -->
             @if($habits->isEmpty())
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-12 text-center">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                    </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No habits found</h3>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Get started by creating a new habit.</p>
-                    <div class="mt-6">
+                <div class="empty-state-card">
+                    <div class="empty-state-icon">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                    </div>
+                    <h3 class="empty-state-title">No habits found</h3>
+                    <p class="empty-state-message">Get started by creating a new habit.</p>
+                    <div class="empty-state-action">
                         <x-app-button variant="primary" href="{{ route('habits.create') }}">
                             <x-slot name="icon">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

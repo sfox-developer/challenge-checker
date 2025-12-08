@@ -1,0 +1,134 @@
+// ============================================================================
+// LAYOUT COMPONENTS
+// ============================================================================
+// Application layout patterns and containers
+// Used for main app structure, modals, and floating elements
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// APP CONTAINER - Main application wrapper
+// ----------------------------------------------------------------------------
+
+.app-container {
+    @apply min-h-screen flex flex-col;
+    @apply bg-gradient-to-br from-gray-50 to-blue-50;
+    @apply dark:from-gray-900 dark:to-gray-800;
+    @apply pb-16 sm:pb-0; // Space for mobile bottom nav
+}
+
+// ----------------------------------------------------------------------------
+// FLOATING ACTION BUTTON (FAB)
+// ----------------------------------------------------------------------------
+
+.fab {
+    @apply fixed bottom-8 right-8 z-50;
+    @apply hidden sm:flex items-center justify-center;
+    @apply bg-gradient-to-r from-blue-600 to-purple-600;
+    @apply hover:from-blue-700 hover:to-purple-700;
+    @apply text-white rounded-full p-4;
+    @apply shadow-2xl hover:shadow-2xl;
+    @apply transform hover:scale-110;
+    @apply transition-all duration-200;
+}
+
+.fab-tooltip {
+    @apply absolute right-full mr-3;
+    @apply bg-gray-900 text-white;
+    @apply px-3 py-2 rounded-lg text-sm font-semibold;
+    @apply whitespace-nowrap;
+    @apply opacity-0 group-hover:opacity-100;
+    @apply transition-opacity duration-200;
+    @apply pointer-events-none;
+}
+
+// ----------------------------------------------------------------------------
+// MODAL COMPONENTS
+// ----------------------------------------------------------------------------
+
+.modal-overlay {
+    @apply fixed inset-0 z-50 overflow-y-auto;
+}
+
+.modal-backdrop {
+    @apply fixed inset-0 bg-gray-500 bg-opacity-75;
+    @apply transition-opacity;
+}
+
+.modal-container {
+    @apply flex items-center justify-center min-h-screen;
+    @apply px-4 pt-4 pb-20 text-center;
+    @apply sm:block sm:p-0;
+}
+
+.modal-panel {
+    @apply inline-block align-bottom;
+    @apply bg-white dark:bg-gray-800;
+    @apply rounded-lg text-left overflow-hidden shadow-xl;
+    @apply transform transition-all;
+    @apply sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full;
+}
+
+.modal-header {
+    @apply bg-gradient-to-r from-blue-600 to-purple-600;
+    @apply px-6 py-4;
+}
+
+.modal-header-title {
+    @apply flex items-center justify-between;
+    
+    h3 {
+        @apply text-xl font-bold text-white flex items-center space-x-2;
+    }
+    
+    button {
+        @apply text-white hover:text-gray-200 transition-colors;
+    }
+}
+
+.modal-tabs {
+    @apply border-b border-gray-200 dark:border-gray-700;
+    @apply bg-gray-50 dark:bg-gray-800/50;
+    
+    nav {
+        @apply flex -mb-px;
+    }
+}
+
+.modal-tab {
+    @apply w-1/2 py-4 px-1 text-center;
+    @apply border-b-2 font-medium text-sm;
+    @apply transition-colors duration-150;
+    
+    &.active-blue {
+        @apply border-blue-500 text-blue-600 dark:text-blue-400;
+    }
+    
+    &.active-teal {
+        @apply border-teal-500 text-teal-600 dark:text-teal-400;
+    }
+    
+    &:not([class*="active-"]) {
+        @apply border-transparent text-gray-500 dark:text-gray-400;
+        @apply hover:text-gray-700 dark:hover:text-gray-300;
+        @apply hover:border-gray-300 dark:hover:border-gray-600;
+    }
+    
+    span {
+        @apply flex items-center justify-center gap-2;
+    }
+}
+
+.modal-content {
+    @apply px-6 py-4 max-h-96 overflow-y-auto;
+    @apply bg-white dark:bg-gray-800;
+}
+
+// ----------------------------------------------------------------------------
+// FOOTER COMPONENT
+// ----------------------------------------------------------------------------
+
+.app-footer {
+    @apply bg-white dark:bg-gray-900;
+    @apply border-t border-gray-200 dark:border-gray-700;
+    @apply mt-auto;
+}

@@ -40,8 +40,8 @@
                         <select name="category" class="app-input">
                             <option value="">All Categories</option>
                             @foreach($categories as $cat)
-                                <option value="{{ $cat }}" {{ $category === $cat ? 'selected' : '' }}>
-                                    {{ ucfirst($cat) }}
+                                <option value="{{ $cat->id }}" {{ $categoryId == $cat->id ? 'selected' : '' }}>
+                                    {{ $cat->icon }} {{ $cat->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -55,7 +55,7 @@
                         <span class="hidden sm:inline">Search</span>
                     </button>
 
-                    @if($search || $category)
+                    @if($search || $categoryId)
                         <a href="{{ route('goals.index') }}" class="btn-secondary sm:w-auto">
                             Clear
                         </a>
@@ -85,7 +85,7 @@
                                         <div class="flex flex-wrap items-center gap-2 mt-2">
                                             @if($goal->category)
                                                 <span class="px-2 py-1 text-xs font-medium rounded-full bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">
-                                                    {{ ucfirst($goal->category) }}
+                                                    {{ $goal->category->icon }} {{ $goal->category->name }}
                                                 </span>
                                             @endif
 
@@ -160,63 +160,51 @@
 
                         <!-- Edit Modal for this goal -->
                         <x-modal name="edit-goal-{{ $goal->id }}" :show="false">
-                            <div class="p-6">
-                                <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Edit Goal</h2>
-                                
+                            <div class="modal-header">
+                                <div class="modal-header-title">
+                                    <h3>Edit Goal</h3>
+                                    <button type="button" @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')" class="text-white hover:text-gray-200 text-2xl font-bold leading-none">&times;</button>
+                                </div>
+                            </div>
+                            
+                            <div class="modal-content">
                                 <form action="{{ route('goals.update', $goal) }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     
-                                    <div class="space-y-4">
-                                        <div>
-                                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                                                Goal Name
-                                            </label>
-                                            <input type="text" 
-                                                   name="name" 
-                                                   value="{{ $goal->name }}"
-                                                   class="app-input" 
-                                                   required>
-                                        </div>
+                                    <x-form-input
+                                        name="name"
+                                        label="Goal Name"
+                                        :value="$goal->name"
+                                        required
+                                        class="mb-4" />
 
-                                        <div class="grid grid-cols-2 gap-3">
-                                            <div>
-                                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                                                    Icon (emoji)
-                                                </label>
-                                                <input type="text" 
-                                                       name="icon" 
-                                                       value="{{ $goal->icon }}"
-                                                       maxlength="10"
-                                                       class="app-input">
-                                            </div>
-
-                                            <div>
-                                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                                                    Category
-                                                </label>
-                                                <select name="category" class="app-input">
-                                                    <option value="">None</option>
-                                                    <option value="health" {{ $goal->category === 'health' ? 'selected' : '' }}>Health</option>
-                                                    <option value="fitness" {{ $goal->category === 'fitness' ? 'selected' : '' }}>Fitness</option>
-                                                    <option value="learning" {{ $goal->category === 'learning' ? 'selected' : '' }}>Learning</option>
-                                                    <option value="productivity" {{ $goal->category === 'productivity' ? 'selected' : '' }}>Productivity</option>
-                                                    <option value="mindfulness" {{ $goal->category === 'mindfulness' ? 'selected' : '' }}>Mindfulness</option>
-                                                    <option value="social" {{ $goal->category === 'social' ? 'selected' : '' }}>Social</option>
-                                                    <option value="other" {{ $goal->category === 'other' ? 'selected' : '' }}>Other</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                                                Description
-                                            </label>
-                                            <textarea name="description" 
-                                                      rows="3" 
-                                                      class="app-input">{{ $goal->description }}</textarea>
-                                        </div>
+                                    <div class="grid grid-cols-2 gap-3 mb-4">
+                                        <x-emoji-picker 
+                                            :id="'edit-goal-icon-' . $goal->id"
+                                            name="icon" 
+                                            :value="$goal->icon"
+                                            label="Icon (emoji)" />
+                                        
+                                        <x-form-select
+                                            name="category_id"
+                                            label="Category"
+                                            :value="$goal->category_id"
+                                            placeholder="None">
+                                            @foreach($categories as $cat)
+                                                <option value="{{ $cat->id }}" {{ $goal->category_id == $cat->id ? 'selected' : '' }}>
+                                                    {{ $cat->icon }} {{ $cat->name }}
+                                                </option>
+                                            @endforeach
+                                        </x-form-select>
                                     </div>
+
+                                    <x-form-textarea
+                                        name="description"
+                                        label="Description"
+                                        :value="$goal->description"
+                                        rows="3"
+                                        class="mb-4" />
 
                                     <div class="flex justify-end space-x-3 mt-6">
                                         <button type="button" 
@@ -238,23 +226,25 @@
                 <div class="card text-center py-12">
                     <div class="text-6xl mb-4">📚</div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                        @if($search || $category)
+                        @if($search || $categoryId)
                             No goals found
                         @else
                             Your goal library is empty
                         @endif
                     </h3>
                     <p class="text-gray-600 dark:text-gray-400 mb-6">
-                        @if($search || $category)
+                        @if($search || $categoryId)
                             Try adjusting your search or filters.
                         @else
                             Create reusable goals to use in your habits and challenges.
                         @endif
                     </p>
-                    @if(!$search && !$category)
-                        <x-app-button variant="primary" @click="$dispatch('open-modal', 'create-goal')">
-                            Add Your First Goal
-                        </x-app-button>
+                    @if(!$search && !$categoryId)
+                        <div class="flex justify-center">
+                            <x-app-button variant="primary" @click="$dispatch('open-modal', 'create-goal')">
+                                Add Your First Goal
+                            </x-app-button>
+                        </div>
                     @endif
                 </div>
             @endif
@@ -264,68 +254,51 @@
 
     <!-- Create Goal Modal -->
     <x-modal name="create-goal" :show="$errors->any()">
-        <div class="p-6">
-            <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Add New Goal</h2>
-            
+        <div class="modal-header">
+            <div class="modal-header-title">
+                <h3>Add New Goal</h3>
+                <button type="button" @click="$dispatch('close-modal', 'create-goal')" class="text-white hover:text-gray-200 text-2xl font-bold leading-none">&times;</button>
+            </div>
+        </div>
+        
+        <div class="modal-content">
             <form action="{{ route('goals.store') }}" method="POST">
                 @csrf
                 
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                            Goal Name
-                        </label>
-                        <input type="text" 
-                               name="name" 
-                               value="{{ old('name') }}"
-                               class="app-input" 
-                               placeholder="e.g., Exercise, Read, Meditate"
-                               required>
-                        @error('name')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
+                <x-form-input
+                    name="name"
+                    label="Goal Name"
+                    placeholder="e.g., Exercise, Read, Meditate"
+                    required
+                    class="mb-4" />
 
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                                Icon (emoji)
-                            </label>
-                            <input type="text" 
-                                   name="icon" 
-                                   value="{{ old('icon') }}"
-                                   maxlength="10"
-                                   class="app-input"
-                                   placeholder="🎯">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                                Category
-                            </label>
-                            <select name="category" class="app-input">
-                                <option value="">None</option>
-                                <option value="health">Health</option>
-                                <option value="fitness">Fitness</option>
-                                <option value="learning">Learning</option>
-                                <option value="productivity">Productivity</option>
-                                <option value="mindfulness">Mindfulness</option>
-                                <option value="social">Social</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                            Description <span class="text-xs text-gray-500 font-normal">(Optional)</span>
-                        </label>
-                        <textarea name="description" 
-                                  rows="3" 
-                                  class="app-input"
-                                  placeholder="What is this goal about?">{{ old('description') }}</textarea>
-                    </div>
+                <div class="grid grid-cols-2 gap-3 mb-4">
+                    <x-emoji-picker 
+                        id="create-goal-icon"
+                        name="icon" 
+                        :value="old('icon')"
+                        placeholder="🎯"
+                        label="Icon (emoji)" />
+                    
+                    <x-form-select
+                        name="category_id"
+                        label="Category"
+                        placeholder="None">
+                        @foreach($categories as $cat)
+                            <option value="{{ $cat->id }}">
+                                {{ $cat->icon }} {{ $cat->name }}
+                            </option>
+                        @endforeach
+                    </x-form-select>
                 </div>
+
+                <x-form-textarea
+                    name="description"
+                    label="Description"
+                    placeholder="What is this goal about?"
+                    rows="3"
+                    optional
+                    class="mb-4" />
 
                 <div class="flex justify-end space-x-3 mt-6">
                     <button type="button" 

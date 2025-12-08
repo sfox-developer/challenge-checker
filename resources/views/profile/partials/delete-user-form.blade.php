@@ -17,13 +17,21 @@
     >{{ __('Delete Account') }}</x-app-button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
-            @csrf
-            @method('delete')
+        <div class="bg-gradient-to-r from-red-600 to-pink-600 px-6 py-4">
+            <div class="modal-header-title">
+                <h3 class="text-lg font-semibold text-white">{{ __('Delete Account') }}</h3>
+                <button type="button" @click="$dispatch('close')" class="text-white hover:text-gray-200 text-2xl font-bold leading-none">&times;</button>
+            </div>
+        </div>
+        
+        <div class="px-6 py-4">
+            <form method="post" action="{{ route('profile.destroy') }}">
+                @csrf
+                @method('delete')
 
-            <h2 class="text-lg font-medium text-gray-800 dark:text-gray-100">
-                {{ __('Are you sure you want to delete your account?') }}
-            </h2>
+                <h2 class="text-lg font-medium text-gray-800 dark:text-gray-100">
+                    {{ __('Are you sure you want to delete your account?') }}
+                </h2>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                 {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
@@ -43,10 +51,17 @@
                 <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
             </div>
 
-            <div class="mt-6 flex justify-end">
-                <x-app-button variant="secondary" type="button" x-on:click="$dispatch('close')">
-                    {{ __('Cancel') }}
-                </x-app-button>
+                <div class="mt-6 flex justify-end gap-3">
+                    <x-app-button variant="secondary" type="button" x-on:click="$dispatch('close')">
+                        {{ __('Cancel') }}
+                    </x-app-button>
+
+                    <x-app-button variant="danger" type="submit">
+                        {{ __('Delete Account') }}
+                    </x-app-button>
+                </div>
+            </form>
+        </div>
 
                 <x-app-button variant="danger" type="submit" class="ms-3">
                     {{ __('Delete Account') }}

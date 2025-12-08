@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-header title="My Challenges" gradient="from-purple-500 to-pink-500">
+        <x-page-header title="My Challenges">
             <x-slot name="icon">
                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
@@ -74,26 +74,24 @@
             </div>
 
             <!-- Filter Tabs -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-                <div class="border-b border-gray-200 dark:border-gray-700">
-                    <nav class="-mb-px flex space-x-8 px-6" aria-label="Tabs">
-                        <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'border-purple-500 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            All
-                        </button>
-                        <button @click="activeFilter = 'active'" :class="activeFilter === 'active' ? 'border-purple-500 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            Active
-                        </button>
-                        <button @click="activeFilter = 'paused'" :class="activeFilter === 'paused' ? 'border-purple-500 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            Paused
-                        </button>
-                        <button @click="activeFilter = 'completed'" :class="activeFilter === 'completed' ? 'border-purple-500 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            Completed
-                        </button>
-                        <button @click="activeFilter = 'draft'" :class="activeFilter === 'draft' ? 'border-purple-500 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                            Draft
-                        </button>
-                    </nav>
-                </div>
+            <div class="tab-header tab-header-purple">
+                <nav class="tab-nav">
+                    <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'tab-button active' : 'tab-button'">
+                        All
+                    </button>
+                    <button @click="activeFilter = 'active'" :class="activeFilter === 'active' ? 'tab-button active' : 'tab-button'">
+                        Active
+                    </button>
+                    <button @click="activeFilter = 'paused'" :class="activeFilter === 'paused' ? 'tab-button active' : 'tab-button'">
+                        Paused
+                    </button>
+                    <button @click="activeFilter = 'completed'" :class="activeFilter === 'completed' ? 'tab-button active' : 'tab-button'">
+                        Completed
+                    </button>
+                    <button @click="activeFilter = 'draft'" :class="activeFilter === 'draft' ? 'tab-button active' : 'tab-button'">
+                        Draft
+                    </button>
+                </nav>
             </div>
 
             @if($challenges->isNotEmpty())
@@ -122,21 +120,13 @@
                         <div class="flex flex-col sm:flex-row justify-between items-start mb-4 space-y-2 sm:space-y-0">
                             <h3 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-100 pr-2">{{ $challenge->name }}</h3>
                             @if($challenge->completed_at)
-                                <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200 whitespace-nowrap">
-                                    ✓ Completed
-                                </span>
+                                <span class="badge-completed whitespace-nowrap">✓ Completed</span>
                             @elseif($challenge->started_at && $challenge->is_active)
-                                <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 whitespace-nowrap">
-                                    🏃 Active
-                                </span>
+                                <span class="badge-challenge-active whitespace-nowrap">🏃 Active</span>
                             @elseif($challenge->started_at && !$challenge->is_active)
-                                <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 whitespace-nowrap">
-                                    ⏸️ Paused
-                                </span>
+                                <span class="badge-challenge-paused whitespace-nowrap">⏸️ Paused</span>
                             @else
-                                <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200 whitespace-nowrap">
-                                    📝 Draft
-                                </span>
+                                <span class="badge-challenge-draft whitespace-nowrap">📝 Draft</span>
                             @endif
                         </div>
                         
@@ -150,10 +140,21 @@
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                                     </svg>
+                                    <span>Frequency:</span>
+                                </div>
+                                <span class="font-semibold text-gray-800 dark:text-gray-100">{{ $challenge->getFrequencyDescription() }}</span>
+                            </div>
+                            @if($challenge->days_duration)
+                            <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
+                                <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                                    </svg>
                                     <span>Duration:</span>
                                 </div>
-                                <span class="font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">{{ $challenge->days_duration }} days</span>
+                                <span class="font-semibold text-gray-800 dark:text-gray-100">{{ $challenge->days_duration }} days</span>
                             </div>
+                            @endif
                             <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
                                 <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -161,7 +162,7 @@
                                     </svg>
                                     <span>Goals:</span>
                                 </div>
-                                <span class="font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">{{ $challenge->goals->count() }}</span>
+                                <span class="font-semibold text-gray-800 dark:text-gray-100">{{ $challenge->goals->count() }}</span>
                             </div>
                             @if($challenge->started_at)
                                 <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
@@ -181,8 +182,8 @@
                                     </svg>
                                     <span>End Date:</span>
                                 </div>
-                                <span class="font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">
-                                    @if($challenge->started_at)
+                                <span class="font-semibold text-gray-800 dark:text-gray-100">
+                                    @if($challenge->started_at && $challenge->days_duration)
                                         {{ $challenge->started_at->addDays($challenge->days_duration - 1)->format('M j, Y') }}
                                     @else
                                         -

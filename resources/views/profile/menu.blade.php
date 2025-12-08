@@ -30,6 +30,43 @@
                     </div>
                 </a>
 
+                <!-- Goals Library -->
+                <a href="{{ route('goals.index') }}" class="block card card-interactive">
+                    <div class="p-5 flex items-center space-x-4">
+                        <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">Goals</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Manage your goals library</p>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </a>
+
+                <!-- Discover -->
+                <a href="{{ route('users.search') }}" class="block card card-interactive">
+                    <div class="p-5 flex items-center space-x-4">
+                        <div class="bg-gradient-to-r from-indigo-500 to-blue-500 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">Discover</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Find and follow other users</p>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </a>
+
                 <!-- Settings -->
                 <a href="{{ route('profile.edit') }}" class="block card card-interactive">
                     <div class="p-5 flex items-center space-x-4">
