@@ -65,14 +65,23 @@
                     <a href="{{ route('habits.index', ['filter' => 'active']) }}" 
                        class="@if($filter === 'active') tab-button active @else tab-button @endif">
                         Active
+                        <span class="tab-count-badge {{ $filter === 'active' ? 'active' : 'inactive' }}">
+                            {{ $activeCount }}
+                        </span>
                     </a>
                     <a href="{{ route('habits.index', ['filter' => 'all']) }}" 
                        class="@if($filter === 'all') tab-button active @else tab-button @endif">
                         All
+                        <span class="tab-count-badge {{ $filter === 'all' ? 'active' : 'inactive' }}">
+                            {{ $allCount }}
+                        </span>
                     </a>
                     <a href="{{ route('habits.index', ['filter' => 'archived']) }}" 
                        class="@if($filter === 'archived') tab-button active @else tab-button @endif">
                         Archived
+                        <span class="tab-count-badge {{ $filter === 'archived' ? 'active' : 'inactive' }}">
+                            {{ $archivedCount }}
+                        </span>
                     </a>
                 </nav>
             </div>

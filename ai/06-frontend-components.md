@@ -313,6 +313,13 @@ Page headers, section headers, and tab headers.
 .tab-button-with-count    // Tab with count badge
 ```
 
+**Tab Count Badges:**
+```scss
+.tab-count-badge          // Tab count badge (dynamic active/inactive)
+.tab-count-badge.active   // Active tab count (blue background)
+.tab-count-badge.inactive // Inactive tab count (gray background)
+```
+
 **Card Headers:**
 ```scss
 .card-header              // Header within card
@@ -336,11 +343,43 @@ Page headers, section headers, and tab headers.
 <h3 class="section-header">Statistics</h3>
 <h4 class="section-header-sm">Completed Goals</h4>
 
-<!-- Tabs -->
+<!-- Tabs with Alpine.js (client-side filtering) -->
 <div class="tab-header">
     <nav class="tab-nav">
-        <button class="tab-button active">Challenges</button>
-        <button class="tab-button">Habits</button>
+        <button @click="activeTab = 'challenges'" 
+                :class="activeTab === 'challenges' ? 'tab-button active' : 'tab-button'">
+            Challenges
+            <span class="tab-count-badge" :class="activeTab === 'challenges' ? 'active' : 'inactive'">
+                {{ $challengeCount }}
+            </span>
+        </button>
+        <button @click="activeTab = 'habits'" 
+                :class="activeTab === 'habits' ? 'tab-button active' : 'tab-button'">
+            Habits
+            <span class="tab-count-badge" :class="activeTab === 'habits' ? 'active' : 'inactive'">
+                {{ $habitCount }}
+            </span>
+        </button>
+    </nav>
+</div>
+
+<!-- Tabs with server-side filtering (using links) -->
+<div class="tab-header">
+    <nav class="tab-nav">
+        <a href="?filter=active" 
+           class="@if($filter === 'active') tab-button active @else tab-button @endif">
+            Active
+            <span class="tab-count-badge {{ $filter === 'active' ? 'active' : 'inactive' }}">
+                {{ $activeCount }}
+            </span>
+        </a>
+        <a href="?filter=all" 
+           class="@if($filter === 'all') tab-button active @else tab-button @endif">
+            All
+            <span class="tab-count-badge {{ $filter === 'all' ? 'active' : 'inactive' }}">
+                {{ $allCount }}
+            </span>
+        </a>
     </nav>
 </div>
 ```

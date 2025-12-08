@@ -70,21 +70,39 @@
                 <nav class="tab-nav">
                     <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'tab-button active' : 'tab-button'">
                         All
+                        <span class="tab-count-badge" :class="activeFilter === 'all' ? 'active' : 'inactive'">
+                            {{ $allCount }}
+                        </span>
                     </button>
                     <button @click="activeFilter = 'active'" :class="activeFilter === 'active' ? 'tab-button active' : 'tab-button'">
                         Active
+                        <span class="tab-count-badge" :class="activeFilter === 'active' ? 'active' : 'inactive'">
+                            {{ $activeCount }}
+                        </span>
                     </button>
                     <button @click="activeFilter = 'paused'" :class="activeFilter === 'paused' ? 'tab-button active' : 'tab-button'">
                         Paused
+                        <span class="tab-count-badge" :class="activeFilter === 'paused' ? 'active' : 'inactive'">
+                            {{ $pausedCount }}
+                        </span>
                     </button>
                     <button @click="activeFilter = 'completed'" :class="activeFilter === 'completed' ? 'tab-button active' : 'tab-button'">
                         Completed
+                        <span class="tab-count-badge" :class="activeFilter === 'completed' ? 'active' : 'inactive'">
+                            {{ $completedCount }}
+                        </span>
                     </button>
                     <button @click="activeFilter = 'draft'" :class="activeFilter === 'draft' ? 'tab-button active' : 'tab-button'">
                         Draft
+                        <span class="tab-count-badge" :class="activeFilter === 'draft' ? 'active' : 'inactive'">
+                            {{ $draftCount }}
+                        </span>
                     </button>
                     <button @click="activeFilter = 'archived'" :class="activeFilter === 'archived' ? 'tab-button active' : 'tab-button'">
                         Archived
+                        <span class="tab-count-badge" :class="activeFilter === 'archived' ? 'active' : 'inactive'">
+                            {{ $archivedCount }}
+                        </span>
                     </button>
                 </nav>
             </div>

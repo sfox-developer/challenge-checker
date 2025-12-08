@@ -49,13 +49,22 @@ class HabitController extends Controller
         $completedToday = $habits->filter(fn($h) => $h->isCompletedToday())->count();
         $currentStreaks = $habits->sum(fn($h) => $h->statistics?->current_streak ?? 0);
 
+        // Calculate filter counts
+        $allHabits = auth()->user()->habits()->get();
+        $activeCount = $allHabits->filter(fn($h) => !$h->archived_at)->count();
+        $archivedCount = $allHabits->filter(fn($h) => $h->archived_at)->count();
+        $allCount = $allHabits->count();
+
         return view('habits.index', compact(
             'habits',
             'groupedHabits',
             'totalHabits',
             'completedToday',
             'currentStreaks',
-            'filter'
+            'filter',
+            'activeCount',
+            'archivedCount',
+            'allCount'
         ));
     }
 

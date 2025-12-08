@@ -39,7 +39,33 @@ class ChallengeController extends Controller
             ->where('is_active', true)
             ->count();
 
-        return view('challenges.index', compact('challenges', 'totalChallenges', 'activeChallenges'));
+        // Calculate filter counts
+        $allCount = $challenges->count();
+        $activeCount = $challenges->filter(function ($c) {
+            return $c->started_at && $c->is_active && !$c->completed_at && !$c->isArchived();
+        })->count();
+        $pausedCount = $challenges->filter(function ($c) {
+            return $c->started_at && !$c->is_active && !$c->completed_at && !$c->isArchived();
+        })->count();
+        $completedCount = $challenges->filter(function ($c) {
+            return $c->completed_at && !$c->isArchived();
+        })->count();
+        $draftCount = $challenges->filter(function ($c) {
+            return !$c->started_at && !$c->isArchived();
+        })->count();
+        $archivedCount = $challenges->filter(fn($c) => $c->isArchived())->count();
+
+        return view('challenges.index', compact(
+            'challenges',
+            'totalChallenges',
+            'activeChallenges',
+            'allCount',
+            'activeCount',
+            'pausedCount',
+            'completedCount',
+            'draftCount',
+            'archivedCount'
+        ));
     }
 
     /**

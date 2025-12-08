@@ -10,6 +10,91 @@ Complete award-winning minimalistic redesign of the Challenge Checker UI, transf
 
 ## Recent Updates
 
+### December 8, 2025 - Tab Count Badges Enhancement
+
+**Problem:** The habits and challenges index pages lacked visual feedback about the number of items in each filter/status category, making it difficult for users to quickly understand the distribution of their data without clicking through each tab.
+
+**Solution:** Added dynamic count badges to all filter tabs in both habits and challenges index pages, matching the pattern already established in the user-content-tabs component.
+
+**Changes Made:**
+
+**Files Modified:**
+1. `app/Http/Controllers/HabitController.php` - Calculate filter counts
+2. `app/Http/Controllers/ChallengeController.php` - Calculate status counts
+3. `resources/views/habits/index.blade.php` - Display count badges
+4. `resources/views/challenges/index.blade.php` - Display count badges
+
+**Key Improvements:**
+
+1. **Habits Index (3 tabs)**
+   - Active tab: Shows count of non-archived habits
+   - All tab: Shows total count of all habits
+   - Archived tab: Shows count of archived habits
+   - Uses server-side filtering with static counts (refreshes on page load)
+
+2. **Challenges Index (6 tabs)**
+   - All tab: Total count of all challenges
+   - Active tab: Count of started, active, non-completed challenges
+   - Paused tab: Count of started, paused, non-completed challenges
+   - Completed tab: Count of completed challenges
+   - Draft tab: Count of not-yet-started challenges
+   - Archived tab: Count of archived challenges
+   - Uses Alpine.js reactive counts (no page refresh needed)
+
+**Implementation Pattern:**
+
+**Habits (Server-Side Filtering):**
+```blade
+<a href="{{ route('habits.index', ['filter' => 'active']) }}" 
+   class="@if($filter === 'active') tab-button active @else tab-button @endif">
+    Active
+    <span class="tab-count-badge {{ $filter === 'active' ? 'active' : 'inactive' }}">
+        {{ $activeCount }}
+    </span>
+</a>
+```
+
+**Challenges (Client-Side Filtering with Alpine.js):**
+```blade
+<button @click="activeFilter = 'active'" 
+        :class="activeFilter === 'active' ? 'tab-button active' : 'tab-button'">
+    Active
+    <span class="tab-count-badge" :class="activeFilter === 'active' ? 'active' : 'inactive'">
+        {{ $activeCount }}
+    </span>
+</button>
+```
+
+**Controller Logic (ChallengeController example):**
+```php
+// Calculate filter counts
+$allCount = $challenges->count();
+$activeCount = $challenges->filter(function ($c) {
+    return $c->started_at && $c->is_active && !$c->completed_at && !$c->isArchived();
+})->count();
+$pausedCount = $challenges->filter(function ($c) {
+    return $c->started_at && !$c->is_active && !$c->completed_at && !$c->isArchived();
+})->count();
+// ... etc for all status types
+```
+
+**Benefits:**
+- ✅ **Better Information Scent** - Users see data distribution at a glance
+- ✅ **Improved Navigation** - Know which tabs have content before clicking
+- ✅ **Visual Consistency** - Matches user-content-tabs pattern
+- ✅ **Professional Polish** - Follows modern app UI patterns (Linear, Height, Notion)
+- ✅ **Minimal Performance Impact** - Calculated once per page load using existing collection
+- ✅ **Accessibility** - Counts provide context without requiring interaction
+
+**Pattern Consistency:**
+This creates perfect visual consistency across all tab systems:
+- User profile tabs (activity, challenges)
+- Habits index filter tabs
+- Challenges index filter tabs
+- All use the same `.tab-count-badge` CSS class with active/inactive states
+
+---
+
 ### December 8, 2025 - Challenge List Item UX Enhancement
 
 **Problem:** The `challenge-list-item` component had inferior UX compared to the habit list items pattern, specifically:
