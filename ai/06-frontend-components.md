@@ -1145,10 +1145,36 @@ This pattern is used in `resources/views/challenges/create.blade.php` for dynami
 - `adminView` - Boolean for admin context (default: false)
 
 **Features:**
-- Routes to admin or public view based on context
-- Shows privacy indicator
-- Shows progress
-- Shows status badge
+- **Full card clickability** - Entire card is an `<a>` tag with `card-link` class
+- **Visual icon display** - Shows first goal's icon (w-12 h-12) with light slate background
+- **Hover effects** - Title and arrow change color on hover via `group` utilities
+- **Inline badge** - Status badge positioned with title for better hierarchy
+- **Emoji-based stats** - Uses emojis (📅 ✓) instead of SVG icons for better scannability
+- **Routes to admin or public view** based on `adminView` prop
+- **Consistent with habit list item pattern** - Same UX and visual approach
+
+**Layout Structure:**
+```blade
+<a href="..." class="card card-link group">
+    <div class="flex items-center gap-4">
+        <!-- Optional goal icon (w-12 h-12) -->
+        <!-- Content area with title, badge, description, stats -->
+        <!-- Chevron arrow (hover effect) -->
+    </div>
+</a>
+```
+
+**Stats Display:**
+- Duration: 📅 emoji + day count
+- Progress: ✓ emoji + completed/total (if started)
+- Goal count: X goals
+
+**Badge Types:**
+- Archived: 📁 Archived
+- Completed: ✓ Completed
+- Active: 🏃 Active
+- Paused: ⏸️ Paused
+- Draft: 📝 Draft
 
 #### x-activity-card
 **File:** `resources/views/components/activity-card.blade.php`
@@ -1170,13 +1196,30 @@ This pattern is used in `resources/views/challenges/create.blade.php` for dynami
 - `user` - User model
 - `challenges` - Challenge collection
 - `activities` - Activity collection
-- `defaultTab` - 'challenges' or 'activities'
+- `defaultTab` - 'challenges' or 'activity' (default)
 - `adminView` - Boolean for admin context
 
 **Features:**
-- Alpine.js tab switching
-- Lazy loading content
+- Alpine.js tab switching with `activeTab` state
+- Tab count badges with active/inactive styling
+- Lazy loading content (hidden tabs use `display: none`)
 - Passes adminView to child components
+- Uses CSS component classes for consistency
+- Pagination support for both tabs
+
+**Empty States:**
+- Activity tab: Uses `empty-state-card` CSS class with proper icon (archive box)
+- Challenges tab: Uses `empty-state-card` CSS class with proper icon (clipboard)
+- Consistent styling following minimalistic design patterns
+
+**Child Components:**
+- `x-activity-card` - For individual activity items
+- `x-challenge-list-item` - For individual challenge items
+
+**Tab Navigation:**
+- Uses `.tab-header` and `.tab-nav` CSS classes
+- Tab buttons with `.tab-button` and `.active` states
+- Count badges with `.tab-count-badge` (active/inactive)
 
 #### x-page-header
 **File:** `resources/views/components/page-header.blade.php`

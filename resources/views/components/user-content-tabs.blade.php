@@ -45,7 +45,6 @@
                 <h3 class="empty-state-title">No activities yet</h3>
                 <p class="empty-state-message">{{ $user->name }} hasn't logged any activities yet.</p>
             </div>
-            </div>
         @endforelse
 
         <!-- Pagination -->
@@ -61,16 +60,14 @@
         @forelse($challenges as $challenge)
             <x-challenge-list-item :challenge="$challenge" :adminView="$adminView" />
         @empty
-            <div class="card">
-                <div class="empty-state">
-                    <div class="empty-state-icon">
-                        <svg class="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-medium text-gray-800 dark:text-gray-100 mb-2">No challenges</h3>
-                    <p class="text-gray-600 dark:text-gray-400">{{ $user->name }} hasn't created any challenges yet.</p>
+            <div class="empty-state-card">
+                <div class="empty-state-icon">
+                    <svg class="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
                 </div>
+                <h3 class="empty-state-title">No challenges</h3>
+                <p class="empty-state-message">{{ $user->name }} hasn't created any challenges yet.</p>
             </div>
         @endforelse
 
