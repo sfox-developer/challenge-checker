@@ -225,7 +225,7 @@
                 <!-- Empty State -->
                 <div class="card text-center py-12">
                     <div class="text-6xl mb-4">📚</div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                    <h3 class="h2 mb-2">
                         @if($search || $categoryId)
                             No goals found
                         @else

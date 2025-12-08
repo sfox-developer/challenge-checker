@@ -17,7 +17,7 @@
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex-1">
                                 <div class="flex items-center space-x-3 mb-2">
-                                    <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                                    <h2 class="h1">
                                         {{ $changelog->version }}
                                     </h2>
                                     @if($changelog->is_major)
@@ -26,7 +26,7 @@
                                         </span>
                                     @endif
                                 </div>
-                                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                                <h3 class="h2 mb-2">
                                     {{ $changelog->title }}
                                 </h3>
                                 <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">

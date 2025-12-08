@@ -274,7 +274,65 @@ Navigation bars, links, and mobile bottom nav patterns.
 ```
 
 #### 3. Headers (`_headers.scss`)
-Page headers, section headers, and tab headers.
+Page headers, section headers, tab headers, and semantic heading classes.
+
+**Semantic Heading Classes (Added December 9, 2025):**
+Standardized heading classes to replace inline Tailwind utility combinations. Use these for all heading elements.
+
+```scss
+// H1 - Main page title
+.h1                       // Standard H1 (text-2xl font-bold)
+.h1-hero                  // Hero H1 for landing/welcome pages (text-4xl md:text-6xl)
+
+// H2 - Section headings
+.h2                       // Standard H2 (text-xl font-semibold)
+.h2-with-icon             // H2 with flex items-center for icons
+
+// H3 - Subsection headings
+.h3                       // Standard H3 (text-lg font-semibold)
+.h3-muted                 // Muted H3 (slate colors)
+.h3-medium                // Medium weight H3
+
+// H4 - Card/component headings
+.h4                       // Standard H4 (text-base font-semibold)
+.h4-card                  // Card heading H4 (text-lg)
+.h4-sm                    // Small H4 (text-sm)
+
+// H5 - Small component headings
+.h5                       // Standard H5 (text-sm font-semibold)
+```
+
+**Semantic Heading Usage Examples:**
+```blade
+<!-- Main page title -->
+<h1 class="h1">Privacy Policy</h1>
+
+<!-- Hero heading -->
+<h1 class="h1 h1-hero">Welcome to Challenge Checker</h1>
+
+<!-- Section heading -->
+<h2 class="h2">Account Settings</h2>
+
+<!-- Section heading with icon -->
+<h2 class="h2 h2-with-icon mt-8 mb-4">
+    <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
+    Privacy & Security
+</h2>
+
+<!-- Subsection heading -->
+<h3 class="h3">Personal Information</h3>
+
+<!-- Muted subsection (slate colors) -->
+<h3 class="h3 h3-muted mt-6 mb-3">Account Details</h3>
+
+<!-- Card heading -->
+<h4 class="h4 h4-card">Challenge Details</h4>
+
+<!-- Card heading with hover effect -->
+<h4 class="h4 h4-card group-hover:text-slate-700 dark:group-hover:text-slate-400 transition-colors">
+    {{ $challenge->name }}
+</h4>
+```
 
 **App Header (Layout):**
 ```scss

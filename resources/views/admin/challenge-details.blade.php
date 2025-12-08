@@ -24,7 +24,7 @@
             
             <!-- Owner Information -->
             <div class="card">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Challenge Owner</h3>
+                <h3 class="h3 mb-4">Challenge Owner</h3>
                 <div class="flex items-center space-x-4">
                     <img src="{{ $challenge->user->getAvatarUrl() }}" alt="{{ $challenge->user->name }}" 
                          class="h-12 w-12 rounded-full ring-2 ring-white dark:ring-gray-700 shadow">
@@ -42,7 +42,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Status Card -->
                 <div class="card">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Status</h3>
+                    <h3 class="h3 mb-4">Status</h3>
                     <div class="space-y-3">
                         <div>
                             <span class="text-sm text-gray-600 dark:text-gray-400">Current Status:</span>
@@ -90,7 +90,7 @@
 
                 <!-- Metadata Card -->
                 <div class="card">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Details</h3>
+                    <h3 class="h3 mb-4">Details</h3>
                     <div class="space-y-3">
                         <div>
                             <span class="text-sm text-gray-600 dark:text-gray-400">Duration:</span>
@@ -122,7 +122,7 @@
             <!-- Description -->
             @if($challenge->description)
                 <div class="card">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Description</h3>
+                    <h3 class="h3 mb-3">Description</h3>
                     <p class="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{{ $challenge->description }}</p>
                 </div>
             @endif
@@ -130,7 +130,7 @@
             <!-- Goals -->
             @if($challenge->goals->isNotEmpty())
                 <div class="card">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                    <h3 class="h3 mb-4">
                         Goals ({{ $challenge->goals->count() }})
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -183,7 +183,7 @@
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"/>
                             </svg>
                         </div>
-                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">No Goals</h4>
+                        <h4 class="h3 mb-2">No Goals</h4>
                         <p class="text-gray-600 dark:text-gray-400">This challenge doesn't have any goals yet.</p>
                     </div>
                 </div>

@@ -31,7 +31,7 @@
                 <div class="flex items-start gap-4 mb-4">
                     <div class="text-5xl">{{ $goal->icon ?? '🎯' }}</div>
                     <div class="flex-1">
-                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">{{ $goal->name }}</h2>
+                        <h2 class="h1 mb-2">{{ $goal->name }}</h2>
                         
                         @if($goal->description)
                             <p class="text-gray-600 dark:text-gray-400 mb-3">{{ $goal->description }}</p>
@@ -86,7 +86,7 @@
                         @if($stats['first_used'])
                             <div>
                                 <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">First Used</div>
-                                <div class="text-lg font-semibold text-gray-900 dark:text-white">
+                                <div class="h3">
                                     {{ \Carbon\Carbon::parse($stats['first_used'])->format('M d, Y') }}
                                     <span class="text-sm text-gray-500 dark:text-gray-400">
                                         ({{ \Carbon\Carbon::parse($stats['first_used'])->diffForHumans() }})
@@ -98,7 +98,7 @@
                         @if($stats['last_active'])
                             <div>
                                 <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Last Active</div>
-                                <div class="text-lg font-semibold text-gray-900 dark:text-white">
+                                <div class="h3">
                                     {{ \Carbon\Carbon::parse($stats['last_active'])->format('M d, Y') }}
                                     <span class="text-sm text-gray-500 dark:text-gray-400">
                                         ({{ \Carbon\Carbon::parse($stats['last_active'])->diffForHumans() }})
@@ -145,7 +145,7 @@
                 @else
                     <div class="card text-center py-12">
                         <div class="text-6xl mb-4">📅</div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                        <h3 class="h2 mb-2">
                             No challenges yet
                         </h3>
                         <p class="text-gray-600 dark:text-gray-400">
@@ -202,7 +202,7 @@
                 @else
                     <div class="card text-center py-12">
                         <div class="text-6xl mb-4">✅</div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                        <h3 class="h2 mb-2">
                             No habits yet
                         </h3>
                         <p class="text-gray-600 dark:text-gray-400">
@@ -217,7 +217,7 @@
             @if($challenges->count() === 0 && $habits->count() === 0)
                 <div class="card text-center py-12">
                     <div class="text-6xl mb-4">{{ $goal->icon ?? '🎯' }}</div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    <h3 class="h2 mb-2">
                         This goal hasn't been used yet
                     </h3>
                     <p class="text-gray-600 dark:text-gray-400 mb-6">

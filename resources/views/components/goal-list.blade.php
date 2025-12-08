@@ -23,7 +23,7 @@
 @if($goals->isNotEmpty())
     <div class="todo-container">
         <!-- Always show header with icon - same style for both views -->
-        <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 flex items-center space-x-3">
+        <h3 class="h2 flex items-center space-x-3 mb-6">
             <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
             </svg>

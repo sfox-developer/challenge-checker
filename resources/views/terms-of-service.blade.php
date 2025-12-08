@@ -20,14 +20,14 @@
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Terms of Service</h1>
+                            <h1 class="h1">Terms of Service</h1>
                             <p class="text-sm text-gray-500 dark:text-gray-400">Last updated: December 5, 2025</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="prose dark:prose-invert max-w-none prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-gray-100">
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Agreement to Terms
                     </h2>
@@ -36,7 +36,7 @@
                         If you disagree with any part of these terms, you may not access the service.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Description of Service
                     </h2>
@@ -51,11 +51,11 @@
                         <li>Participate in a social activity feed</li>
                     </ul>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         User Accounts
                     </h2>
-                    <h3 class="text-lg font-semibold mt-6 mb-3 text-slate-700 dark:text-slate-400">Account Creation</h3>
+                    <h3 class="h3 h3-muted mt-6 mb-3">Account Creation</h3>
                     <p>To use our service, you must:</p>
                     <ul>
                         <li>Be at least 13 years of age</li>
@@ -64,7 +64,7 @@
                         <li>Notify us immediately of any unauthorized use of your account</li>
                     </ul>
 
-                    <h3 class="text-lg font-semibold mt-6 mb-3 text-slate-700 dark:text-slate-400">Account Responsibilities</h3>
+                    <h3 class="h3 h3-muted mt-6 mb-3">Account Responsibilities</h3>
                     <p>You are responsible for:</p>
                     <ul>
                         <li>All activities that occur under your account</li>
@@ -72,11 +72,11 @@
                         <li>All content you post or share through the service</li>
                     </ul>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         User Content
                     </h2>
-                    <h3 class="text-lg font-semibold mt-6 mb-3 text-slate-700 dark:text-slate-400">Your Content</h3>
+                    <h3 class="h3 h3-muted mt-6 mb-3">Your Content</h3>
                     <p>You retain all rights to the content you create (challenges, goals, habits, activities). By using our service, you grant us a license to:</p>
                     <ul>
                         <li>Store and display your content as necessary to provide the service</li>
@@ -84,7 +84,7 @@
                         <li>Use aggregated, anonymized data for service improvement</li>
                     </ul>
 
-                    <h3 class="text-lg font-semibold mt-6 mb-3 text-slate-700 dark:text-slate-400">Content Standards</h3>
+                    <h3 class="h3 h3-muted mt-6 mb-3">Content Standards</h3>
                     <p>You agree not to post content that:</p>
                     <ul>
                         <li>Is illegal, harmful, threatening, abusive, or harassing</li>
@@ -94,7 +94,7 @@
                         <li>Impersonates another person or entity</li>
                     </ul>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Privacy Settings
                     </h2>
@@ -104,7 +104,7 @@
                         for more information on how we handle your data.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Social Features
                     </h2>
@@ -115,7 +115,7 @@
                         <li>Be respectful in all interactions</li>
                     </ul>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Prohibited Activities
                     </h2>
@@ -129,7 +129,7 @@
                         <li>Collect user information without consent</li>
                     </ul>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Service Availability
                     </h2>
@@ -138,7 +138,7 @@
                         We may modify, suspend, or discontinue any part of the service at any time with or without notice.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Intellectual Property
                     </h2>
@@ -147,7 +147,7 @@
                         {{ config('app.name') }} and is protected by copyright, trademark, and other intellectual property laws.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Termination
                     </h2>
@@ -162,7 +162,7 @@
                         will be permanently deleted.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Disclaimer of Warranties
                     </h2>
@@ -171,7 +171,7 @@
                         We do not warrant that the service will be uninterrupted, secure, or error-free.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Limitation of Liability
                     </h2>
@@ -180,7 +180,7 @@
                         special, consequential, or punitive damages resulting from your use of or inability to use the service.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Changes to Terms
                     </h2>
@@ -190,7 +190,7 @@
                         changes constitutes acceptance of the new terms.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Governing Law
                     </h2>
@@ -199,7 +199,7 @@
                         conflict of law provisions.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Contact Information
                     </h2>
@@ -208,7 +208,7 @@
                         or by reaching out to our support team.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Acknowledgment
                     </h2>

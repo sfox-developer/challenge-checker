@@ -168,7 +168,7 @@
                 <!-- Challenge Details -->
                 <div class="card">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Details</h3>
+                        <h3 class="h3">Details</h3>
                         @if($challenge->completed_at)
                             <span class="badge-completed">✓ Completed</span>
                         @elseif($challenge->started_at && $challenge->is_active)
@@ -322,7 +322,7 @@
             @if($challenge->goals->isNotEmpty())
                 <div class="card">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Challenge Goals</h3>
+                        <h3 class="h3">Challenge Goals</h3>
                         <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200">
                             {{ $challenge->goals->count() }} {{ Str::plural('goal', $challenge->goals->count()) }}
                         </span>
@@ -335,7 +335,7 @@
             @if($challenge->started_at)
                 <div class="card">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                        <h3 class="h3">
                             @php
                                 $periodName = match($challenge->frequency_type?->value ?? 'daily') {
                                     'daily' => 'Daily',

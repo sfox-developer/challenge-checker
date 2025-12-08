@@ -5,7 +5,7 @@
             <div class="card p-8 rounded-2xl mb-6">
                 <div class="text-center">
                     <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->name }}" class="h-24 w-24 rounded-full mx-auto mb-4 ring-4 ring-white dark:ring-gray-700 shadow-lg">
-                    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 dark:text-gray-100">{{ Auth::user()->name }}</h2>
+                    <h2 class="h1">{{ Auth::user()->name }}</h2>
                     <p class="text-gray-600 dark:text-gray-400 mt-1">{{ Auth::user()->email }}</p>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">My Profile</h3>
+                            <h3 class="h3">My Profile</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-400">View your public profile</p>
                         </div>
                         <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -40,7 +40,7 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">Goals</h3>
+                            <h3 class="h3">Goals</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-400">Manage your goals library</p>
                         </div>
                         <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,7 +58,7 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">Discover</h3>
+                            <h3 class="h3">Discover</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-400">Find and follow other users</p>
                         </div>
                         <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -77,7 +77,7 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">Settings</h3>
+                            <h3 class="h3">Settings</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-400">Edit your profile & preferences</p>
                         </div>
                         <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -100,7 +100,7 @@
                             </svg>
                         </div>
                         <div class="flex-1 text-left">
-                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">Theme</h3>
+                            <h3 class="h3">Theme</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-400" x-text="theme === 'dark' ? 'Dark Mode' : 'Light Mode'"></p>
                         </div>
                         <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -120,7 +120,7 @@
                                 </svg>
                             </div>
                             <div class="flex-1 text-left">
-                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100">Log Out</h3>
+                                <h3 class="h3">Log Out</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400">Sign out of your account</p>
                             </div>
                             <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -20,14 +20,14 @@
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Privacy Policy</h1>
+                            <h1 class="h1">Privacy Policy</h1>
                             <p class="text-sm text-gray-500 dark:text-gray-400">Last updated: December 5, 2025</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="prose dark:prose-invert max-w-none prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-gray-100">
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Introduction
                     </h2>
@@ -36,11 +36,11 @@
                         This privacy policy will inform you about how we look after your personal data and tell you about your privacy rights.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Information We Collect
                     </h2>
-                    <h3 class="text-lg font-semibold mt-6 mb-3 text-slate-700 dark:text-slate-400">Personal Information</h3>
+                    <h3 class="h3 h3-muted mt-6 mb-3">Personal Information</h3>
                     <p>We collect the following personal information when you use our service:</p>
                     <ul>
                         <li><strong>Account Information:</strong> Name, email address, and password (encrypted)</li>
@@ -48,7 +48,7 @@
                         <li><strong>Usage Data:</strong> Challenges, goals, habits, and activity logs you create</li>
                     </ul>
 
-                    <h3 class="text-lg font-semibold mt-6 mb-3 text-slate-700 dark:text-slate-400">Automatically Collected Information</h3>
+                    <h3 class="h3 h3-muted mt-6 mb-3">Automatically Collected Information</h3>
                     <p>We automatically collect certain information when you use our service:</p>
                     <ul>
                         <li>Browser type and version</li>
@@ -57,7 +57,7 @@
                         <li>Usage patterns and preferences</li>
                     </ul>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         How We Use Your Information
                     </h2>
@@ -71,7 +71,7 @@
                         <li>To ensure security and prevent fraud</li>
                     </ul>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Data Sharing and Disclosure
                     </h2>
@@ -82,7 +82,7 @@
                         <li><strong>Legal Requirements:</strong> We may disclose your data if required by law or to protect our rights</li>
                     </ul>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Data Security
                     </h2>
@@ -92,7 +92,7 @@
                         over the internet is 100% secure.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Your Privacy Rights
                     </h2>
@@ -105,7 +105,7 @@
                         <li><strong>Withdrawal of Consent:</strong> Withdraw consent for data processing at any time</li>
                     </ul>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Data Retention
                     </h2>
@@ -114,7 +114,7 @@
                         When you delete your account, all your personal data and associated content will be permanently deleted.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Cookies and Tracking
                     </h2>
@@ -123,7 +123,7 @@
                         These cookies are essential for the service to function properly.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Children's Privacy
                     </h2>
@@ -132,7 +132,7 @@
                         information from children under 13.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Changes to This Policy
                     </h2>
@@ -141,7 +141,7 @@
                         new privacy policy on this page and updating the "Last updated" date.
                     </p>
 
-                    <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
+                    <h2 class="h2 h2-with-icon mt-8 mb-4">
                         <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Contact Us
                     </h2>

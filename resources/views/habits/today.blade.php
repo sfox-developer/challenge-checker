@@ -81,7 +81,7 @@
                                         <div class="flex-1">
                                             <div class="flex items-center space-x-2 mb-1">
                                                 <span class="text-2xl">{{ $habit->goal->icon }}</span>
-                                                <h3 class="text-lg font-bold text-gray-900 dark:text-white"
+                                                <h3 class="h3"
                                                     :class="{ 'line-through text-gray-500': isCompleted }">
                                                     {{ $habit->goal_name }}
                                                 </h3>
@@ -208,7 +208,7 @@
                 <!-- Empty State -->
                 <div class="card text-center py-12">
                     <div class="text-6xl mb-4">🎯</div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No habits due today</h3>
+                    <h3 class="h2 mb-2">No habits due today</h3>
                     <p class="text-gray-600 dark:text-gray-400 mb-6">
                         You're all caught up! Create a new habit to get started.
                     </p>

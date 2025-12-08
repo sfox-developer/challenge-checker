@@ -19,7 +19,7 @@
                     <div class="flex items-center space-x-4">
                         <img src="{{ $user->getAvatarUrl() }}" alt="{{ $user->name }}" class="h-20 w-20 sm:h-24 sm:w-24 rounded-full ring-4 ring-white shadow-lg flex-shrink-0">
                         <div class="min-w-0">
-                            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 dark:text-gray-100">{{ $user->name }}</h3>
+                            <h3 class="h1 h1-hero">{{ $user->name }}</h3>
                             <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 truncate">{{ $user->email }}</p>
                         </div>
                     </div>

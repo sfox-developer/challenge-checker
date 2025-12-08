@@ -19,7 +19,7 @@
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <div class="bg-red-600 dark:bg-red-500 px-6 py-4">
             <div class="modal-header-title">
-                <h3 class="text-lg font-semibold text-white">{{ __('Delete Account') }}</h3>
+                <h3 class="h3 text-white">{{ __('Delete Account') }}</h3>
                 <button type="button" @click="$dispatch('close')" class="text-white hover:text-gray-200 text-2xl font-bold leading-none">&times;</button>
             </div>
         </div>

@@ -43,7 +43,7 @@
             <!-- Results Header -->
             @if(!$query)
                 <div class="mb-6 text-center">
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100 mb-2">
+                    <h3 class="h3 mb-2">
                         ✨ Discover Active Users
                     </h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
@@ -63,7 +63,7 @@
                                         <img src="{{ $user->getAvatarUrl() }}" alt="{{ $user->name }}" class="h-14 w-14 rounded-full ring-2 ring-white shadow-sm">
                                     </div>
                                     <div>
-                                        <a href="{{ route('users.show', $user) }}" class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100 hover:text-slate-700 dark:hover:text-slate-400">
+                                        <a href="{{ route('users.show', $user) }}" class="h3 hover:text-slate-700 dark:hover:text-slate-400">
                                             {{ $user->name }}
                                         </a>
                                         <div class="flex items-center space-x-4 mt-1 text-sm text-gray-600 dark:text-gray-400">

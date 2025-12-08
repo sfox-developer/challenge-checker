@@ -2,7 +2,61 @@
 // HEADER COMPONENTS - Minimalistic Design
 // ============================================================================
 // Clean page headers with solid blue accent
+// Consistent heading typography across the application
 // ============================================================================
+
+// ----------------------------------------------------------------------------
+// SEMANTIC HEADING CLASSES - Use these instead of inline utilities
+// ----------------------------------------------------------------------------
+
+// H1 - Main page title (used on standalone pages like privacy, terms)
+.h1 {
+    @apply text-2xl font-bold text-gray-900 dark:text-gray-100;
+    
+    &.h1-hero {
+        @apply text-4xl md:text-6xl font-bold text-gray-800 dark:text-gray-100;
+    }
+}
+
+// H2 - Section headings
+.h2 {
+    @apply text-xl font-semibold text-gray-900 dark:text-gray-100;
+    
+    &.h2-with-icon {
+        @apply flex items-center;
+    }
+}
+
+// H3 - Subsection headings
+.h3 {
+    @apply text-lg font-semibold text-gray-800 dark:text-gray-100;
+    
+    &.h3-muted {
+        @apply text-slate-700 dark:text-slate-400;
+    }
+    
+    &.h3-medium {
+        @apply font-medium;
+    }
+}
+
+// H4 - Card/component headings
+.h4 {
+    @apply text-base font-semibold text-gray-900 dark:text-white;
+    
+    &.h4-card {
+        @apply text-lg font-semibold text-gray-800 dark:text-gray-100;
+    }
+    
+    &.h4-sm {
+        @apply text-sm font-semibold text-gray-700 dark:text-gray-300;
+    }
+}
+
+// H5 - Small component headings
+.h5 {
+    @apply text-sm font-semibold text-gray-900 dark:text-white;
+}
 
 // ----------------------------------------------------------------------------
 // APP HEADER - Main page header wrapper (in app.blade.php)
@@ -135,12 +189,12 @@
 
 .card-header {
     @apply flex items-start justify-between mb-4;
-    
-    .card-title {
-        @apply text-lg font-semibold text-gray-800 dark:text-gray-100;
-    }
-    
-    .card-subtitle {
-        @apply text-sm text-gray-600 dark:text-gray-400 mt-1;
-    }
+}
+
+.card-title {
+    @apply text-lg font-semibold text-gray-800 dark:text-gray-100;
+}
+
+.card-subtitle {
+    @apply text-sm text-gray-600 dark:text-gray-400 mt-1;
 }

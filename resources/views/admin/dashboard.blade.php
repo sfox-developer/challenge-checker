@@ -21,7 +21,7 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Manage Categories</h3>
+                            <h3 class="h3">Manage Categories</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-400">Create and edit goal categories</p>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Manage Changelogs</h3>
+                            <h3 class="h3">Manage Changelogs</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-400">Create and publish changelog entries</p>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                     <div class="card">
                         <div class="flex items-start justify-between mb-4">
                                 <div class="flex-1">
-                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $user->name }}</h3>
+                                    <h3 class="h3">{{ $user->name }}</h3>
                                     <p class="text-sm text-gray-600 dark:text-gray-400">{{ $user->email }}</p>
                                     @if($user->is_admin)
                                         <span class="badge-admin mt-1">Admin</span>
@@ -105,7 +105,7 @@
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">No Users Found</h3>
+                        <h3 class="h2 mb-2">No Users Found</h3>
                         <p class="text-gray-600 dark:text-gray-400">There are no users registered in the system yet.</p>
                     </div>
                 @endif

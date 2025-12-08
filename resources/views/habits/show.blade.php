@@ -108,7 +108,7 @@
                 <!-- Habit Info -->
                 <div class="card">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Details</h3>
+                        <h3 class="h3">Details</h3>
                         <span class="badge-frequency">
                             {{ $habit->getProgressText() }}
                         </span>
@@ -170,7 +170,7 @@
                 <!-- Calendar -->
                 <div class="card">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Completion Calendar</h3>
+                        <h3 class="h3">Completion Calendar</h3>
                         <div class="flex items-center space-x-1">
                             <a href="?year={{ $year }}&month={{ $month - 1 < 1 ? 12 : $month - 1 }}{{ $month - 1 < 1 ? '&year=' . ($year - 1) : '' }}" 
                                class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">

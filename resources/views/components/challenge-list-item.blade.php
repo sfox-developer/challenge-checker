@@ -7,7 +7,7 @@
         <div class="flex-1 min-w-0">
             <!-- Header with Badge -->
             <div class="flex items-start justify-between gap-3 mb-2">
-                <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-slate-700 dark:group-hover:text-slate-400 transition-colors">
+                <h4 class="h4 h4-card group-hover:text-slate-700 dark:group-hover:text-slate-400 transition-colors">
                     {{ $challenge->name }}
                 </h4>
                 
