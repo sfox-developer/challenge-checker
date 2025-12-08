@@ -62,7 +62,13 @@ class AdminController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10, ['*'], 'challenges_page');
 
-        return view('admin.user-details', compact('user', 'activities', 'challenges'));
+        // Get user's habits with pagination
+        $habits = $user->habits()
+            ->with(['goal', 'statistics'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10, ['*'], 'habits_page');
+
+        return view('admin.user-details', compact('user', 'activities', 'challenges', 'habits'));
     }
 
     /**

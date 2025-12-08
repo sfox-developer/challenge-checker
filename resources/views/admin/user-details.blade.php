@@ -179,7 +179,7 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <x-stat-card 
                     label="Total Challenges" 
-                    :value="$user->challenges->count()" 
+                    :value="$user->challenges->count()">
                     <x-slot name="icon">
                         <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
@@ -189,7 +189,7 @@
 
                 <x-stat-card 
                     label="Active" 
-                    :value="$user->challenges->where('started_at', '!=', null)->where('completed_at', null)->where('is_active', true)->count()" 
+                    :value="$user->challenges->where('started_at', '!=', null)->where('completed_at', null)->where('is_active', true)->count()">
                     <x-slot name="icon">
                         <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"></path>
@@ -199,7 +199,7 @@
 
                 <x-stat-card 
                     label="Completed" 
-                    :value="$user->challenges->where('completed_at', '!=', null)->count()" 
+                    :value="$user->challenges->where('completed_at', '!=', null)->count()">
                     <x-slot name="icon">
                         <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
@@ -209,7 +209,7 @@
 
                 <x-stat-card 
                     label="Paused" 
-                    :value="$user->challenges->where('started_at', '!=', null)->where('is_active', false)->where('completed_at', null)->count()" 
+                    :value="$user->challenges->where('started_at', '!=', null)->where('is_active', false)->where('completed_at', null)->count()">
                     <x-slot name="icon">
                         <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
@@ -221,7 +221,8 @@
             <!-- User Content Tabs -->
             <x-user-content-tabs 
                 :user="$user" 
-                :challenges="$challenges" 
+                :challenges="$challenges"
+                :habits="$habits"
                 :activities="$activities"
                 defaultTab="challenges"
                 :adminView="true" />
