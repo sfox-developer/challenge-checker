@@ -66,9 +66,7 @@
                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $user->name }}</h3>
                                     <p class="text-sm text-gray-600 dark:text-gray-400">{{ $user->email }}</p>
                                     @if($user->is_admin)
-                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 mt-1">
-                                            Admin
-                                        </span>
+                                        <span class="badge-admin mt-1">Admin</span>
                                     @endif
                                 </div>
                             </div>

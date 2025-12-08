@@ -34,6 +34,9 @@ This document provides quick reference examples for using the reusable CSS class
 <span class="px-3 py-1 text-sm font-bold rounded-full bg-orange-100 dark:bg-orange-900/20 text-orange-800 dark:text-orange-400">
     🏃 Active
 </span>
+<span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 whitespace-nowrap">
+    🏃 Active
+</span>
 ```
 
 **After (CSS classes):**
@@ -41,8 +44,12 @@ This document provides quick reference examples for using the reusable CSS class
 <span class="badge-completed">✓ Completed</span>
 <span class="badge-challenge-active">🏃 Active</span>
 <span class="badge-challenge-paused">⏸️ Paused</span>
-<span class="badge-challenge-draft">Draft</span>
+<span class="badge-challenge-draft">📝 Draft</span>
 <span class="badge-challenge-archived">📁 Archived</span>
+
+<!-- Habits -->
+<span class="badge-habit-active">Active</span>
+<span class="badge-habit-archived">Archived</span>
 ```
 
 **Status Badge Priority (use highest matching state):**
@@ -51,6 +58,28 @@ This document provides quick reference examples for using the reusable CSS class
 3. Active (currently running)
 4. Paused (temporarily stopped)
 5. Draft (not started - challenges only)
+
+**Additional Badge Types:**
+
+```blade
+<!-- Frequency/Progress Info -->
+<span class="badge-frequency">2 of 3 this week</span>
+
+<!-- Count/Usage Info (challenges, habits using this goal) -->
+<span class="badge-info-count">3 challenges</span>
+<span class="badge-info-count">5 habits</span>
+
+<!-- Category -->
+<span class="badge-category">🏃 Fitness</span>
+
+<!-- Admin Role -->
+<span class="badge-admin">Admin</span>
+
+<!-- Tab Counts (with Alpine.js) -->
+<span class="tab-count-badge" :class="activeTab === 'challenges' ? 'active' : 'inactive'">
+    {{ $count }}
+</span>
+```
 
 ### 2. Page Headers
 
@@ -739,6 +768,39 @@ Verify the component works in both light and dark mode. All CSS classes include 
 ```blade
 <span class="badge-gradient-purple">🚀 Major Release</span>
 ```
+
+---
+
+## Available Badge Classes Reference
+
+### Status Badges
+
+| Class | Purpose | Colors | Example |
+|-------|---------|--------|---------|
+| `.badge-completed` | Completed state | Green | `<span class="badge-completed">✓ Completed</span>` |
+| `.badge-challenge-active` | Active challenge | Slate | `<span class="badge-challenge-active">🏃 Active</span>` |
+| `.badge-challenge-paused` | Paused challenge | Yellow | `<span class="badge-challenge-paused">⏸️ Paused</span>` |
+| `.badge-challenge-draft` | Draft challenge | Gray | `<span class="badge-challenge-draft">📝 Draft</span>` |
+| `.badge-challenge-archived` | Archived challenge | Gray (muted) | `<span class="badge-challenge-archived">📁 Archived</span>` |
+| `.badge-habit-active` | Active habit | Slate | `<span class="badge-habit-active">Active</span>` |
+| `.badge-habit-archived` | Archived habit | Gray (muted) | `<span class="badge-habit-archived">Archived</span>` |
+
+### Informational Badges
+
+| Class | Purpose | Colors | Example |
+|-------|---------|--------|---------|
+| `.badge-frequency` | Frequency/progress text | Slate | `<span class="badge-frequency">2 of 3 this week</span>` |
+| `.badge-info-count` | Usage count | Slate | `<span class="badge-info-count">3 challenges</span>` |
+| `.badge-category` | Category label | Slate | `<span class="badge-category">🏃 Fitness</span>` |
+| `.badge-admin` | Admin role indicator | Red | `<span class="badge-admin">Admin</span>` |
+
+### Dynamic Badges (with Alpine.js)
+
+| Class | Purpose | Usage |
+|-------|---------|-------|
+| `.tab-count-badge` | Tab count with active state | `<span class="tab-count-badge" :class="active ? 'active' : 'inactive'">5</span>` |
+| `.count-badge` | General count badge | `<span class="count-badge">10</span>` |
+| `.count-badge-primary` | Count with emphasis | `<span class="count-badge-primary">5</span>` |
 
 ---
 

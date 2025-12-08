@@ -121,6 +121,30 @@
     @apply bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-400;
 }
 
+// Info badges for usage counts (challenges, habits)
+.badge-info-count {
+    @apply inline-flex items-center px-2 py-1 text-xs font-medium rounded-full;
+    @apply bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300;
+}
+
+// Category badge
+.badge-category {
+    @apply inline-flex items-center px-2 py-1 text-xs font-medium rounded-full;
+    @apply bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300;
+}
+
+// Admin badge
+.badge-admin {
+    @apply inline-flex items-center px-2 py-1 text-xs font-medium rounded-full;
+    @apply bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-400;
+}
+
+// Frequency/progress text badge
+.badge-frequency {
+    @apply inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full;
+    @apply bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 whitespace-nowrap;
+}
+
 // ----------------------------------------------------------------------------
 // STREAK BADGE - Special styling for streak counters
 // ----------------------------------------------------------------------------

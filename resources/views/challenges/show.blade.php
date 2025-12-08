@@ -178,21 +178,13 @@
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white">Details</h3>
                         @if($challenge->completed_at)
-                            <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 whitespace-nowrap">
-                                ✓ Completed
-                            </span>
+                            <span class="badge-completed">✓ Completed</span>
                         @elseif($challenge->started_at && $challenge->is_active)
-                            <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 whitespace-nowrap">
-                                🏃 Active
-                            </span>
+                            <span class="badge-challenge-active">🏃 Active</span>
                         @elseif($challenge->started_at && !$challenge->is_active)
-                            <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 whitespace-nowrap">
-                                ⏸️ Paused
-                            </span>
+                            <span class="badge-challenge-paused">⏸️ Paused</span>
                         @else
-                            <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200 whitespace-nowrap">
-                                📝 Draft
-                            </span>
+                            <span class="badge-challenge-draft">📝 Draft</span>
                         @endif
                     </div>
                     

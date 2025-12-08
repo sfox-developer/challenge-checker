@@ -8,6 +8,64 @@
 
 Complete award-winning minimalistic redesign of the Challenge Checker UI, transforming from a bright multi-color design to a sophisticated, subtle single-accent-color system. This refactoring creates a clean, professional appearance inspired by modern productivity apps like Linear, Height, and Notion.
 
+## Recent Updates
+
+### December 8, 2025 - Badge Class Refactoring
+
+**Problem:** Multiple views had inline Tailwind badge classes with inconsistent styling, making it difficult to maintain a cohesive design system. Badges were using various color schemes (blue, gray) that didn't follow our minimalistic design principles.
+
+**Solution:** Created comprehensive badge component classes and refactored all inline badge usage to use semantic class names.
+
+**New Badge Classes Added:**
+- `.badge-frequency` - For frequency/progress text badges
+- `.badge-info-count` - For usage count badges (challenges, habits)
+- `.badge-category` - For category labels
+- `.badge-admin` - For admin role indicators
+- Enhanced `.tab-count-badge` with `active`/`inactive` states
+
+**Files Refactored:**
+1. `resources/views/challenges/show.blade.php` - Challenge status badges
+2. `resources/views/habits/show.blade.php` - Habit frequency badge
+3. `resources/views/goals/index.blade.php` - Category and count badges
+4. `resources/views/goals/show.blade.php` - Tab count badges and habit status
+5. `resources/views/admin/dashboard.blade.php` - Admin role badge
+
+**Before:**
+```blade
+<!-- Inline classes with inconsistent colors -->
+<span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 whitespace-nowrap">
+    🏃 Active
+</span>
+<span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+    3 challenges
+</span>
+```
+
+**After:**
+```blade
+<!-- Semantic classes following design system -->
+<span class="badge-challenge-active">🏃 Active</span>
+<span class="badge-info-count">3 challenges</span>
+```
+
+**Benefits:**
+- ✅ Consistent badge styling across all views
+- ✅ Semantic class names that express intent
+- ✅ Easier maintenance - change once, update everywhere
+- ✅ Following minimalistic design with subtle slate accent
+- ✅ Reduced code duplication
+- ✅ Better adherence to component-based architecture
+
+**Color Scheme Alignment:**
+All badges now use the approved minimalistic color palette:
+- **Slate** for informational/active states (not bright blue)
+- **Gray** for neutral/archived states
+- **Green** for success/completed (semantic only)
+- **Yellow** for warnings/paused (semantic only)
+- **Red** for admin/danger (semantic only)
+
+---
+
 ## Design Philosophy
 
 ### Before (Blue Accent Era)

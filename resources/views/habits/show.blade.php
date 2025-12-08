@@ -117,7 +117,7 @@
                 <div class="card">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white">Details</h3>
-                        <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 whitespace-nowrap">
+                        <span class="badge-frequency">
                             {{ $habit->getProgressText() }}
                         </span>
                     </div>

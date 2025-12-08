@@ -84,19 +84,19 @@
 
                                         <div class="flex flex-wrap items-center gap-2 mt-2">
                                             @if($goal->category)
-                                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                                                <span class="badge-category">
                                                     {{ $goal->category->icon }} {{ $goal->category->name }}
                                                 </span>
                                             @endif
 
                                             @if($goal->challenge_goals_count > 0)
-                                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                                                <span class="badge-info-count">
                                                     {{ $goal->challenge_goals_count }} challenge{{ $goal->challenge_goals_count !== 1 ? 's' : '' }}
                                                 </span>
                                             @endif
 
                                             @if($goal->habits_count > 0)
-                                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                                                <span class="badge-info-count">
                                                     {{ $goal->habits_count }} habit{{ $goal->habits_count !== 1 ? 's' : '' }}
                                                 </span>
                                             @endif
