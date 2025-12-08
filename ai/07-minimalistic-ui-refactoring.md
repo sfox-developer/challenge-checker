@@ -10,6 +10,97 @@ Complete award-winning minimalistic redesign of the Challenge Checker UI, transf
 
 ## Recent Updates
 
+### December 9, 2025 - Habit List Item Component & Profile Integration
+
+**Problem:** Habits were listed with inline card markup in `habits/index.blade.php`, lacking code reusability. User profiles only showed challenges and activities, missing habits data despite habits being a core feature.
+
+**Solution:** Created reusable `habit-list-item.blade.php` component following the established `challenge-list-item` pattern, and integrated habits into user profiles with a dedicated tab.
+
+**Changes Made:**
+
+**Files Created:**
+1. `resources/views/components/habit-list-item.blade.php` - New reusable habit list component
+
+**Files Modified:**
+1. `resources/views/habits/index.blade.php` - Replaced 53 lines of inline card markup with `<x-habit-list-item />` component
+2. `resources/views/components/user-content-tabs.blade.php` - Added third "Habits" tab with pagination
+3. `app/Http/Controllers/UserController.php` - Added `publicHabits` query and `habits_count` to user stats
+4. `resources/views/users/show.blade.php` - Updated stats display and passed habits data to tabs component
+5. `resources/views/goals/show.blade.php` - Replaced inline habit markup with `<x-habit-list-item />` component in habits tab
+
+**Component Features:**
+- Full card clickability (entire card is `<a>` tag with `card-link` class)
+- Goal icon display (12x12 slate background with icon)
+- Status badges: 📁 Archived, ✓ Done Today, 🏃 Active, ⏸️ Paused
+- Frequency description (e.g., "Daily", "3 times weekly")
+- Statistics: 🔥 streak counter and total completions
+- Hover effects on title and arrow via `group` utilities
+- Consistent with challenge-list-item pattern
+
+**Before/After Comparison:**
+
+**Before (habits/index.blade.php - inline markup):**
+```blade
+@foreach($habits as $habit)
+    <a href="{{ route('habits.show', $habit) }}" class="card card-link group">
+        <div class="flex items-center gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-slate-100 dark:bg-slate-900 rounded-lg...">
+                {{ $habit->goal->icon ?? '✓' }}
+            </div>
+            <!-- 45+ more lines of inline markup -->
+        </div>
+    </a>
+@endforeach
+```
+
+**After (habits/index.blade.php - component):**
+```blade
+@foreach($habits as $habit)
+    <x-habit-list-item :habit="$habit" />
+@endforeach
+```
+
+**Profile Stats Update:**
+```blade
+<!-- Changed from 3 stats (Challenges, Followers, Following) -->
+<div class="grid grid-cols-3 gap-4">
+    <div>{{ $user->challenges_count }} Challenges</div>
+    <div>{{ $user->habits_count }} Habits</div>  <!-- NEW -->
+    <div>{{ $user->followers_count }} Followers</div>
+</div>
+```
+
+**User Content Tabs Enhancement:**
+```blade
+<!-- Added third tab -->
+<x-user-content-tabs 
+    :user="$user" 
+    :challenges="$publicChallenges"
+    :habits="$publicHabits"           <!-- NEW -->
+    :activities="$activities" />
+```
+
+**Benefits:**
+- ✅ **Code Reusability** - 53 lines of inline markup → 1 line component call
+- ✅ **Maintainability** - Change habit card styling in one place
+- ✅ **Consistency** - Matches challenge-list-item pattern exactly
+- ✅ **Feature Completeness** - User profiles now show all content types (activities, challenges, habits)
+- ✅ **Better UX** - Users can view others' public habits for inspiration
+- ✅ **Pagination Support** - Each tab has independent pagination (activities_page, challenges_page, habits_page)
+- ✅ **Performance** - Only non-archived habits shown on profiles
+- ✅ **Statistics** - Accurate habit count displayed in user stats
+
+**Design Rationale:**
+- **Icon Display:** Unlike challenges (multi-goal), habits show goal icons because each habit is based on a single goal from the library
+- **Badge Emojis:** Consistent with challenge badges (📁 🏃 ⏸️ ✓) for quick status recognition
+- **Streak Display:** Fire emoji 🔥 provides instant visual feedback for habit consistency
+- **Full Clickability:** Entire card is link for better mobile UX (follows modern web patterns)
+
+**Alignment with Project Goals:**
+This change continues the component-based architecture pattern, reducing code duplication and improving maintainability. The habit-list-item component achieves the same benefits as challenge-list-item: cleaner templates, easier styling updates, and consistent user experience.
+
+---
+
 ### December 9, 2025 - Button Border to Box-Shadow Redesign
 
 **Problem:** All button variants used borders (`border`, `border-2`) which added visual weight and felt less minimalistic. Borders create hard edges that can feel dated compared to modern ultra-minimalistic designs.

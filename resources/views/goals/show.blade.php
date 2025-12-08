@@ -113,19 +113,17 @@
             <!-- Tabs -->
             <div x-data="{ activeTab: 'challenges' }">
                 <!-- Tab Navigation -->
-                <div class="card card-no-padding mb-4">
-                    <nav class="flex -mb-px">
+                <div class="tab-header">
+                    <nav class="tab-nav">
                         <button @click="activeTab = 'challenges'" 
-                                :class="activeTab === 'challenges' ? 'border-slate-600 text-slate-700 dark:text-slate-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-600'"
-                                class="w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors duration-150">
+                                :class="activeTab === 'challenges' ? 'tab-button active' : 'tab-button'">
                             Challenges
                             <span class="tab-count-badge" :class="activeTab === 'challenges' ? 'active' : 'inactive'">
                                 {{ $challenges->count() }}
                             </span>
                         </button>
                         <button @click="activeTab = 'habits'" 
-                                :class="activeTab === 'habits' ? 'border-teal-500 text-slate-700 dark:text-slate-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-600'"
-                                class="w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors duration-150">
+                                :class="activeTab === 'habits' ? 'tab-button active' : 'tab-button'">
                             Habits
                             <span class="tab-count-badge" :class="activeTab === 'habits' ? 'active' : 'inactive'">
                                 {{ $habits->count() }}
@@ -160,43 +158,7 @@
                 @if($habits->count() > 0)
                     <div class="space-y-3">
                         @foreach($habits as $habit)
-                            <a href="{{ route('habits.show', $habit) }}" 
-                               class="block p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                                <div class="flex items-start justify-between gap-4">
-                                    <div class="flex-1 min-w-0">
-                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1">{{ $habit->title }}</h4>
-                                        
-                                        @if($habit->description)
-                                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                                                {{ Str::limit($habit->description, 100) }}
-                                            </p>
-                                        @endif
-
-                                        <div class="flex flex-wrap items-center gap-2 text-sm">
-                                            <!-- Status Badge -->
-                                            @if($habit->is_archived)
-                                                <span class="badge-habit-archived">Archived</span>
-                                            @else
-                                                <span class="badge-habit-active">Active</span>
-                                            @endif
-
-                                            <span class="text-gray-600 dark:text-gray-400">
-                                                {{ $habit->getFrequencyDescription() }}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Streak -->
-                                    @if(!$habit->is_archived && $habit->statistics)
-                                        <div class="text-right">
-                                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-400">
-                                                {{ $habit->statistics->current_streak }}
-                                            </div>
-                                            <div class="text-xs text-gray-600 dark:text-gray-400">Day Streak</div>
-                                        </div>
-                                    @endif
-                                </div>
-                            </a>
+                            <x-habit-list-item :habit="$habit" />
                         @endforeach
                     </div>
                 @else

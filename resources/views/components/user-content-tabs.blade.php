@@ -1,6 +1,7 @@
 @props([
     'user',
     'challenges',
+    'habits',
     'activities',
     'defaultTab' => 'activity',
     'adminView' => false
@@ -25,6 +26,17 @@
                         {{ count($challenges) }}
                     @else
                         {{ $challenges->total() }}
+                    @endif
+                </span>
+            </button>
+            <button @click="activeTab = 'habits'" 
+                    :class="activeTab === 'habits' ? 'tab-button active' : 'tab-button'">
+                Habits
+                <span class="tab-count-badge" :class="activeTab === 'habits' ? 'active' : 'inactive'">
+                    @if(is_countable($habits))
+                        {{ count($habits) }}
+                    @else
+                        {{ $habits->total() }}
                     @endif
                 </span>
             </button>
@@ -78,4 +90,29 @@
             </div>
         @endif
     </div>
+
+    <!-- Habits Tab -->
+    <div x-show="activeTab === 'habits'" class="space-y-4" style="display: none;" x-cloak>
+        @forelse($habits as $habit)
+            <x-habit-list-item :habit="$habit" />
+        @empty
+            <div class="empty-state-card">
+                <div class="empty-state-icon">
+                    <svg class="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                    </svg>
+                </div>
+                <h3 class="empty-state-title">No habits</h3>
+                <p class="empty-state-message">{{ $user->name }} hasn't created any habits yet.</p>
+            </div>
+        @endforelse
+
+        <!-- Pagination -->
+        @if(method_exists($habits, 'hasPages') && $habits->hasPages())
+            <div class="mt-6">
+                {{ $habits->links('pagination::tailwind', ['pageName' => 'habits_page']) }}
+            </div>
+        @endif
+    </div>
 </div>
+

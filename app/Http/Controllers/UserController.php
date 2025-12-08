@@ -64,12 +64,18 @@ class UserController extends Controller
     {
         $currentUser = $request->user();
         
-        $user->loadCount(['followers', 'following', 'challenges']);
+        $user->loadCount(['followers', 'following', 'challenges', 'habits']);
         
         $publicChallenges = $user->challenges()
             ->where('is_public', true)
             ->latest()
             ->paginate(10, ['*'], 'challenges_page');
+
+        $publicHabits = $user->habits()
+            ->whereNull('archived_at')
+            ->with(['goal', 'statistics'])
+            ->latest()
+            ->paginate(10, ['*'], 'habits_page');
 
         $activities = $user->activities()
             ->with(['user', 'challenge', 'goal'])
@@ -84,6 +90,6 @@ class UserController extends Controller
 
         $isFollowing = $currentUser->isFollowing($user);
 
-        return view('users.show', compact('user', 'publicChallenges', 'activities', 'isFollowing'));
+        return view('users.show', compact('user', 'publicChallenges', 'publicHabits', 'activities', 'isFollowing'));
     }
 }

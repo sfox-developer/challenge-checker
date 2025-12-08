@@ -1320,6 +1320,64 @@ Challenges do not display icons because:
 3. Displaying one goal's icon would be arbitrary and misleading
 4. Status badge emojis provide sufficient visual differentiation
 
+#### x-habit-list-item
+**File:** `resources/views/components/habit-list-item.blade.php`  
+**Created:** December 9, 2025
+
+**Props:**
+- `habit` - Habit model instance
+- `adminView` - Boolean for admin context (default: false)
+
+**Features:**
+- **Full card clickability** - Entire card is an `<a>` tag with `card-link` class
+- **Icon display** - Shows goal icon (habits are based on single goals from library)
+- **Hover effects** - Title and arrow change color on hover via `group` utilities
+- **Inline badge** - Status badge positioned with title for better hierarchy
+- **Stats display** - Current streak with fire emoji 🔥 and total completions
+- **Routes to habit detail page**
+- **Clean, consistent layout** - Matches challenge-list-item pattern
+
+**Layout Structure:**
+```blade
+<a href="{{ route('habits.show', $habit) }}" class="card card-link group">
+    <div class="flex items-center gap-4">
+        <!-- Icon (w-12 h-12, slate background) -->
+        <!-- Content area with title, badge, frequency, stats -->
+        <!-- Chevron arrow (hover effect) -->
+    </div>
+</a>
+```
+
+**Stats Display:**
+- Streak: 🔥 emoji + days count (if > 0)
+- Completions: Total count
+
+**Badge Types:**
+- Archived: 📁 Archived
+- Done Today: ✓ Done Today
+- Active: 🏃 Active
+- Paused: ⏸️ Paused
+
+**Usage:**
+```blade
+<!-- In habits index page -->
+<x-habit-list-item :habit="$habit" />
+
+<!-- In goal detail page (habits tab) -->
+<x-habit-list-item :habit="$habit" />
+
+<!-- In user profile (habits tab) -->
+<x-habit-list-item :habit="$habit" />
+
+<!-- In admin context -->
+<x-habit-list-item :habit="$habit" :adminView="true" />
+```
+
+**Design Rationale:**
+- Unlike challenges, habits display goal icons because each habit is based on a single goal from the library
+- Creates clear visual differentiation from challenges
+- Provides quick recognition of habit type via icon
+
 #### x-activity-card
 **File:** `resources/views/components/activity-card.blade.php`
 
@@ -1338,16 +1396,37 @@ Challenges do not display icons because:
 
 **Props:**
 - `user` - User model
-- `challenges` - Challenge collection
-- `activities` - Activity collection
-- `defaultTab` - 'challenges' or 'activity' (default)
+- `challenges` - Challenge collection (paginated)
+- `habits` - Habit collection (paginated) - **Added December 9, 2025**
+- `activities` - Activity collection (paginated)
+- `defaultTab` - 'activity', 'challenges', or 'habits' (default: 'activity')
 - `adminView` - Boolean for admin context
 
 **Features:**
 - Alpine.js tab switching with `activeTab` state
+- **3 tabs:** Activity, Challenges, Habits (Habits added December 9, 2025)
 - Tab count badges with active/inactive styling
 - Lazy loading content (hidden tabs use `display: none`)
+- Separate pagination for each tab (activities_page, challenges_page, habits_page)
 - Passes adminView to child components
+- Empty states for each tab type
+
+**Usage:**
+```blade
+<x-user-content-tabs 
+    :user="$user" 
+    :challenges="$publicChallenges"
+    :habits="$publicHabits"
+    :activities="$activities"
+    defaultTab="activity" />
+```
+
+**Implementation Notes:**
+- Each tab maintains its own pagination state via named pagination (`pageName`)
+- Challenges tab uses `x-challenge-list-item` component
+- Habits tab uses `x-habit-list-item` component (new)
+- Activities tab uses `x-activity-card` component
+- All tabs support both countable arrays and paginated collections
 - Uses CSS component classes for consistency
 - Pagination support for both tabs
 
