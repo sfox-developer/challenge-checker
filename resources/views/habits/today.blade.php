@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-header title="Today's Habits" gradient="success">
+        <x-page-header title="Today's Habits">
             <x-slot name="icon">
-                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                 </svg>
             </x-slot>

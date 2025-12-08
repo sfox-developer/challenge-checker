@@ -499,7 +499,7 @@ function updateChallengeProgress(container, change) {
             
             // Update header border and icon
             if (progressHeader) {
-                progressHeader.classList.remove('border-blue-200', 'dark:border-blue-800', 'bg-gradient-to-r', 'from-blue-50', 'to-purple-50', 'dark:from-blue-900/20', 'dark:to-purple-900/20');
+                progressHeader.classList.remove('border-blue-200', 'dark:border-blue-800', 'bg-blue-50', 'dark:bg-blue-900/20');
                 progressHeader.classList.add('border-teal-500', 'bg-teal-50', 'dark:bg-teal-900/20');
                 
                 const icon = progressHeader.querySelector('svg');
@@ -530,7 +530,7 @@ function updateChallengeProgress(container, change) {
             // Update header border and icon
             if (progressHeader) {
                 progressHeader.classList.remove('border-teal-500', 'bg-teal-50', 'dark:bg-teal-900/20');
-                progressHeader.classList.add('border-blue-200', 'dark:border-blue-800', 'bg-gradient-to-r', 'from-blue-50', 'to-purple-50', 'dark:from-blue-900/20', 'dark:to-purple-900/20');
+                progressHeader.classList.add('border-blue-200', 'dark:border-blue-800', 'bg-blue-50', 'dark:bg-blue-900/20');
                 
                 const icon = progressHeader.querySelector('svg');
                 if (icon) {

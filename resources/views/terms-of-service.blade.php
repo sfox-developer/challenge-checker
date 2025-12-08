@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-header title="Terms of Service" gradient="primary">
+        <x-page-header title="Terms of Service">
             <x-slot name="icon">
-                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
                 </svg>
             </x-slot>
@@ -14,8 +14,8 @@
             <div class="card">
                 <div class="flex items-center justify-between mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
                     <div class="flex items-center space-x-3">
-                        <div class="p-3 bg-slate-700 dark:bg-slate-600 rounded-lg">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg">
+                            <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
                             </svg>
                         </div>
@@ -28,7 +28,7 @@
 
                 <div class="prose dark:prose-invert max-w-none prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-gray-100">
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Agreement to Terms
                     </h2>
                     <p>
@@ -37,7 +37,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Description of Service
                     </h2>
                     <p>
@@ -52,7 +52,7 @@
                     </ul>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         User Accounts
                     </h2>
                     <h3 class="text-lg font-semibold mt-6 mb-3 text-slate-700 dark:text-slate-400">Account Creation</h3>
@@ -73,7 +73,7 @@
                     </ul>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         User Content
                     </h2>
                     <h3 class="text-lg font-semibold mt-6 mb-3 text-slate-700 dark:text-slate-400">Your Content</h3>
@@ -95,7 +95,7 @@
                     </ul>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Privacy Settings
                     </h2>
                     <p>
@@ -105,7 +105,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Social Features
                     </h2>
                     <p>Our service includes social features such as following other users and viewing public activities. When using these features:</p>
@@ -116,7 +116,7 @@
                     </ul>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Prohibited Activities
                     </h2>
                     <p>You may not:</p>
@@ -130,7 +130,7 @@
                     </ul>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Service Availability
                     </h2>
                     <p>
@@ -139,7 +139,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Intellectual Property
                     </h2>
                     <p>
@@ -148,7 +148,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Termination
                     </h2>
                     <p>We may terminate or suspend your account and access to the service immediately, without prior notice, if you:</p>
@@ -163,7 +163,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Disclaimer of Warranties
                     </h2>
                     <p>
@@ -172,7 +172,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Limitation of Liability
                     </h2>
                     <p>
@@ -181,7 +181,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Changes to Terms
                     </h2>
                     <p>
@@ -191,7 +191,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Governing Law
                     </h2>
                     <p>
@@ -200,7 +200,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Contact Information
                     </h2>
                     <p>
@@ -209,7 +209,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Acknowledgment
                     </h2>
                     <p>

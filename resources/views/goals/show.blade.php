@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-header :title="$goal->name" gradient="primary">
+        <x-page-header :title="$goal->name">
             <x-slot name="icon">
                 <span class="text-4xl">{{ $goal->icon ?? '🎯' }}</span>
             </x-slot>

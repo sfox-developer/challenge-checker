@@ -15,8 +15,8 @@
                 <!-- My Profile -->
                 <a href="{{ route('users.show', Auth::user()) }}" class="block card card-interactive">
                     <div class="p-5 flex items-center space-x-4">
-                        <div class="bg-slate-700 dark:bg-slate-600 p-3 rounded-lg">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <div class="bg-slate-100 dark:bg-slate-900 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
                             </svg>
                         </div>
@@ -33,8 +33,8 @@
                 <!-- Goals Library -->
                 <a href="{{ route('goals.index') }}" class="block card card-interactive">
                     <div class="p-5 flex items-center space-x-4">
-                        <div class="bg-slate-700 dark:bg-slate-600 p-3 rounded-lg">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <div class="bg-slate-100 dark:bg-slate-900 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
                                 <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
                             </svg>
@@ -52,8 +52,8 @@
                 <!-- Discover -->
                 <a href="{{ route('users.search') }}" class="block card card-interactive">
                     <div class="p-5 flex items-center space-x-4">
-                        <div class="bg-slate-700 dark:bg-slate-600 p-3 rounded-lg">
-                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div class="bg-slate-100 dark:bg-slate-900 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
                         </div>

@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-header title="Privacy Policy" gradient="primary">
+        <x-page-header title="Privacy Policy">
             <x-slot name="icon">
-                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                 </svg>
             </x-slot>
@@ -14,8 +14,8 @@
             <div class="card">
                 <div class="flex items-center justify-between mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
                     <div class="flex items-center space-x-3">
-                        <div class="p-3 bg-slate-700 dark:bg-slate-600 rounded-lg">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg">
+                            <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                             </svg>
                         </div>
@@ -28,7 +28,7 @@
 
                 <div class="prose dark:prose-invert max-w-none prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-gray-100">
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Introduction
                     </h2>
                     <p>
@@ -37,7 +37,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Information We Collect
                     </h2>
                     <h3 class="text-lg font-semibold mt-6 mb-3 text-slate-700 dark:text-slate-400">Personal Information</h3>
@@ -58,7 +58,7 @@
                     </ul>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         How We Use Your Information
                     </h2>
                     <p>We use your personal data for the following purposes:</p>
@@ -72,7 +72,7 @@
                     </ul>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Data Sharing and Disclosure
                     </h2>
                     <p>We do not sell your personal data. We may share your information in the following situations:</p>
@@ -83,7 +83,7 @@
                     </ul>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Data Security
                     </h2>
                     <p>
@@ -93,7 +93,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Your Privacy Rights
                     </h2>
                     <p>You have the following rights regarding your personal data:</p>
@@ -106,7 +106,7 @@
                     </ul>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Data Retention
                     </h2>
                     <p>
@@ -115,7 +115,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Cookies and Tracking
                     </h2>
                     <p>
@@ -124,7 +124,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Children's Privacy
                     </h2>
                     <p>
@@ -133,7 +133,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Changes to This Policy
                     </h2>
                     <p>
@@ -142,7 +142,7 @@
                     </p>
 
                     <h2 class="flex items-center text-xl font-semibold mt-8 mb-4">
-                        <span class="w-2 h-8 bg-slate-700 dark:bg-slate-600 rounded mr-3"></span>
+                        <span class="w-2 h-8 bg-slate-200 dark:bg-slate-800 rounded mr-3"></span>
                         Contact Us
                     </h2>
                     <p>

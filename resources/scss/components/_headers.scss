@@ -32,12 +32,10 @@
 
 .page-header-icon {
     @apply p-3 rounded-lg flex-shrink-0;
+    @apply bg-slate-100 dark:bg-slate-900;
     
-    // All icons use subtle slate accent
-    &.gradient-primary,
-    &.gradient-success,
-    &.gradient-danger {
-        @apply bg-slate-700 dark:bg-slate-600;
+    svg {
+        @apply w-6 h-6;
     }
 }
 

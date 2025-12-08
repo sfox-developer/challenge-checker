@@ -87,7 +87,7 @@ This document provides quick reference examples for using the reusable CSS class
 ```blade
 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
     <div class="flex items-center space-x-3">
-        <div class="bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-lg flex-shrink-0">
+        <div class="bg-slate-700 dark:bg-slate-600 p-2 rounded-lg flex-shrink-0">
             <svg class="w-6 h-6 text-white">...</svg>
         </div>
         <h2 class="font-bold text-xl sm:text-2xl text-gray-800 dark:text-gray-100 leading-tight">
@@ -101,13 +101,15 @@ This document provides quick reference examples for using the reusable CSS class
 ```blade
 <div class="page-header">
     <div class="page-header-content">
-        <div class="page-header-icon gradient-blue-purple">
-            <svg class="w-6 h-6 text-white">...</svg>
+        <div class="page-header-icon">
+            <svg class="w-6 h-6 text-slate-700 dark:text-slate-400">...</svg>
         </div>
         <h2 class="page-header-title">My Challenges</h2>
     </div>
 </div>
 ```
+
+**Note:** Page header icons now use colored icons (`text-slate-700 dark:text-slate-400`) on light backgrounds (`bg-slate-100 dark:bg-slate-900`) for better accessibility and ultra-minimalistic design.
 
 ### 3. Section Headers
 

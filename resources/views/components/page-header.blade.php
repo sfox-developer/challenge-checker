@@ -1,12 +1,11 @@
 @props([
     'title' => null,
-    'gradient' => 'primary',  // primary (blue-purple), success (green), danger (red)
 ])
 
 <div class="page-header">
     <div class="page-header-content">
         @isset($icon)
-            <div class="page-header-icon gradient-{{ $gradient }}">
+            <div class="page-header-icon">
                 {{ $icon }}
             </div>
         @endisset
