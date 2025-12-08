@@ -78,7 +78,7 @@
                                     <span class="text-gray-500 dark:text-gray-400">{{ $challenge->getCurrentDay() }} / {{ $challenge->days_duration }} days</span>
                                 </div>
                                 <div class="progress-container">
-                                    <div class="progress-bar bg-gradient-to-r from-blue-500 to-purple-500" 
+                                    <div class="progress-bar bg-blue-600 dark:bg-blue-500" 
                                          style="width: {{ $challenge->getProgressPercentage() }}%"></div>
                                 </div>
                             </div>

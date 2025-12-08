@@ -111,20 +111,20 @@
                         <a href="{{ route('habits.show', $habit) }}" class="card card-link group">
                             <div class="flex items-center gap-4">
                                 <!-- Icon -->
-                                <div class="flex-shrink-0 w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center text-white text-2xl">
+                                <div class="flex-shrink-0 w-12 h-12 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center text-white text-2xl">
                                     {{ $habit->goal->icon ?? '✓' }}
                                 </div>
                                 
                                 <!-- Content -->
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-start justify-between gap-3 mb-2">
-                                        <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
+                                        <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                                             {{ $habit->goal_name }}
                                         </h4>
                                         
                                         <!-- Status Badge -->
                                         @if($habit->isCompletedToday())
-                                            <span class="flex-shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200">
+                                            <span class="flex-shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
                                                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                                 </svg>
@@ -153,7 +153,7 @@
                                 
                                 <!-- Arrow -->
                                 <div class="flex-shrink-0">
-                                    <svg class="w-5 h-5 text-gray-400 group-hover:text-teal-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                     </svg>
                                 </div>

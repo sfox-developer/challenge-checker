@@ -209,10 +209,10 @@
                                 <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
                                     <div class="flex justify-between text-sm mb-2">
                                         <span class="text-gray-700 dark:text-gray-400 font-medium">Progress</span>
-                                        <span class="font-semibold text-teal-600 dark:text-teal-400">{{ number_format($challenge->getProgressPercentage(), 1) }}%</span>
+                                        <span class="font-semibold text-blue-600 dark:text-blue-400">{{ number_format($challenge->getProgressPercentage(), 1) }}%</span>
                                     </div>
                                     <div class="progress-container">
-                                        <div class="progress-bar bg-teal-500" style="width: {{ $challenge->getProgressPercentage() }}%"></div>
+                                        <div class="progress-bar bg-blue-600 dark:bg-blue-500" style="width: {{ $challenge->getProgressPercentage() }}%"></div>
                                     </div>
                                 </div>
                             @endif

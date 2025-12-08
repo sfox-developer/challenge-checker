@@ -104,12 +104,12 @@
                                 <span class="text-optional">(Read-only)</span>
                             </label>
                             
-                            <div class="bg-gradient-to-r from-blue-50 dark:from-blue-900/30 to-purple-50 dark:to-purple-900/30 border-2 border-blue-200 dark:border-blue-700 rounded-xl p-6">
+                            <div class="bg-blue-50 dark:bg-blue-900/30 border-2 border-blue-200 dark:border-blue-700 rounded-xl p-6">
                                 <div id="existing-goals" class="space-y-4">
                                     @foreach($challenge->goals as $index => $goal)
                                         <div class="existing-goal-item bg-white dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
                                             <div class="flex items-start space-x-3">
-                                                <div class="bg-gradient-to-r from-blue-500 to-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                                                <div class="bg-blue-600 dark:bg-blue-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                                                     {{ $index + 1 }}
                                                 </div>
                                                 <div class="flex-1 space-y-2">

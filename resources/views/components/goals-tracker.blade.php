@@ -20,7 +20,7 @@
 @if($goals->isNotEmpty())
     <div class="space-y-4" data-challenge-id="{{ $challenge->id }}">
         <!-- Progress Header -->
-        <div class="rounded-lg p-4 border-2 transition-all duration-200 {{ $allCompleted ? 'bg-green-50 dark:bg-green-900/20 border-green-500' : 'bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-blue-200 dark:border-blue-800' }}">
+        <div class="rounded-lg p-4 border-2 transition-all duration-200 {{ $allCompleted ? 'bg-green-50 dark:bg-green-900/20 border-green-500' : 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800' }}">
             <div class="flex items-center justify-between mb-2">
                 <div class="flex items-center gap-2">
                     <svg class="w-5 h-5 {{ $allCompleted ? 'text-green-500' : 'text-blue-500' }}" fill="currentColor" viewBox="0 0 20 20">
@@ -35,7 +35,7 @@
             
             <!-- Progress Bar -->
             <div class="bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
-                <div class="bg-green-500 h-1.5 rounded-full transition-all duration-300" 
+                <div class="bg-blue-600 dark:bg-blue-500 h-1.5 rounded-full transition-all duration-300" 
                      data-progress-bar
                      style="width: {{ $progressPercentage }}%">
                 </div>
@@ -65,7 +65,7 @@
                                 onclick="toggleGoalInstant({{ $goal->id }})"
                                 class="flex-shrink-0 mt-0.5">
                             <div class="w-6 h-6 rounded-md border-2 transition-all duration-200 flex items-center justify-center
-                                {{ $isCompleted ? 'bg-green-500 border-green-500' : 'border-gray-300 dark:border-gray-500 hover:border-blue-500' }}">
+                                {{ $isCompleted ? 'bg-blue-600 dark:bg-blue-500 border-blue-600 dark:border-blue-500' : 'border-gray-300 dark:border-gray-500 hover:border-blue-500' }}">
                                 @if($isCompleted)
                                     <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>

@@ -98,6 +98,7 @@
     @apply badge badge-archived;
 }
 
+
 .badge-habit-completed-today {
     @apply badge badge-success;
 }
@@ -131,21 +132,21 @@
 }
 
 // ----------------------------------------------------------------------------
-// GRADIENT BADGES - Special highlight badges
+// ACCENT BADGES - Clean solid blue accent
 // ----------------------------------------------------------------------------
 
 .badge-accent {
     @apply inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full;
-    @apply bg-blue-600 text-white shadow-sm;
+    @apply bg-blue-600 dark:bg-blue-500 text-white shadow-sm;
 }
 
 // ----------------------------------------------------------------------------
-// NUMBERED BADGES - Goal/item numbers with gradient
+// NUMBERED BADGES - Goal/item numbers (solid blue)
 // ----------------------------------------------------------------------------
 
 .numbered-badge {
     @apply flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center;
-    @apply bg-blue-600 text-white text-sm font-bold;
+    @apply bg-blue-600 dark:bg-blue-500 text-white text-sm font-bold;
 }
 
 // ----------------------------------------------------------------------------

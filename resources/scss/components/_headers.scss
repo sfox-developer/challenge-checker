@@ -1,8 +1,7 @@
 // ============================================================================
-// HEADER COMPONENTS
+// HEADER COMPONENTS - Minimalistic Design
 // ============================================================================
-// Page headers, section headers, and title patterns
-// Used for consistent header styling across the application
+// Clean page headers with solid blue accent
 // ============================================================================
 
 // ----------------------------------------------------------------------------
@@ -34,24 +33,16 @@
 .page-header-icon {
     @apply p-2 rounded-lg flex-shrink-0;
     
-    // Primary - Blue (default for most pages)
-    &.gradient-primary {
-        @apply bg-gradient-to-r from-blue-500 to-purple-500;
-    }
-    
-    // Success - Green (for positive actions, goals, habits)
-    &.gradient-success {
-        @apply bg-gradient-to-r from-green-500 to-green-600;
-    }
-    
-    // Danger - Red (for destructive actions, warnings)
+    // All icons use solid blue (single accent color)
+    &.gradient-primary,
+    &.gradient-success,
     &.gradient-danger {
-        @apply bg-gradient-to-r from-red-600 to-red-700;
+        @apply bg-blue-600 dark:bg-blue-500;
     }
 }
 
 .page-header-title {
-    @apply font-bold text-xl sm:text-2xl text-gray-800 dark:text-gray-100 leading-tight;
+    @apply font-bold text-xl sm:text-2xl text-gray-900 dark:text-white leading-tight;
 }
 
 .page-header-subtitle {
@@ -67,7 +58,7 @@
 // ----------------------------------------------------------------------------
 
 .section-header {
-    @apply text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4;
+    @apply text-lg font-semibold text-gray-900 dark:text-white mb-4;
     
     &.section-header-sm {
         @apply text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3;
@@ -75,7 +66,7 @@
     }
     
     &.section-header-md {
-        @apply text-base font-semibold text-gray-800 dark:text-gray-200 mb-3;
+        @apply text-base font-semibold text-gray-900 dark:text-gray-200 mb-3;
     }
 }
 
@@ -103,16 +94,15 @@
 // ----------------------------------------------------------------------------
 
 .tab-header {
-    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm;
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm mb-6;
 }
 
 .tab-nav {
-    @apply -mb-px flex space-x-8 px-6;
-    @apply border-b border-gray-200 dark:border-gray-700;
+    @apply -mb-px flex border-b border-gray-200 dark:border-gray-700;
 }
 
 .tab-button {
-    @apply whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm;
+    @apply flex-1 py-4 px-1 text-center border-b-2 font-medium text-sm;
     @apply transition-colors duration-150;
     
     &.active {
@@ -126,21 +116,12 @@
     }
 }
 
-// Tab color variants
-.tab-header-purple .tab-button.active {
-    @apply border-purple-500 text-purple-600 dark:text-purple-400;
-}
-
-.tab-header-teal .tab-button.active {
-    @apply border-teal-500 text-teal-600 dark:text-teal-400;
-}
-
-.tab-header-green .tab-button.active {
-    @apply border-green-500 text-green-600 dark:text-green-400;
-}
-
+// Tab color variants - all use blue accent for minimalistic design
+.tab-header-purple .tab-button.active,
+.tab-header-teal .tab-button.active,
+.tab-header-green .tab-button.active,
 .tab-header-orange .tab-button.active {
-    @apply border-orange-500 text-orange-600 dark:text-orange-400;
+    @apply border-blue-500 text-blue-600 dark:text-blue-400;
 }
 
 // Tab button with count badge

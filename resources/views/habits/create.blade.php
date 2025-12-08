@@ -18,7 +18,7 @@
                     <!-- Goal Selection or Creation -->
                     <div class="mb-6">
                         <label class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-3 flex items-center space-x-2">
-                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
                                 <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
                             </svg>

@@ -15,7 +15,7 @@
             <div class="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <a href="{{ route('admin.categories.index') }}" class="card card-interactive p-6">
                     <div class="flex items-center space-x-4">
-                        <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-lg">
+                        <div class="bg-blue-600 dark:bg-blue-500 p-3 rounded-lg">
                             <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
                             </svg>
@@ -29,7 +29,7 @@
                 
                 <a href="{{ route('admin.changelogs.index') }}" class="card card-interactive p-6">
                     <div class="flex items-center space-x-4">
-                        <div class="bg-gradient-to-r from-indigo-500 to-purple-500 p-3 rounded-lg">
+                        <div class="bg-blue-600 dark:bg-blue-500 p-3 rounded-lg">
                             <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
                             </svg>
@@ -95,7 +95,7 @@
 
                             <!-- Action Button -->
                             <a href="{{ route('admin.user', $user) }}" 
-                                class="block w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-center py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-200 transform hover:scale-105">
+                                class="block w-full bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white text-center py-2 px-4 rounded-lg font-semibold text-sm transition-all duration-200 transform hover:scale-105">
                                 View Details
                             </a>
                         </div>

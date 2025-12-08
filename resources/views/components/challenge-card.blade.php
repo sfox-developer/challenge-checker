@@ -35,7 +35,7 @@
                     <span class="font-bold">{{ number_format($progress, 1) }}% Complete</span>
                 </div>
                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 shadow-inner">
-                    <div class="bg-gradient-to-r {{ $challenge->is_active ? 'from-blue-500 to-purple-500' : 'from-gray-400 to-gray-500' }} h-3 rounded-full shadow-sm transition-all duration-500" 
+                    <div class="{{ $challenge->is_active ? 'bg-blue-600 dark:bg-blue-500' : 'bg-gray-400 dark:bg-gray-500' }} h-3 rounded-full shadow-sm transition-all duration-500" 
                          style="width: {{ $progress }}%"></div>
                 </div>
                 @if(!$challenge->is_active)

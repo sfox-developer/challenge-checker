@@ -49,7 +49,7 @@
                 <div class="flex items-start space-x-6">
                     <!-- Avatar -->
                     <div class="flex-shrink-0">
-                        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-1">
+                        <div class="w-24 h-24 rounded-full bg-blue-600 dark:bg-blue-500 p-1">
                             <div class="w-full h-full rounded-full bg-white dark:bg-gray-800 flex items-center justify-center overflow-hidden">
                                 <img src="{{ $user->getAvatarUrl() }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
                             </div>

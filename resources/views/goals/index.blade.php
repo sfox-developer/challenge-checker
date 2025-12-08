@@ -84,7 +84,7 @@
 
                                         <div class="flex flex-wrap items-center gap-2 mt-2">
                                             @if($goal->category)
-                                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">
+                                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
                                                     {{ $goal->category->icon }} {{ $goal->category->name }}
                                                 </span>
                                             @endif
@@ -96,7 +96,7 @@
                                             @endif
 
                                             @if($goal->habits_count > 0)
-                                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200">
+                                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
                                                     {{ $goal->habits_count }} habit{{ $goal->habits_count !== 1 ? 's' : '' }}
                                                 </span>
                                             @endif

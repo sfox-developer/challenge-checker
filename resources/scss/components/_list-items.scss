@@ -16,7 +16,7 @@
 
 .goal-info-number {
     @apply flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center;
-    @apply bg-gradient-to-br from-blue-500 to-purple-500 text-white text-sm font-bold;
+    @apply bg-blue-600 dark:bg-blue-500 text-white text-sm font-bold;
 }
 
 .goal-info-content {

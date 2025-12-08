@@ -1,44 +1,43 @@
 // ============================================================================
-// BUTTON COMPONENTS
+// BUTTON COMPONENTS - Minimalistic Design
 // ============================================================================
-// Reusable button styles with consistent dark mode support
-// Usage: Add these classes to buttons or links styled as buttons
+// Clean, flat button styles with single accent color (blue)
 // ============================================================================
 
 // ----------------------------------------------------------------------------
-// PRIMARY BUTTONS - Main call-to-action buttons
+// PRIMARY BUTTONS - Main call-to-action (Blue accent)
 // ----------------------------------------------------------------------------
 
 .btn-primary {
-    @apply bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500;
-    @apply hover:from-blue-700 hover:to-purple-700 dark:hover:from-blue-600 dark:hover:to-purple-600;
-    @apply text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl;
-    @apply transform hover:scale-105 transition-all duration-200;
+    @apply bg-blue-600 dark:bg-blue-500;
+    @apply hover:bg-blue-700 dark:hover:bg-blue-600;
+    @apply text-white font-bold py-3 px-8 rounded-lg shadow-sm hover:shadow-md;
+    @apply transition-all duration-200;
     @apply flex items-center justify-center space-x-2;
 }
 
 // ----------------------------------------------------------------------------
-// SUCCESS BUTTONS - Positive actions (start, continue, submit)
+// SUCCESS BUTTONS - Positive actions (minimal use, green for completed states)
 // ----------------------------------------------------------------------------
 
 .btn-success {
     @apply bg-green-600 dark:bg-green-500;
     @apply hover:bg-green-700 dark:hover:bg-green-600;
-    @apply text-white font-bold py-2 px-4 rounded-lg shadow-lg hover:shadow-xl;
-    @apply transform hover:scale-105 transition-all duration-200;
+    @apply text-white font-bold py-2 px-4 rounded-lg shadow-sm hover:shadow-md;
+    @apply transition-all duration-200;
     @apply flex items-center justify-center space-x-2;
 }
 
 .btn-success-sm {
     @apply bg-green-600 dark:bg-green-500;
     @apply hover:bg-green-700 dark:hover:bg-green-600;
-    @apply text-white text-sm font-semibold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg;
-    @apply transform hover:scale-105 transition-all duration-200;
+    @apply text-white text-sm font-semibold py-2.5 px-4 rounded-lg shadow-sm hover:shadow-md;
+    @apply transition-all duration-200;
     @apply flex items-center justify-center space-x-1;
 }
 
 // ----------------------------------------------------------------------------
-// DANGER BUTTONS - Destructive actions (delete, remove)
+// DANGER BUTTONS - Destructive actions (minimal use, red for delete/error)
 // ----------------------------------------------------------------------------
 
 .btn-danger {
@@ -47,7 +46,6 @@
     @apply p-2 rounded-lg transition-all duration-200;
     @apply flex items-center justify-center space-x-1;
 }
-
 // ----------------------------------------------------------------------------
 // SECONDARY BUTTONS - Outlined/ghost buttons for secondary actions
 // ----------------------------------------------------------------------------
