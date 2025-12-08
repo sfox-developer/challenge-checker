@@ -3,13 +3,6 @@
 <a href="{{ $adminView ? route('admin.challenge', $challenge) : route('challenges.show', $challenge) }}" 
    class="card card-link group">
     <div class="flex items-center gap-4">
-        <!-- Icon (if challenge has a primary goal with icon) -->
-        @if($challenge->goals->first()?->icon)
-            <div class="flex-shrink-0 w-12 h-12 bg-slate-100 dark:bg-slate-900 rounded-lg flex items-center justify-center text-slate-700 dark:text-slate-400 text-2xl">
-                {{ $challenge->goals->first()->icon }}
-            </div>
-        @endif
-        
         <!-- Content -->
         <div class="flex-1 min-w-0">
             <!-- Header with Badge -->
@@ -41,15 +34,26 @@
             
             <!-- Stats Row -->
             <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                <span class="flex items-center gap-1">
-                    📅 {{ $challenge->days_duration }} {{ Str::plural('day', $challenge->days_duration) }}
-                </span>
+                <div class="challenge-stat-item">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>{{ $challenge->days_duration }} {{ Str::plural('day', $challenge->days_duration) }}</span>
+                </div>
                 @if($challenge->started_at)
-                    <span class="flex items-center gap-1 font-medium">
-                        ✓ {{ $challenge->getCompletedDaysCount() }} / {{ $challenge->days_duration }}
-                    </span>
+                    <div class="challenge-stat-item">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="font-medium">{{ $challenge->getCompletedDaysCount() }} / {{ $challenge->days_duration }}</span>
+                    </div>
                 @endif
-                <span>{{ $challenge->goals->count() }} {{ Str::plural('goal', $challenge->goals->count()) }}</span>
+                <div class="challenge-stat-item">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"/>
+                    </svg>
+                    <span>{{ $challenge->goals->count() }} {{ Str::plural('goal', $challenge->goals->count()) }}</span>
+                </div>
             </div>
         </div>
         

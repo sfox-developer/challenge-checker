@@ -10,6 +10,66 @@ Complete award-winning minimalistic redesign of the Challenge Checker UI, transf
 
 ## Recent Updates
 
+### December 9, 2025 - Challenge List Item Icon Removal
+
+**Problem:** The challenge list item component displayed the first goal's icon to represent the challenge, which was problematic because:
+1. Challenges don't have their own emoji/icon property (confirmed in database schema)
+2. Using the first goal's icon is arbitrary when challenges typically have multiple goals with different icons
+3. It created visual inconsistency - showing one goal's icon doesn't accurately represent a multi-goal challenge
+4. The conditional display meant some challenges had icons and others didn't, creating layout inconsistency
+
+**Solution:** Removed the icon display from challenge list items, relying on status badge emojis for visual interest and keeping the focus on the challenge name and description.
+
+**Changes Made:**
+
+**File Modified:**
+- `resources/views/components/challenge-list-item.blade.php` - Removed goal icon display
+
+**What Was Removed:**
+```blade
+<!-- Icon (if challenge has a primary goal with icon) -->
+@if($challenge->goals->first()?->icon)
+    <div class="flex-shrink-0 w-12 h-12 bg-slate-100 dark:bg-slate-900 rounded-lg flex items-center justify-center text-slate-700 dark:text-slate-400 text-2xl">
+        {{ $challenge->goals->first()->icon }}
+    </div>
+@endif
+```
+
+**Rationale:**
+- **Data Model Accuracy** - Challenges don't have icons in the schema; displaying goal icons was misleading
+- **Visual Clarity** - Without an arbitrary icon, users focus on the challenge name and status
+- **Consistent Layout** - All challenge cards now have the same structure regardless of goal icons
+- **Badge Emojis Sufficient** - Status badges (📁 🏃 ⏸️ ✓ 📝) already provide visual differentiation
+- **Simplicity** - Cleaner, more minimalistic design aligned with project goals
+
+**Current Layout:**
+```blade
+<a href="..." class="card card-link group">
+    <div class="flex items-center gap-4">
+        <div class="flex-1 min-w-0">
+            <!-- Title with status badge -->
+            <!-- Description -->
+            <!-- Stats (days, progress, goals) -->
+        </div>
+        <svg><!-- Arrow --></svg>
+    </div>
+</a>
+```
+
+**Benefits:**
+- ✅ **Accurate Data Representation** - No longer using goal icons to represent challenges
+- ✅ **Consistent Layout** - All cards have identical structure
+- ✅ **Improved Focus** - Challenge name and description are more prominent
+- ✅ **Cleaner Design** - Reduced visual noise aligns with minimalistic UI goals
+- ✅ **Simpler Code** - Removed conditional rendering logic
+
+**Distinction from Habits:**
+- Habits display goal icons because each habit is based on a single goal from the library
+- Challenges contain multiple goals, so displaying one goal's icon doesn't accurately represent the challenge
+- This creates appropriate visual differentiation between the two features
+
+---
+
 ### December 8, 2025 - Tab Count Badges Enhancement
 
 **Problem:** The habits and challenges index pages lacked visual feedback about the number of items in each filter/status category, making it difficult for users to quickly understand the distribution of their data without clicking through each tab.

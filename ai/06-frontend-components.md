@@ -1185,18 +1185,17 @@ This pattern is used in `resources/views/challenges/create.blade.php` for dynami
 
 **Features:**
 - **Full card clickability** - Entire card is an `<a>` tag with `card-link` class
-- **Visual icon display** - Shows first goal's icon (w-12 h-12) with light slate background
+- **No icon display** - Unlike habits, challenges don't display icons (challenges don't have their own icons and displaying one goal's icon would be arbitrary for multi-goal challenges)
 - **Hover effects** - Title and arrow change color on hover via `group` utilities
 - **Inline badge** - Status badge positioned with title for better hierarchy
 - **Emoji-based stats** - Uses emojis (📅 ✓) instead of SVG icons for better scannability
 - **Routes to admin or public view** based on `adminView` prop
-- **Consistent with habit list item pattern** - Same UX and visual approach
+- **Clean, consistent layout** - All cards have identical structure
 
 **Layout Structure:**
 ```blade
 <a href="..." class="card card-link group">
     <div class="flex items-center gap-4">
-        <!-- Optional goal icon (w-12 h-12) -->
         <!-- Content area with title, badge, description, stats -->
         <!-- Chevron arrow (hover effect) -->
     </div>
@@ -1214,6 +1213,13 @@ This pattern is used in `resources/views/challenges/create.blade.php` for dynami
 - Active: 🏃 Active
 - Paused: ⏸️ Paused
 - Draft: 📝 Draft
+
+**Design Note:**
+Challenges do not display icons because:
+1. Challenges don't have icon properties in the data model
+2. Each challenge contains multiple goals with potentially different icons
+3. Displaying one goal's icon would be arbitrary and misleading
+4. Status badge emojis provide sufficient visual differentiation
 
 #### x-activity-card
 **File:** `resources/views/components/activity-card.blade.php`
