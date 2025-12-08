@@ -71,9 +71,9 @@
                     <div class="mt-12 pt-8  dark:border-gray-700">
                         <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Looking for something? Try these:</p>
                         <div class="flex flex-wrap justify-center gap-4 text-sm">
-                            <a href="{{ route('challenges.index') }}" class="text-blue-600 dark:text-blue-400 hover:underline transition-colors">Your Challenges</a>
-                            <a href="{{ route('feed.index') }}" class="text-blue-600 dark:text-blue-400 hover:underline transition-colors">Activity Feed</a>
-                            <a href="{{ route('profile.edit') }}" class="text-blue-600 dark:text-blue-400 hover:underline transition-colors">Profile Settings</a>
+                            <a href="{{ route('challenges.index') }}" class="text-slate-700 dark:text-slate-400 hover:underline transition-colors">Your Challenges</a>
+                            <a href="{{ route('feed.index') }}" class="text-slate-700 dark:text-slate-400 hover:underline transition-colors">Activity Feed</a>
+                            <a href="{{ route('profile.edit') }}" class="text-slate-700 dark:text-slate-400 hover:underline transition-colors">Profile Settings</a>
                         </div>
                     </div>
                 @endauth

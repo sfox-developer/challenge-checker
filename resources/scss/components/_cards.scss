@@ -2,7 +2,7 @@
 // Base card styles with variants for different use cases
 
 .card {
-    @apply bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 sm:p-8
+    @apply bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-8 sm:p-10
     border border-gray-200 dark:border-gray-700;
     
     // Variant: No padding (for custom layouts)
@@ -17,13 +17,13 @@
     
     // Variant: Interactive card (for links/buttons)
     &.card-interactive {
-        @apply shadow-md rounded-xl hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02];
+        @apply shadow-sm rounded-xl hover:shadow-md transition-all duration-200;
     }
     
     // Variant: Card as link - clean link styling with hover
     &.card-link {
-        @apply block rounded-lg shadow-sm border p-5;
-        @apply hover:border-blue-300 dark:hover:border-blue-600;
+        @apply block rounded-lg shadow-sm border p-6;
+        @apply hover:border-slate-300 dark:hover:border-slate-600;
         @apply transition-all duration-200;
     }
 }

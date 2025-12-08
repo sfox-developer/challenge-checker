@@ -10,8 +10,8 @@
 // ----------------------------------------------------------------------------
 
 .link {
-    @apply text-blue-600 dark:text-blue-400;
-    @apply hover:text-blue-700 dark:hover:text-blue-300;
+    @apply text-slate-700 dark:text-slate-400;
+    @apply hover:text-slate-900 dark:hover:text-slate-300;
     @apply transition-colors duration-150;
     
     &:hover {
@@ -26,8 +26,8 @@
 // Link with icon (icon + text)
 .link-with-icon {
     @apply inline-flex items-center space-x-2;
-    @apply text-blue-600 dark:text-blue-400;
-    @apply hover:text-blue-700 dark:hover:text-blue-300;
+    @apply text-slate-700 dark:text-slate-400;
+    @apply hover:text-slate-900 dark:hover:text-slate-300;
     @apply transition-colors duration-150;
     
     svg {
@@ -63,7 +63,8 @@
 
 // Arrow link (commonly used for "View →" type links)
 .link-arrow {
-    @apply text-blue-600 hover:text-blue-500 font-medium whitespace-nowrap;
+    @apply text-slate-700 hover:text-slate-900 font-medium whitespace-nowrap;
+    @apply dark:text-slate-400 dark:hover:text-slate-300;
     @apply transition-colors duration-150;
     
     &::after {
@@ -77,8 +78,8 @@
 
 .action-link {
     @apply text-sm font-medium;
-    @apply text-blue-600 dark:text-blue-400;
-    @apply hover:text-blue-700 dark:hover:text-blue-300;
+    @apply text-slate-700 dark:text-slate-400;
+    @apply hover:text-slate-900 dark:hover:text-slate-300;
     @apply transition-colors duration-150;
     @apply cursor-pointer;
 }
@@ -97,10 +98,10 @@
 
 .card-link {
     @apply block transition-all duration-200;
-    @apply hover:shadow-md transform hover:scale-[1.01];
+    @apply hover:shadow-md;
     
     &:focus {
-        @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+        @apply outline-none ring-2 ring-slate-500 ring-offset-2;
     }
 }
 
@@ -114,6 +115,6 @@
     @apply transition-colors duration-200;
     
     &:focus {
-        @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+        @apply outline-none ring-2 ring-slate-500 ring-offset-2;
     }
 }

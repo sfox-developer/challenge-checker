@@ -111,14 +111,14 @@
                         <a href="{{ route('habits.show', $habit) }}" class="card card-link group">
                             <div class="flex items-center gap-4">
                                 <!-- Icon -->
-                                <div class="flex-shrink-0 w-12 h-12 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center text-white text-2xl">
+                                <div class="flex-shrink-0 w-12 h-12 bg-slate-700 dark:bg-slate-600 rounded-lg flex items-center justify-center text-white text-2xl">
                                     {{ $habit->goal->icon ?? '✓' }}
                                 </div>
                                 
                                 <!-- Content -->
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-start justify-between gap-3 mb-2">
-                                        <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                        <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-slate-700 dark:group-hover:text-slate-400 transition-colors">
                                             {{ $habit->goal_name }}
                                         </h4>
                                         
@@ -153,7 +153,7 @@
                                 
                                 <!-- Arrow -->
                                 <div class="flex-shrink-0">
-                                    <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 text-gray-400 group-hover:text-slate-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                     </svg>
                                 </div>

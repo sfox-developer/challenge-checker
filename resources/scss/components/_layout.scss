@@ -17,16 +17,16 @@
 }
 
 // ----------------------------------------------------------------------------
-// FLOATING ACTION BUTTON (FAB) - Clean solid blue
+// FLOATING ACTION BUTTON (FAB) - Clean subtle slate
 // ----------------------------------------------------------------------------
 
 .fab {
     @apply fixed bottom-8 right-8 z-50;
     @apply hidden sm:flex items-center justify-center;
-    @apply bg-blue-600 dark:bg-blue-500;
-    @apply hover:bg-blue-700 dark:hover:bg-blue-600;
+    @apply bg-slate-700 dark:bg-slate-600;
+    @apply hover:bg-slate-800 dark:hover:bg-slate-700;
     @apply text-white rounded-full p-4;
-    @apply shadow-lg hover:shadow-xl;
+    @apply shadow-md hover:shadow-lg;
     @apply transition-all duration-200;
 }
 
@@ -62,21 +62,21 @@
 .modal-panel {
     @apply inline-block align-bottom;
     @apply bg-white dark:bg-gray-800;
-    @apply rounded-lg text-left overflow-hidden shadow-xl;
+    @apply rounded-lg text-left overflow-hidden shadow-lg;
     @apply transform transition-all;
     @apply sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full;
 }
 
 .modal-header {
-    @apply bg-blue-600 dark:bg-blue-500;
-    @apply px-6 py-4;
+    @apply bg-slate-700 dark:bg-slate-600;
+    @apply px-6 py-5;
 }
 
 .modal-header-title {
     @apply flex items-center justify-between;
     
     h3 {
-        @apply text-xl font-bold text-white flex items-center space-x-2;
+        @apply text-xl font-semibold text-white flex items-center space-x-2;
     }
     
     button {
@@ -99,11 +99,11 @@
     @apply transition-colors duration-150;
     
     &.active-blue {
-        @apply border-blue-500 text-blue-600 dark:text-blue-400;
+        @apply border-slate-700 dark:border-slate-500 text-slate-900 dark:text-slate-300;
     }
     
     &.active-teal {
-        @apply border-teal-500 text-teal-600 dark:text-teal-400;
+        @apply border-slate-700 dark:border-slate-500 text-slate-900 dark:text-slate-300;
     }
     
     &:not([class*="active-"]) {
@@ -118,7 +118,7 @@
 }
 
 .modal-content {
-    @apply px-6 py-4 max-h-96 overflow-y-auto;
+    @apply px-6 py-6 max-h-96 overflow-y-auto;
     @apply bg-white dark:bg-gray-800;
 }
 
@@ -138,11 +138,11 @@
 
 .stat-item {
     @apply flex items-center justify-between text-sm;
-    @apply bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3;
+    @apply bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4;
 }
 
 .stat-label {
-    @apply flex items-center space-x-2 text-gray-600 dark:text-gray-400;
+    @apply flex items-center space-x-2 text-gray-600 dark:text-gray-400 font-medium;
 }
 
 .stat-value {

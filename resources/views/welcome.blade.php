@@ -46,13 +46,13 @@
           x-init="initTheme()">
         <!-- Navigation -->
         @if (Route::has('login'))
-            <nav class="bg-blue-600 dark:bg-blue-500 shadow-lg">
+            <nav class="bg-slate-700 dark:bg-slate-600 shadow-lg">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex items-center">
                             <div class="flex-shrink-0 flex items-center">
                                 <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg class="w-5 h-5 text-slate-700" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                     </svg>
                                 </div>
@@ -99,7 +99,7 @@
             <div class="max-w-7xl mx-auto">
                 <div class="text-center">
                     <!-- Hero Icon -->
-                    <div class="mx-auto w-20 h-20 bg-blue-600 dark:bg-blue-500 rounded-full flex items-center justify-center mb-8">
+                    <div class="mx-auto w-20 h-20 bg-slate-700 dark:bg-slate-600 rounded-full flex items-center justify-center mb-8">
                         <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>
@@ -108,7 +108,7 @@
                     <!-- Hero Text -->
                     <h1 class="text-4xl md:text-6xl font-bold text-gray-800 dark:text-gray-100 mb-6">
                         Track Your Daily
-                        <span class="text-transparent bg-clip-text bg-blue-600 dark:bg-blue-500">
+                        <span class="text-transparent bg-clip-text bg-slate-700 dark:bg-slate-600">
                             Challenges
                         </span>
                     </h1>
@@ -166,7 +166,7 @@
 
                     <!-- Feature 2 -->
                     <div class="card text-center rounded-xl hover:shadow-xl transition-shadow duration-300">
-                        <div class="w-12 h-12 bg-blue-600 dark:bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <div class="w-12 h-12 bg-slate-700 dark:bg-slate-600 rounded-lg flex items-center justify-center mx-auto mb-4">
                             <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>

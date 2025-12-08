@@ -5,11 +5,11 @@
 // ============================================================================
 
 // ----------------------------------------------------------------------------
-// MAIN NAVIGATION BAR
+// MAIN NAVIGATION BAR - Clean minimalistic style
 // ----------------------------------------------------------------------------
 
 .nav-main {
-    @apply bg-blue-600 dark:bg-blue-700 shadow-sm;
+    @apply bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800;
 }
 
 .nav-container {
@@ -37,15 +37,15 @@
 }
 
 .nav-logo-icon {
-    @apply w-8 h-8 bg-white rounded-full flex items-center justify-center;
+    @apply w-8 h-8 bg-slate-700 dark:bg-slate-600 rounded-full flex items-center justify-center;
     
     svg {
-        @apply w-5 h-5 text-blue-600;
+        @apply w-5 h-5 text-white;
     }
 }
 
 .nav-logo-text {
-    @apply text-white font-bold text-lg;
+    @apply text-gray-900 dark:text-white font-semibold text-lg;
 }
 
 // ----------------------------------------------------------------------------
@@ -58,15 +58,15 @@
 
 .nav-link {
     @apply inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5;
-    @apply text-white focus:outline-none transition duration-150 ease-in-out;
+    @apply text-gray-600 dark:text-gray-400 focus:outline-none transition duration-150 ease-in-out;
     
     &.active {
-        @apply border-white;
+        @apply border-slate-700 dark:border-slate-500 text-gray-900 dark:text-white;
     }
     
     &:not(.active) {
-        @apply border-transparent hover:text-gray-200 hover:border-white;
-        @apply focus:text-gray-200 focus:border-white;
+        @apply border-transparent hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-gray-600;
+        @apply focus:text-gray-900 dark:focus:text-white focus:border-gray-300 dark:focus:border-gray-600;
     }
 }
 
@@ -76,10 +76,10 @@
 
 .nav-link {
     @apply inline-flex items-center px-1 pt-1 text-sm font-medium transition-colors duration-150;
-    @apply text-white/80 hover:text-white;
+    @apply text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white;
     
     &.active {
-        @apply text-white border-b-2 border-white/30;
+        @apply text-gray-900 dark:text-white border-b-2 border-slate-700 dark:border-slate-500;
     }
 }
 
@@ -93,11 +93,11 @@
 
 .nav-admin-button {
     @apply inline-flex items-center px-1 pt-1 border-b-2 border-transparent;
-    @apply text-sm font-medium text-white hover:text-gray-200 hover:border-white;
+    @apply text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-gray-600;
     @apply focus:outline-none transition ease-in-out duration-150;
     
     &.active {
-        @apply border-white;
+        @apply border-slate-700 dark:border-slate-500 text-gray-900 dark:text-white;
     }
     
     svg {
@@ -115,8 +115,8 @@
 
 .nav-user-trigger {
     @apply inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md;
-    @apply border border-white border-opacity-20 text-white;
-    @apply bg-white bg-opacity-10 hover:bg-opacity-20;
+    @apply border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300;
+    @apply bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800;
     @apply focus:outline-none transition ease-in-out duration-150;
     
     img {
@@ -144,11 +144,11 @@
 .bottom-nav-item {
     @apply flex flex-col items-center justify-center space-y-1;
     @apply text-gray-600 dark:text-gray-400;
-    @apply hover:text-blue-600 dark:hover:text-blue-400;
+    @apply hover:text-slate-700 dark:hover:text-slate-400;
     @apply transition-colors duration-150;
     
     &.active {
-        @apply text-blue-600 dark:text-blue-400;
+        @apply text-slate-700 dark:text-slate-400;
     }
     
     // Icon wrapper

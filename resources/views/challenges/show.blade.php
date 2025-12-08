@@ -261,11 +261,11 @@
                                 <span class="font-semibold">{{ number_format($challenge->getProgressPercentage(), 1) }}%</span>
                             </div>
                             <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
-                                <div class="bg-blue-600 dark:bg-blue-500 h-1.5 rounded-full transition-all duration-300" 
+                                <div class="bg-slate-700 dark:bg-slate-600 h-1.5 rounded-full transition-all duration-300" 
                                      style="width: {{ $challenge->getProgressPercentage() }}%"></div>
                             </div>
                             @if(!$challenge->is_active)
-                                <p class="text-xs text-blue-600 dark:text-blue-400 mt-2 flex items-center">
+                                <p class="text-xs text-slate-700 dark:text-slate-400 mt-2 flex items-center">
                                     <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                                     </svg>
@@ -415,15 +415,15 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div class="text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ $totalPeriods }}</div>
+                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-400">{{ $totalPeriods }}</div>
                             <div class="text-sm text-gray-600 dark:text-gray-400">{{ $periodLabel }} Active</div>
                         </div>
                         <div class="text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ $perfectPeriods }}</div>
+                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-400">{{ $perfectPeriods }}</div>
                             <div class="text-sm text-gray-600 dark:text-gray-400">Perfect {{ $periodLabel }}</div>
                         </div>
                         <div class="text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-400">
                                 {{ number_format(($perfectPeriods / max($totalPeriods, 1)) * 100, 1) }}%
                             </div>
                             <div class="text-sm text-gray-600 dark:text-gray-400">Success Rate</div>
@@ -462,7 +462,7 @@
                                 
                                 // Determine styling based on completion
                                 if ($completionPercentage === 100) {
-                                    $bgColor = 'bg-blue-600 dark:bg-blue-500 text-white';
+                                    $bgColor = 'bg-slate-700 dark:bg-slate-600 text-white';
                                 } elseif ($completionPercentage > 0) {
                                     $bgColor = 'bg-yellow-400 text-gray-800 dark:text-gray-100';
                                 } else {
@@ -479,7 +479,7 @@
                                 <div class="w-8 h-8 rounded-full {{ $bgColor }} flex items-center justify-center text-xs font-semibold mx-auto relative" title="{{ $currentDate->format('M j, Y') }}: {{ $completedGoalsForDay }}/{{ $totalGoals }} goals completed">
                                     {{ $dayNumber }}
                                     @if($isToday)
-                                        <div class="absolute -bottom-1 w-1 h-1 bg-blue-500 rounded-full"></div>
+                                        <div class="absolute -bottom-1 w-1 h-1 bg-slate-600 rounded-full"></div>
                                     @endif
                                 </div>
                                 <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ $completedGoalsForDay }}/{{ $totalGoals }}</div>
@@ -549,7 +549,7 @@
                                         </div>
                                     </div>
                                     <div class="progress-container">
-                                        <div class="progress-bar {{ $period['percentage'] >= 100 ? 'bg-blue-600 dark:bg-blue-500' : 'bg-blue-500' }}" style="width: {{ $period['percentage'] }}%"></div>
+                                        <div class="progress-bar {{ $period['percentage'] >= 100 ? 'bg-slate-700 dark:bg-slate-600' : 'bg-slate-600' }}" style="width: {{ $period['percentage'] }}%"></div>
                                     </div>
                                 </div>
                             @endforeach
@@ -557,7 +557,7 @@
                     @endif                    @if($frequencyType === 'daily')
                     <div class="flex items-center justify-center space-x-6 text-xs text-gray-600 dark:text-gray-400">
                         <div class="flex items-center space-x-2">
-                            <div class="w-3 h-3 rounded-full bg-blue-600 dark:bg-blue-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-slate-700 dark:bg-slate-600"></div>
                             <span>All goals completed</span>
                         </div>
                         <div class="flex items-center space-x-2">

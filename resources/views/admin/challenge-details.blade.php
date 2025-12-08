@@ -30,7 +30,7 @@
                          class="h-12 w-12 rounded-full ring-2 ring-white dark:ring-gray-700 shadow">
                     <div>
                         <a href="{{ route('admin.user', $challenge->user) }}" 
-                           class="text-lg font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+                           class="text-lg font-semibold text-slate-700 dark:text-slate-400 hover:underline">
                             {{ $challenge->user->name }}
                         </a>
                         <p class="text-sm text-gray-600 dark:text-gray-400">{{ $challenge->user->email }}</p>
@@ -78,7 +78,7 @@
                                     <span class="text-gray-500 dark:text-gray-400">{{ $challenge->getCurrentDay() }} / {{ $challenge->days_duration }} days</span>
                                 </div>
                                 <div class="progress-container">
-                                    <div class="progress-bar bg-blue-600 dark:bg-blue-500" 
+                                    <div class="progress-bar bg-slate-700 dark:bg-slate-600" 
                                          style="width: {{ $challenge->getProgressPercentage() }}%"></div>
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
                                                     ? ($goal->dailyProgress->where('completed', true)->count() / $goal->dailyProgress->count() * 100) 
                                                     : 0;
                                             @endphp
-                                            <div class="bg-blue-500 h-1.5 rounded-full" style="width: {{ $progressPercentage }}%"></div>
+                                            <div class="bg-slate-600 h-1.5 rounded-full" style="width: {{ $progressPercentage }}%"></div>
                                         </div>
                                     </div>
                                 @endif

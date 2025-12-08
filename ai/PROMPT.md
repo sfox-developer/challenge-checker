@@ -45,7 +45,7 @@ Read ai/README.md and follow the standard AI agent workflow for this project.
 
 Before starting any work:
 1. Read ai/README.md to understand the workflow
-2. Read all documentation files in ai/ folder (01-06)
+2. Read all documentation files in ai/ folder (01-08)
 3. Understand the project architecture and patterns
 
 Task: Add a "Challenge Templates" feature that allows users to save their completed challenges as templates for future use. Users should be able to create a new challenge from a template, which copies the goals but resets progress.
@@ -65,7 +65,7 @@ Read ai/README.md and follow the standard AI agent workflow for this project.
 
 Before starting any work:
 1. Read ai/README.md to understand the workflow
-2. Read all documentation files in ai/ folder (01-06)
+2. Read all documentation files in ai/ folder (01-08)
 3. Understand the project architecture and patterns
 
 Task: Fix bug where users can complete the same goal multiple times on the same day by clicking the checkbox rapidly. The unique constraint should prevent this, but the UI allows duplicate requests.
@@ -85,7 +85,7 @@ Read ai/README.md and follow the standard AI agent workflow for this project.
 
 Before starting any work:
 1. Read ai/README.md to understand the workflow
-2. Read all documentation files in ai/ folder (01-06)
+2. Read all documentation files in ai/ folder (01-08)
 3. Understand the project architecture and patterns
 
 Task: Refactor the habit statistics calculation to use a database observer pattern instead of manually updating statistics in the controller. This will ensure statistics are always updated correctly regardless of how completions are created.

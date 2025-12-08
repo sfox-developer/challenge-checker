@@ -117,8 +117,9 @@
                         x-transition:leave-end="opacity-0 transform scale-95"
                         class="card card-hover">
                         
-                        <div class="flex flex-col sm:flex-row justify-between items-start mb-4 space-y-2 sm:space-y-0">
-                            <h3 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-100 pr-2">{{ $challenge->name }}</h3>
+                        <!-- Header with Title and Badge -->
+                        <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-5">
+                            <h3 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white pr-2 flex-1">{{ $challenge->name }}</h3>
                             @if($challenge->completed_at)
                                 <span class="badge-completed whitespace-nowrap">✓ Completed</span>
                             @elseif($challenge->started_at && $challenge->is_active)
@@ -130,11 +131,13 @@
                             @endif
                         </div>
                         
+                        <!-- Description -->
                         @if($challenge->description)
-                            <p class="text-sm text-gray-700 dark:text-gray-100 mb-4 leading-relaxed">{{ Str::limit($challenge->description, 100) }}</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">{{ Str::limit($challenge->description, 100) }}</p>
                         @endif
                         
-                        <div class="card-body">
+                        <!-- Stats -->
+                        <div class="space-y-3 mb-6">
                             <div class="stat-item">
                                 <div class="stat-label">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -170,26 +173,18 @@
                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                                         </svg>
-                                        <span>Started:</span>
+                                        <span>End Date:</span>
                                     </div>
-                                    <span class="stat-value">{{ $challenge->started_at->format('M j, Y') }}</span>
+                                    <span class="stat-value">
+                                        @if($challenge->days_duration)
+                                            {{ $challenge->started_at->addDays($challenge->days_duration - 1)->format('M j, Y') }}
+                                        @else
+                                            -
+                                        @endif
+                                    </span>
                                 </div>
                             @endif
-                            <div class="stat-item">
-                                <div class="stat-label">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span>End Date:</span>
-                                </div>
-                                <span class="stat-value">
-                                    @if($challenge->started_at && $challenge->days_duration)
-                                        {{ $challenge->started_at->addDays($challenge->days_duration - 1)->format('M j, Y') }}
-                                    @else
-                                        -
-                                    @endif
-                                </span>
-                            </div>
+                            @if($challenge->completed_at)
                             <div class="stat-item">
                                 <div class="stat-label">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -197,29 +192,27 @@
                                     </svg>
                                     <span>Completed:</span>
                                 </div>
-                                <span class="stat-value">
-                                    @if($challenge->completed_at)
-                                        {{ $challenge->completed_at->format('M j, Y') }}
-                                    @else
-                                        -
-                                    @endif
-                                </span>
+                                <span class="stat-value">{{ $challenge->completed_at->format('M j, Y') }}</span>
                             </div>
-                            @if($challenge->is_active && !$challenge->completed_at)
-                                <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-                                    <div class="flex justify-between text-sm mb-2">
-                                        <span class="text-gray-700 dark:text-gray-400 font-medium">Progress</span>
-                                        <span class="font-semibold text-blue-600 dark:text-blue-400">{{ number_format($challenge->getProgressPercentage(), 1) }}%</span>
-                                    </div>
-                                    <div class="progress-container">
-                                        <div class="progress-bar bg-blue-600 dark:bg-blue-500" style="width: {{ $challenge->getProgressPercentage() }}%"></div>
-                                    </div>
-                                </div>
                             @endif
                         </div>
                         
-                        <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-                            <x-app-button variant="primary" href="{{ route('challenges.show', $challenge) }}" class="flex-1">
+                        <!-- Progress Bar (for active challenges) -->
+                        @if($challenge->is_active && !$challenge->completed_at)
+                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 mb-6">
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="text-gray-700 dark:text-gray-400 font-medium">Progress</span>
+                                    <span class="font-semibold text-slate-700 dark:text-slate-400">{{ number_format($challenge->getProgressPercentage(), 1) }}%</span>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar bg-slate-700 dark:bg-slate-600" style="width: {{ $challenge->getProgressPercentage() }}%"></div>
+                                </div>
+                            </div>
+                        @endif
+                        
+                        <!-- Actions -->
+                        <div class="flex flex-col sm:flex-row gap-2 pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <x-app-button variant="secondary" href="{{ route('challenges.show', $challenge) }}" class="flex-1 sm:flex-initial">
                                 <x-slot name="icon">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
@@ -230,9 +223,9 @@
                             </x-app-button>
                             
                             @if(!$challenge->started_at && !$challenge->completed_at)
-                                <form action="{{ route('challenges.start', $challenge) }}" method="POST" class="flex-1">
+                                <form action="{{ route('challenges.start', $challenge) }}" method="POST" class="flex-1 sm:flex-initial">
                                     @csrf
-                                    <x-app-button variant="success" size="sm" type="submit" class="w-full">
+                                    <x-app-button variant="secondary" type="submit" class="w-full">
                                         <x-slot name="icon">
                                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
@@ -242,9 +235,9 @@
                                     </x-app-button>
                                 </form>
                             @elseif($challenge->started_at && !$challenge->is_active && !$challenge->completed_at)
-                                <form action="{{ route('challenges.resume', $challenge) }}" method="POST" class="flex-1">
+                                <form action="{{ route('challenges.resume', $challenge) }}" method="POST" class="flex-1 sm:flex-initial">
                                     @csrf
-                                    <x-app-button variant="success" size="sm" type="submit" class="w-full">
+                                    <x-app-button variant="secondary" type="submit" class="w-full">
                                         <x-slot name="icon">
                                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
@@ -256,12 +249,13 @@
                             @endif
                             
                             @if(!$challenge->is_active && !$challenge->completed_at)
-                                <x-app-button variant="secondary" href="{{ route('challenges.edit', $challenge) }}?back={{ urlencode(route('challenges.index')) }}">
+                                <x-app-button variant="secondary" href="{{ route('challenges.edit', $challenge) }}?back={{ urlencode(route('challenges.index')) }}" class="sm:w-auto">
                                     <x-slot name="icon">
                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                                         </svg>
                                     </x-slot>
+                                    <span class="hidden sm:inline">Edit</span>
                                     <span class="sm:hidden">Edit</span>
                                 </x-app-button>
                             @endif
@@ -273,7 +267,7 @@
                 <div class="card">
                     <div class="p-8 text-center">
                         <div class="empty-state-icon-lg">
-                            <svg class="w-10 h-10 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-10 h-10 text-slate-700" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
                         </div>

@@ -42,7 +42,7 @@
                 </button>
                 <div>
                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">Current Avatar</p>
-                    <button type="button" @click="showModal = true" class="text-sm text-blue-600 hover:text-blue-700">
+                    <button type="button" @click="showModal = true" class="text-sm text-slate-700 hover:text-slate-900">
                         Change avatar
                     </button>
                 </div>
@@ -78,7 +78,7 @@
                             @foreach(\App\Domain\User\Models\User::getAvailableAvatars() as $key => $label)
                                 <button type="button"
                                         @click="selectedAvatar = '{{ $key }}'; showModal = false"
-                                        :class="selectedAvatar === '{{ $key }}' ? 'border-blue-600 ring-2 ring-blue-200' : 'border-gray-200 hover:border-blue-400'"
+                                        :class="selectedAvatar === '{{ $key }}' ? 'border-slate-700 ring-2 ring-slate-200' : 'border-gray-200 hover:border-slate-400'"
                                         class="rounded-lg border-2 transition-all duration-200 p-2 bg-white focus:outline-none">
                                     <img src="{{ asset('avatars/' . $key . '.svg') }}" alt="{{ $label }}" class="w-full aspect-square rounded">
                                 </button>

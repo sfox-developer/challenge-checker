@@ -35,7 +35,7 @@
                     <span class="font-bold">{{ number_format($progress, 1) }}% Complete</span>
                 </div>
                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 shadow-inner">
-                    <div class="{{ $challenge->is_active ? 'bg-blue-600 dark:bg-blue-500' : 'bg-gray-400 dark:bg-gray-500' }} h-3 rounded-full shadow-sm transition-all duration-500" 
+                    <div class="{{ $challenge->is_active ? 'bg-slate-700 dark:bg-slate-600' : 'bg-gray-400 dark:bg-gray-500' }} h-3 rounded-full shadow-sm transition-all duration-500" 
                          style="width: {{ $progress }}%"></div>
                 </div>
                 @if(!$challenge->is_active)
@@ -105,14 +105,14 @@
                     </div>
                 @endif
                 
-                <a href="{{ route('challenges.show', $challenge) }}" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                <a href="{{ route('challenges.show', $challenge) }}" class="text-slate-700 hover:text-blue-800 font-medium text-sm">
                     View Details →
                 </a>
             </div>
         @elseif($compact)
             <!-- Compact mode - only show view link -->
             <div class="flex justify-end mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
-                <a href="{{ route('challenges.show', $challenge) }}" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                <a href="{{ route('challenges.show', $challenge) }}" class="text-slate-700 hover:text-blue-800 font-medium text-sm">
                     View Details →
                 </a>
             </div>

@@ -85,7 +85,7 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <a href="{{ route('admin.changelogs.edit', $changelog) }}" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-3">
+                                        <a href="{{ route('admin.changelogs.edit', $changelog) }}" class="text-slate-700 hover:text-blue-900 dark:text-slate-400 dark:hover:text-blue-300 mr-3">
                                             Edit
                                         </a>
                                         <form action="{{ route('admin.changelogs.destroy', $changelog) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this changelog?')">

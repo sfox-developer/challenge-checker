@@ -7,7 +7,7 @@
 <div class="card">
     <div class="flex items-center">
         <div class="flex-shrink-0">
-            <div class="bg-blue-600 dark:bg-blue-500 p-2 md:p-3 rounded-lg">
+            <div class="bg-slate-700 dark:bg-slate-600 p-2 md:p-3 rounded-lg">
                 {!! $icon !!}
             </div>
         </div>

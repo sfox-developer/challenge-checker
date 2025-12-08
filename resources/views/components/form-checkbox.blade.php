@@ -17,7 +17,7 @@
                 id="{{ $name }}" 
                 value="{{ $value }}" 
                 {{ old($name, $checked) ? 'checked' : '' }}
-                class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-200">
+                class="rounded border-gray-300 text-slate-700 shadow-sm focus:border-slate-600 focus:ring-2 focus:ring-slate-500 focus:ring-opacity-50 transition-all duration-200">
         </div>
         <div class="ml-3">
             <label for="{{ $name }}" class="text-sm font-bold text-gray-800 dark:text-gray-100 flex items-center space-x-2">

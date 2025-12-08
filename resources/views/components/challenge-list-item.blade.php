@@ -10,7 +10,7 @@
             @endif
         </div>
         <a href="{{ $adminView ? route('admin.challenge', $challenge) : route('challenges.show', $challenge) }}" 
-           class="ml-4 text-blue-600 hover:text-blue-500 font-medium whitespace-nowrap">
+           class="ml-4 text-slate-700 hover:text-slate-600 font-medium whitespace-nowrap">
             View →
         </a>
     </div>

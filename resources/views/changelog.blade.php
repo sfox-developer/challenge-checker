@@ -52,7 +52,7 @@
                                     @if(trim($line))
                                         <div class="flex items-start">
                                             @if(str_starts_with(trim($line), '-') || str_starts_with(trim($line), '•'))
-                                                <span class="text-blue-500 dark:text-blue-400 mr-2 mt-1">•</span>
+                                                <span class="text-slate-600 dark:text-slate-400 mr-2 mt-1">•</span>
                                                 <span>{{ trim(ltrim(trim($line), '-•')) }}</span>
                                             @else
                                                 <span>{{ $line }}</span>

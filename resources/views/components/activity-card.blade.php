@@ -9,7 +9,7 @@
                 <img src="{{ $activity->user->getAvatarUrl() }}" alt="{{ $activity->user->name }}" class="h-12 w-12 rounded-full ring-2 ring-white dark:ring-gray-700 shadow-sm">
             </div>
             <div>
-                <a href="{{ route('users.show', $activity->user) }}" class="font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400">
+                <a href="{{ route('users.show', $activity->user) }}" class="font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100 hover:text-slate-700 dark:hover:text-slate-400">
                     {{ $activity->user->name }}
                 </a>
                 <p class="text-sm text-gray-500 dark:text-gray-400">{{ $activity->created_at->diffForHumans() }}</p>
@@ -24,7 +24,7 @@
     <div class="mb-4">
         <p class="text-gray-700 dark:text-gray-100">{!! $activity->getDescription() !!}</p>
         @if($activity->challenge)
-            <a href="{{ route('challenges.show', $activity->challenge) }}" class="inline-block mt-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 font-medium">
+            <a href="{{ route('challenges.show', $activity->challenge) }}" class="inline-block mt-2 text-sm text-slate-700 dark:text-slate-400 hover:text-slate-600 dark:hover:text-blue-300 font-medium">
                 View challenge →
             </a>
         @endif
@@ -58,7 +58,7 @@
             
             <button @click="openLikesModal()" 
                     x-show="likesCount > 0"
-                    class="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-150">
+                    class="text-sm text-gray-600 dark:text-gray-400 hover:text-slate-700 dark:hover:text-slate-400 transition-colors duration-150">
                 <span x-text="likesCount + ' ' + (likesCount === 1 ? 'like' : 'likes')"></span>
             </button>
         </div>
@@ -93,7 +93,7 @@
                     <div class="space-y-2 max-h-96 overflow-y-auto">
                         <!-- Loading state -->
                         <div x-show="loadingLikes" class="text-center py-8">
-                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-3"></div>
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-700 mx-auto mb-3"></div>
                             <p class="text-sm text-gray-600 dark:text-gray-400">Loading likes...</p>
                         </div>
 
@@ -108,7 +108,7 @@
                                          class="h-12 w-12 rounded-full ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-blue-400 transition-all duration-150">
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <p class="font-medium text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400" x-text="like.user.name"></p>
+                                    <p class="font-medium text-gray-800 dark:text-gray-100 group-hover:text-slate-700 dark:group-hover:text-slate-400" x-text="like.user.name"></p>
                                     <p class="text-sm text-gray-500 dark:text-gray-400" x-text="like.user.email"></p>
                                 </div>
                             </a>
@@ -128,7 +128,7 @@
                     <div class="mt-5 sm:mt-6">
                         <button type="button" 
                                 @click="closeLikesModal()" 
-                                class="w-full inline-flex justify-center rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-300 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm transition-colors duration-150">
+                                class="w-full inline-flex justify-center rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-300 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 sm:text-sm transition-colors duration-150">
                             Close
                         </button>
                     </div>

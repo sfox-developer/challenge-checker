@@ -82,7 +82,7 @@
                                     <span>Goals</span>
                                 </label>
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('goals.index') }}" class="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center space-x-1">
+                                    <a href="{{ route('goals.index') }}" class="text-sm text-slate-700 dark:text-slate-400 hover:underline flex items-center space-x-1">
                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"/>
                                         </svg>
@@ -101,7 +101,7 @@
                                             <input type="checkbox" 
                                                    name="goal_library_ids[]" 
                                                    value="{{ $goal->id }}"
-                                                   class="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                                   class="mt-1 rounded border-gray-300 text-slate-700 focus:ring-slate-500">
                                             <div class="ml-3 flex-1">
                                                 <div class="flex items-center space-x-2">
                                                     @if($goal->icon)

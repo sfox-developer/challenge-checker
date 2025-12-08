@@ -46,7 +46,17 @@ When an AI agent receives a task for this project, follow this workflow:
 6. **`ai/06-frontend-components.md`**
    - Understand Alpine.js component system
    - Learn Blade component patterns
-   - Review frontend architecture
+   - Review frontend architecture and CSS utility classes
+
+7. **`ai/07-minimalistic-ui-refactoring.md`**
+   - Learn current design system (minimalistic, single blue accent)
+   - Understand color palette and usage guidelines
+   - Review recent UI consistency changes
+
+8. **`ai/08-css-classes-usage-guide.md`**
+   - Understand SCSS component system
+   - Learn Tailwind utility patterns
+   - Review responsive design approach
 
 **⚠️ CRITICAL:** Do not skip this phase. Misunderstanding the architecture leads to:
 - Breaking existing features

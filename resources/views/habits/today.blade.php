@@ -38,12 +38,12 @@
             <div class="card">
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Today's Progress</span>
-                    <span class="text-sm font-bold text-blue-600 dark:text-blue-400">
+                    <span class="text-sm font-bold text-slate-700 dark:text-slate-400">
                         {{ $stats['completed'] }}/{{ $stats['total_due'] }}
                     </span>
                 </div>
                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
-                    <div class="bg-blue-600 dark:bg-blue-500 h-4 rounded-full transition-all duration-500"
+                    <div class="bg-slate-700 dark:bg-slate-600 h-4 rounded-full transition-all duration-500"
                          style="width: {{ $stats['total_due'] > 0 ? round(($stats['completed'] / $stats['total_due']) * 100) : 0 }}%">
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                                         <input type="checkbox" 
                                                :checked="isCompleted"
                                                @change="toggleHabitToday($event, {{ $habit->id }})"
-                                               class="w-6 h-6 rounded border-2 border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 transition-all duration-200">
+                                               class="w-6 h-6 rounded border-2 border-gray-300 text-slate-700 focus:ring-2 focus:ring-slate-500 transition-all duration-200">
                                     </label>
                                 </div>
 
@@ -193,7 +193,7 @@
                                                     Cancel
                                                 </button>
                                                 <button type="submit" 
-                                                        class="px-4 py-2 text-sm font-medium text-white bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 rounded-lg transition-colors">
+                                                        class="px-4 py-2 text-sm font-medium text-white bg-slate-700 dark:bg-slate-600 hover:bg-slate-800 dark:hover:bg-slate-700 rounded-lg transition-colors">
                                                     Save & Complete
                                                 </button>
                                             </div>

@@ -23,26 +23,26 @@
 
 .page-header {
     @apply flex flex-col sm:flex-row justify-between items-start sm:items-center;
-    @apply space-y-4 sm:space-y-0;
+    @apply space-y-6 sm:space-y-0;
 }
 
 .page-header-content {
-    @apply flex items-center space-x-3;
+    @apply flex items-center space-x-4;
 }
 
 .page-header-icon {
-    @apply p-2 rounded-lg flex-shrink-0;
+    @apply p-3 rounded-lg flex-shrink-0;
     
-    // All icons use solid blue (single accent color)
+    // All icons use subtle slate accent
     &.gradient-primary,
     &.gradient-success,
     &.gradient-danger {
-        @apply bg-blue-600 dark:bg-blue-500;
+        @apply bg-slate-700 dark:bg-slate-600;
     }
 }
 
 .page-header-title {
-    @apply font-bold text-xl sm:text-2xl text-gray-900 dark:text-white leading-tight;
+    @apply font-semibold text-xl sm:text-2xl text-gray-900 dark:text-white leading-tight;
 }
 
 .page-header-subtitle {
@@ -58,15 +58,15 @@
 // ----------------------------------------------------------------------------
 
 .section-header {
-    @apply text-lg font-semibold text-gray-900 dark:text-white mb-4;
+    @apply text-lg font-semibold text-gray-900 dark:text-white mb-6;
     
     &.section-header-sm {
-        @apply text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3;
+        @apply text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4;
         @apply flex items-center;
     }
     
     &.section-header-md {
-        @apply text-base font-semibold text-gray-900 dark:text-gray-200 mb-3;
+        @apply text-base font-semibold text-gray-900 dark:text-gray-200 mb-4;
     }
 }
 
@@ -106,22 +106,22 @@
     @apply transition-colors duration-150;
     
     &.active {
-        @apply border-blue-500 text-blue-600 dark:text-blue-400;
+        @apply border-slate-700 dark:border-slate-500 text-slate-900 dark:text-slate-300;
     }
     
     &:not(.active) {
         @apply border-transparent text-gray-500 dark:text-gray-400;
-        @apply hover:text-gray-700 dark:hover:text-gray-100;
+        @apply hover:text-gray-900 dark:hover:text-gray-100;
         @apply hover:border-gray-300 dark:hover:border-gray-600;
     }
 }
 
-// Tab color variants - all use blue accent for minimalistic design
+// Tab color variants - all use slate accent for minimalistic design
 .tab-header-purple .tab-button.active,
 .tab-header-teal .tab-button.active,
 .tab-header-green .tab-button.active,
 .tab-header-orange .tab-button.active {
-    @apply border-blue-500 text-blue-600 dark:text-blue-400;
+    @apply border-slate-700 dark:border-slate-500 text-slate-900 dark:text-slate-300;
 }
 
 // Tab button with count badge

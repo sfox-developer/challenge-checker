@@ -212,7 +212,7 @@
                             <div class="aspect-square">
                                 @if($day['day'])
                                     <div class="w-full h-full rounded flex items-center justify-center text-xs font-medium
-                                        {{ $day['is_completed'] ? 'bg-blue-600 dark:bg-blue-500 text-white' : '' }}
+                                        {{ $day['is_completed'] ? 'bg-slate-700 dark:bg-slate-600 text-white' : '' }}
                                         {{ $day['is_today'] ? 'ring-2 ring-teal-500 text-gray-900 dark:text-gray-100' : '' }}
                                         {{ !$day['is_completed'] && !$day['is_today'] ? 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300' : '' }}">
                                         {{ $day['day'] }}
@@ -227,7 +227,7 @@
                     <!-- Legend -->
                     <div class="flex items-center justify-center gap-4 mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
                         <div class="flex items-center gap-1.5">
-                            <div class="w-3 h-3 rounded bg-blue-600 dark:bg-blue-500"></div>
+                            <div class="w-3 h-3 rounded bg-slate-700 dark:bg-slate-600"></div>
                             <span class="text-xs text-gray-600 dark:text-gray-400">Completed</span>
                         </div>
                         <div class="flex items-center gap-1.5">

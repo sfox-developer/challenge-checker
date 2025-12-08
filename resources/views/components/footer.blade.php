@@ -8,13 +8,13 @@
             </div>
             
             <div class="flex items-center space-x-6 text-sm">
-                <a href="{{ route('changelog') }}" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a href="{{ route('changelog') }}" class="text-gray-600 dark:text-gray-400 hover:text-slate-700 dark:hover:text-slate-400 transition-colors">
                     Changelog
                 </a>
-                <a href="{{ route('privacy.policy') }}" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a href="{{ route('privacy.policy') }}" class="text-gray-600 dark:text-gray-400 hover:text-slate-700 dark:hover:text-slate-400 transition-colors">
                     Privacy Policy
                 </a>
-                <a href="{{ route('terms.service') }}" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a href="{{ route('terms.service') }}" class="text-gray-600 dark:text-gray-400 hover:text-slate-700 dark:hover:text-slate-400 transition-colors">
                     Terms of Service
                 </a>
             </div>

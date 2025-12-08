@@ -23,7 +23,7 @@
                                 id="query" 
                                 value="{{ old('query', $query) }}" 
                                 placeholder="Enter at least 2 characters..."
-                                class="flex-1 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                class="flex-1 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-slate-600 focus:ring-slate-500"
                                 autofocus>
                             <x-app-button variant="blue" type="submit">
                                 Search
@@ -31,7 +31,7 @@
                         </div>
                         @if($query)
                             <div class="mt-2">
-                                <a href="{{ route('users.search') }}" class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-500">
+                                <a href="{{ route('users.search') }}" class="text-sm text-slate-700 dark:text-slate-400 hover:text-slate-600">
                                         ← Back to discovery
                                 </a>
                             </div>
@@ -63,7 +63,7 @@
                                         <img src="{{ $user->getAvatarUrl() }}" alt="{{ $user->name }}" class="h-14 w-14 rounded-full ring-2 ring-white shadow-sm">
                                     </div>
                                     <div>
-                                        <a href="{{ route('users.show', $user) }}" class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400">
+                                        <a href="{{ route('users.show', $user) }}" class="text-lg font-semibold text-gray-800 dark:text-gray-100 dark:text-gray-100 hover:text-slate-700 dark:hover:text-slate-400">
                                             {{ $user->name }}
                                         </a>
                                         <div class="flex items-center space-x-4 mt-1 text-sm text-gray-600 dark:text-gray-400">
