@@ -1,7 +1,7 @@
 @props(['size' => 'w-5 h-5'])
 
 <button @click="toggleTheme()" 
-        {{ $attributes->merge(['class' => 'inline-flex items-center justify-center px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800 transition ease-in-out duration-150']) }}
+        {{ $attributes->merge(['class' => 'inline-flex items-center justify-center px-3 py-2 rounded-md shadow-[0_0_0_1px_rgba(209,213,219,1)] dark:shadow-[0_0_0_1px_rgba(75,85,99,1)] bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800 transition ease-in-out duration-150']) }}
         title="Toggle theme">
     <!-- Sun Icon (Light Mode) -->
     <svg x-show="getThemeIcon() === 'sun'" class="{{ $size }} text-slate-700 dark:text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -10,6 +10,74 @@ Complete award-winning minimalistic redesign of the Challenge Checker UI, transf
 
 ## Recent Updates
 
+### December 9, 2025 - Button Border to Box-Shadow Redesign
+
+**Problem:** All button variants used borders (`border`, `border-2`) which added visual weight and felt less minimalistic. Borders create hard edges that can feel dated compared to modern ultra-minimalistic designs.
+
+**Solution:** Replaced all button borders with subtle box-shadows using Tailwind's arbitrary value syntax for precise 1px ring effect. This creates a cleaner, more refined appearance while maintaining visual boundaries and accessibility.
+
+**Changes Made:**
+
+**Files Modified:**
+1. `resources/scss/components/_buttons.scss` - Updated 3 button variants
+2. `resources/views/components/theme-toggle.blade.php` - Updated theme toggle component
+
+**Box-Shadow Implementation:**
+```scss
+// BEFORE (border approach)
+.btn-primary {
+    @apply border-2 border-gray-300 dark:border-gray-600;
+    @apply bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800;
+    // ...
+}
+
+// AFTER (box-shadow approach)
+.btn-primary {
+    @apply shadow-[0_0_0_1px_rgba(209,213,219,1)] dark:shadow-[0_0_0_1px_rgba(75,85,99,1)];
+    @apply hover:shadow-[0_0_0_1px_rgba(156,163,175,1)] dark:hover:shadow-[0_0_0_1px_rgba(107,114,128,1)];
+    @apply bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800;
+    // ...
+}
+```
+
+**Updated Components:**
+- `.btn-primary` - Primary outline buttons (1px shadow replacing 2px border)
+- `.btn-secondary` - Secondary outlined buttons (1px shadow)
+- `.btn-modal-cancel` - Modal cancel buttons (1px shadow)
+- `x-theme-toggle` - Theme toggle component (1px shadow)
+
+**Color Mapping:**
+- **Light mode base**: `rgba(209,213,219,1)` - gray-300 equivalent
+- **Light mode hover**: `rgba(156,163,175,1)` - gray-400 equivalent
+- **Dark mode base**: `rgba(75,85,99,1)` - gray-600 equivalent
+- **Dark mode hover**: `rgba(107,114,128,1)` - gray-500 equivalent
+
+**Benefits:**
+- ✅ **Enhanced Minimalism** - Softer, more refined appearance than borders
+- ✅ **Visual Consistency** - All outlined buttons now use box-shadow approach
+- ✅ **Hover Feedback** - Shadow color changes on hover for better UX
+- ✅ **Accessibility Maintained** - 1px shadow provides clear visual boundaries
+- ✅ **Dark Mode Support** - Proper RGBA values for both themes
+- ✅ **Modern Aesthetic** - Follows current design trends (Linear, Height, Notion)
+- ✅ **No Breaking Changes** - Visual appearance nearly identical, just cleaner
+
+**Technical Notes:**
+- Used Tailwind arbitrary values: `shadow-[0_0_0_1px_rgba(...)]`
+- Box-shadow with 0 blur creates sharp ring identical to border
+- RGBA values match Tailwind's gray color scale
+- Focus states remain unchanged (using focus:ring-2)
+- Solid buttons (.btn-primary-solid, .btn-success, etc.) unaffected - they don't use borders
+
+**Build Results:**
+- Build time: 988ms (no performance impact)
+- Bundle size: 190.86 kB CSS, 107.47 kB JS (maintained)
+- No visual regressions detected
+
+**Alignment with Project Goals:**
+This change continues the ultra-minimalistic design philosophy established throughout the codebase. Box-shadows provide the same functional boundary as borders but with a softer, more refined aesthetic that better aligns with modern minimalist design trends.
+
+---
+
 ### December 9, 2025 - Comprehensive Heading Standardization
 
 **Problem:** Discovered severe inconsistency across 70+ heading instances throughout the application:

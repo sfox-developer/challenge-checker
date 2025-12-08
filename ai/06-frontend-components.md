@@ -739,18 +739,59 @@ Reusable list item patterns for goals, challenges, and content lists.
 ```
 
 **Buttons (`_buttons.scss`):**
+
+**Design Note (December 9, 2025):** All outlined button variants now use box-shadow instead of borders for a cleaner, more minimalistic appearance. Box-shadows are created using Tailwind arbitrary values to match border colors exactly.
+
 ```scss
-.btn-primary              // Primary gradient button (blue-purple)
+// Outlined Buttons (use box-shadow, not borders)
+.btn-primary              // Primary ghost button (1px shadow)
+.btn-secondary            // Secondary outlined button (1px shadow)
+.btn-modal-cancel         // Modal cancel button (1px shadow)
+
+// Solid Buttons (no borders or shadows)
+.btn-primary-solid        // Solid slate button for critical CTAs
 .btn-success              // Solid green success button
 .btn-success-sm           // Small success button
-.btn-danger               // Red danger button
-.btn-secondary            // Outlined secondary button
-.btn-blue                 // Solid blue button
-.btn-modal-cancel         // Modal cancel button
-.btn-modal-confirm        // Modal confirm button
+.btn-danger               // Red danger button (soft background)
+.btn-accent               // Solid slate accent button
+.btn-modal-confirm        // Modal confirm button (solid slate)
+
+// Action Buttons (small colored buttons for cards/lists)
 .btn-action-sm            // Small green action button
 .btn-action-pause         // Small yellow pause button
 .btn-action-complete      // Small blue complete button
+```
+
+**Box-Shadow Implementation:**
+```scss
+// Example: Primary button with 1px shadow ring
+.btn-primary {
+    @apply shadow-[0_0_0_1px_rgba(209,213,219,1)] dark:shadow-[0_0_0_1px_rgba(75,85,99,1)];
+    @apply hover:shadow-[0_0_0_1px_rgba(156,163,175,1)] dark:hover:shadow-[0_0_0_1px_rgba(107,114,128,1)];
+    // ... other styles
+}
+```
+
+**Usage:**
+```blade
+<!-- Primary outlined button (box-shadow) -->
+<x-app-button variant="primary" href="/challenges/create">
+    Create Challenge
+</x-app-button>
+
+<!-- Secondary button (box-shadow) -->
+<x-app-button variant="secondary" type="button">
+    Cancel
+</x-app-button>
+
+<!-- Solid primary button (no shadow) -->
+<x-app-button variant="primary-solid" type="submit">
+    Save Changes
+</x-app-button>
+
+<!-- Modal buttons -->
+<x-app-button variant="modal-cancel" onclick="hideModal()">Cancel</x-app-button>
+<x-app-button variant="modal-confirm" type="submit">Confirm</x-app-button>
 ```
 
 **Forms (`_forms.scss`):**

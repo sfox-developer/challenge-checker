@@ -4,6 +4,8 @@
 
 This document provides quick reference examples for using the reusable CSS classes in Challenge Checker. These classes minimize repetitive Tailwind utility classes and ensure consistency across the application.
 
+**Recent Update (December 9, 2025):** All outlined button variants now use box-shadows instead of borders for a more minimalistic appearance.
+
 ---
 
 ## When to Use CSS Classes vs. Tailwind
