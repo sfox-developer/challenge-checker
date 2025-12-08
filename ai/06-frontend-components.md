@@ -65,6 +65,35 @@ The Challenge Checker uses a modular SCSS architecture with reusable CSS classes
 2. **Maintainability** - Change styles in one place instead of many templates
 3. **Dark Mode** - All classes support dark mode out of the box
 4. **Semantic Naming** - Class names describe purpose, not appearance
+5. **Minimalism** - Clean 5-color system for reduced visual noise
+6. **Pattern Consolidation** - Complex 15-20 class inline patterns replaced with 1-3 semantic classes
+
+### Pattern Consolidation Results
+
+The codebase has undergone extensive CSS refactoring to reduce inline Tailwind classes:
+
+- **Stat Items**: 16-class patterns → 3 semantic classes (81% reduction)
+- **Empty States**: 13-class patterns → 1-2 semantic classes (92% reduction)
+- **Progress Bars**: 18-class patterns → 2 semantic classes (89% reduction)
+- **Total Utilities Created**: 46+ reusable CSS classes
+- **Files Updated**: 49 view files consolidated
+- **Build Size**: ~200 kB (maintained despite new utilities due to Tailwind purging)
+
+### Color System (5 Core Colors)
+
+The design system uses a minimal color palette with clear semantic meanings:
+
+| Color | Usage | Examples |
+|-------|-------|----------|
+| **Blue** | Primary interactions, links, active states | Buttons, checkboxes, active tabs |
+| **Green** | Success, completions, positive actions | Completed items, habits, success messages |
+| **Yellow** | Warnings, pending states, cautions | Paused badges, streak counters |
+| **Red** | Errors, danger, destructive actions | Delete buttons, error messages, admin areas |
+| **Gray** | Neutral, text, borders, disabled states | Text, dividers, disabled elements |
+
+**Gradient Usage:**
+- **Blue-Purple** (primary gradient) - Used only for navigation and brand elements
+- **Solid Colors** - Preferred for buttons, badges, and most UI elements
 
 ### Available CSS Modules
 
@@ -81,28 +110,26 @@ Status indicators, pills, and labels with semantic naming.
 
 **Color Variants:**
 ```scss
+.badge-primary            // Blue - primary/active states
 .badge-success            // Green - completed/success states
-.badge-active             // Orange - active/in-progress
 .badge-paused             // Yellow - paused/warning
 .badge-draft              // Gray - draft/pending
 .badge-archived           // Gray (muted) - archived items
-.badge-info               // Blue - informational
-.badge-teal               // Teal - habits
-.badge-purple             // Purple - special states
+.badge-info               // Blue - informational (alternative to primary)
 .badge-danger             // Red - errors/destructive
 ```
 
 **Semantic Classes (Challenge States):**
 ```scss
 .badge-completed          // Completed challenges
-.badge-challenge-active   // Active challenges
+.badge-challenge-active   // Active challenges (uses primary)
 .badge-challenge-paused   // Paused challenges
 .badge-challenge-draft    // Draft challenges
 ```
 
 **Semantic Classes (Habit States):**
 ```scss
-.badge-habit-active       // Active habits
+.badge-habit-active       // Active habits (uses primary)
 .badge-habit-archived     // Archived habits
 .badge-habit-completed-today  // Habits completed today
 ```
@@ -110,11 +137,10 @@ Status indicators, pills, and labels with semantic naming.
 **Special Badges:**
 ```scss
 .count-badge              // Count indicators (tabs, sections)
-.count-badge-active       // Active count badge
-.count-badge-teal         // Teal count badge
-.streak-badge             // Streak counter with 🔥 emoji
-.badge-gradient-purple    // Gradient purple-pink badge (major releases)
-.numbered-badge           // Numbered badge with blue-purple gradient
+.count-badge-primary      // Primary count badge (blue)
+.streak-badge             // Streak counter with 🔥 emoji (yellow)
+.badge-accent             // Accent badge (solid blue for special items)
+.numbered-badge           // Numbered badge (solid blue)
 .tab-count-badge          // Tab count badge (dynamic active/inactive)
 .tab-count-badge.active   // Active tab count
 .tab-count-badge.inactive // Inactive tab count
@@ -132,13 +158,13 @@ Status indicators, pills, and labels with semantic naming.
 <span class="badge-habit-completed-today">✓ Done Today</span>
 
 <!-- Count badges in tabs -->
-<span class="count-badge-active">5</span>
+<span class="count-badge-primary">5</span>
 
 <!-- Streak badge -->
 <span class="streak-badge">7</span> <!-- Shows: 🔥 7 -->
 
-<!-- Gradient badges -->
-<span class="badge-gradient-purple">🚀 Major Release</span>
+<!-- Accent badges -->
+<span class="badge-accent">🚀 Featured</span>
 
 <!-- Numbered goal/item badge -->
 <div class="numbered-badge">1</div>
@@ -261,12 +287,9 @@ Page headers, section headers, and tab headers.
 .page-header              // Main page header container
 .page-header-content      // Header content wrapper
 .page-header-icon         // Icon container with gradient
-.page-header-icon.gradient-blue-purple    // Blue to purple gradient
-.page-header-icon.gradient-green-teal     // Green to teal gradient
-.page-header-icon.gradient-orange-red     // Orange to red gradient
-.page-header-icon.gradient-teal-cyan      // Teal to cyan gradient
-.page-header-icon.gradient-red-pink       // Red to pink gradient
-.page-header-icon.gradient-indigo-purple  // Indigo to purple gradient
+.page-header-icon.gradient-primary    // Blue-purple gradient (default)
+.page-header-icon.gradient-success    // Green gradient (positive pages)
+.page-header-icon.gradient-danger     // Red gradient (admin/warnings)
 .page-header-title        // Page title text
 .page-header-subtitle     // Page subtitle text
 .page-header-actions      // Action buttons container
@@ -547,19 +570,17 @@ Reusable list item patterns for goals, challenges, and content lists.
 .card-no-padding          // Card without padding
 .card-hover               // Card with hover effect
 .card-interactive         // Interactive card (clickable)
+.card-link                // Card as clickable link with hover border
 ```
 
 **Buttons (`_buttons.scss`):**
 ```scss
-.btn-primary              // Primary gradient button
-.btn-success              // Green success button
+.btn-primary              // Primary gradient button (blue-purple)
+.btn-success              // Solid green success button
 .btn-success-sm           // Small success button
 .btn-danger               // Red danger button
 .btn-secondary            // Outlined secondary button
 .btn-blue                 // Solid blue button
-.btn-gradient-purple      // Purple gradient
-.btn-gradient-pause       // Pause button gradient
-.btn-gradient-complete    // Complete button gradient
 .btn-modal-cancel         // Modal cancel button
 .btn-modal-confirm        // Modal confirm button
 .btn-action-sm            // Small green action button
@@ -569,9 +590,164 @@ Reusable list item patterns for goals, challenges, and content lists.
 
 **Forms (`_forms.scss`):**
 ```scss
+// Form Inputs
 .app-input                // Standard form input
 .app-textarea             // Multi-line textarea
 .app-select               // Select dropdown
+
+// Form Labels
+.form-label               // Standard form label
+.form-label-icon          // Label with icon support
+
+// Info Boxes
+.info-box                 // Base info/alert box
+.info-box-primary         // Blue info box
+.info-box-success         // Green info box
+.info-box-warning         // Yellow info box
+.info-box-danger          // Red info box
+.info-box-bordered        // Add left border accent
+
+// Text Helpers
+.text-hint                // Extra small gray text (hints)
+.text-muted               // Small gray text (muted)
+.text-optional            // Optional field indicator
+```
+
+**Layout & Utilities (`_layout.scss`):**
+```scss
+// Stat Items & Info Rows
+.stat-item                // Info row with gray background (replaces 16-class inline pattern)
+.stat-label               // Label section with icon spacing
+.stat-value               // Bold value text
+
+// Section Headers
+.section-header-row       // Header with actions container
+.section-title            // Section title text
+.section-actions          // Action buttons container
+
+// Empty States
+.empty-state              // Base empty state container (text-center py-8)
+.empty-state-icon         // Standard icon (16x16, gray background)
+.empty-state-icon-lg      // Large icon with blue-purple gradient (20x20)
+.empty-state-icon-muted   // Gray gradient icon (20x20)
+.empty-state-title        // Empty state heading (2xl, bold)
+.empty-state-text         // Empty state description (lg)
+
+// Progress Bars
+.progress-container       // Progress bar background
+.progress-bar             // Standard progress bar
+.progress-bar-gradient    // Gradient progress bar (blue-cyan)
+
+// Grid Layouts
+.grid-2-cols              // 2 column grid (gap-4)
+.grid-2-cols-responsive   // 1→2 columns responsive
+.grid-3-cols-responsive   // 1→2→3 columns responsive
+.grid-4-cols-responsive   // 2→4 columns responsive
+
+// Dividers
+.divider-top              // Top border with pt-6
+.divider-top-sm           // Top border with pt-3
+.divider-top-md           // Top border with pt-4
+.divider-bottom           // Bottom border with pb-6
+
+// Button Groups
+.btn-group                // Flex with space-x-3
+.btn-group-end            // Flex end with space-x-3
+```
+
+**Usage Examples - Stat Items:**
+```blade
+<!-- Before: 16 classes -->
+<div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
+    <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+        <svg>...</svg>
+        <span>Frequency:</span>
+    </div>
+    <span class="font-semibold text-gray-900 dark:text-white">Daily</span>
+</div>
+
+<!-- After: 3 classes -->
+<div class="stat-item">
+    <div class="stat-label">
+        <svg>...</svg>
+        <span>Frequency:</span>
+    </div>
+    <span class="stat-value">Daily</span>
+</div>
+```
+
+**Usage Examples - Empty States:**
+```blade
+<!-- Empty state with icon -->
+<div class="empty-state">
+    <div class="empty-state-icon">
+        <svg>...</svg>
+    </div>
+    <h3 class="empty-state-title">No challenges yet</h3>
+    <p class="empty-state-text">Create your first challenge to get started</p>
+</div>
+
+<!-- Large branded empty state -->
+<div class="empty-state-icon-lg">
+    <svg>...</svg>
+</div>
+<h3 class="empty-state-title">Ready to Start Your Journey?</h3>
+<p class="empty-state-text">Create your first challenge!</p>
+```
+
+**Usage Examples - Progress Bars:**
+```blade
+<!-- Before: 18 classes -->
+<div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+    <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full transition-all duration-300"
+         style="width: 75%"></div>
+</div>
+
+<!-- After: 2 classes -->
+<div class="progress-container">
+    <div class="progress-bar-gradient" style="width: 75%"></div>
+</div>
+
+<!-- Solid color progress bar -->
+<div class="progress-container">
+    <div class="progress-bar bg-teal-500" style="width: 85%"></div>
+</div>
+```
+
+**Usage Examples - Grids:**
+```blade
+<!-- 3-column responsive grid -->
+<div class="grid-3-cols-responsive">
+    <div class="card">Challenge 1</div>
+    <div class="card">Challenge 2</div>
+    <div class="card">Challenge 3</div>
+</div>
+
+<!-- 4-column responsive stats grid -->
+<div class="grid-4-cols-responsive">
+    <x-stat-card title="Total" value="42" />
+    <x-stat-card title="Active" value="12" />
+    <x-stat-card title="Completed" value="28" />
+    <x-stat-card title="Paused" value="2" />
+</div>
+```
+
+**Usage Examples - Dividers & Button Groups:**
+```blade
+<!-- Form actions with divider -->
+<div class="divider-top">
+    <div class="btn-group-end">
+        <button class="btn-secondary">Cancel</button>
+        <button class="btn-primary">Save</button>
+    </div>
+</div>
+
+<!-- Section divider -->
+<div class="divider-top-md">
+    <h3 class="section-title">Next Section</h3>
+</div>
+```
+.text-optional            // Optional field indicator
 ```
 
 **Todos (`_todos.scss`):**

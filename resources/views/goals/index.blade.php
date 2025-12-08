@@ -65,7 +65,7 @@
 
             <!-- Goals Grid -->
             @if($goals->count() > 0)
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="grid-3-cols-responsive">
                     @foreach($goals as $goal)
                         <div class="card hover:shadow-lg transition-shadow duration-200" x-data="{ showMenu: false }">
                             <div class="flex items-start justify-between">

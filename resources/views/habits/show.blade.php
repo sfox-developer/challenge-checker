@@ -127,49 +127,49 @@
                     @endif
                     
                     <div class="space-y-3">
-                        <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-                            <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                        <div class="stat-item">
+                            <div class="stat-label">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                                 </svg>
                                 <span>Frequency:</span>
                             </div>
-                            <span class="font-semibold text-gray-900 dark:text-white">{{ $habit->frequency_count }} time{{ $habit->frequency_count > 1 ? 's' : '' }} per {{ $habit->frequency_type->label() }}</span>
+                            <span class="stat-value">{{ $habit->frequency_count }} time{{ $habit->frequency_count > 1 ? 's' : '' }} per {{ $habit->frequency_type->label() }}</span>
                         </div>
                         
                         @if($habit->goal->category)
-                        <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-                            <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                        <div class="stat-item">
+                            <div class="stat-label">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
                                 </svg>
                                 <span>Category:</span>
                             </div>
-                            <span class="font-semibold text-gray-900 dark:text-white">{{ $habit->goal->category->icon }} {{ $habit->goal->category->name }}</span>
+                            <span class="stat-value">{{ $habit->goal->category->icon }} {{ $habit->goal->category->name }}</span>
                         </div>
                         @endif
                         
                         @if($habit->statistics?->last_completed_at)
-                        <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-                            <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                        <div class="stat-item">
+                            <div class="stat-label">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                 </svg>
                                 <span>Last Completed:</span>
                             </div>
-                            <span class="font-semibold text-gray-900 dark:text-white">{{ $habit->statistics->last_completed_at->diffForHumans() }}</span>
+                            <span class="stat-value">{{ $habit->statistics->last_completed_at->diffForHumans() }}</span>
                         </div>
                         @endif
                         
                         @if($habit->statistics?->streak_start_date)
-                        <div class="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-                            <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                        <div class="stat-item">
+                            <div class="stat-label">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
                                 </svg>
                                 <span>Streak Started:</span>
                             </div>
-                            <span class="font-semibold text-gray-900 dark:text-white">{{ $habit->statistics->streak_start_date->format('M d, Y') }}</span>
+                            <span class="stat-value">{{ $habit->statistics->streak_start_date->format('M d, Y') }}</span>
                         </div>
                         @endif
                     </div>

@@ -131,8 +131,8 @@
                                     <!-- Progress Bar for multi-count habits -->
                                     @if($habit->frequency_count > 1)
                                     <div class="mt-3">
-                                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                            <div class="bg-gradient-to-r from-teal-500 to-cyan-500 h-2 rounded-full transition-all duration-300"
+                                        <div class="progress-container">
+                                            <div class="progress-bar-gradient"
                                                  style="width: {{ $habit->getProgressPercentage() }}%">
                                             </div>
                                         </div>

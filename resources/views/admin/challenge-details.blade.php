@@ -77,8 +77,8 @@
                                     <span class="text-gray-700 dark:text-gray-300">{{ number_format($challenge->getProgressPercentage(), 1) }}%</span>
                                     <span class="text-gray-500 dark:text-gray-400">{{ $challenge->getCurrentDay() }} / {{ $challenge->days_duration }} days</span>
                                 </div>
-                                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
-                                    <div class="bg-gradient-to-r from-blue-500 to-purple-500 h-2.5 rounded-full transition-all duration-500" 
+                                <div class="progress-container">
+                                    <div class="progress-bar bg-gradient-to-r from-blue-500 to-purple-500" 
                                          style="width: {{ $challenge->getProgressPercentage() }}%"></div>
                                 </div>
                             </div>
@@ -175,8 +175,8 @@
                 </div>
             @else
                 <div class="card">
-                    <div class="text-center py-8">
-                        <div class="bg-gray-100 dark:bg-gray-700 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">
                             <svg class="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"/>
                             </svg>
