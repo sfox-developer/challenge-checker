@@ -15,7 +15,9 @@
                 @endif
             </div>
             <div class="ml-4">
-                @if($challenge->completed_at)
+                @if($challenge->isArchived())
+                    <span class="badge-challenge-archived">📁 Archived</span>
+                @elseif($challenge->completed_at)
                     <span class="badge-completed">✓ Completed</span>
                 @elseif($challenge->started_at && $challenge->is_active)
                     <span class="badge-challenge-active">🏃 Active</span>

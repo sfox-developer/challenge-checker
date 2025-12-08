@@ -31,7 +31,9 @@
                 <span>{{ $challenge->getCompletedDaysCount() }} / {{ $challenge->days_duration }} completed</span>
             </div>
         @endif
-        @if($challenge->completed_at)
+        @if($challenge->isArchived())
+            <span class="badge-challenge-archived">Archived</span>
+        @elseif($challenge->completed_at)
             <span class="badge-completed">✓ Completed</span>
         @elseif($challenge->is_active)
             <span class="badge-challenge-active">Active</span>

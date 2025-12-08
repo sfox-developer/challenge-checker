@@ -78,11 +78,12 @@ getFollowersCountAttribute(): int   // Count of followers
 ### Fillable Attributes
 - `user_id`, `name`, `description`, `days_duration`
 - `frequency_type`, `frequency_count`, `frequency_config`
-- `started_at`, `completed_at`, `is_active`, `is_public`
+- `started_at`, `completed_at`, `archived_at`, `is_active`, `is_public`
 
 ### Casts
 - `started_at` → datetime
 - `completed_at` → datetime
+- `archived_at` → datetime
 - `is_active` → boolean
 - `is_public` → boolean
 - `frequency_type` → FrequencyType (enum: daily, weekly, monthly, yearly)
@@ -101,6 +102,13 @@ dailyProgress(): HasMany       // Daily progress entries
 activities(): HasMany          // Related activities
 ```
 
+### Scopes
+
+```php
+scopeActive($query)            // Filter non-archived challenges
+scopeArchived($query)          // Filter only archived challenges
+```
+
 ### State Methods
 
 **Lifecycle:**
@@ -109,12 +117,15 @@ start(): void                  // Start the challenge (sets started_at, is_activ
 pause(): void                  // Pause challenge (is_active=false)
 resume(): void                 // Resume challenge (is_active=true)
 complete(): void               // Complete challenge (sets completed_at, is_active=false)
+archive(): void                // Archive challenge (sets archived_at, is_active=false)
+restore(): void                // Restore archived challenge (sets archived_at=null)
 ```
 
 **State Checks:**
 ```php
-isActive(): bool               // Started, active, not completed
-isPaused(): bool               // Started, not active, not completed
+isArchived(): bool             // Has archived_at (highest priority state)
+isActive(): bool               // Started, active, not completed, not archived
+isPaused(): bool               // Started, not active, not completed, not archived
 isNotStarted(): bool           // Not started yet
 isCompleted(): bool            // Has completed_at
 hasExpired(): bool             // Duration exceeded
@@ -124,7 +135,7 @@ hasExpired(): bool             // Duration exceeded
 
 ```php
 getEndDateAttribute()              // start + days_duration (or getDuration())
-getStatusAttribute(): string       // 'draft', 'active', 'paused', 'completed'
+getStatusAttribute(): string       // 'archived', 'draft', 'active', 'paused', 'completed' (priority order)
 getFrequencyDescription(): string  // Human-readable frequency (e.g., "Daily", "3 times per week")
 getDuration(): int                 // Returns days_duration or default (30)
 ```

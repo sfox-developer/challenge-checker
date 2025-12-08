@@ -54,6 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/challenges/{challenge}/pause', [ChallengeController::class, 'pause'])->name('challenges.pause');
     Route::post('/challenges/{challenge}/resume', [ChallengeController::class, 'resume'])->name('challenges.resume');
     Route::post('/challenges/{challenge}/complete', [ChallengeController::class, 'complete'])->name('challenges.complete');
+    Route::post('/challenges/{challenge}/archive', [ChallengeController::class, 'archive'])->name('challenges.archive');
+    Route::post('/challenges/{challenge}/restore', [ChallengeController::class, 'restoreArchived'])->name('challenges.restore');
     
     // Goal tracking routes
     Route::post('/goals/{goal}/toggle', [GoalController::class, 'toggle'])->name('goals.toggle');

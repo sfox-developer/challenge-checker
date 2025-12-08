@@ -91,6 +91,9 @@
                     <button @click="activeFilter = 'draft'" :class="activeFilter === 'draft' ? 'tab-button active' : 'tab-button'">
                         Draft
                     </button>
+                    <button @click="activeFilter = 'archived'" :class="activeFilter === 'archived' ? 'tab-button active' : 'tab-button'">
+                        Archived
+                    </button>
                 </nav>
             </div>
 
@@ -98,13 +101,15 @@
             <div class="space-y-3">
                 @foreach($challenges as $challenge)
                     @php
-                        $isActive = $challenge->started_at && $challenge->is_active && !$challenge->completed_at;
-                        $isPaused = $challenge->started_at && !$challenge->is_active && !$challenge->completed_at;
-                        $isCompleted = $challenge->completed_at !== null;
-                        $isDraft = !$challenge->started_at;
+                        $isArchived = $challenge->isArchived();
+                        $isActive = $challenge->started_at && $challenge->is_active && !$challenge->completed_at && !$isArchived;
+                        $isPaused = $challenge->started_at && !$challenge->is_active && !$challenge->completed_at && !$isArchived;
+                        $isCompleted = $challenge->completed_at !== null && !$isArchived;
+                        $isDraft = !$challenge->started_at && !$isArchived;
                     @endphp
                     <div 
                         x-show="activeFilter === 'all' || 
+                                (activeFilter === 'archived' && {{ $isArchived ? 'true' : 'false' }}) || 
                                 (activeFilter === 'active' && {{ $isActive ? 'true' : 'false' }}) || 
                                 (activeFilter === 'paused' && {{ $isPaused ? 'true' : 'false' }}) || 
                                 (activeFilter === 'completed' && {{ $isCompleted ? 'true' : 'false' }}) || 
@@ -139,7 +144,9 @@
                                         </h4>
                                         
                                         <!-- Status Badge -->
-                                        @if($challenge->completed_at)
+                                        @if($challenge->isArchived())
+                                            <span class="badge-challenge-archived flex-shrink-0">📁 Archived</span>
+                                        @elseif($challenge->completed_at)
                                             <span class="badge-completed flex-shrink-0">✓ Completed</span>
                                         @elseif($challenge->is_active)
                                             <span class="badge-challenge-active flex-shrink-0">Active</span>

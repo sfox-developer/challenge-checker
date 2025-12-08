@@ -86,6 +86,10 @@
     @apply badge badge-draft;
 }
 
+.badge-challenge-archived {
+    @apply badge badge-archived;
+}
+
 // ----------------------------------------------------------------------------
 // SEMANTIC BADGE CLASSES - Habit States
 // ----------------------------------------------------------------------------

@@ -42,7 +42,15 @@ This document provides quick reference examples for using the reusable CSS class
 <span class="badge-challenge-active">🏃 Active</span>
 <span class="badge-challenge-paused">⏸️ Paused</span>
 <span class="badge-challenge-draft">Draft</span>
+<span class="badge-challenge-archived">📁 Archived</span>
 ```
+
+**Status Badge Priority (use highest matching state):**
+1. Archived (permanent state)
+2. Completed (final state for challenges)
+3. Active (currently running)
+4. Paused (temporarily stopped)
+5. Draft (not started - challenges only)
 
 ### 2. Page Headers
 

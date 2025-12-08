@@ -24,6 +24,7 @@ class Challenge extends Model
         'frequency_config',
         'started_at',
         'completed_at',
+        'archived_at',
         'is_active',
         'is_public',
     ];
@@ -31,6 +32,7 @@ class Challenge extends Model
     protected $casts = [
         'started_at' => 'datetime',
         'completed_at' => 'datetime',
+        'archived_at' => 'datetime',
         'is_active' => 'boolean',
         'is_public' => 'boolean',
         'frequency_type' => FrequencyType::class,
@@ -72,6 +74,51 @@ class Challenge extends Model
     public function activities(): HasMany
     {
         return $this->hasMany(Activity::class);
+    }
+
+    /**
+     * Scope to get only active (non-archived) challenges.
+     */
+    public function scopeActive($query)
+    {
+        return $query->whereNull('archived_at');
+    }
+
+    /**
+     * Scope to get archived challenges.
+     */
+    public function scopeArchived($query)
+    {
+        return $query->whereNotNull('archived_at');
+    }
+
+    /**
+     * Check if challenge is archived.
+     */
+    public function isArchived(): bool
+    {
+        return !is_null($this->archived_at);
+    }
+
+    /**
+     * Archive this challenge.
+     */
+    public function archive(): void
+    {
+        $this->update([
+            'archived_at' => now(),
+            'is_active' => false,
+        ]);
+    }
+
+    /**
+     * Restore an archived challenge.
+     */
+    public function restore(): void
+    {
+        $this->update([
+            'archived_at' => null,
+        ]);
     }
 
     /**
@@ -194,6 +241,10 @@ class Challenge extends Model
      */
     public function getStatusAttribute(): string
     {
+        if ($this->isArchived()) {
+            return 'archived';
+        }
+        
         if ($this->isCompleted()) {
             return 'completed';
         }

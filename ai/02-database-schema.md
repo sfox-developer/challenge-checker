@@ -47,6 +47,7 @@ Time-bound challenges created by users.
 - `frequency_config` - JSON, additional config (e.g., weekly days)
 - `started_at` - When challenge was started (nullable)
 - `completed_at` - When challenge was completed (nullable)
+- `archived_at` - When challenge was archived (nullable)
 - `is_active` - Boolean, currently active
 - `is_public` - Boolean, visible to other users
 - `created_at`, `updated_at` - Timestamps
@@ -54,12 +55,14 @@ Time-bound challenges created by users.
 **Indexes:**
 - `user_id`, `created_at` for efficient user challenge queries
 - `is_public` for public challenge filtering
+- `archived_at` for filtering archived challenges
 
 **States:**
-- Draft: `started_at` is null
-- Active: `started_at` is set, `is_active` true, `completed_at` null
-- Paused: `started_at` is set, `is_active` false, `completed_at` null
-- Completed: `completed_at` is set
+- Archived: `archived_at` is set (highest priority - immutable state)
+- Draft: `started_at` is null, `archived_at` is null
+- Active: `started_at` is set, `is_active` true, `completed_at` null, `archived_at` is null
+- Paused: `started_at` is set, `is_active` false, `completed_at` null, `archived_at` is null
+- Completed: `completed_at` is set, `archived_at` is null
 
 **Frequency System:**
 Similar to habits, challenges now support flexible frequency tracking:

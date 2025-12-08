@@ -47,7 +47,9 @@
                         <div>
                             <span class="text-sm text-gray-600 dark:text-gray-400">Current Status:</span>
                             <div class="mt-1">
-                                @if($challenge->completed_at)
+                                @if($challenge->isArchived())
+                                    <span class="badge-challenge-archived">📁 Archived</span>
+                                @elseif($challenge->completed_at)
                                     <span class="badge-completed">✓ Completed</span>
                                 @elseif($challenge->started_at && $challenge->is_active)
                                     <span class="badge-challenge-active">🏃 Active</span>

@@ -257,4 +257,30 @@ class ChallengeController extends Controller
         return redirect()->route('challenges.show', $challenge)
             ->with('success', 'Congratulations! Challenge completed! 🎉');
     }
+
+    /**
+     * Archive the specified challenge.
+     */
+    public function archive(Challenge $challenge): RedirectResponse
+    {
+        $this->authorize('update', $challenge);
+
+        $challenge->archive();
+
+        return redirect()->route('challenges.index')
+            ->with('success', 'Challenge archived successfully!');
+    }
+
+    /**
+     * Restore an archived challenge.
+     */
+    public function restoreArchived(Challenge $challenge): RedirectResponse
+    {
+        $this->authorize('update', $challenge);
+
+        $challenge->restore();
+
+        return redirect()->route('challenges.show', $challenge)
+            ->with('success', 'Challenge restored successfully!');
+    }
 }

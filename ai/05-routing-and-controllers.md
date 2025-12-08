@@ -109,6 +109,8 @@ Route::post('/challenges/{challenge}/start', [ChallengeController::class, 'start
 Route::post('/challenges/{challenge}/pause', [ChallengeController::class, 'pause'])->name('challenges.pause');
 Route::post('/challenges/{challenge}/resume', [ChallengeController::class, 'resume'])->name('challenges.resume');
 Route::post('/challenges/{challenge}/complete', [ChallengeController::class, 'complete'])->name('challenges.complete');
+Route::post('/challenges/{challenge}/archive', [ChallengeController::class, 'archive'])->name('challenges.archive');
+Route::post('/challenges/{challenge}/restore', [ChallengeController::class, 'restoreArchived'])->name('challenges.restore');
 ```
 
 **ChallengeController Methods:**
@@ -154,6 +156,14 @@ Route::post('/challenges/{challenge}/complete', [ChallengeController::class, 'co
 - `complete(Challenge $challenge)` - Complete challenge
   - Sets completed_at
   - Creates activity
+- `archive(Challenge $challenge)` - Archive challenge
+  - Sets archived_at, is_active = false
+  - Redirects to challenges index
+  - Flash message: 'Challenge archived successfully!'
+- `restoreArchived(Challenge $challenge)` - Restore archived challenge
+  - Sets archived_at = null
+  - Redirects to challenge show page
+  - Flash message: 'Challenge restored successfully!'
 
 **Authorization:**
 All methods use `ChallengePolicy` for authorization.
