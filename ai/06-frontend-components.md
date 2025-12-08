@@ -502,7 +502,7 @@ Application layout containers, modals, and floating elements.
     <span class="fab-tooltip">Quick Complete</span>
 </button>
 
-<!-- Modal -->
+<!-- Full-featured Alpine.js Modal (Quick Complete) -->
 <div class="modal-overlay">
     <div class="modal-container">
         <div class="modal-backdrop" @click="close()"></div>
@@ -526,7 +526,75 @@ Application layout containers, modals, and floating elements.
         </div>
     </div>
 </div>
+
+<!-- Simple Confirmation Modal (Archive/Complete/Delete) -->
+<div id="modalId" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
+        <div class="mt-3 text-center">
+            <!-- Icon with colored background -->
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100 dark:bg-yellow-900/30">
+                <svg class="h-6 w-6 text-yellow-600 dark:text-yellow-400">...</svg>
+            </div>
+            
+            <!-- Title -->
+            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mt-4">
+                Confirm Action?
+            </h3>
+            
+            <!-- Description -->
+            <div class="mt-2 px-7 py-3">
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Description of what will happen
+                </p>
+            </div>
+            
+            <!-- Action buttons -->
+            <div class="items-center px-4 py-3">
+                <div class="flex space-x-3">
+                    <x-app-button variant="modal-cancel" type="button" onclick="hideModalName()">
+                        Cancel
+                    </x-app-button>
+                    <form method="POST" action="{{ route('action') }}" class="w-full">
+                        @csrf
+                        <x-app-button variant="modal-confirm" type="submit">
+                            Confirm
+                        </x-app-button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.showModalName = () => showModal('modalId');
+    window.hideModalName = () => hideModal('modalId');
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        initModalListeners('modalId', hideModalName);
+    });
+</script>
 ```
+
+**Modal Utilities** (`resources/js/components/modal.js`):
+- `showModal(modalId)` - Shows modal and prevents body scroll
+- `hideModal(modalId)` - Hides modal and restores body scroll  
+- `initModalListeners(modalId, hideCallback)` - Sets up overlay click and escape key handlers
+
+**Confirmation Modals in Application:**
+1. **Challenge Complete** - `challenges/show.blade.php` - `completeModal`
+2. **Challenge Archive** - `challenges/show.blade.php` - `archiveModal`
+3. **Habit Archive** - `habits/show.blade.php` - `archiveModal`
+
+**Button Variants for Modals:**
+- `modal-cancel` - Gray cancel button
+- `modal-confirm` - Slate confirmation button
+
+**Icon Color Guidelines:**
+- Yellow background (`bg-yellow-100 dark:bg-yellow-900/30`) - Warnings/caution
+- Red background - Destructive actions
+- Green background - Success confirmations
+- Blue background - Informational
 
 #### 7. List Items (`_list-items.scss`)
 Reusable list item patterns for goals, challenges, and content lists.

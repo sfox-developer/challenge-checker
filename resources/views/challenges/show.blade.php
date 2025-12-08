@@ -86,18 +86,15 @@
                         </x-app-button>
                         
                         @if(!$challenge->isArchived())
-                            <form method="POST" action="{{ route('challenges.archive', $challenge) }}" onsubmit="return confirm('Are you sure you want to archive this challenge?');">
-                                @csrf
-                                <x-app-button variant="secondary" type="submit">
-                                    <x-slot name="icon">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"/>
-                                            <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"/>
-                                        </svg>
-                                    </x-slot>
-                                    Archive
-                                </x-app-button>
-                            </form>
+                            <x-app-button variant="secondary" type="button" onclick="showArchiveModal()">
+                                <x-slot name="icon">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"/>
+                                        <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                                    </svg>
+                                </x-slot>
+                                Archive
+                            </x-app-button>
                         @else
                             <form method="POST" action="{{ route('challenges.restore', $challenge) }}">
                                 @csrf
@@ -638,15 +635,51 @@
         </div>
     </div>
 
+    <!-- Archive Confirmation Modal -->
+    <div id="archiveModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
+            <div class="mt-3 text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100 dark:bg-yellow-900/30">
+                    <svg class="h-6 w-6 text-yellow-600 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"/>
+                        <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mt-4">Archive Challenge?</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        This challenge will be hidden from your active list. You can restore it later if needed.
+                    </p>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <div class="flex space-x-3">
+                        <x-app-button variant="modal-cancel" type="button" onclick="hideArchiveModal()">
+                            Cancel
+                        </x-app-button>
+                        <form method="POST" action="{{ route('challenges.archive', $challenge) }}" class="w-full">
+                            @csrf
+                            <x-app-button variant="modal-confirm" type="submit">
+                                Archive Challenge
+                            </x-app-button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Goal toggle functionality is now handled by goal-toggle.js
         // Modal functions are now global
         window.showCompleteModal = () => showModal('completeModal');
         window.hideCompleteModal = () => hideModal('completeModal');
+        window.showArchiveModal = () => showModal('archiveModal');
+        window.hideArchiveModal = () => hideModal('archiveModal');
         
         // Initialize modal listeners
         document.addEventListener('DOMContentLoaded', () => {
             initModalListeners('completeModal', hideCompleteModal);
+            initModalListeners('archiveModal', hideArchiveModal);
         });
     </script>
 </x-app-layout>
