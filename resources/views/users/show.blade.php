@@ -66,7 +66,7 @@
                         <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ Str::plural('Follower', $user->followers_count) }}</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-3xl font-bold text-pink-600">{{ $user->following_count }}</div>
+                        <div class="text-3xl font-bold text-blue-600">{{ $user->following_count }}</div>
                         <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Following</div>
                     </div>
                 </div>

@@ -1,17 +1,12 @@
 @props([
     'title' => null,
-    'gradient' => 'from-blue-500 to-purple-500',
+    'gradient' => 'primary',  // primary (blue-purple), success (green), danger (red)
 ])
-
-@php
-    // Convert "from-blue-500 to-purple-500" to "blue-purple"
-    $gradientClass = preg_replace('/from-(\w+)-\d+\s+to-(\w+)-\d+/', '$1-$2', $gradient);
-@endphp
 
 <div class="page-header">
     <div class="page-header-content">
         @isset($icon)
-            <div class="page-header-icon gradient-{{ $gradientClass }}">
+            <div class="page-header-icon gradient-{{ $gradient }}">
                 {{ $icon }}
             </div>
         @endisset

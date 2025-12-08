@@ -34,3 +34,81 @@ textarea.app-textarea {
 .app-select {
     @apply app-input;
 }
+
+// ----------------------------------------------------------------------------
+// FORM LABELS - Consistent label styling
+// ----------------------------------------------------------------------------
+
+.form-label {
+    @apply block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2;
+    
+    // Label with icon
+    &.form-label-icon {
+        @apply flex items-center space-x-2;
+    }
+}
+
+// ----------------------------------------------------------------------------
+// INFO BOXES - Colored informational boxes
+// ----------------------------------------------------------------------------
+
+.info-box {
+    @apply p-4 rounded-lg mb-6;
+    
+    // Primary - Blue
+    &.info-box-primary {
+        @apply bg-blue-50 dark:bg-blue-900/20;
+    }
+    
+    // Success - Green
+    &.info-box-success {
+        @apply bg-green-50 dark:bg-green-900/20;
+    }
+    
+    // Warning - Yellow  
+    &.info-box-warning {
+        @apply bg-yellow-50 dark:bg-yellow-900/20;
+    }
+    
+    // Danger - Red
+    &.info-box-danger {
+        @apply bg-red-50 dark:bg-red-900/20;
+    }
+    
+    // With border accent
+    &.info-box-bordered {
+        @apply border-l-4;
+        
+        &.info-box-primary {
+            @apply border-blue-500;
+        }
+        
+        &.info-box-success {
+            @apply border-green-500;
+        }
+        
+        &.info-box-warning {
+            @apply border-yellow-500;
+        }
+        
+        &.info-box-danger {
+            @apply border-red-500;
+        }
+    }
+}
+
+// ----------------------------------------------------------------------------
+// TEXT HELPERS - Common text patterns
+// ----------------------------------------------------------------------------
+
+.text-hint {
+    @apply text-xs text-gray-500 dark:text-gray-400;
+}
+
+.text-muted {
+    @apply text-sm text-gray-500 dark:text-gray-400;
+}
+
+.text-optional {
+    @apply text-xs text-gray-500 font-normal;
+}

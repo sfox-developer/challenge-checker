@@ -22,16 +22,16 @@
 // ----------------------------------------------------------------------------
 
 .btn-success {
-    @apply bg-gradient-to-r from-green-500 to-green-600 dark:from-green-400 dark:to-green-500;
-    @apply hover:from-green-600 hover:to-green-700 dark:hover:from-green-500 dark:hover:to-green-600;
+    @apply bg-green-600 dark:bg-green-500;
+    @apply hover:bg-green-700 dark:hover:bg-green-600;
     @apply text-white font-bold py-2 px-4 rounded-lg shadow-lg hover:shadow-xl;
     @apply transform hover:scale-105 transition-all duration-200;
     @apply flex items-center justify-center space-x-2;
 }
 
 .btn-success-sm {
-    @apply bg-gradient-to-r from-green-500 to-green-600 dark:from-green-400 dark:to-green-500;
-    @apply hover:from-green-600 hover:to-green-700 dark:hover:from-green-500 dark:hover:to-green-600;
+    @apply bg-green-600 dark:bg-green-500;
+    @apply hover:bg-green-700 dark:hover:bg-green-600;
     @apply text-white text-sm font-semibold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg;
     @apply transform hover:scale-105 transition-all duration-200;
     @apply flex items-center justify-center space-x-1;
@@ -66,34 +66,6 @@
 .btn-blue {
     @apply px-6 py-2 bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600;
     @apply text-white font-semibold rounded-lg transition-colors duration-200;
-    @apply flex items-center justify-center space-x-2;
-}
-
-// ----------------------------------------------------------------------------
-// GRADIENT BUTTONS - Special gradient variants for specific actions
-// ----------------------------------------------------------------------------
-
-.btn-gradient-purple {
-    @apply bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500;
-    @apply hover:from-purple-700 hover:to-pink-700 dark:hover:from-purple-600 dark:hover:to-pink-600;
-    @apply text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl;
-    @apply transform hover:scale-105 transition-all duration-200;
-    @apply flex items-center justify-center space-x-2;
-}
-
-.btn-gradient-pause {
-    @apply bg-gradient-to-r from-purple-500 to-indigo-500 dark:from-purple-400 dark:to-indigo-400;
-    @apply hover:from-purple-600 hover:to-indigo-600 dark:hover:from-purple-500 dark:hover:to-indigo-500;
-    @apply text-white font-bold py-2 px-4 rounded-lg shadow-lg hover:shadow-xl;
-    @apply transform hover:scale-105 transition-all duration-200;
-    @apply flex items-center justify-center space-x-2;
-}
-
-.btn-gradient-complete {
-    @apply bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500;
-    @apply hover:from-blue-600 hover:to-blue-700 dark:hover:from-blue-500 dark:hover:to-blue-600;
-    @apply text-white font-bold py-2 px-4 rounded-lg shadow-lg hover:shadow-xl;
-    @apply transform hover:scale-105 transition-all duration-200;
     @apply flex items-center justify-center space-x-2;
 }
 

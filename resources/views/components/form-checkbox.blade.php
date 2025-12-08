@@ -29,7 +29,7 @@
                 <span>{{ $label }}</span>
             </label>
             @if($description)
-                <p class="text-xs text-gray-500 mt-1">{{ $description }}</p>
+                <p class="text-hint mt-1">{{ $description }}</p>
             @endif
         </div>
     </div>

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-header :title="$goal->name" gradient="from-purple-500 to-pink-500">
+        <x-page-header :title="$goal->name" gradient="primary">
             <x-slot name="icon">
                 <span class="text-4xl">{{ $goal->icon ?? '🎯' }}</span>
             </x-slot>
@@ -39,7 +39,7 @@
 
                         <div class="flex flex-wrap items-center gap-2">
                             @if($goal->category)
-                                <span class="badge-purple">
+                                <span class="badge-primary">
                                     {{ $goal->category->icon }} {{ $goal->category->name }}
                                 </span>
                             @endif
@@ -48,7 +48,7 @@
                                 {{ $challenges->count() }} Challenge{{ $challenges->count() !== 1 ? 's' : '' }}
                             </span>
 
-                            <span class="count-badge-teal">
+                            <span class="count-badge-primary">
                                 {{ $habits->count() }} Habit{{ $habits->count() !== 1 ? 's' : '' }}
                             </span>
                         </div>

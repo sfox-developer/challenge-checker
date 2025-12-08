@@ -8,7 +8,7 @@
             @endphp
             
             <div class="p-4 rounded-lg border-2 transition-all duration-200
-                {{ $isCompleted ? 'bg-teal-50 dark:bg-teal-900/20 border-teal-500' : 'bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:border-teal-300 dark:hover:border-teal-700' }}"
+                {{ $isCompleted ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500' : 'bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-700' }}"
                  data-habit-id="{{ $habit->id }}">
                 <div class="flex items-start gap-3">
                     <!-- Checkbox -->
@@ -16,7 +16,7 @@
                             onclick="toggleHabit({{ $habit->id }}, '{{ date('Y-m-d') }}', this)"
                             class="flex-shrink-0 mt-0.5">
                         <div class="w-6 h-6 rounded-md border-2 transition-all duration-200 flex items-center justify-center
-                            {{ $isCompleted ? 'bg-teal-500 border-teal-500' : 'border-gray-300 dark:border-gray-500 hover:border-teal-500' }}">
+                            {{ $isCompleted ? 'bg-blue-500 border-blue-500' : 'border-gray-300 dark:border-gray-500 hover:border-blue-500' }}">
                             @if($isCompleted)
                                 <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -50,12 +50,12 @@
                             <div class="mt-2" data-progress-container>
                                 <div class="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400 mb-1">
                                     <span>{{ $habit->getFrequencyDescription() }}</span>
-                                    <span class="font-semibold {{ $progress >= $target ? 'text-teal-600 dark:text-teal-400' : '' }}" data-progress-text>
+                                    <span class="font-semibold {{ $progress >= $target ? 'text-blue-600 dark:text-blue-400' : '' }}" data-progress-text>
                                         {{ $progress }}/{{ $target }}
                                     </span>
                                 </div>
                                 <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-1.5">
-                                    <div class="bg-teal-500 h-1.5 rounded-full transition-all duration-300" 
+                                    <div class="bg-blue-500 h-1.5 rounded-full transition-all duration-300" 
                                          data-progress-bar
                                          style="width: {{ min(100, ($progress / $target) * 100) }}%">
                                     </div>

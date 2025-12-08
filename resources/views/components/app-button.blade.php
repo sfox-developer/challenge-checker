@@ -1,5 +1,5 @@
 @props([
-    'variant' => 'primary',     // primary, secondary, success, danger, blue, gradient-purple, gradient-pause, gradient-complete
+    'variant' => 'primary',     // primary, secondary, success, danger, blue
     'size' => 'md',             // sm, md, lg
     'type' => 'button',         // button, submit, reset
     'href' => null,             // If provided, renders as <a> instead of <button>
@@ -15,9 +15,6 @@
         'success' => 'btn-success',
         'danger' => 'btn-danger',
         'blue' => 'btn-blue',
-        'gradient-purple' => 'btn-gradient-purple',
-        'gradient-pause' => 'btn-gradient-pause',
-        'gradient-complete' => 'btn-gradient-complete',
         'modal-cancel' => 'btn-modal-cancel',
         'modal-confirm' => 'btn-modal-confirm',
         'action-sm' => 'btn-action-sm',

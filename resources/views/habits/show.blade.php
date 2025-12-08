@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-header :title="$habit->goal->name" gradient="from-green-500 to-green-500">
+        <x-page-header :title="$habit->goal->name" gradient="success">
             <x-slot name="icon">
                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>

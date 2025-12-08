@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-header title="Create New Challenge" gradient="from-green-500 to-teal-500">
+        <x-page-header title="Create New Challenge" gradient="success">
             <x-slot name="icon">
                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
@@ -39,11 +39,11 @@
 
                         <!-- Duration (optional - for challenges with end date) -->
                         <div class="mb-6">
-                            <label for="days_duration" class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2">
+                            <label for="days_duration" class="form-label form-label-icon">
                                 <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                                 </svg>
-                                <span>Duration (Days) <span class="text-xs text-gray-500 font-normal">(Optional - leave blank for ongoing)</span></span>
+                                <span>Duration (Days) <span class="text-optional">(Optional - leave blank for ongoing)</span></span>
                             </label>
                             <div class="relative">
                                 <input type="number" name="days_duration" id="days_duration" value="{{ old('days_duration', '') }}" 
@@ -75,7 +75,7 @@
                         <!-- Goals Section -->
                         <div class="mb-6">
                             <div class="flex justify-between items-center mb-4">
-                                <label class="block text-sm font-bold text-gray-800 dark:text-gray-100 flex items-center space-x-2">
+                                <label class="form-label form-label-icon">
                                     <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                                     </svg>
@@ -93,7 +93,7 @@
 
                             <!-- Select from Library -->
                             @if($goalsLibrary->count() > 0)
-                            <div class="mb-4 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                            <div class="info-box info-box-primary">
                                 <div class="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-3">Select from Your Library:</div>
                                 <div class="space-y-2 max-h-64 overflow-y-auto">
                                     @foreach($goalsLibrary as $goal)
@@ -134,7 +134,7 @@
                             <!-- New Goals Container -->
                             <div x-show="newGoals.length > 0" class="mt-4 space-y-3">
                                 <template x-for="(goal, index) in newGoals" :key="index">
-                                    <div class="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-2 border-green-200 dark:border-green-700">
+                                    <div class="info-box info-box-success" style="border: 2px solid; border-color: rgb(34 197 94 / 0.3);">
                                         <div class="flex justify-between items-start mb-3">
                                             <div class="font-semibold text-gray-900 dark:text-white">New Goal</div>
                                             <button type="button" 

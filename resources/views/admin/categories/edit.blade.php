@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-header title="Edit Category" gradient="from-indigo-500 to-purple-500">
+        <x-page-header title="Edit Category" gradient="primary">
             <x-slot name="icon">
                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
@@ -70,7 +70,7 @@
                         :checked="$category->is_active" />
 
                     @if($category->goalsLibrary()->count() > 0)
-                        <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg mb-6">
+                        <div class="info-box info-box-primary">
                             <p class="text-sm text-blue-800 dark:text-blue-200">
                                 <strong>Note:</strong> This category is currently used by {{ $category->goalsLibrary()->count() }} goal(s).
                             </p>

@@ -34,41 +34,19 @@
 .page-header-icon {
     @apply p-2 rounded-lg flex-shrink-0;
     
-    // Default gradient
-    &.gradient-blue-purple {
+    // Primary - Blue (default for most pages)
+    &.gradient-primary {
         @apply bg-gradient-to-r from-blue-500 to-purple-500;
     }
     
-    &.gradient-blue-indigo {
-        @apply bg-gradient-to-r from-blue-500 to-indigo-500;
-    }
-    
-    &.gradient-green-green {
+    // Success - Green (for positive actions, goals, habits)
+    &.gradient-success {
         @apply bg-gradient-to-r from-green-500 to-green-600;
     }
     
-    &.gradient-green-teal {
-        @apply bg-gradient-to-r from-green-500 to-teal-500;
-    }
-    
-    &.gradient-orange-red {
-        @apply bg-gradient-to-r from-orange-500 to-red-500;
-    }
-    
-    &.gradient-teal-cyan {
-        @apply bg-gradient-to-r from-teal-500 to-cyan-500;
-    }
-    
-    &.gradient-purple-pink {
-        @apply bg-gradient-to-r from-purple-500 to-pink-500;
-    }
-    
-    &.gradient-red-pink {
-        @apply bg-gradient-to-r from-red-500 to-pink-500;
-    }
-    
-    &.gradient-indigo-purple {
-        @apply bg-gradient-to-r from-indigo-500 to-purple-500;
+    // Danger - Red (for destructive actions, warnings)
+    &.gradient-danger {
+        @apply bg-gradient-to-r from-red-600 to-red-700;
     }
 }
 

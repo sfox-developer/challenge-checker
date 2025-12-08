@@ -19,6 +19,13 @@
     &.card-interactive {
         @apply shadow-md rounded-xl hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02];
     }
+    
+    // Variant: Card as link - clean link styling with hover
+    &.card-link {
+        @apply block rounded-lg shadow-sm border p-5;
+        @apply hover:border-blue-300 dark:hover:border-blue-600;
+        @apply transition-all duration-200;
+    }
 }
 
 

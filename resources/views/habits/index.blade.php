@@ -2,7 +2,7 @@
     <x-slot name="header">
         <x-page-header 
             title="Habits" 
-            gradient="from-green-500 to-green-500">
+            gradient="success">
             <x-slot name="icon">
                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
@@ -108,10 +108,10 @@
             @else
                 <div class="space-y-3">
                     @foreach($habits as $habit)
-                        <a href="{{ route('habits.show', $habit) }}" class="block bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-5 hover:border-teal-300 dark:hover:border-teal-600 transition-all duration-200 group">
+                        <a href="{{ route('habits.show', $habit) }}" class="card card-link group">
                             <div class="flex items-center gap-4">
                                 <!-- Icon -->
-                                <div class="flex-shrink-0 w-12 h-12 bg-teal-500 rounded-lg flex items-center justify-center text-white text-2xl">
+                                <div class="flex-shrink-0 w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center text-white text-2xl">
                                     {{ $habit->goal->icon ?? '✓' }}
                                 </div>
                                 

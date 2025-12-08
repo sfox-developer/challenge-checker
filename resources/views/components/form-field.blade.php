@@ -10,7 +10,7 @@
 
 <div {{ $attributes->merge(['class' => 'mb-6']) }}>
     @if($label)
-        <label for="{{ $name }}" class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2 flex items-center space-x-2">
+        <label for="{{ $name }}" class="form-label form-label-icon">
             @if($icon)
                 <svg class="w-4 h-4 text-{{ $iconColor }}-500" fill="currentColor" viewBox="0 0 20 20">
                     {!! $icon !!}
@@ -18,7 +18,7 @@
             @endif
             <span>{{ $label }}</span>
             @if($optional)
-                <span class="text-xs text-gray-500 font-normal">(Optional)</span>
+                <span class="text-optional">(Optional)</span>
             @endif
         </label>
     @endif
@@ -26,7 +26,7 @@
     {{ $slot }}
 
     @if($hint)
-        <p class="mt-1 text-xs text-gray-500">{{ $hint }}</p>
+        <p class="mt-1 text-hint">{{ $hint }}</p>
     @endif
 
     @if($error || $errors->has($name))
