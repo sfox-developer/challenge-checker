@@ -1,31 +1,41 @@
-// Card Component System
-// Base card styles with variants for different use cases
+// ============================================================================
+// CARDS - Minimal Card System
+// ============================================================================
 
 .card {
-    @apply bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-8 sm:p-10
-    border border-gray-200 dark:border-gray-700;
-    
-    // Variant: No padding (for custom layouts)
-    &.card-no-padding {
-        @apply p-0;
-    }
-    
-    // Variant: Hover effect
-    &.card-hover {
-        @apply hover:shadow-md transition-shadow duration-200;
-    }
-    
-    // Variant: Interactive card (for links/buttons)
-    &.card-interactive {
-        @apply shadow-sm rounded-xl hover:shadow-md transition-all duration-200;
-    }
-    
-    // Variant: Card as link - clean link styling with hover
-    &.card-link {
-        @apply block rounded-lg shadow-sm border p-6;
-        @apply hover:border-slate-300 dark:hover:border-slate-600;
-        @apply transition-all duration-200;
-    }
+    background-color: rgba(255, 255, 255, 0.5);
+    @apply border border-gray-200 dark:border-gray-700;
+    @apply rounded-xl p-6;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
+html.dark .card {
+    background-color: rgba(31, 41, 55, 0.5);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
 
+// Clickable card (entire card is link)
+.card-link {
+    @extend .card;
+    @apply transition-all duration-200;
+    @apply hover:shadow-md hover:border-gray-300 dark:hover:border-gray-600;
+    @apply cursor-pointer;
+}
+
+// Stat card (minimalistic, centered)
+.stat-card {
+    @extend .card;
+    @apply text-center p-6;
+}
+
+.stat-value {
+    @apply text-3xl md:text-4xl font-bold;
+    @apply text-gray-900 dark:text-white mb-2;
+}
+
+.stat-label {
+    @apply text-xs font-medium uppercase tracking-wide;
+    @apply text-gray-500 dark:text-gray-400;
+}

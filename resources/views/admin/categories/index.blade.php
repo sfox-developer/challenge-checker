@@ -1,22 +1,22 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-header title="Manage Categories">
+        <x-ui.page-header title="Manage Categories">
             <x-slot name="icon">
                 <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
                 </svg>
             </x-slot>
             <x-slot name="action">
-                <x-app-button variant="primary" :href="route('admin.categories.create')">
+                <x-ui.app-button variant="primary" :href="route('admin.categories.create')">
                     <x-slot name="icon">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
                         </svg>
                     </x-slot>
                     Add Category
-                </x-app-button>
+                </x-ui.app-button>
             </x-slot>
-        </x-page-header>
+        </x-ui.page-header>
     </x-slot>
 
     <div class="py-8">

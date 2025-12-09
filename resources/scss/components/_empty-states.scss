@@ -1,163 +1,19 @@
 // ============================================================================
-// EMPTY STATE COMPONENTS
+// EMPTY STATES - Minimal Empty State Component
 // ============================================================================
-// Empty state messages and placeholders
-// Used when lists, collections, or sections have no content
-// ============================================================================
-
-// ----------------------------------------------------------------------------
-// EMPTY STATE CONTAINER
-// ----------------------------------------------------------------------------
 
 .empty-state {
     @apply text-center py-12;
-    
-    &.empty-state-sm {
-        @apply py-8;
-    }
-    
-    &.empty-state-lg {
-        @apply py-16;
-    }
 }
 
-// ----------------------------------------------------------------------------
-// EMPTY STATE ELEMENTS
-// ----------------------------------------------------------------------------
-
 .empty-state-icon {
-    @apply mx-auto h-12 w-12 text-gray-400 mb-4;
-    
-    svg {
-        @apply mx-auto h-12 w-12 text-gray-400;
-    }
-    
-    &.empty-state-icon-sm {
-        @apply h-8 w-8 mb-3;
-        
-        svg {
-            @apply h-8 w-8;
-        }
-    }
-    
-    &.empty-state-icon-lg {
-        @apply h-16 w-16 mb-6;
-        
-        svg {
-            @apply h-16 w-16;
-        }
-    }
+    @apply text-6xl mb-4;
 }
 
 .empty-state-title {
-    @apply mt-2 text-sm font-medium text-gray-900 dark:text-gray-100 mb-2;
-    
-    &.empty-state-title-sm {
-        @apply text-xs mb-1;
-    }
-    
-    &.empty-state-title-lg {
-        @apply text-lg;
-    }
+    @apply text-xl font-semibold text-gray-900 dark:text-white mb-2;
 }
 
-.empty-state-message {
-    @apply mt-1 text-sm text-gray-500 dark:text-gray-400 mb-6;
-    
-    &.empty-state-message-sm {
-        @apply text-xs mb-4;
-    }
-}
-
-.empty-state-action {
-    @apply mt-6;
-    
-    &.empty-state-action-sm {
-        @apply mt-4;
-    }
-}
-
-// ----------------------------------------------------------------------------
-// EMPTY STATE VARIANTS
-// ----------------------------------------------------------------------------
-
-// Centered in card
-.empty-state-card {
-    @apply empty-state;
-    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm p-12;
-}
-
-// Dashed border variant
-.empty-state-dashed {
-    @apply empty-state;
-    @apply bg-gray-50 dark:bg-gray-800/50 rounded-lg p-12;
-    @apply border-2 border-dashed border-gray-300 dark:border-gray-700;
-}
-
-// Full page empty state
-.empty-state-page {
-    @apply empty-state empty-state-lg;
-    @apply min-h-[400px] flex flex-col items-center justify-center;
-}
-
-// ----------------------------------------------------------------------------
-// ERROR PAGE COMPONENTS
-// ----------------------------------------------------------------------------
-
-.error-page-container {
-    @apply min-h-screen bg-gray-50 dark:bg-gray-900;
-    @apply flex items-center justify-center px-4 py-12;
-}
-
-.error-page-content {
-    @apply max-w-md w-full text-center;
-}
-
-.error-page-icon-wrapper {
-    @apply mb-6;
-}
-
-.error-page-icon {
-    @apply mx-auto w-24 h-24 rounded-full flex items-center justify-center;
-    
-    svg {
-        @apply w-12 h-12;
-    }
-    
-    // Solid color variants
-    &.error-icon-404 {
-        @apply bg-blue-100 dark:bg-blue-900/30;
-        
-        svg {
-            @apply text-blue-600 dark:text-blue-400;
-        }
-    }
-    
-    &.error-icon-403 {
-        @apply bg-red-100 dark:bg-red-900/30;
-        
-        svg {
-            @apply text-red-600 dark:text-red-400;
-        }
-    }
-    
-    &.error-icon-500 {
-        @apply bg-orange-100 dark:bg-orange-900/30;
-        
-        svg {
-            @apply text-orange-600 dark:text-orange-400;
-        }
-    }
-}
-
-.error-page-title {
-    @apply text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4;
-}
-
-.error-page-message {
-    @apply text-lg text-gray-600 dark:text-gray-400 mb-8;
-}
-
-.error-page-actions {
-    @apply flex flex-col sm:flex-row gap-4 justify-center;
+.empty-state-text {
+    @apply text-base text-gray-600 dark:text-gray-400 mb-6;
 }

@@ -54,7 +54,7 @@ class UserController extends Controller
             }
         }
 
-        return view('users.search', compact('users', 'query'));
+        return view('dashboard.users.search', compact('users', 'query'));
     }
 
     /**
@@ -91,6 +91,6 @@ class UserController extends Controller
 
         $isFollowing = $currentUser->isFollowing($user);
 
-        return view('users.show', compact('user', 'publicChallenges', 'publicHabits', 'activities', 'isFollowing'));
+        return view('dashboard.users.show', compact('user', 'publicChallenges', 'publicHabits', 'activities', 'isFollowing'));
     }
 }

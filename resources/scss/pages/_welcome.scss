@@ -1,0 +1,13 @@
+// ============================================================================
+// WELCOME PAGE - Landing page specific styles
+// ============================================================================
+
+.features {
+    @apply mt-32;
+    @apply grid grid-cols-1 md:grid-cols-3 gap-12;
+}
+
+.feature {
+    @apply text-center space-y-4;
+}
+

@@ -1,0 +1,41 @@
+// ============================================================================
+// UTILITIES - Minimal Global Utilities
+// ============================================================================
+
+// Container
+.container {
+    @apply max-w-7xl mx-auto px-6 sm:px-8 lg:px-12;
+}
+
+// Page wrapper
+.page {
+    @apply min-h-screen flex flex-col;
+    background-color: var(--color-bg-main);
+}
+
+html.dark .page {
+    background-color: var(--color-bg-main-dark);
+}
+
+// Section spacing
+.section {
+    @apply py-12 md:py-20;
+}
+
+// Icon wrapper
+.icon {
+    @apply w-12 h-12;
+    background: var(--gradient-accent);
+    @apply rounded-xl;
+    @apply text-white;
+    
+    svg {
+        @apply w-full h-full;
+        @apply p-3;
+    }
+}
+
+html.dark .icon {
+    background: var(--gradient-accent-dark);
+    color: #FFFFFF;
+}

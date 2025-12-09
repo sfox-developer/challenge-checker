@@ -1,0 +1,120 @@
+// ============================================================================
+// CHANGELOG COMPONENT
+// ============================================================================
+
+.changelog-list {
+    @apply space-y-6;
+}
+
+.changelog-item {
+    border-bottom: 1px solid #E5E4E2;
+    padding-bottom: 1.5rem;
+    
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+}
+
+html.dark .changelog-item {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.changelog-header {
+    @apply mb-4;
+}
+
+.changelog-version {
+    @apply flex items-center gap-3 mb-2;
+}
+
+.changelog-version-number {
+    @apply text-2xl font-bold;
+    color: var(--color-heading);
+}
+
+html.dark .changelog-version-number {
+    color: var(--color-heading-dark);
+}
+
+.changelog-badge {
+    @apply px-3 py-1 text-xs font-medium rounded-full;
+    background: var(--gradient-accent);
+    color: white;
+}
+
+.changelog-title {
+    @apply mb-2;
+}
+
+.changelog-date {
+    @apply flex items-center gap-1;
+    color: var(--color-text);
+    font-size: 0.875rem;
+}
+
+html.dark .changelog-date {
+    @apply text-gray-400;
+}
+
+.changelog-description {
+    @apply p-4 rounded-lg mb-4 italic;
+    background-color: rgba(0, 0, 0, 0.02);
+    border: 1px solid #E5E4E2;
+    color: var(--color-text);
+}
+
+html.dark .changelog-description {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.1);
+    @apply text-gray-300;
+}
+
+.changelog-changes {
+    @apply space-y-2 leading-relaxed;
+    color: var(--color-text);
+}
+
+html.dark .changelog-changes {
+    @apply text-gray-300;
+}
+
+.changelog-change-item {
+    @apply flex items-start gap-2;
+    
+    .bullet {
+        color: var(--color-accent);
+        margin-top: 0.25rem;
+    }
+}
+
+html.dark .changelog-change-item .bullet {
+    color: var(--color-accent-dark);
+}
+
+.changelog-empty {
+    @apply p-16 text-center;
+    
+    svg {
+        @apply mx-auto mb-4;
+        width: 4rem;
+        height: 4rem;
+        color: var(--color-text);
+        opacity: 0.4;
+    }
+    
+    h3 {
+        @apply text-xl font-medium mb-2;
+        color: var(--color-heading);
+    }
+    
+    p {
+        color: var(--color-text);
+    }
+}
+
+html.dark .changelog-empty {
+    h3 {
+        color: var(--color-heading-dark);
+    }
+}

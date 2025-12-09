@@ -1,118 +1,74 @@
 // ============================================================================
-// BUTTON COMPONENTS - Minimalistic Design
+// BUTTONS - Minimal, Reusable Button System
 // ============================================================================
-// Clean, flat button styles with single accent color (blue)
+// Only 2 variants (primary/secondary) + 2 sizes (default/large)
 // ============================================================================
 
-// ----------------------------------------------------------------------------
-// PRIMARY BUTTONS - Main call-to-action (Ghost/Outline style)
-// ----------------------------------------------------------------------------
+// Base button - Ready.so-inspired minimal design
+.btn {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply px-6 py-2.5 rounded-lg;
+    @apply font-medium text-sm;
+    @apply transition-all duration-150;
+    @apply focus:outline-none focus:ring-2 focus:ring-slate-400/50 focus:ring-offset-0;
+}
 
+// Variants
 .btn-primary {
-    @apply shadow-[0_0_0_1px_rgba(209,213,219,1)] dark:shadow-[0_0_0_1px_rgba(75,85,99,1)];
-    @apply hover:shadow-[0_0_0_1px_rgba(156,163,175,1)] dark:hover:shadow-[0_0_0_1px_rgba(107,114,128,1)];
-    @apply bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800;
-    @apply text-gray-900 dark:text-gray-100 font-medium py-3 px-8 rounded-lg;
-    @apply transition-all duration-200;
-    @apply flex items-center justify-center space-x-2;
+    @extend .btn;
+    background: var(--gradient-accent);
+    @apply text-white;
+    @apply shadow-sm hover:shadow;
+    
+    &:hover {
+        filter: brightness(0.9);
+    }
 }
 
-// Solid variant for critical CTAs only
-.btn-primary-solid {
-    @apply bg-slate-700 dark:bg-slate-600;
-    @apply hover:bg-slate-800 dark:hover:bg-slate-700;
-    @apply text-white font-medium py-3 px-8 rounded-lg;
-    @apply transition-all duration-200;
-    @apply flex items-center justify-center space-x-2;
+html.dark .btn-primary {
+    background: var(--gradient-accent-dark);
+    color: #FFFFFF;
+    
+    &:hover {
+        filter: brightness(0.95);
+    }
 }
-
-// ----------------------------------------------------------------------------
-// SUCCESS BUTTONS - Positive actions (minimal use, green for completed states)
-// ----------------------------------------------------------------------------
-
-.btn-success {
-    @apply bg-green-600 dark:bg-green-500;
-    @apply hover:bg-green-700 dark:hover:bg-green-600;
-    @apply text-white font-bold py-2 px-4 rounded-lg shadow-sm hover:shadow-md;
-    @apply transition-all duration-200;
-    @apply flex items-center justify-center space-x-2;
-}
-
-.btn-success-sm {
-    @apply bg-green-600 dark:bg-green-500;
-    @apply hover:bg-green-700 dark:hover:bg-green-600;
-    @apply text-white text-sm font-semibold py-2.5 px-4 rounded-lg shadow-sm hover:shadow-md;
-    @apply transition-all duration-200;
-    @apply flex items-center justify-center space-x-1;
-}
-
-// ----------------------------------------------------------------------------
-// DANGER BUTTONS - Destructive actions (minimal use, red for delete/error)
-// ----------------------------------------------------------------------------
-
-.btn-danger {
-    @apply bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50;
-    @apply text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300;
-    @apply p-2 rounded-lg transition-all duration-200;
-    @apply flex items-center justify-center space-x-1;
-}
-// ----------------------------------------------------------------------------
-// SECONDARY BUTTONS - Outlined/ghost buttons for secondary actions
-// ----------------------------------------------------------------------------
 
 .btn-secondary {
-    @apply px-4 py-2 shadow-[0_0_0_1px_rgba(209,213,219,1)] dark:shadow-[0_0_0_1px_rgba(75,85,99,1)];
-    @apply bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-lg;
-    @apply hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200;
-    @apply flex items-center justify-center space-x-2;
-}
-
-// ----------------------------------------------------------------------------
-// ACCENT BUTTONS - Subtle slate accent buttons
-// ----------------------------------------------------------------------------
-
-.btn-accent {
-    @apply px-6 py-2 bg-slate-700 dark:bg-slate-600 hover:bg-slate-800 dark:hover:bg-slate-700;
-    @apply text-white font-medium rounded-lg transition-colors duration-200;
-    @apply flex items-center justify-center space-x-2;
-}
-
-// ----------------------------------------------------------------------------
-// MODAL BUTTONS - Specific styling for modal dialogs
-// ----------------------------------------------------------------------------
-
-.btn-modal-cancel {
-    @apply px-3 py-1.5 shadow-[0_0_0_1px_rgba(209,213,219,1)] dark:shadow-[0_0_0_1px_rgba(75,85,99,1)] bg-transparent;
+    @extend .btn;
+    @apply bg-white dark:bg-gray-800;
+    @apply border border-gray-300 dark:border-gray-600;
     @apply text-gray-700 dark:text-gray-300;
-    @apply text-sm font-medium rounded-md w-full;
-    @apply hover:bg-gray-50 dark:hover:bg-gray-800;
-    @apply focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600;
+    @apply hover:bg-gray-50 dark:hover:bg-gray-700;
+    @apply shadow-sm hover:shadow;
 }
 
-.btn-modal-confirm {
-    @apply px-3 py-1.5 bg-slate-700 dark:bg-slate-600 text-white text-sm font-medium rounded-md w-full;
-    @apply hover:bg-slate-800 dark:hover:bg-slate-700;
-    @apply focus:outline-none focus:ring-2 focus:ring-slate-500 dark:focus:ring-slate-400;
+// Size variant - larger for hero CTAs
+.btn-lg {
+    @apply px-8 py-3.5 text-base rounded-xl;
 }
 
-// ----------------------------------------------------------------------------
-// ACTION BUTTONS - Small inline action buttons for cards/lists
-// ----------------------------------------------------------------------------
-
-.btn-action-sm {
-    @apply bg-green-100 dark:bg-green-900/30 hover:bg-green-200 dark:hover:bg-green-900/50;
-    @apply text-green-800 dark:text-green-400 px-3 py-1 rounded-lg text-sm font-medium;
-    @apply transition-colors duration-200;
+// Small variant
+.btn-sm {
+    @apply px-4 py-2 text-sm;
 }
 
-.btn-action-pause {
-    @apply bg-yellow-100 dark:bg-yellow-900/30 hover:bg-yellow-200 dark:hover:bg-yellow-900/50;
-    @apply text-yellow-800 dark:text-yellow-400 px-3 py-1 rounded-lg text-sm font-medium;
-    @apply transition-colors duration-200;
+// Full width
+.btn-block {
+    @apply w-full;
 }
 
-.btn-action-complete {
-    @apply bg-blue-100 dark:bg-blue-400/30 hover:bg-blue-200 dark:hover:bg-blue-900/50;
-    @apply text-blue-800 dark:text-blue-400 px-3 py-1 rounded-lg text-sm font-medium;
-    @apply transition-colors duration-200;
+// Success/danger for specific actions only
+.btn-success {
+    @extend .btn;
+    @apply bg-green-600 dark:bg-green-500;
+    @apply text-white;
+    @apply hover:bg-green-700 dark:hover:bg-green-600;
+}
+
+.btn-danger {
+    @extend .btn;
+    @apply bg-red-100 dark:bg-red-900/30;
+    @apply text-red-600 dark:text-red-400;
+    @apply hover:bg-red-200 dark:hover:bg-red-900/50;
 }

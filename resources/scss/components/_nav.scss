@@ -1,0 +1,66 @@
+// ============================================================================
+// NAVIGATION - Single Nav Style for All Contexts
+// ============================================================================
+// One nav design used everywhere (public, dashboard, admin)
+// ============================================================================
+
+.nav {
+    @apply sticky top-0 z-50;
+    @apply border-b border-gray-200;
+    background-color: rgba(245, 244, 242, 0.8); /* 80% opacity of #F5F4F2 */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+html.dark .nav {
+    @apply border-b border-gray-800;
+    background-color: rgba(17, 24, 39, 0.8); /* 80% opacity of gray-900 */
+}
+
+.nav-container {
+    @apply max-w-7xl mx-auto px-6 sm:px-8 lg:px-12;
+    @apply flex items-center justify-between h-20;
+}
+
+.nav-brand {
+    @apply flex items-center gap-3;
+    @apply text-xl font-bold;
+    color: var(--color-heading);
+}
+
+html.dark .nav-brand {
+    color: var(--color-heading-dark);
+}
+
+.nav-link {
+    @apply px-4 py-2 rounded-lg;
+    @apply text-sm font-medium;
+    @apply transition-colors;
+    color: var(--color-text);
+    
+    &:hover {
+        color: var(--color-heading);
+    }
+}
+
+html.dark .nav-link {
+    color: var(--color-text-dark);
+    
+    &:hover {
+        color: var(--color-heading-dark);
+    }
+}
+
+.nav-link-active {
+    @apply bg-gray-100 dark:bg-gray-800;
+    @apply text-gray-900 dark:text-white;
+}
+
+// Theme toggle button
+.theme-toggle {
+    @apply p-2.5 rounded-lg;
+    @apply text-gray-600 dark:text-gray-400;
+    @apply hover:text-gray-900 dark:hover:text-white;
+    @apply hover:bg-gray-100 dark:hover:bg-gray-800;
+    @apply transition-colors;
+}

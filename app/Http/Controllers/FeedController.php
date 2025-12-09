@@ -31,7 +31,7 @@ class FeedController extends Controller
             ])
             ->paginate(20);
 
-        return view('feed.index', compact('activities'));
+        return view('dashboard.feed.index', compact('activities'));
     }
 
     /**

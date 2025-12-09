@@ -1,0 +1,30 @@
+// ============================================================================
+// ABSTRACTS - Variables & Configuration
+// ============================================================================
+// SCSS variables, custom properties, and Tailwind extensions
+// No CSS output - only variables and configuration
+// ============================================================================
+
+// Custom CSS properties for theme values
+:root {
+    // Main background colors
+    --color-bg-main: #F5F4F2;
+    --color-bg-main-dark: #111827; // gray-900
+    
+    // Heading colors
+    --color-heading: #333333;
+    --color-heading-dark: #E5E4E2; // Softer warm light instead of pure white
+    
+    // Text colors
+    --color-text: #666666;
+    --color-text-dark: #D1D5DB; // gray-300
+    
+    // Accent gradient for buttons and icons
+    --gradient-accent: linear-gradient(135deg, rgb(92, 106, 228), rgb(115, 102, 254));
+    --gradient-accent-dark: linear-gradient(135deg, rgb(80, 90, 180), rgb(95, 85, 200)); // Darker, less bright
+    --color-accent: rgb(92, 106, 228); // Fallback
+    --color-accent-dark: rgb(80, 90, 180); // Fallback
+}
+
+// Tailwind configuration extensions
+// Add custom Tailwind theme extensions here if needed

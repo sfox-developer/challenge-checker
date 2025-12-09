@@ -18,14 +18,14 @@ Route::get('/', function () {
     if (auth()->check()) {
         return redirect()->route('feed.index');
     }
-    return view('welcome');
+    return view('public.welcome');
 });
 
 // Public static pages
 Route::get('/changelog', [ChangelogController::class, 'index'])->name('changelog');
-Route::view('/privacy-policy', 'privacy-policy')->name('privacy.policy');
-Route::view('/terms-of-service', 'terms-of-service')->name('terms.service');
-Route::view('/imprint', 'imprint')->name('imprint');
+Route::view('/privacy-policy', 'public.privacy-policy')->name('privacy.policy');
+Route::view('/terms-of-service', 'public.terms-of-service')->name('terms.service');
+Route::view('/imprint', 'public.imprint')->name('imprint');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

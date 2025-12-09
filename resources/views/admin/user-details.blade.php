@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-header title="{{ $user->name }}">
+        <x-ui.page-header title="{{ $user->name }}">
             <x-slot name="icon">
                 <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
@@ -8,14 +8,14 @@
             </x-slot>
             <x-slot name="action">
                 <div class="flex space-x-2">
-                    <x-app-button variant="secondary" href="{{ route('admin.dashboard') }}">
+                    <x-ui.app-button variant="secondary" href="{{ route('admin.dashboard') }}">
                         <x-slot name="icon">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
                             </svg>
                         </x-slot>
                         Back
-                    </x-app-button>
+                    </x-ui.app-button>
                     
                     @if($user->is_admin)
                         <span class="px-4 py-2 rounded-lg text-sm font-medium bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-400 border border-red-200 dark:border-red-800 flex items-center">
@@ -25,7 +25,7 @@
                             Admin User
                         </span>
                     @else
-                        <x-app-button 
+                        <x-ui.app-button 
                             variant="secondary" 
                             type="button"
                             onclick="window.showDeleteUserModal('{{ $user->name }}', '{{ route('admin.user.delete', $user) }}')">
@@ -35,11 +35,11 @@
                                 </svg>
                             </x-slot>
                             Delete
-                        </x-app-button>
+                        </x-ui.app-button>
                     @endif
                 </div>
             </x-slot>
-        </x-page-header>
+        </x-ui.page-header>
     </x-slot>
 
     <div class="py-8">
@@ -177,7 +177,7 @@
 
             <!-- User Statistics -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <x-stat-card 
+                <x-ui.stat-card 
                     label="Total Challenges" 
                     :value="$user->challenges->count()">
                     <x-slot name="icon">
@@ -185,9 +185,9 @@
                             <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
                         </svg>
                     </x-slot>
-                </x-stat-card>
+                </x-ui.stat-card>
 
-                <x-stat-card 
+                <x-ui.stat-card 
                     label="Active" 
                     :value="$user->challenges->where('started_at', '!=', null)->where('completed_at', null)->where('is_active', true)->count()">
                     <x-slot name="icon">
@@ -195,9 +195,9 @@
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"></path>
                         </svg>
                     </x-slot>
-                </x-stat-card>
+                </x-ui.stat-card>
 
-                <x-stat-card 
+                <x-ui.stat-card 
                     label="Completed" 
                     :value="$user->challenges->where('completed_at', '!=', null)->count()">
                     <x-slot name="icon">
@@ -205,9 +205,9 @@
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>
                     </x-slot>
-                </x-stat-card>
+                </x-ui.stat-card>
 
-                <x-stat-card 
+                <x-ui.stat-card 
                     label="Paused" 
                     :value="$user->challenges->where('started_at', '!=', null)->where('is_active', false)->where('completed_at', null)->count()">
                     <x-slot name="icon">
@@ -215,11 +215,11 @@
                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                         </svg>
                     </x-slot>
-                </x-stat-card>
+                </x-ui.stat-card>
             </div>
 
             <!-- User Content Tabs -->
-            <x-user-content-tabs 
+            <x-social.user-content-tabs 
                 :user="$user" 
                 :challenges="$challenges"
                 :habits="$habits"

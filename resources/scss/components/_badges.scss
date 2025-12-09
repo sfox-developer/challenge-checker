@@ -1,194 +1,39 @@
 // ============================================================================
-// BADGE COMPONENTS
+// BADGES - Minimal Badge System
 // ============================================================================
-// Status badges, pills, and label indicators
-// Used for challenge/habit status, counts, and notifications
-// ============================================================================
-
-// ----------------------------------------------------------------------------
-// BASE BADGE
-// ----------------------------------------------------------------------------
 
 .badge {
-    @apply inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full;
-    @apply transition-colors duration-200;
-    
-    // Size variants
-    &.badge-sm {
-        @apply px-2 py-0.5 text-xs;
-    }
-    
-    &.badge-md {
-        @apply px-3 py-1 text-sm;
-    }
-    
-    &.badge-lg {
-        @apply px-4 py-1.5 text-sm;
-    }
+    @apply inline-flex items-center gap-1;
+    @apply px-2.5 py-1 rounded-md;
+    @apply text-xs font-medium;
 }
 
-// ----------------------------------------------------------------------------
-// COLOR VARIANTS - Status Badges
-// ----------------------------------------------------------------------------
-
-// Success/Completed - Green
-.badge-success {
-    @apply bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400;
+.badge-gray {
+    @extend .badge;
+    @apply bg-gray-100 dark:bg-gray-800;
+    @apply text-gray-700 dark:text-gray-300;
 }
 
-// Primary/Active - Subtle Slate (minimal use)
-.badge-primary {
-    @apply bg-slate-100 text-slate-800 dark:bg-slate-900/20 dark:text-slate-400;
+.badge-green {
+    @extend .badge;
+    @apply bg-green-100 dark:bg-green-900/30;
+    @apply text-green-700 dark:text-green-400;
 }
 
-// Paused/Warning - Yellow
-.badge-paused {
-    @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400;
+.badge-yellow {
+    @extend .badge;
+    @apply bg-yellow-100 dark:bg-yellow-900/30;
+    @apply text-yellow-700 dark:text-yellow-400;
 }
 
-// Draft/Pending - Gray
-.badge-draft {
-    @apply bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200;
+.badge-red {
+    @extend .badge;
+    @apply bg-red-100 dark:bg-red-900/30;
+    @apply text-red-700 dark:text-red-400;
 }
 
-// Archived - Gray (muted)
-.badge-archived {
-    @apply bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400;
-}
-
-// Info - Slate (alternative to primary)
-.badge-info {
-    @apply bg-slate-100 text-slate-800 dark:bg-slate-900/30 dark:text-slate-400;
-}
-
-// Danger/Error - Red
-.badge-danger {
-    @apply bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400;
-}
-
-// ----------------------------------------------------------------------------
-// SEMANTIC BADGE CLASSES - Challenge States
-// ----------------------------------------------------------------------------
-
-.badge-completed {
-    @apply badge badge-success;
-}
-
-.badge-challenge-active {
-    @apply badge badge-primary;
-}
-
-.badge-challenge-paused {
-    @apply badge badge-paused;
-}
-
-.badge-challenge-draft {
-    @apply badge badge-draft;
-}
-
-.badge-challenge-archived {
-    @apply badge badge-archived;
-}
-
-// ----------------------------------------------------------------------------
-// SEMANTIC BADGE CLASSES - Habit States
-// ----------------------------------------------------------------------------
-
-.badge-habit-active {
-    @apply badge badge-primary;
-}
-
-.badge-habit-archived {
-    @apply badge badge-archived;
-}
-
-
-.badge-habit-completed-today {
-    @apply badge badge-success;
-}
-
-// ----------------------------------------------------------------------------
-// COUNT BADGES - For tabs, sections
-// ----------------------------------------------------------------------------
-
-.count-badge {
-    @apply inline-flex items-center justify-center px-2 py-1 text-xs font-medium rounded-full;
-    @apply bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300;
-    @apply min-w-[1.5rem] text-center;
-}
-
-.count-badge-primary {
-    @apply bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-400;
-}
-
-// Info badges for usage counts (challenges, habits)
-.badge-info-count {
-    @apply inline-flex items-center px-2 py-1 text-xs font-medium rounded-full;
-    @apply bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300;
-}
-
-// Category badge
-.badge-category {
-    @apply inline-flex items-center px-2 py-1 text-xs font-medium rounded-full;
-    @apply bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300;
-}
-
-// Admin badge
-.badge-admin {
-    @apply inline-flex items-center px-2 py-1 text-xs font-medium rounded-full;
-    @apply bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-400;
-}
-
-// Frequency/progress text badge
-.badge-frequency {
-    @apply inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full;
-    @apply bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 whitespace-nowrap;
-}
-
-// ----------------------------------------------------------------------------
-// STREAK BADGE - Special styling for streak counters
-// ----------------------------------------------------------------------------
-
-.streak-badge {
-    @apply badge-sm;
-    @apply bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200;
-    @apply font-semibold;
-    
-    &::before {
-        content: '🔥 ';
-    }
-}
-
-// ----------------------------------------------------------------------------
-// ACCENT BADGES - Clean subtle slate accent
-// ----------------------------------------------------------------------------
-
-.badge-accent {
-    @apply inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full;
-    @apply bg-slate-700 dark:bg-slate-600 text-white;
-}
-
-// ----------------------------------------------------------------------------
-// NUMBERED BADGES - Goal/item numbers (subtle slate)
-// ----------------------------------------------------------------------------
-
-.numbered-badge {
-    @apply flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center;
-    @apply bg-slate-700 dark:bg-slate-600 text-white text-sm font-semibold;
-}
-
-// ----------------------------------------------------------------------------
-// DYNAMIC TAB COUNT BADGES
-// ----------------------------------------------------------------------------
-
-.tab-count-badge {
-    @apply ml-2 px-2 py-1 text-xs rounded-full transition-colors;
-    
-    &.active {
-        @apply bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-400;
-    }
-    
-    &.inactive {
-        @apply bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400;
-    }
+.badge-blue {
+    @extend .badge;
+    @apply bg-blue-100 dark:bg-blue-900/30;
+    @apply text-blue-700 dark:text-blue-400;
 }

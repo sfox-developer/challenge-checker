@@ -1,10 +1,10 @@
 <x-guest-layout>
     <!-- Header -->
-    <div class="auth-header">
-        <h1 class="auth-title">
+    <div class="text-center mb-8">
+        <h1 class="h2">
             Verify your email
         </h1>
-        <p class="auth-subtitle">
+        <p class="text-muted">
             Thanks for signing up! Before getting started, please verify your email address by clicking on the link we just emailed to you.
         </p>
     </div>
@@ -18,7 +18,7 @@
     <div class="space-y-4">
         <form method="POST" action="{{ route('verification.send') }}">
             @csrf
-            <button type="submit" class="auth-submit">
+            <button type="submit" class="btn btn-primary btn-block">
                 {{ __('Resend Verification Email') }}
             </button>
         </form>

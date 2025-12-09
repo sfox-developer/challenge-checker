@@ -1,114 +1,163 @@
 // ============================================================================
-// FORM COMPONENTS
-// ============================================================================
-// Reusable form input styles with consistent dark mode support
-// Usage: Add these classes to form inputs, textareas, and selects
+// FORMS - Minimal Form Components
 // ============================================================================
 
-// ----------------------------------------------------------------------------
-// TEXT INPUTS - Standard text input fields
-// ----------------------------------------------------------------------------
-
-input.app-input, textarea.app-input, select.app-input {
-    @apply w-full !rounded-md border-gray-300 dark:border-gray-600;
-    @apply bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm;
-    @apply focus:border-blue-500 dark:focus:border-blue-400;
-    @apply focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-opacity-50;
-    @apply transition-all duration-200;
-    @apply placeholder:text-gray-400 dark:placeholder:text-gray-500;
+.form-group {
+    @apply space-y-2;
 }
-
-// ----------------------------------------------------------------------------
-// TEXTAREAS - Multi-line text input fields
-// ----------------------------------------------------------------------------
-
-textarea.app-textarea {
-    @apply app-input;
-    @apply resize-none min-h-[100px];
-}
-
-// ----------------------------------------------------------------------------
-// SELECT DROPDOWNS - Select/dropdown fields
-// ----------------------------------------------------------------------------
-
-.app-select {
-    @apply app-input;
-}
-
-// ----------------------------------------------------------------------------
-// FORM LABELS - Consistent label styling
-// ----------------------------------------------------------------------------
 
 .form-label {
-    @apply block text-sm font-bold text-gray-800 dark:text-gray-100 mb-2;
+    @apply block text-sm font-semibold;
+    color: var(--color-heading);
+    letter-spacing: -0.01em;
+}
+
+html.dark .form-label {
+    color: var(--color-heading-dark);
+}
+
+// Custom form input styles (Tailwind Forms plugin now uses class strategy)
+input.form-input,
+textarea.form-input,
+select.form-input {
+    @apply block w-full;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #E5E4E2;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--color-heading);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     
-    // Label with icon
-    &.form-label-icon {
-        @apply flex items-center space-x-2;
+    &::placeholder {
+        @apply text-gray-400;
+    }
+    
+    &:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 3px rgba(92, 106, 228, 0.1), 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+    
+    &:hover:not(:focus) {
+        border-color: #D4D3D1;
     }
 }
 
-// ----------------------------------------------------------------------------
-// INFO BOXES - Colored informational boxes
-// ----------------------------------------------------------------------------
-
-.info-box {
-    @apply p-4 rounded-lg mb-6;
+html.dark input.form-input,
+html.dark textarea.form-input,
+html.dark select.form-input {
+    border-color: #374151;
+    background-color: rgba(31, 41, 55, 0.8);
+    color: var(--color-heading-dark);
     
-    // Primary - Blue
-    &.info-box-primary {
-        @apply bg-blue-50 dark:bg-blue-900/20;
+    &::placeholder {
+        @apply text-gray-600;
     }
     
-    // Success - Green
-    &.info-box-success {
-        @apply bg-green-50 dark:bg-green-900/20;
+    &:focus {
+        border-color: var(--color-accent-dark);
+        box-shadow: 0 0 0 3px rgba(147, 136, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0.1);
     }
     
-    // Warning - Yellow  
-    &.info-box-warning {
-        @apply bg-yellow-50 dark:bg-yellow-900/20;
-    }
-    
-    // Danger - Red
-    &.info-box-danger {
-        @apply bg-red-50 dark:bg-red-900/20;
-    }
-    
-    // With border accent
-    &.info-box-bordered {
-        @apply border-l-4;
-        
-        &.info-box-primary {
-            @apply border-blue-500;
-        }
-        
-        &.info-box-success {
-            @apply border-green-500;
-        }
-        
-        &.info-box-warning {
-            @apply border-yellow-500;
-        }
-        
-        &.info-box-danger {
-            @apply border-red-500;
-        }
+    &:hover:not(:focus) {
+        border-color: #4B5563;
     }
 }
 
-// ----------------------------------------------------------------------------
-// TEXT HELPERS - Common text patterns
-// ----------------------------------------------------------------------------
-
-.text-hint {
-    @apply text-xs text-gray-500 dark:text-gray-400;
+textarea.form-input {
+    resize: vertical;
+    min-height: 100px;
 }
 
-.text-muted {
-    @apply text-sm text-gray-500 dark:text-gray-400;
+select.form-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
 }
 
-.text-optional {
-    @apply text-xs text-gray-500 font-normal;
+html.dark select.form-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
+.form-error {
+    @apply text-xs text-red-600 dark:text-red-400 mt-1.5;
+}
+
+.form-help {
+    @apply text-xs text-gray-500 dark:text-gray-500 mt-1;
+}
+
+// Checkbox styles
+input[type="checkbox"].form-checkbox {
+    @apply w-4 h-4;
+    border: 1.5px solid #E5E4E2;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--color-accent);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    
+    &:checked {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-color: var(--color-accent);
+        background-size: 85% 85%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%235c6ae4' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+    }
+    
+    &:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 3px rgba(92, 106, 228, 0.1);
+    }
+    
+    &:hover:not(:checked) {
+        border-color: #D4D3D1;
+    }
+}
+
+html.dark input[type="checkbox"].form-checkbox {
+    border-color: #374151;
+    background-color: rgba(31, 41, 55, 0.8);
+    
+    &:checked {
+        background-color: rgba(31, 41, 55, 0.8);
+        border-color: var(--color-accent-dark);
+        background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23505ab4' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+    }
+    
+    &:focus {
+        border-color: var(--color-accent-dark);
+        box-shadow: 0 0 0 3px rgba(80, 90, 180, 0.15);
+    }
+    
+    &:hover:not(:checked) {
+        border-color: #4B5563;
+    }
+}
+
+// Checkbox label wrapper
+.checkbox-label {
+    @apply flex items-center gap-2 cursor-pointer;
+    color: var(--color-text);
+}
+
+html.dark .checkbox-label {
+    color: var(--color-text-dark);
 }

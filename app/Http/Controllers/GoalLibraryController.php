@@ -36,7 +36,7 @@ class GoalLibraryController extends Controller
         // Get active categories from database
         $categories = Category::active()->ordered()->get();
 
-        return view('goals.index', compact('goals', 'categories', 'search', 'categoryId'));
+        return view('dashboard.goals.index', compact('goals', 'categories', 'search', 'categoryId'));
     }
 
     /**
@@ -79,7 +79,7 @@ class GoalLibraryController extends Controller
         // Get active categories from database for edit modal
         $categories = Category::active()->ordered()->get();
 
-        return view('goals.show', compact('goal', 'challenges', 'habits', 'stats', 'categories'));
+        return view('dashboard.goals.show', compact('goal', 'challenges', 'habits', 'stats', 'categories'));
     }
 
     /**

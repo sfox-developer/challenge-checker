@@ -34,7 +34,7 @@
                  ...themeManager() 
              }" 
              @open-goals.window="open()">
-            @include('layouts.navigation')
+            @include('components.layout.navigation')
 
             <!-- Page Heading -->
             @isset($header)
@@ -51,7 +51,7 @@
             </main>
 
             <!-- Footer -->
-            <x-footer />
+            <x-layout.footer />
 
             <!-- Desktop FAB for Quick Goal Completion (Hidden on Mobile and Challenge Detail Page) -->
             @if(!request()->routeIs('challenges.show'))

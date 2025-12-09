@@ -55,7 +55,7 @@ class HabitController extends Controller
         $archivedCount = $allHabits->filter(fn($h) => $h->archived_at)->count();
         $allCount = $allHabits->count();
 
-        return view('habits.index', compact(
+        return view('dashboard.habits.index', compact(
             'habits',
             'groupedHabits',
             'totalHabits',
@@ -81,7 +81,7 @@ class HabitController extends Controller
         $categories = Category::active()->ordered()->get();
         $frequencyTypes = FrequencyType::options();
 
-        return view('habits.create', compact('goalsLibrary', 'categories', 'frequencyTypes'));
+        return view('dashboard.habits.create', compact('goalsLibrary', 'categories', 'frequencyTypes'));
     }
 
     /**
@@ -159,7 +159,7 @@ class HabitController extends Controller
         // Calculate monthly stats
         $monthlyStats = $this->getMonthlyStats($habit, $year, $month);
 
-        return view('habits.show', compact(
+        return view('dashboard.habits.show', compact(
             'habit',
             'calendar',
             'monthlyStats',
@@ -181,7 +181,7 @@ class HabitController extends Controller
 
         $frequencyTypes = FrequencyType::options();
 
-        return view('habits.edit', compact('habit', 'goalsLibrary', 'frequencyTypes'));
+        return view('dashboard.habits.edit', compact('habit', 'goalsLibrary', 'frequencyTypes'));
     }
 
     /**
@@ -257,7 +257,7 @@ class HabitController extends Controller
             ->get()
             ->filter(fn($habit) => $habit->isDueToday());
 
-        return view('partials.quick-habits', compact('todaysHabits'));
+        return view('dashboard.partials.quick-habits', compact('todaysHabits'));
     }
 
     /**
@@ -338,7 +338,7 @@ class HabitController extends Controller
             'completed' => $todaysHabits->filter(fn($h) => $h->isCompletedToday())->count(),
         ];
 
-        return view('habits.today', compact('todaysHabits', 'stats'));
+        return view('dashboard.habits.today', compact('todaysHabits', 'stats'));
     }
 
     /**

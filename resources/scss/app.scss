@@ -1,28 +1,54 @@
-// Import custom components first (SCSS modules must come before @tailwind)
-@use 'components/forms';
-@use 'components/buttons';
-@use 'components/cards';
-@use 'components/badges';
-@use 'components/navigation';
-@use 'components/headers';
-@use 'components/empty-states';
-@use 'components/links';
-@use 'components/layout';
-@use 'components/public-layout';
-@use 'components/dashboard-layout';
-@use 'components/list-items';
-@use 'components/todos';
-@use 'components/toast';
+// ============================================================================
+// CHALLENGE CHECKER - Clean Minimal SCSS
+// ============================================================================
+// Ultra-minimal, reusable class system
+// No page-specific styles here - use pages/ folder for that
+// ============================================================================
 
-// Import Tailwind
+// ----------------------------------------------------------------------------
+// 1. ABSTRACTS - Variables and mixins (no output)
+// ----------------------------------------------------------------------------
+@use 'abstracts/variables';
+@use 'abstracts/mixins';
+
+// ----------------------------------------------------------------------------
+// 2. BASE - Typography and utilities
+// ----------------------------------------------------------------------------
+@use 'base/typography' as typography;
+@use 'base/utilities' as utilities;
+
+// ----------------------------------------------------------------------------
+// 3. COMPONENTS - Minimal, reusable components
+// ----------------------------------------------------------------------------
+@use 'components/buttons' as buttons;
+@use 'components/nav' as nav;
+@use 'components/cards' as cards;
+@use 'components/forms' as forms;
+@use 'components/badges' as badges;
+@use 'components/modals' as modals;
+@use 'components/empty-states' as empty-states;
+@use 'components/changelog' as changelog;
+
+// ----------------------------------------------------------------------------
+// 4. PAGES - Page-specific styles (add as needed)
+// ----------------------------------------------------------------------------
+@use 'pages/welcome' as welcome;
+
+// ----------------------------------------------------------------------------
+// 5. VENDORS - Third-party overrides
+// ----------------------------------------------------------------------------
+@use 'vendors/toast';
+
+// ----------------------------------------------------------------------------
+// 6. TAILWIND - Framework (must use @import, not @use)
+// ----------------------------------------------------------------------------
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-// Custom components
-@import 'toast';
-
-// Global styles
+// ----------------------------------------------------------------------------
+// 7. GLOBAL OVERRIDES
+// ----------------------------------------------------------------------------
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', 'Figtree', ui-sans-serif, system-ui, sans-serif;
 }

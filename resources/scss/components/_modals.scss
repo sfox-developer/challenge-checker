@@ -1,0 +1,40 @@
+// ============================================================================
+// MODALS - Minimal Modal System
+// ============================================================================
+
+.modal-backdrop {
+    @apply fixed inset-0 z-50;
+    @apply bg-black/50 backdrop-blur-sm;
+}
+
+.modal {
+    @apply fixed inset-0 z-50;
+    @apply flex items-center justify-center p-6;
+}
+
+.modal-content {
+    @apply bg-white dark:bg-gray-800;
+    @apply rounded-2xl shadow-xl;
+    @apply max-w-md w-full;
+    @apply border border-gray-200 dark:border-gray-700;
+}
+
+.modal-header {
+    @apply px-6 py-4;
+    @apply border-b border-gray-200 dark:border-gray-700;
+}
+
+.modal-title {
+    @apply text-xl font-semibold;
+    @apply text-gray-900 dark:text-white;
+}
+
+.modal-body {
+    @apply px-6 py-4;
+}
+
+.modal-footer {
+    @apply px-6 py-4;
+    @apply border-t border-gray-200 dark:border-gray-700;
+    @apply flex justify-end gap-3;
+}

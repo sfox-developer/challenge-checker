@@ -1,0 +1,112 @@
+// ============================================================================
+// TYPOGRAPHY - Minimal, Reusable Text Styles
+// ============================================================================
+// Use @layer base to ensure these styles override Tailwind's base reset
+// ============================================================================
+
+@layer base {
+    // Headings - Just 3 sizes, semantic
+    h1,
+    .h1 {
+        @apply text-4xl md:text-5xl font-bold mb-4;
+        color: var(--color-heading);
+    }
+
+    html.dark h1,
+    html.dark .h1 {
+        color: var(--color-heading-dark);
+    }
+
+    h2,
+    .h2 {
+        @apply text-2xl font-semibold mb-4;
+        color: var(--color-heading);
+    }
+
+    html.dark h2,
+    html.dark .h2 {
+        color: var(--color-heading-dark);
+    }
+
+    h3,
+    .h3 {
+        @apply text-lg font-semibold;
+        color: var(--color-heading);
+    }
+
+    html.dark h3,
+    html.dark .h3 {
+        color: var(--color-heading-dark);
+    }
+
+    // Paragraph text
+    p {
+        color: var(--color-text);
+    }
+
+    html.dark p {
+        color: var(--color-text-dark);
+    }
+
+    // List items
+    ul li,
+    ol li {
+        color: var(--color-text);
+    }
+
+    html.dark ul li,
+    html.dark ol li {
+        color: var(--color-text-dark);
+    }
+
+    // Subtitle text
+    .subtitle {
+        @apply text-xl;
+        color: var(--color-text);
+    }
+
+    html.dark .subtitle {
+        @apply text-gray-400;
+    }
+
+    // Small helper text
+    .text-help {
+        @apply text-sm;
+        color: var(--color-text);
+    }
+
+    html.dark .text-help {
+        @apply text-gray-400;
+    }
+
+    // Body text
+    .text-body {
+        @apply text-base leading-relaxed;
+        color: var(--color-text);
+    }
+
+    html.dark .text-body {
+        color: var(--color-text-dark);
+    }
+
+    .text-muted {
+        @apply text-sm text-gray-500;
+    }
+
+    html.dark .text-muted {
+        @apply text-gray-500;
+    }
+
+    // Links
+    .link {
+        @apply text-slate-700;
+        @apply hover:text-slate-900;
+        @apply underline underline-offset-2;
+        @apply transition-colors;
+    }
+
+    html.dark .link {
+        @apply text-slate-400;
+        @apply hover:text-slate-300;
+    }
+}

@@ -30,7 +30,7 @@ class ChangelogController extends Controller
     {
         $changelogs = Changelog::published()->latest()->paginate(10);
 
-        return view('changelog', compact('changelogs'));
+        return view('public.changelog', compact('changelogs'));
     }
 
     /**

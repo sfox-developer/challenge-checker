@@ -22,6 +22,6 @@ class QuickGoalsController extends Controller
             ->with('goals')
             ->get();
 
-        return view('partials.quick-goals', compact('activeChallenges'));
+        return view('dashboard.partials.quick-goals', compact('activeChallenges'));
     }
 }

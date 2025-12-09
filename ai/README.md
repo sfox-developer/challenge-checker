@@ -58,6 +58,18 @@ When an AI agent receives a task for this project, follow this workflow:
    - Learn Tailwind utility patterns
    - Review responsive design approach
 
+9. **`ai/09-folder-structure.md`**
+   - Learn views folder organization (public, auth, dashboard, admin)
+   - Understand component namespace structure (dot notation)
+   - Review SCSS modular architecture (SMACSS/ITCSS)
+   - See controller view path conventions
+
+10. **`ai/10-global-scss-refactoring.md`**
+   - Understand global class system (typography, icons, buttons)
+   - Learn class consolidation patterns (icon-wrapper, btn-large)
+   - Review global vs layout-specific organization
+   - See before/after refactoring examples
+
 **⚠️ CRITICAL:** Do not skip this phase. Misunderstanding the architecture leads to:
 - Breaking existing features
 - Creating duplicate code

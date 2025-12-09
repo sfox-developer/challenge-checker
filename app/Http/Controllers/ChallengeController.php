@@ -55,7 +55,7 @@ class ChallengeController extends Controller
         })->count();
         $archivedCount = $challenges->filter(fn($c) => $c->isArchived())->count();
 
-        return view('challenges.index', compact(
+        return view('dashboard.challenges.index', compact(
             'challenges',
             'totalChallenges',
             'activeChallenges',
@@ -80,7 +80,7 @@ class ChallengeController extends Controller
 
         $categories = Category::active()->ordered()->get();
 
-        return view('challenges.create', compact('goalsLibrary', 'categories'));
+        return view('dashboard.challenges.create', compact('goalsLibrary', 'categories'));
     }
 
     /**
@@ -167,7 +167,7 @@ class ChallengeController extends Controller
         $totalGoals = $challenge->goals->count();
         $progressPercentage = $challenge->getProgressPercentage();
 
-        return view('challenges.show', compact('challenge', 'totalDays', 'totalGoals', 'progressPercentage'));
+        return view('dashboard.challenges.show', compact('challenge', 'totalDays', 'totalGoals', 'progressPercentage'));
     }
 
     /**
@@ -177,7 +177,7 @@ class ChallengeController extends Controller
     {
         $this->authorize('update', $challenge);
 
-        return view('challenges.edit', compact('challenge'));
+        return view('dashboard.challenges.edit', compact('challenge'));
     }
 
     /**

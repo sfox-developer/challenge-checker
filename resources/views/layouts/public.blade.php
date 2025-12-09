@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @auth
+        <meta name="user-authenticated" content="true">
+    @endauth
 
     <title>{{ $title ?? config('app.name', 'Laravel') }}</title>
 
@@ -31,52 +34,50 @@
         })();
     </script>
 </head>
-<body class="public-layout" x-data="themeManager()" x-init="initTheme()">
+<body class="page" x-data="themeManager()">
     <!-- Sticky Navigation with Blur -->
-    <nav class="public-nav">
-        <div class="public-nav-container">
-            <div class="public-nav-content">
-                <a href="/" class="public-nav-logo">
-                    <span>Challenge Checker</span>
-                </a>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <span>Challenge Checker</span>
+            </a>
+            
+            <div class="flex items-center gap-3">
+                <button @click="toggleTheme()" 
+                        class="theme-toggle"
+                        title="Toggle theme">
+                    <svg x-show="getThemeIcon() === 'sun'" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <svg x-show="getThemeIcon() === 'moon'" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
                 
-                <div class="public-nav-actions">
-                    <button @click="toggleTheme()" 
-                            class="theme-toggle"
-                            title="Toggle theme">
-                        <svg x-show="getThemeIcon() === 'sun'" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                        <svg x-show="getThemeIcon() === 'moon'" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                        </svg>
-                    </button>
-                    
-                    @auth
-                        <a href="{{ route('feed.index') }}" class="public-nav-link">
-                            Feed
+                @auth
+                    <a href="{{ route('feed.index') }}" class="nav-link">
+                        Feed
+                    </a>
+                @else
+                    <a href="{{ route('login') }}" class="nav-link">
+                        Log in
+                    </a>
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" class="btn btn-primary btn-sm">
+                            Get Started
                         </a>
-                    @else
-                        <a href="{{ route('login') }}" class="public-nav-link">
-                            Log in
-                        </a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="public-nav-button">
-                                Get Started
-                            </a>
-                        @endif
-                    @endauth
-                </div>
+                    @endif
+                @endauth
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="public-main">
+    <main class="flex-1">
         {{ $slot }}
     </main>
 
     <!-- Footer -->
-    <x-footer />
+    <x-layout.footer />
 </body>
 </html>

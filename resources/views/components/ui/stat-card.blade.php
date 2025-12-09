@@ -1,0 +1,13 @@
+@props([
+    'label',
+    'value'
+])
+
+<div class="stat-card">
+    <div class="stat-value">
+        {{ $value }}{{ $suffix ?? '' }}
+    </div>
+    <div class="stat-label">
+        {{ $label }}
+    </div>
+</div>

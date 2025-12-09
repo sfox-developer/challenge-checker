@@ -15,6 +15,13 @@ export function createThemeManager() {
         theme: document.documentElement.dataset.theme || 'light',
         
         init() {
+            // For guests, check localStorage
+            if (!document.querySelector('meta[name="user-authenticated"]')) {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme) {
+                    this.theme = savedTheme;
+                }
+            }
             // Apply initial theme
             this.applyTheme();
         },
@@ -35,6 +42,13 @@ export function createThemeManager() {
         },
         
         async saveThemePreference() {
+            // For guests, save to localStorage only
+            if (!document.querySelector('meta[name="user-authenticated"]')) {
+                localStorage.setItem('theme', this.theme);
+                return;
+            }
+            
+            // For authenticated users, save to server
             try {
                 const response = await fetch('/profile/theme', {
                     method: 'POST',
