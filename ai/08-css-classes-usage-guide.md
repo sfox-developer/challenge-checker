@@ -679,7 +679,82 @@ Verify the component works in both light and dark mode. All CSS classes include 
 
 ---
 
-### 11. Challenge Stats
+### 11. Stat Cards
+
+**Before (heavy card wrapper with icons):**
+```blade
+<div class="card">
+    <div class="flex items-center">
+        <div class="flex-shrink-0">
+            <div class="bg-slate-100 dark:bg-slate-900 p-2 md:p-3 rounded-lg">
+                <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-700 dark:text-slate-400">
+                    <!-- icon -->
+                </svg>
+            </div>
+        </div>
+        <div class="ml-3 md:ml-4 min-w-0">
+            <div class="text-xs md:text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
+                Current Streak
+            </div>
+            <div class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
+                7 days
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+**After (centered, value-first design):**
+```blade
+<x-stat-card label="Current Streak" :value="7">
+    <x-slot name="suffix"> days</x-slot>
+</x-stat-card>
+```
+
+**Component markup (stat-card.blade.php):**
+```blade
+<div class="stat-card">
+    <div class="stat-card-value">{{ $value }}{{ $suffix ?? '' }}</div>
+    <div class="stat-card-label">{{ $label }}</div>
+</div>
+```
+
+**CSS Classes:**
+```scss
+.stat-card {
+    @apply bg-white dark:bg-gray-800 rounded-lg p-4;
+    @apply border border-gray-200 dark:border-gray-700;
+    @apply text-center;
+}
+
+.stat-card-value {
+    @apply text-2xl font-bold text-gray-900 dark:text-white;
+    @apply mb-1;
+}
+
+.stat-card-label {
+    @apply text-xs font-medium text-gray-500 dark:text-gray-400;
+    @apply uppercase tracking-wide;
+}
+```
+
+**Benefits:**
+- 🎯 Centered alignment for balanced, symmetrical appearance
+- 📊 Value-first hierarchy (number is primary, label is context)
+- ❌ Removed decorative icons (data-first approach)
+- 📉 88% reduction in markup (17 classes + icon → 2 semantic classes)
+- 🔤 Uppercase tracking on labels for clear distinction
+- 🔧 Update all stat cards by modifying 3 CSS classes
+
+**Usage:**
+- Habit statistics (streaks, completions)
+- Challenge progress indicators
+- Admin dashboard metrics
+- User profile stats
+
+---
+
+### 12. Challenge Stats
 
 **Before:**
 ```blade
@@ -703,7 +778,7 @@ Verify the component works in both light and dark mode. All CSS classes include 
 
 ---
 
-### 12. Error Pages
+### 13. Error Pages
 
 **Before:**
 ```blade

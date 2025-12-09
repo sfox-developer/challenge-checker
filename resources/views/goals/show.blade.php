@@ -58,25 +58,15 @@
 
             <!-- Statistics Cards -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="card">
-                    <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Completions</div>
-                    <div class="text-3xl font-bold text-gray-900 dark:text-white">{{ $stats['total_completions'] }}</div>
-                </div>
-
-                <div class="card">
-                    <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Avg Success Rate</div>
-                    <div class="text-3xl font-bold text-gray-900 dark:text-white">{{ $stats['success_rate'] }}%</div>
-                </div>
-
-                <div class="card">
-                    <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Active Challenges</div>
-                    <div class="text-3xl font-bold text-slate-700 dark:text-slate-400">{{ $stats['active_challenges'] }}</div>
-                </div>
-
-                <div class="card">
-                    <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Active Habits</div>
-                    <div class="text-3xl font-bold text-slate-700 dark:text-slate-400">{{ $stats['active_habits'] }}</div>
-                </div>
+                <x-stat-card label="Total Completions" :value="$stats['total_completions']" />
+                
+                <x-stat-card label="Avg Success Rate" :value="$stats['success_rate']">
+                    <x-slot name="suffix">%</x-slot>
+                </x-stat-card>
+                
+                <x-stat-card label="Active Challenges" :value="$stats['active_challenges']" />
+                
+                <x-stat-card label="Active Habits" :value="$stats['active_habits']" />
             </div>
 
             <!-- Timeline Info -->
