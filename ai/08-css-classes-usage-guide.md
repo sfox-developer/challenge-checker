@@ -905,6 +905,117 @@ Example:
 
 ---
 
+## Welcome Page Classes (Landing Page)
+
+**Complete redesign for conversion-focused homepage.**
+
+### Hero Section
+```blade
+<div class="hero">
+    <div class="section">
+        <h1 class="hero-title">Turn Goals Into Habits.<br>Habits Into Results.</h1>
+        <p class="hero-subtitle">Track challenges, build habits, achieve goals.</p>
+        <div class="hero-cta">
+            <a href="/register" class="btn btn-primary btn-lg">Get Started</a>
+        </div>
+    </div>
+</div>
+```
+
+### Features Grid
+```blade
+<div class="features">
+    <div class="section">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><svg>...</svg></div>
+                <h3 class="feature-title">Time-Bound Challenges</h3>
+                <p class="feature-description">30/60/90-day challenges with clear deadlines.</p>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### How It Works
+```blade
+<div class="how-it-works">
+    <div class="section">
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Set Your Goals</h3>
+                <p class="step-description">Create challenges or habits.</p>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Benefits with Visual
+```blade
+<div class="benefits">
+    <div class="section">
+        <div class="benefits-grid">
+            <div class="benefit-content">
+                <div class="benefit-item">
+                    <div class="benefit-icon"><svg>...</svg></div>
+                    <div class="benefit-text">
+                        <h3>Clear Structure</h3>
+                        <p>Time-bound deadlines prevent "someday" goals.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="benefit-visual">
+                <div class="placeholder-image">[SCREENSHOT: Dashboard]</div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Stats Section
+```blade
+<div class="stats">
+    <div class="section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-value">10,000+</div>
+                <div class="stat-label">Goals Completed</div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Available Welcome Page Classes
+| Class | Purpose | Example |
+|-------|---------|---------|
+| `.hero` | Hero section wrapper | `<div class="hero">` |
+| `.hero-title` | Large gradient title (5xl-7xl) | `<h1 class="hero-title">` |
+| `.hero-subtitle` | Hero subtitle text | `<p class="hero-subtitle">` |
+| `.hero-cta` | CTA buttons container | `<div class="hero-cta">` |
+| `.features` | Features section | `<div class="features">` |
+| `.features-grid` | 4-column feature grid | `<div class="features-grid">` |
+| `.feature-card` | Individual feature card | `<div class="feature-card">` |
+| `.feature-icon` | Feature icon wrapper | `<div class="feature-icon">` |
+| `.how-it-works` | Process section | `<div class="how-it-works">` |
+| `.steps-grid` | 3-column steps grid | `<div class="steps-grid">` |
+| `.step-number` | Numbered circle | `<div class="step-number">1</div>` |
+| `.benefits` | Benefits section | `<div class="benefits">` |
+| `.benefits-grid` | 2-column layout | `<div class="benefits-grid">` |
+| `.benefit-item` | Individual benefit | `<div class="benefit-item">` |
+| `.placeholder-image` | Image placeholder | `<div class="placeholder-image">` |
+| `.stats` | Stats section | `<div class="stats">` |
+| `.stats-grid` | 4-column stats | `<div class="stats-grid">` |
+| `.stat-value` | Large stat number | `<div class="stat-value">` |
+| `.final-cta` | Final CTA section | `<div class="final-cta">` |
+| `.section` | Generic section container | `<div class="section">` |
+| `.section-header` | Section header wrapper | `<div class="section-header">` |
+| `.section-title` | Section title | `<h2 class="section-title">` |
+
+---
+
 ## Troubleshooting
 
 ### CSS class not working?

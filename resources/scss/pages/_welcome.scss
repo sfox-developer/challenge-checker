@@ -2,12 +2,210 @@
 // WELCOME PAGE - Landing page specific styles
 // ============================================================================
 
-.features {
-    @apply mt-32;
-    @apply grid grid-cols-1 md:grid-cols-3 gap-12;
+// Hero Section - Text only, minimal spacing
+.hero {
+    @apply pt-16 pb-12 text-center;
 }
 
-.feature {
+.hero-title {
+    @apply text-5xl md:text-6xl lg:text-7xl font-bold mb-6;
+    @apply bg-gradient-to-r from-slate-700 to-slate-900;
+    @apply dark:from-slate-400 dark:to-slate-200;
+    @apply bg-clip-text text-transparent;
+    line-height: 1.1;
+}
+
+.hero-subtitle {
+    @apply text-xl md:text-2xl mb-10;
+    @apply text-gray-600 dark:text-gray-400;
+    @apply max-w-3xl mx-auto;
+}
+
+.hero-cta {
+    @apply flex flex-col sm:flex-row gap-4 justify-center items-center;
+}
+
+// Hero Visual Showcase - Ready.so style
+.hero-visual {
+    @apply relative;
+    @apply max-w-6xl mx-auto;
+    @apply -mt-8; // Pull up slightly to reduce gap
+}
+
+.hero-image {
+    @apply w-full rounded-2xl shadow-2xl;
+    @apply border border-gray-200 dark:border-gray-700;
+}
+
+.hero-video-container {
+    @apply relative w-full rounded-2xl overflow-hidden;
+    @apply shadow-2xl border border-gray-200 dark:border-gray-700;
+    @apply bg-gray-100 dark:bg-gray-800;
+}
+
+.hero-video {
+    @apply w-full h-auto;
+    max-height: 600px;
+    object-fit: cover;
+}
+
+// Features Grid - no extra padding, uses .section
+.features {
+    // No padding here, handled by .section
+}
+
+.features-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16;
+}
+
+.feature-card {
+    @apply bg-white dark:bg-gray-800;
+    @apply rounded-2xl p-8;
+    @apply border border-gray-200 dark:border-gray-700;
     @apply text-center space-y-4;
+    @apply transition-all duration-200;
+    @apply hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600;
+}
+
+.feature-icon {
+    @apply w-14 h-14 mx-auto;
+    @apply bg-slate-100 dark:bg-slate-900;
+    @apply rounded-2xl flex items-center justify-center;
+    @apply text-slate-700 dark:text-slate-400;
+}
+
+.feature-title {
+    @apply text-lg font-semibold text-gray-900 dark:text-white;
+}
+
+.feature-description {
+    @apply text-sm text-gray-600 dark:text-gray-400 leading-relaxed;
+}
+
+// How It Works Section - background only, padding from .section
+.how-it-works {
+    @apply bg-gray-50 dark:bg-gray-900/50;
+}
+
+.steps-grid {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-12 mt-12;
+}
+
+.step-card {
+    @apply text-center space-y-4;
+}
+
+.step-number {
+    @apply w-12 h-12 mx-auto mb-4;
+    @apply bg-slate-700 dark:bg-slate-600;
+    @apply rounded-full flex items-center justify-center;
+    @apply text-white font-bold text-xl;
+}
+
+.step-title {
+    @apply text-xl font-semibold text-gray-900 dark:text-white;
+}
+
+.step-description {
+    @apply text-gray-600 dark:text-gray-400;
+}
+
+// Benefits Section - no extra padding
+.benefits {
+    // Padding from .section
+}
+
+.benefits-grid {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-16 mt-16 items-center;
+}
+
+.benefit-content {
+    @apply space-y-6;
+}
+
+.benefit-item {
+    @apply flex gap-4;
+}
+
+.benefit-icon {
+    @apply w-10 h-10 flex-shrink-0;
+    @apply bg-slate-100 dark:bg-slate-900;
+    @apply rounded-xl flex items-center justify-center;
+    @apply text-slate-700 dark:text-slate-400;
+
+    border: 6px solid rgb(229 231 235 / var(--tw-border-opacity, 1));
+}
+
+.benefit-text h3 {
+    @apply text-lg font-semibold text-gray-900 dark:text-white mb-2;
+}
+
+.benefit-text p {
+    @apply text-gray-600 dark:text-gray-400 text-sm;
+}
+
+.benefit-visual {
+    @apply bg-gray-100 dark:bg-gray-800;
+    @apply rounded-2xl p-8 lg:p-12;
+    @apply border border-gray-200 dark:border-gray-700;
+}
+
+.placeholder-image {
+    @apply w-full h-full min-h-[400px];
+    @apply bg-gradient-to-br from-gray-200 to-gray-300;
+    @apply dark:from-gray-700 dark:to-gray-800;
+    @apply rounded-xl;
+    @apply flex items-center justify-center;
+    @apply text-gray-500 dark:text-gray-400;
+    @apply font-medium;
+}
+
+// Stats Section - background only
+.stats {
+    @apply bg-slate-700 dark:bg-slate-800;
+}
+
+.stats-grid {
+    @apply grid grid-cols-2 md:grid-cols-4 gap-8;
+}
+
+.stat-item {
+    @apply text-center;
+}
+
+.stat-value {
+    @apply text-4xl md:text-5xl font-bold text-white mb-2;
+}
+
+.stat-label {
+    @apply text-slate-300 text-sm uppercase tracking-wide;
+}
+
+// Final CTA Section - no extra padding
+.final-cta {
+    @apply text-center;
+}
+
+.final-cta-title {
+    @apply text-4xl md:text-5xl font-bold mb-6;
+    @apply text-gray-900 dark:text-white;
+}
+
+.final-cta-subtitle {
+    @apply text-xl text-gray-600 dark:text-gray-400 mb-10;
+    @apply max-w-2xl mx-auto;
+}
+
+// Section-specific utilities
+.section-header {
+    @apply text-center mb-8;
+}
+
+.section-title {
+    @apply text-3xl md:text-4xl font-bold text-gray-900 dark:text-white;
+}
+
+.section-subtitle {
+    @apply text-lg text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto;
 }
 
