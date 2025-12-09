@@ -4,12 +4,18 @@
     <div class="section">
         <div class="container max-w-3xl">
 
-            <h1>Changelog</h1>
-            <p class="subtitle mb-10">Latest updates and new features</p>
+            <h1 class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                x-data="{}" 
+                x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 100)">Changelog</h1>
+            <p class="subtitle mb-10 opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+               x-data="{}" 
+               x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 200)">Latest updates and new features</p>
 
             <div class="changelog-list">
-                @forelse($changelogs as $changelog)
-                    <article class="changelog-item">
+                @forelse($changelogs as $index => $changelog)
+                    <article class="changelog-item opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                             x-data="{}" 
+                             x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), {{ $index % 3 * 100 }})">
                         <header class="changelog-header">
                             <div class="changelog-version">
                                 <h2 class="changelog-version-number">

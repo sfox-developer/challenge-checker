@@ -4,11 +4,17 @@
     <div class="section">
         <div class="container max-w-3xl">
             
-            <h1 class="h1">Privacy Policy</h1>
-            <p class="subtitle mb-10">Last updated: December 5, 2025</p>
+            <h1 class="h1 opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                x-data="{}" 
+                x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 100)">Privacy Policy</h1>
+            <p class="subtitle mb-10 opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+               x-data="{}" 
+               x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 200)">Last updated: December 5, 2025</p>
 
             <div class="space-y-10">
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Introduction</h2>
                 <div>
                     <p>
@@ -18,7 +24,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Information We Collect</h2>
                 <div>
                     <p><strong>Personal Information:</strong></p>
@@ -40,7 +48,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">How We Use Your Information</h2>
                 <div>
                     <p>We use your personal data for the following purposes:</p>
@@ -55,7 +65,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Data Sharing and Disclosure</h2>
                 <div>
                     <p>We do not sell your personal data. We may share your information in the following situations:</p>
@@ -67,7 +79,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Data Security</h2>
                 <div>
                     <p>
@@ -78,7 +92,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Your Privacy Rights</h2>
                 <div>
                     <p>You have the following rights regarding your personal data:</p>
@@ -92,7 +108,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Data Retention</h2>
                 <div>
                     <p>
@@ -102,7 +120,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Cookies and Tracking</h2>
                 <div>
                     <p>
@@ -112,7 +132,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Children's Privacy</h2>
                 <div>
                     <p>
@@ -122,7 +144,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Changes to This Policy</h2>
                 <div>
                     <p>
@@ -132,7 +156,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Contact Us</h2>
                 <div>
                     <p>

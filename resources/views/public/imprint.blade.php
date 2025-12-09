@@ -4,11 +4,17 @@
     <div class="section">
         <div class="container max-w-3xl">
             
-            <h1 class="h1">Imprint</h1>
-            <p class="subtitle mb-10">Legal information</p>
+            <h1 class="h1 opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                x-data="{}" 
+                x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 100)">Imprint</h1>
+            <p class="subtitle mb-10 opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+               x-data="{}" 
+               x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 200)">Legal information</p>
 
             <div class="space-y-10">
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Information according to § 5 TMG</h2>
                 <div class="space-y-1 text-body">
                     <p><strong>{{ config('app.name') }}</strong></p>
@@ -19,7 +25,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Contact</h2>
                 <div class="space-y-1 text-body">
                     <p>Email: contact@example.com</p>
@@ -27,7 +35,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Responsible for content</h2>
                 <div class="space-y-1 text-body">
                     <p>Your Name</p>
@@ -36,7 +46,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Dispute resolution</h2>
                 <div class="space-y-3 text-body">
                     <p>
@@ -51,7 +63,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Liability for content</h2>
                 <div>
                     <p>
@@ -67,7 +81,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Liability for links</h2>
                 <div>
                     <p>
@@ -78,7 +94,9 @@
                 </div>
             </section>
 
-            <section>
+            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     x-data="{}" 
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
                 <h2 class="h2">Copyright</h2>
                 <div>
                     <p>
