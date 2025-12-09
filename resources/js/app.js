@@ -12,7 +12,10 @@ import './goal-toggle.js';
 import './toast.js';
 
 import Alpine from 'alpinejs';
+import intersect from '@alpinejs/intersect';
 
 window.Alpine = Alpine;
+
+Alpine.plugin(intersect);
 
 Alpine.start();
