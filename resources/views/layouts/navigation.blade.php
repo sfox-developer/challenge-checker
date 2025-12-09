@@ -27,7 +27,7 @@
                     <x-nav-link :href="route('users.search')" :active="request()->routeIs('users.*')">
                         {{ __('Discover') }}
                     </x-nav-link>
-                    @if(Auth::user()->is_admin)
+                    @if(Auth::check() && Auth::user()->is_admin)
                         <div class="nav-admin-wrapper" x-data="{ open: false }">
                             <button @click="open = !open" 
                                     class="nav-admin-button {{ request()->routeIs('admin.*') ? 'active' : '' }}">
@@ -85,8 +85,8 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="nav-user-trigger">
-                            <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->name }}">
-                            <div>{{ Auth::user()->name }}</div>
+                            <img src="{{ Auth::check() ? Auth::user()->getAvatarUrl() : '' }}" alt="{{ Auth::check() ? Auth::user()->name : '' }}">
+                            <div>{{ Auth::check() ? Auth::user()->name : '' }}</div>
 
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -97,9 +97,11 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('users.show', Auth::user())">
-                            {{ __('My Profile') }}
-                        </x-dropdown-link>
+                        @if(Auth::check())
+                            <x-dropdown-link :href="route('users.show', Auth::user())">
+                                {{ __('My Profile') }}
+                            </x-dropdown-link>
+                        @endif
                         
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Settings') }}
@@ -171,7 +173,7 @@
 
         <!-- Profile / Menu -->
         <a href="{{ route('profile.menu') }}" class="bottom-nav-item {{ request()->routeIs('profile.menu') ? 'active' : '' }}">
-            <img src="{{ Auth::user()->getAvatarUrl() }}" alt="{{ Auth::user()->name }}">
+            <img src="{{ Auth::check() ? Auth::user()->getAvatarUrl() : '' }}" alt="{{ Auth::check() ? Auth::user()->name : '' }}">
             <span>Menu</span>
         </a>
     </div>

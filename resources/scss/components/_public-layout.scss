@@ -1,0 +1,390 @@
+// ============================================================================
+// PUBLIC LAYOUT - Ready.so-inspired public pages
+// ============================================================================
+// Layout components for unauthenticated public pages
+// Includes navigation, static pages, marketing pages, and auth pages
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// TYPOGRAPHY CLASSES - Reusable headings and text styles
+// ----------------------------------------------------------------------------
+
+// Headings
+.h1 {
+    @apply text-3xl font-bold;
+    @apply text-gray-900 dark:text-white;
+}
+
+.h2 {
+    @apply text-2xl font-bold;
+    @apply text-gray-900 dark:text-white;
+}
+
+.h3 {
+    @apply text-xl font-semibold;
+    @apply text-gray-900 dark:text-white;
+}
+
+// Text variants
+.text-body {
+    @apply text-base;
+    @apply text-gray-700 dark:text-gray-300;
+}
+
+.text-muted {
+    @apply text-sm;
+    @apply text-gray-600 dark:text-gray-400;
+}
+
+.text-success {
+    @apply font-medium text-sm;
+    @apply text-green-600 dark:text-green-400;
+}
+
+// Links
+.link-muted {
+    @apply text-sm;
+    @apply text-gray-600 dark:text-gray-400;
+    @apply hover:text-gray-800 dark:hover:text-gray-200;
+    @apply underline;
+    @apply rounded-md;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500;
+}
+
+// ----------------------------------------------------------------------------
+// COMPONENT CLASSES - Reusable UI elements
+// ----------------------------------------------------------------------------
+
+// Feature icon - Used in landing page features
+.feature-icon {
+    @apply w-16 h-16;
+    @apply bg-slate-700 dark:bg-slate-600;
+    @apply rounded-2xl;
+    @apply flex items-center justify-center;
+    @apply mx-auto;
+}
+
+.feature-icon-sm {
+    @apply w-12 h-12;
+    @apply bg-slate-700 dark:bg-slate-600;
+    @apply rounded-xl;
+    @apply flex items-center justify-center;
+}
+
+// Feature card - Landing page feature cards
+.feature-card {
+    @apply text-center space-y-4;
+}
+
+.feature-card-content {
+    @apply space-y-2;
+}
+
+// Hero section
+.hero-section {
+    @apply flex-1 flex items-center justify-center;
+    @apply px-6 sm:px-8 lg:px-12;
+    @apply py-20 md:py-32 lg:py-40;
+}
+
+.hero-content {
+    @apply max-w-5xl mx-auto;
+}
+
+.hero-text-wrapper {
+    @apply text-center space-y-12;
+}
+
+.hero-title-section {
+    @apply space-y-6;
+}
+
+// CTA Buttons - Large prominent buttons for hero sections
+.cta-primary {
+    @apply px-10 py-4;
+    @apply text-lg font-medium;
+    @apply text-white;
+    @apply bg-slate-700 dark:bg-slate-600;
+    @apply hover:bg-slate-800 dark:hover:bg-slate-700;
+    @apply rounded-xl;
+    @apply transition-all duration-200;
+    @apply shadow-sm hover:shadow-md;
+}
+
+.cta-secondary {
+    @apply px-10 py-4;
+    @apply text-lg font-medium;
+    @apply text-gray-700 dark:text-gray-300;
+    @apply bg-transparent;
+    @apply border border-gray-200 dark:border-gray-700;
+    @apply hover:bg-gray-50 dark:hover:bg-gray-800;
+    @apply rounded-xl;
+    @apply transition-all duration-200;
+}
+
+// Grid layouts
+.features-grid {
+    @apply mt-32;
+    @apply grid grid-cols-1 md:grid-cols-3 gap-12;
+    @apply max-w-6xl mx-auto;
+}
+
+// ----------------------------------------------------------------------------
+// PUBLIC PAGE WRAPPER
+// ----------------------------------------------------------------------------
+
+.public-layout {
+    @apply font-sans antialiased;
+    @apply bg-white dark:bg-gray-900;
+    @apply min-h-screen flex flex-col;
+}
+
+// ----------------------------------------------------------------------------
+// PUBLIC NAVIGATION - Sticky blur effect
+// ----------------------------------------------------------------------------
+
+.public-nav {
+    @apply sticky top-0 z-50;
+    @apply bg-white/80 dark:bg-gray-900/80;
+    @apply backdrop-blur-lg;
+    @apply border-b border-gray-100 dark:border-gray-800;
+}
+
+.public-nav-container {
+    @apply max-w-7xl mx-auto px-6;
+    @apply sm:px-8 lg:px-12;
+}
+
+.public-nav-content {
+    @apply flex justify-between items-center h-20;
+}
+
+.public-nav-logo {
+    @apply flex items-center space-x-3;
+    
+    span {
+        @apply text-gray-900 dark:text-white;
+        @apply font-semibold text-xl;
+    }
+}
+
+.public-nav-actions {
+    @apply flex items-center space-x-3;
+}
+
+.public-nav-link {
+    @apply px-5 py-2.5;
+    @apply text-sm font-medium;
+    @apply text-gray-700 dark:text-gray-300;
+    @apply hover:text-gray-900 dark:hover:text-white;
+    @apply transition-colors duration-200;
+}
+
+.public-nav-button {
+    @apply px-6 py-3;
+    @apply text-sm font-medium;
+    @apply text-white;
+    @apply bg-slate-700 dark:bg-slate-600;
+    @apply hover:bg-slate-800 dark:hover:bg-slate-700;
+    @apply rounded-xl;
+    @apply transition-colors duration-200;
+}
+
+.theme-toggle {
+    @apply inline-flex items-center justify-center;
+    @apply w-10 h-10 rounded-lg;
+    @apply text-gray-600 dark:text-gray-400;
+    @apply hover:bg-gray-50 dark:hover:bg-gray-800;
+    @apply transition-colors duration-200;
+}
+
+// ----------------------------------------------------------------------------
+// PUBLIC MAIN CONTENT
+// ----------------------------------------------------------------------------
+
+.public-main {
+    @apply flex-1 flex flex-col;
+    @apply px-6 sm:px-8 lg:px-12;
+    @apply py-20 sm:py-24;
+}
+
+// ----------------------------------------------------------------------------
+// STATIC PAGE COMPONENTS
+// ----------------------------------------------------------------------------
+
+.static-page-container {
+    @apply max-w-4xl mx-auto w-full;
+    @apply space-y-8;
+}
+
+.static-page-header {
+    @apply flex items-center space-x-4 mb-10;
+}
+
+.static-page-icon {
+    @apply p-3;
+    @apply bg-slate-100 dark:bg-slate-900;
+    @apply rounded-xl;
+    @apply text-slate-700 dark:text-slate-400;
+}
+
+.static-page-title {
+    @apply text-3xl font-bold;
+    @apply text-gray-900 dark:text-white;
+}
+
+.static-page-subtitle {
+    @apply text-base font-normal;
+    @apply text-gray-600 dark:text-gray-400;
+    @apply mt-2;
+}
+
+.static-page-content {
+    @apply space-y-8;
+}
+
+.content-section {
+    @apply space-y-4;
+}
+
+.section-heading {
+    @apply text-xl font-semibold;
+    @apply text-gray-900 dark:text-white;
+    @apply flex items-center space-x-3;
+    
+    &:before {
+        content: '';
+        @apply w-1 h-6;
+        @apply bg-slate-700 dark:bg-slate-600;
+        @apply rounded;
+    }
+}
+
+.content-block {
+    @apply space-y-3;
+    @apply text-base;
+    @apply text-gray-700 dark:text-gray-300;
+    @apply leading-relaxed;
+    
+    p {
+        @apply mb-3;
+    }
+    
+    strong {
+        @apply font-semibold;
+        @apply text-gray-900 dark:text-white;
+    }
+}
+
+.text-link {
+    @apply text-slate-700 dark:text-slate-400;
+    @apply hover:text-slate-900 dark:hover:text-slate-300;
+    @apply underline underline-offset-2;
+    @apply transition-colors duration-200;
+}
+
+// ----------------------------------------------------------------------------
+// AUTH LAYOUT - Spacious auth pages
+// ----------------------------------------------------------------------------
+
+.auth-layout {
+    @apply font-sans antialiased;
+    @apply bg-white dark:bg-gray-900;
+    @apply min-h-screen flex flex-col;
+}
+
+.auth-content {
+    @apply min-h-screen flex flex-col;
+    @apply items-center justify-center;
+    @apply px-6 py-20 sm:py-24;
+}
+
+.auth-container {
+    @apply w-full max-w-md space-y-8;
+}
+
+.auth-header {
+    @apply text-center space-y-3 mb-10;
+}
+
+.auth-title {
+    @apply text-3xl font-bold;
+    @apply text-gray-900 dark:text-white;
+}
+
+.auth-subtitle {
+    @apply text-base font-normal;
+    @apply text-gray-600 dark:text-gray-400;
+}
+
+.auth-form {
+    @apply space-y-6;
+}
+
+.auth-field {
+    @apply space-y-2;
+}
+
+.auth-label {
+    @apply text-sm font-medium;
+    @apply text-gray-700 dark:text-gray-300;
+}
+
+.auth-input {
+    @apply block w-full;
+    @apply px-4 py-3 rounded-xl;
+    @apply border-gray-200 dark:border-gray-700;
+    @apply focus:border-slate-700 dark:focus:border-slate-500;
+    @apply focus:ring-slate-700 dark:focus:ring-slate-500;
+}
+
+.auth-actions {
+    @apply flex items-center justify-between;
+}
+
+.auth-remember {
+    @apply inline-flex items-center;
+    
+    input {
+        @apply rounded;
+        @apply border-gray-300 dark:border-gray-600;
+        @apply text-slate-700;
+        @apply shadow-sm;
+        @apply focus:ring-slate-500 dark:focus:ring-slate-600;
+    }
+    
+    span {
+        @apply ms-2 text-sm font-normal;
+        @apply text-gray-600 dark:text-gray-400;
+    }
+}
+
+.auth-link {
+    @apply text-sm font-medium;
+    @apply text-gray-600 dark:text-gray-400;
+    @apply hover:text-slate-700 dark:hover:text-slate-400;
+    @apply transition-colors;
+}
+
+.auth-submit {
+    @apply w-full px-6 py-4;
+    @apply text-base font-medium;
+    @apply text-white;
+    @apply bg-slate-700 dark:bg-slate-600;
+    @apply hover:bg-slate-800 dark:hover:bg-slate-700;
+    @apply rounded-xl;
+    @apply transition-colors duration-200;
+    @apply shadow-sm;
+}
+
+.auth-footer {
+    @apply text-center text-sm font-normal;
+    @apply text-gray-600 dark:text-gray-400;
+    
+    a {
+        @apply font-medium;
+        @apply text-slate-700 dark:text-slate-400;
+        @apply hover:text-slate-800 dark:hover:text-slate-300;
+        @apply transition-colors;
+    }
+}

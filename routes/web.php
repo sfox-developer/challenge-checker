@@ -21,19 +21,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Public static pages
+Route::get('/changelog', [ChangelogController::class, 'index'])->name('changelog');
+Route::view('/privacy-policy', 'privacy-policy')->name('privacy.policy');
+Route::view('/terms-of-service', 'terms-of-service')->name('terms.service');
+Route::view('/imprint', 'imprint')->name('imprint');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/menu', [ProfileController::class, 'menu'])->name('profile.menu');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/theme', [ProfileController::class, 'updateTheme'])->name('profile.updateTheme');
-    
-    // Changelog (public)
-    Route::get('/changelog', [ChangelogController::class, 'index'])->name('changelog');
-    
-    // Static pages
-    Route::view('/privacy-policy', 'privacy-policy')->name('privacy.policy');
-    Route::view('/terms-of-service', 'terms-of-service')->name('terms.service');
     
     // Feed routes
     Route::get('/feed', [FeedController::class, 'index'])->name('feed.index');

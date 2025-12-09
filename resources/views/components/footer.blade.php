@@ -15,7 +15,10 @@
                     Privacy Policy
                 </a>
                 <a href="{{ route('terms.service') }}" class="text-gray-600 dark:text-gray-400 hover:text-slate-700 dark:hover:text-slate-400 transition-colors">
-                    Terms of Service
+                    Terms
+                </a>
+                <a href="{{ route('imprint') }}" class="text-gray-600 dark:text-gray-400 hover:text-slate-700 dark:hover:text-slate-400 transition-colors">
+                    Imprint
                 </a>
             </div>
         </div>
