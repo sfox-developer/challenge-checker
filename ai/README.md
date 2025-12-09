@@ -1,76 +1,33 @@
 # AI Agent Quick Start Guide
 
-## 🎯 Purpose of This Document
-
-This document provides a **standardized prompt template** for AI agents working on the Challenge Checker project. Following this workflow ensures that AI agents:
-
-1. **Understand the project architecture** before making changes
-2. **Complete tasks correctly** with proper context
-3. **Update documentation** to keep it current for future agents
+**Last Updated:** December 10, 2025  
+**Purpose:** Standardized workflow for AI agents working on Challenge Checker
 
 ---
 
-## 📋 Standard AI Agent Workflow
+## 🎯 Overview
 
-When an AI agent receives a task for this project, follow this workflow:
+This guide ensures AI agents:
+1. **Understand** the project architecture before making changes
+2. **Execute** tasks following established patterns
+3. **Document** changes to keep docs current
 
-### Phase 1: Project Understanding (REQUIRED FIRST STEP)
+---
 
-**Before starting any task, read these documentation files in order:**
+## 📋 3-Phase Workflow
 
-1. **`ai/01-overview-and-tech-stack.md`**
-   - Understand project purpose and architecture
-   - Learn tech stack (Laravel, Alpine.js, Tailwind, PostgreSQL)
-   - Review development conventions
+### Phase 1: Understand (Required First Step)
 
-2. **`ai/02-database-schema.md`**
-   - Understand all database tables and relationships
-   - Review foreign key constraints and cascade rules
-   - Learn unique constraints and indexes
+**Read documentation in this order:**
 
-3. **`ai/03-domain-models.md`**
-   - Learn model organization and relationships
-   - Understand model methods and scopes
-   - Review business logic patterns
+1. **`01-architecture.md`** - Tech stack, folder structure, conventions
+2. **`02-database.md`** - Database schema and relationships
+3. **`03-styling-system.md`** - SCSS architecture and Tailwind patterns
+4. **`04-blade-components.md`** - Component system and Alpine.js
+5. **`05-features.md`** - Business logic, models, routes
+6. **`06-public-pages-blueprint.md`** - Reference implementation (Gold Standard)
 
-4. **`ai/04-features-and-workflows.md`**
-   - Understand user workflows and features
-   - Learn how features interact
-   - Review state management (challenge lifecycle, habit tracking, etc.)
-
-5. **`ai/05-routing-and-controllers.md`**
-   - Understand routing structure
-   - Learn controller methods and responsibilities
-   - Review authorization patterns
-
-6. **`ai/06-frontend-components.md`**
-   - Understand Alpine.js component system
-   - Learn Blade component patterns
-   - Review frontend architecture and CSS utility classes
-
-7. **`ai/07-minimalistic-ui-refactoring.md`**
-   - Learn current design system (minimalistic, single blue accent)
-   - Understand color palette and usage guidelines
-   - Review recent UI consistency changes
-
-8. **`ai/08-css-classes-usage-guide.md`**
-   - Understand SCSS component system
-   - Learn Tailwind utility patterns
-   - Review responsive design approach
-
-9. **`ai/09-folder-structure.md`**
-   - Learn views folder organization (public, auth, dashboard, admin)
-   - Understand component namespace structure (dot notation)
-   - Review SCSS modular architecture (SMACSS/ITCSS)
-   - See controller view path conventions
-
-10. **`ai/10-global-scss-refactoring.md`**
-   - Understand global class system (typography, icons, buttons)
-   - Learn class consolidation patterns (icon-wrapper, btn-large)
-   - Review global vs layout-specific organization
-   - See before/after refactoring examples
-
-**⚠️ CRITICAL:** Do not skip this phase. Misunderstanding the architecture leads to:
+**⚠️ Do not skip this phase.** Misunderstanding the architecture leads to:
 - Breaking existing features
 - Creating duplicate code
 - Violating architectural patterns
@@ -78,74 +35,205 @@ When an AI agent receives a task for this project, follow this workflow:
 
 ---
 
-### Phase 2: Task Execution
+### Phase 2: Execute
 
 **After understanding the project:**
 
-1. **Analyze the task requirements**
+1. **Analyze Task Requirements**
    - What needs to be created, modified, or fixed?
    - Which domains/models are affected?
    - What database changes are needed?
    - Which routes and controllers are involved?
    - What frontend components need updates?
 
-2. **Plan your approach**
+2. **Plan Your Approach**
    - Identify all files that need changes
    - Consider database migrations if schema changes
    - Plan authorization (policies) if needed
-   - Consider activity feed implications
-   - Think about edge cases
+   - Reference `06-public-pages-blueprint.md` for patterns
 
-3. **Implement changes**
+3. **Implement Changes**
    - Follow existing code patterns
    - Use proper naming conventions
-   - Maintain separation of concerns
-   - Add proper validation
+   - Use SCSS classes (not inline Tailwind for repeated patterns)
+   - Add Alpine.js animations following blueprint
    - Handle errors gracefully
-   - Test authorization rules
 
-4. **Verify the implementation**
+4. **Verify Implementation**
    - Check for syntax errors
    - Verify database relationships
-   - Ensure proper eager loading (no N+1 queries)
    - Test authorization policies
-   - Verify frontend components work
+   - Test both light and dark modes
+   - Verify responsive design
 
 ---
 
-### Phase 3: Documentation Updates (REQUIRED)
+### Phase 3: Document (Required)
 
-**After completing the task, update relevant documentation:**
+**After completing the task:**
 
-1. **Identify what changed:**
-   - New database tables/columns? → Update `02-database-schema.md`
-   - New models or methods? → Update `03-domain-models.md`
-   - New features or workflows? → Update `04-features-and-workflows.md`
-   - New routes or controllers? → Update `05-routing-and-controllers.md`
-   - New components or JS? → Update `06-frontend-components.md`
-   - Architecture changes? → Update `01-overview-and-tech-stack.md`
+1. **Identify What Changed:**
+   - New database tables/columns? → Update `02-database.md`
+   - New business logic or workflows? → Update `05-features.md`
+   - New SCSS classes? → Update `03-styling-system.md`
+   - New components? → Update `04-blade-components.md`
+   - Architecture changes? → Update `01-architecture.md`
 
-2. **Update the documentation files:**
+2. **Update Documentation:**
    - Keep consistent formatting
-   - Be specific and detailed
-   - Include code examples where helpful
+   - Include code examples
    - Update relationships and dependencies
    - Document any breaking changes
 
-3. **Verify documentation accuracy:**
-   - Does it reflect the current state?
-   - Are all new features documented?
-   - Are examples correct?
-   - Is it easy for future agents to understand?
+---
+
+## 🤖 Standard Prompt Template
+
+Copy and use this when starting work:
+
+```
+Read ai/README.md and follow the 3-phase workflow.
+
+Before starting:
+1. Read ai/README.md to understand the workflow
+2. Read all documentation files (01-06) in order
+3. Understand the project architecture and patterns
+
+Task: [DESCRIBE YOUR TASK HERE]
+
+Requirements:
+- Follow 3-phase workflow (Understand → Execute → Document)
+- Reference 06-public-pages-blueprint.md for patterns
+- Follow SCSS class system (see 03-styling-system.md)
+- Use Alpine.js animations following blueprint patterns
+- Update relevant documentation after changes
+- Test dark mode and responsive design
+
+Please confirm you have read the documentation before proceeding.
+```
 
 ---
 
-## 🤖 Prompt Template for AI Agents
+## 📚 Quick Task Reference
 
-Copy and use this prompt template when starting work on this project:
+### Adding a Feature
+**Read:** 02-database.md, 05-features.md, 06-public-pages-blueprint.md  
+**Pattern:** Follow existing domain structure, use blueprint for UI patterns
+
+### Creating a New Page
+**Read:** 03-styling-system.md, 04-blade-components.md, 06-public-pages-blueprint.md  
+**Pattern:** Copy patterns from completed public pages exactly
+
+### Updating Styles
+**Read:** 03-styling-system.md, 06-public-pages-blueprint.md  
+**Pattern:** Use existing SCSS classes, create new class if pattern repeats 3+ times
+
+### Database Changes
+**Read:** 02-database.md, 05-features.md  
+**Pattern:** Follow existing relationship patterns, update documentation
+
+### Fixing a Bug
+**Read:** Relevant domain documentation (01-06)  
+**Pattern:** Understand the feature first, then fix following existing patterns
+
+---
+
+## 🎨 Key Principles
+
+### 1. Use Completed Work as Blueprint
+- **Public pages (welcome, legal, changelog) are the gold standard**
+- Copy their patterns exactly for consistency
+- Don't reinvent animations, spacing, or typography
+- Reference `06-public-pages-blueprint.md` extensively
+
+### 2. Follow SCSS Class System
+- Use custom SCSS classes for repeated patterns (3+ occurrences)
+- Use Tailwind utilities for unique, one-off styling
+- See `03-styling-system.md` for complete class reference
+- Create new classes in appropriate files (base/components/pages)
+
+### 3. Maintain Consistency
+- Same animation delays (100ms increments)
+- Same spacing scale (py-12 md:py-20 for sections)
+- Same typography hierarchy (.h1, .h2, etc.)
+- Same color palette (slate-700 accent)
+- Same component patterns
+
+### 4. Always Support Dark Mode
+- Include dark: variants for all colors
+- Test in both light and dark modes
+- Follow existing dark mode patterns
+
+### 5. Mobile-First Responsive Design
+- Base styles for mobile
+- md: breakpoint for tablet (768px)
+- lg: breakpoint for desktop (1024px)
+- Test on all screen sizes
+
+---
+
+## ✅ Quality Checklist
+
+Before marking task complete:
+
+**Code Quality:**
+- [ ] Follows existing architectural patterns
+- [ ] Uses SCSS classes (not inline Tailwind for common patterns)
+- [ ] Includes dark mode support
+- [ ] Responsive design tested
+- [ ] No console errors
+- [ ] No syntax errors
+
+**Functionality:**
+- [ ] Feature works as expected
+- [ ] Edge cases handled
+- [ ] Authorization policies work
+- [ ] Database queries optimized (no N+1)
+
+**Design:**
+- [ ] Matches completed page patterns
+- [ ] Typography hierarchy correct
+- [ ] Spacing consistent with blueprint
+- [ ] Animations follow blueprint timing
+- [ ] Colors from established palette
+
+**Documentation:**
+- [ ] Relevant docs updated
+- [ ] Code examples provided
+- [ ] Breaking changes noted
+- [ ] New classes documented
+
+---
+
+## 📖 Documentation Structure
 
 ```
-I am working on the Challenge Checker Laravel project. Before starting my task, I will:
+ai/
+├── README.md                    ← You are here
+├── 01-architecture.md          ← Tech stack + structure
+├── 02-database.md              ← Schema + relationships
+├── 03-styling-system.md        ← SCSS + Tailwind
+├── 04-blade-components.md      ← Components + Alpine.js
+├── 05-features.md              ← Business logic + routes
+├── 06-public-pages-blueprint.md ← Reference implementation ⭐
+├── PROMPT.md                    ← Prompt templates
+└── archive/                     ← Old documentation
+```
+
+---
+
+## 🚀 Getting Started
+
+1. **Read this README** (you're doing it!)
+2. **Read all 6 documentation files** in order (01-06)
+3. **Review the public pages** (`resources/views/public/`) to see patterns in action
+4. **Start your task** following the 3-phase workflow
+5. **Update documentation** when done
+
+---
+
+**Remember: The completed public pages are your blueprint. When in doubt, reference them first.**
+
 
 1. READ AND UNDERSTAND these documentation files in order:
    - ai/01-overview-and-tech-stack.md

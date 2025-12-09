@@ -1,0 +1,742 @@
+# Styling System - SCSS + Tailwind
+
+**Last Updated:** December 10, 2025  
+**Purpose:** Complete guide to SCSS architecture and Tailwind patterns
+
+---
+
+## 🎯 Styling Philosophy
+
+### Design Principles
+1. **Minimalistic** - Single accent color (slate-700), clean aesthetics
+2. **Consistent** - Reusable SCSS classes for repeated patterns
+3. **Semantic** - Class names describe purpose, not appearance
+4. **Progressive** - Dark mode support built-in
+5. **Performant** - Tailwind JIT compilation for optimal bundle size
+
+### When to Use What
+
+**Use SCSS Classes When:**
+- ✅ Pattern appears 3+ times across the app
+- ✅ Styling has semantic meaning (e.g., `.badge-completed`, `.hero-title`)
+- ✅ Dark mode handling needs to be centralized
+- ✅ Pattern might need global style updates
+
+**Use Tailwind Utilities When:**
+- ✅ Styling is unique to one component
+- ✅ Need precise spacing/sizing adjustments
+- ✅ Prototyping and exploring designs
+- ✅ Pattern is too simple to warrant a class (e.g., single utility)
+
+---
+
+## 📁 SCSS Architecture
+
+### File Structure (SMACSS/ITCSS Pattern)
+
+```
+resources/scss/
+├── app.scss                    # Main entry point
+├── abstracts/                  # No CSS output
+│   ├── _variables.scss        # Color palette, spacing
+│   └── _mixins.scss           # Reusable mixins
+├── base/                       # Global foundational styles
+│   ├── _typography.scss       # h1, h2, text classes
+│   └── _utilities.scss        # .section, .container
+├── components/                 # Reusable component classes
+│   ├── _badges.scss           # Status badges
+│   ├── _buttons.scss          # Button variants
+│   ├── _cards.scss            # Card patterns
+│   ├── _changelog.scss        # Changelog styles
+│   ├── _empty-states.scss     # Empty state patterns
+│   ├── _forms.scss            # Form components
+│   ├── _modals.scss           # Modal styles
+│   └── _nav.scss              # Navigation
+├── pages/                      # Page-specific styles ONLY
+│   └── _welcome.scss          # Landing page classes
+└── vendors/                    # Third-party overrides
+    └── _toast.scss            # Toast notifications
+```
+
+### Import Order (app.scss)
+
+```scss
+// 1. ABSTRACTS - Variables and mixins (no CSS output)
+@use 'abstracts/variables';
+@use 'abstracts/mixins';
+
+// 2. BASE - Typography and utilities
+@use 'base/typography';
+@use 'base/utilities';
+
+// 3. COMPONENTS - Reusable component classes
+@use 'components/buttons';
+@use 'components/nav';
+@use 'components/cards';
+@use 'components/forms';
+@use 'components/badges';
+@use 'components/modals';
+@use 'components/empty-states';
+@use 'components/changelog';
+
+// 4. PAGES - Page-specific styles (add as needed)
+@use 'pages/welcome';
+
+// 5. VENDORS - Third-party overrides
+@use 'vendors/toast';
+
+// 6. TAILWIND - Framework (must use @import, not @use)
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+// 7. GLOBAL OVERRIDES
+body {
+    font-family: 'Inter', 'Figtree', ui-sans-serif, system-ui, sans-serif;
+}
+```
+
+---
+
+## 📝 Component Classes Reference
+
+### Typography (`base/_typography.scss`)
+
+**Headings:**
+```scss
+.h1 {
+    @apply text-4xl md:text-5xl font-bold;
+    @apply text-gray-900 dark:text-white;
+}
+
+.h2 {
+    @apply text-2xl md:text-3xl font-bold;
+    @apply text-gray-900 dark:text-white;
+}
+
+.h3 {
+    @apply text-xl font-semibold;
+    @apply text-gray-900 dark:text-white;
+}
+```
+
+**Body Text:**
+```scss
+.text-body {
+    @apply text-gray-700 dark:text-gray-300;
+}
+
+.text-muted {
+    @apply text-gray-600 dark:text-gray-400;
+}
+
+.text-help {
+    @apply text-sm text-gray-500 dark:text-gray-400;
+}
+```
+
+**Links:**
+```scss
+.text-link {
+    @apply text-slate-700 dark:text-slate-400;
+    @apply hover:underline;
+}
+
+.link-muted {
+    @apply text-gray-600 dark:text-gray-400;
+    @apply hover:text-slate-700 dark:hover:text-slate-300;
+}
+```
+
+**Usage Example:**
+```blade
+<h1 class="h1">Page Title</h1>
+<h2 class="h2">Section Heading</h2>
+<p class="text-body">Body content goes here.</p>
+<p class="text-help">Helper text for the user.</p>
+<a href="#" class="text-link">Learn more</a>
+```
+
+---
+
+### Utilities (`base/_utilities.scss`)
+
+**Layout Containers:**
+```scss
+.section {
+    @apply py-12 md:py-20;  // Vertical section spacing
+}
+
+.container {
+    @apply max-w-7xl mx-auto px-6;  // Horizontal content constraint
+}
+```
+
+**Usage Example:**
+```blade
+<div class="section">
+    <div class="container">
+        <!-- Content constrained to max-width with padding -->
+    </div>
+</div>
+```
+
+---
+
+### Badges (`components/_badges.scss`)
+
+**Challenge Status:**
+```scss
+.badge-challenge-active    // 🏃 Active - Orange
+.badge-challenge-completed // ✓ Completed - Green
+.badge-challenge-paused    // ⏸️ Paused - Gray
+.badge-challenge-draft     // 📝 Draft - Blue
+.badge-challenge-archived  // 📁 Archived - Gray
+```
+
+**Habit Status:**
+```scss
+.badge-habit-active        // Active - Orange
+.badge-habit-archived      // Archived - Gray
+```
+
+**Other Badges:**
+```scss
+.badge-frequency           // Progress info (e.g., "2 of 3 this week")
+.badge-info-count          // Usage count (e.g., "3 challenges")
+.badge-category            // Goal category (e.g., "🏃 Fitness")
+.badge-admin               // Admin role badge
+```
+
+**Tab Count Badge:**
+```scss
+.tab-count-badge           // Base badge for tab counts
+.tab-count-badge.active    // Active tab count
+.tab-count-badge.inactive  // Inactive tab count
+```
+
+**Usage Example:**
+```blade
+<!-- Challenge status -->
+<span class="badge-challenge-active">🏃 Active</span>
+<span class="badge-challenge-completed">✓ Completed</span>
+
+<!-- Habit status -->
+<span class="badge-habit-active">Active</span>
+
+<!-- Progress info -->
+<span class="badge-frequency">2 of 3 this week</span>
+
+<!-- Category -->
+<span class="badge-category">🏃 Fitness</span>
+
+<!-- Tab count (with Alpine.js) -->
+<span class="tab-count-badge" :class="activeTab === 'challenges' ? 'active' : 'inactive'">
+    {{ $count }}
+</span>
+```
+
+---
+
+### Buttons (`components/_buttons.scss`)
+
+**Standard Buttons:**
+```scss
+.btn               // Base button class
+.btn-primary       // Primary action (slate-700 bg, white text)
+.btn-secondary     // Secondary action (transparent, bordered)
+.btn-danger        // Destructive action (red)
+```
+
+**Large Buttons (CTAs):**
+```scss
+.btn-lg            // Large size modifier
+.btn-large         // Alternative large button class
+.btn-large-primary // Large primary CTA
+.btn-large-secondary // Large secondary CTA
+```
+
+**Icon Buttons:**
+```scss
+.btn-icon          // Icon-only button (square, centered icon)
+```
+
+**Usage Example:**
+```blade
+<!-- Standard buttons -->
+<button class="btn btn-primary">Save Challenge</button>
+<button class="btn btn-secondary">Cancel</button>
+<button class="btn btn-danger">Delete</button>
+
+<!-- Large CTAs -->
+<a href="{{ route('register') }}" class="btn btn-primary btn-lg">
+    Get Started Free
+</a>
+
+<!-- Icon button -->
+<button class="btn-icon">
+    <svg>...</svg>
+</button>
+```
+
+**Note:** Buttons now use box-shadows instead of borders for a more minimalistic appearance.
+
+---
+
+### Cards (`components/_cards.scss`)
+
+**Base Card:**
+```scss
+.card              // Base card container
+.card-header       // Card header section
+.card-body         // Card main content
+.card-footer       // Card footer section
+```
+
+**Specialized Cards:**
+```scss
+.stat-card         // Statistics display card
+.challenge-card    // Challenge overview card
+.habit-card        // Habit overview card
+```
+
+**Usage Example:**
+```blade
+<div class="card">
+    <div class="card-header">
+        <h3>Card Title</h3>
+    </div>
+    <div class="card-body">
+        <p>Card content goes here.</p>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-primary">Action</button>
+    </div>
+</div>
+```
+
+---
+
+### Forms (`components/_forms.scss`)
+
+**Form Elements:**
+```scss
+.form-field        // Form field wrapper
+.form-label        // Form label
+.form-input        // Text input
+.form-textarea     // Textarea
+.form-select       // Select dropdown
+.form-checkbox     // Checkbox input
+.form-radio        // Radio input
+.form-error        // Error message
+.form-help         // Help text
+```
+
+**Usage Example:**
+```blade
+<div class="form-field">
+    <label class="form-label">Challenge Name</label>
+    <input type="text" class="form-input" name="name">
+    <p class="form-help">Enter a descriptive name for your challenge.</p>
+</div>
+```
+
+---
+
+### Empty States (`components/_empty-states.scss`)
+
+```scss
+.empty-state       // Container
+.empty-state-icon  // Large icon (emoji or SVG)
+.empty-state-title // Heading
+.empty-state-text  // Description
+.empty-state-cta   // Call-to-action button
+```
+
+**Usage Example:**
+```blade
+<div class="empty-state">
+    <div class="empty-state-icon">📅</div>
+    <h3 class="empty-state-title">No challenges yet</h3>
+    <p class="empty-state-text">
+        Create your first challenge to get started
+    </p>
+    <div class="empty-state-cta">
+        <a href="{{ route('challenges.create') }}" class="btn btn-primary">
+            Create Challenge
+        </a>
+    </div>
+</div>
+```
+
+---
+
+### Page Headers
+
+**Standard Page Header:**
+```scss
+.page-header         // Container
+.page-header-content // Content wrapper
+.page-header-icon    // Icon container
+.page-header-title   // Page title
+.page-header-actions // Action buttons
+```
+
+**Usage Example:**
+```blade
+<div class="page-header">
+    <div class="page-header-content">
+        <div class="page-header-icon">
+            <svg>...</svg>
+        </div>
+        <h2 class="page-header-title">My Challenges</h2>
+    </div>
+    <div class="page-header-actions">
+        <a href="{{ route('challenges.create') }}" class="btn btn-primary">
+            Create Challenge
+        </a>
+    </div>
+</div>
+```
+
+---
+
+### Section Headers
+
+```scss
+.section-header    // Large section heading
+.section-header-sm // Small section heading (uppercase)
+```
+
+**Usage Example:**
+```blade
+<h3 class="section-header">Statistics</h3>
+<h4 class="section-header-sm">Completed Goals</h4>
+```
+
+---
+
+## 🎨 Color System
+
+### Palette
+
+```scss
+// Primary Accent
+$accent: slate-700;
+$accent-dark: slate-400;
+
+// Backgrounds
+$bg-light: white;
+$bg-dark: gray-800;
+$bg-secondary-light: gray-50;
+$bg-secondary-dark: gray-900;
+
+// Text
+$text-light: gray-900;
+$text-dark: white;
+$text-muted-light: gray-600;
+$text-muted-dark: gray-400;
+
+// Borders
+$border-light: gray-200;
+$border-dark: gray-700;
+
+// Status Colors
+$success: green-500;
+$warning: orange-500;
+$error: red-500;
+```
+
+### Usage in SCSS
+
+```scss
+// Light mode
+background-color: theme('colors.slate.700');
+
+// Dark mode (Tailwind approach)
+@apply bg-slate-700 dark:bg-slate-400;
+```
+
+---
+
+## 📱 Responsive Design Patterns
+
+### Mobile-First Approach
+
+```scss
+// Base styles (mobile)
+.component {
+    @apply text-sm p-4;
+}
+
+// Tablet and up
+@screen md {
+    .component {
+        @apply text-base p-6;
+    }
+}
+
+// Desktop and up
+@screen lg {
+    .component {
+        @apply text-lg p-8;
+    }
+}
+```
+
+### Common Responsive Patterns
+
+**Grid Layouts:**
+```blade
+<!-- 1 column mobile, 2 tablet, 4 desktop -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <!-- Cards -->
+</div>
+```
+
+**Flex Direction:**
+```blade
+<!-- Stack mobile, row tablet+ -->
+<div class="flex flex-col md:flex-row gap-4">
+    <!-- Items -->
+</div>
+```
+
+**Text Sizing:**
+```blade
+<h1 class="text-3xl md:text-4xl lg:text-5xl">Heading</h1>
+```
+
+**Spacing:**
+```blade
+<div class="py-8 md:py-12 lg:py-16">Content</div>
+```
+
+---
+
+## 🌙 Dark Mode
+
+### Tailwind Dark Mode
+
+Challenge Checker uses **class-based dark mode** (not media query).
+
+**Configuration (tailwind.config.js):**
+```js
+module.exports = {
+    darkMode: 'class',
+    // ...
+}
+```
+
+**Usage in HTML:**
+```blade
+<!-- Light mode: white bg, dark text -->
+<!-- Dark mode: dark bg, light text -->
+<div class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
+    Content
+</div>
+```
+
+### Dark Mode Patterns
+
+**Backgrounds:**
+```blade
+bg-white dark:bg-gray-800           <!-- Primary bg -->
+bg-gray-50 dark:bg-gray-900         <!-- Secondary bg -->
+bg-slate-100 dark:bg-slate-900      <!-- Accent bg -->
+```
+
+**Text:**
+```blade
+text-gray-900 dark:text-white       <!-- Body text -->
+text-gray-600 dark:text-gray-400    <!-- Muted text -->
+text-slate-700 dark:text-slate-400  <!-- Accent text -->
+```
+
+**Borders:**
+```blade
+border-gray-200 dark:border-gray-700
+```
+
+**In SCSS:**
+```scss
+.component {
+    @apply bg-white dark:bg-gray-800;
+    @apply text-gray-900 dark:text-white;
+    @apply border-gray-200 dark:border-gray-700;
+}
+```
+
+---
+
+## ✨ Animation Patterns
+
+### Alpine.js Animations (Scroll-Triggered)
+
+**Required:** Alpine.js Intersect plugin (installed via npm)
+
+**Immediate Animations (Hero Elements):**
+```blade
+<h1 class="opacity-0 translate-y-4 transition-all duration-700 ease-out"
+    x-data="{}"
+    x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-4') }, 100)">
+    Hero Title
+</h1>
+```
+
+**Scroll-Triggered Animations:**
+```blade
+<div class="opacity-0 translate-y-8 transition-all duration-700 ease-out"
+     x-data="{}"
+     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+    Content fades in when scrolled into view
+</div>
+```
+
+**Staggered Animations (Lists):**
+```blade
+@foreach($items as $index => $item)
+    <div class="opacity-0 translate-y-8 transition-all duration-700 ease-out"
+         x-data="{}"
+         x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), {{ $index % 3 * 100 }})">
+        {{ $item->name }}
+    </div>
+@endforeach
+```
+
+**Animation Utilities:**
+```scss
+// Initial state
+opacity-0           // Hidden
+translate-y-8       // Moved down
+translate-y-4       // Slightly down (hero)
+scale-95            // Slightly scaled down
+
+// Transition
+transition-all      // Animate all properties
+duration-700        // 700ms duration
+ease-out            // Easing function
+```
+
+**Stagger Delays:**
+- 0ms, 100ms, 200ms, 300ms for sequential items
+- Use modulo for long lists: `{{ $index % 3 * 100 }}`
+
+---
+
+## 🎯 Best Practices
+
+### 1. Class Naming
+- Use **kebab-case** for all SCSS classes
+- Be **semantic** (describe purpose, not appearance)
+- Prefix with **context** when needed (`.badge-challenge-active`, `.page-header`)
+
+### 2. Component Organization
+- Keep components **small and focused**
+- Group related classes in **one file**
+- Use `@apply` for Tailwind utilities in SCSS
+
+### 3. Avoiding Duplication
+- If a pattern appears **3+ times**, create a class
+- Document new classes in this guide
+- Update relevant component files
+
+### 4. Tailwind Usage
+- Use utilities for **one-off styling**
+- Combine utilities for **prototyping**
+- Extract to SCSS class when **pattern is established**
+
+### 5. Dark Mode
+- Always include **dark mode variants**
+- Test both modes before deployment
+- Use Tailwind's `dark:` prefix consistently
+
+### 6. Performance
+- Tailwind JIT compiles **only used classes**
+- Avoid custom CSS when Tailwind provides utilities
+- Purge unused styles in production
+
+---
+
+## 📚 Quick Reference
+
+### Most Common Classes
+
+**Typography:**
+- `.h1`, `.h2`, `.h3` - Headings
+- `.text-body`, `.text-muted`, `.text-help` - Body text
+- `.text-link` - Links
+
+**Layout:**
+- `.section` - Vertical spacing (py-12 md:py-20)
+- `.container` - Horizontal constraint (max-w-7xl)
+
+**Components:**
+- `.btn .btn-primary` - Primary button
+- `.card` - Card container
+- `.badge-challenge-active` - Status badge
+- `.empty-state` - Empty state pattern
+- `.page-header` - Page header
+
+**Forms:**
+- `.form-field` - Field wrapper
+- `.form-label` - Label
+- `.form-input` - Input field
+
+### Common Tailwind Patterns
+
+**Spacing:**
+```blade
+space-y-4 space-y-6 space-y-8    <!-- Vertical spacing -->
+gap-4 gap-6 gap-8                 <!-- Grid/flex gap -->
+p-4 p-6 p-8                       <!-- Padding -->
+m-4 m-6 m-8                       <!-- Margin -->
+```
+
+**Sizing:**
+```blade
+w-full w-1/2 w-1/3               <!-- Width -->
+h-full h-screen                   <!-- Height -->
+max-w-7xl max-w-3xl              <!-- Max width -->
+```
+
+**Flexbox:**
+```blade
+flex items-center justify-between
+flex-col md:flex-row
+```
+
+**Grid:**
+```blade
+grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4
+```
+
+**Text:**
+```blade
+text-sm text-base text-lg text-xl
+font-normal font-semibold font-bold
+text-center text-left text-right
+```
+
+---
+
+## 🔍 Finding the Right Class
+
+**Question:** "How do I style a challenge status badge?"  
+**Answer:** Use `.badge-challenge-active`, `.badge-challenge-completed`, etc.
+
+**Question:** "How do I create a page header?"  
+**Answer:** Use `.page-header`, `.page-header-content`, `.page-header-title`
+
+**Question:** "How do I add vertical spacing to a section?"  
+**Answer:** Use `.section` class (provides py-12 md:py-20)
+
+**Question:** "How do I create a card?"  
+**Answer:** Use `.card`, `.card-header`, `.card-body`, `.card-footer`
+
+**Question:** "How do I style a primary button?"  
+**Answer:** Use `.btn .btn-primary`
+
+---
+
+For page-specific examples and complete implementation patterns, see **06-public-pages-blueprint.md**.
