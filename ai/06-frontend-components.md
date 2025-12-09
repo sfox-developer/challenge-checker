@@ -282,7 +282,6 @@ Standardized heading classes to replace inline Tailwind utility combinations. Us
 ```scss
 // H1 - Main page title
 .h1                       // Standard H1 (text-2xl font-bold)
-.h1-hero                  // Hero H1 for landing/welcome pages (text-4xl md:text-6xl)
 
 // H2 - Section headings
 .h2                       // Standard H2 (text-xl font-semibold)
@@ -306,9 +305,6 @@ Standardized heading classes to replace inline Tailwind utility combinations. Us
 ```blade
 <!-- Main page title -->
 <h1 class="h1">Privacy Policy</h1>
-
-<!-- Hero heading -->
-<h1 class="h1 h1-hero">Welcome to Challenge Checker</h1>
 
 <!-- Section heading -->
 <h2 class="h2">Account Settings</h2>

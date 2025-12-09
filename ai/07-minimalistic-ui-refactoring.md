@@ -206,7 +206,6 @@ Most common anti-pattern: `text-lg font-semibold text-gray-800 dark:text-gray-10
 ```scss
 // H1 - Main page title
 .h1                       // text-2xl font-bold text-gray-900 dark:text-gray-100
-.h1-hero                  // text-4xl md:text-6xl (for welcome/landing pages)
 
 // H2 - Section headings
 .h2                       // text-xl font-semibold text-gray-900 dark:text-gray-100

@@ -12,10 +12,6 @@
 // H1 - Main page title (used on standalone pages like privacy, terms)
 .h1 {
     @apply text-2xl font-bold text-gray-900 dark:text-gray-100;
-    
-    &.h1-hero {
-        @apply text-4xl md:text-6xl font-bold text-gray-800 dark:text-gray-100;
-    }
 }
 
 // H2 - Section headings
