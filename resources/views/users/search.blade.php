@@ -25,7 +25,7 @@
                                 placeholder="Enter at least 2 characters..."
                                 class="flex-1 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-slate-600 focus:ring-slate-500"
                                 autofocus>
-                            <x-app-button variant="blue" type="submit">
+                            <x-app-button variant="secondary" type="submit">
                                 Search
                             </x-app-button>
                         </div>
@@ -83,7 +83,7 @@
                                     @else
                                         <form action="{{ route('social.follow', $user) }}" method="POST">
                                             @csrf
-                                            <x-app-button variant="blue" type="submit">
+                                            <x-app-button variant="secondary" type="submit">
                                                 Follow
                                             </x-app-button>
                                         </form>
