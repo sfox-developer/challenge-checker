@@ -72,6 +72,7 @@ class UserController extends Controller
             ->paginate(10, ['*'], 'challenges_page');
 
         $publicHabits = $user->habits()
+            ->where('is_public', true)
             ->whereNull('archived_at')
             ->with(['goal', 'statistics'])
             ->latest()

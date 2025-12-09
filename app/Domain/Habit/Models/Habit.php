@@ -23,6 +23,7 @@ class Habit extends Model
         'frequency_count',
         'frequency_config',
         'is_active',
+        'is_public',
         'archived_at',
     ];
 
@@ -31,6 +32,7 @@ class Habit extends Model
         'frequency_count' => 'integer',
         'frequency_config' => 'array',
         'is_active' => 'boolean',
+        'is_public' => 'boolean',
         'archived_at' => 'datetime',
     ];
 

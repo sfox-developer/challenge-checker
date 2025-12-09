@@ -137,14 +137,21 @@
    - Type: Daily, Weekly, Monthly, Yearly
    - Count: How many times per period
    - Optional: Specific days (for weekly)
-4. Submit form
+4. Set privacy (public/private checkbox)
+5. Submit form
 
 **Backend Process:**
 - Controller: `HabitController@store`
-- Creates Habit record
+- Creates Habit record (with `is_public` flag)
 - Creates HabitStatistic record (initialized to 0s)
 - Optionally creates GoalLibrary entry
 - Creates activity: `TYPE_HABIT_CREATED`
+
+**Privacy Behavior:**
+- Public habits (`is_public = true`): Visible on user profiles
+- Private habits (`is_public = false`): Only visible to owner
+- Default: Private
+- Admin view shows all habits regardless of privacy setting
 
 **Frequency Examples:**
 - Daily meditation: type=daily, count=1
