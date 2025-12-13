@@ -20,11 +20,13 @@
         </x-ui.page-header>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="section">
+        <div class="container space-y-6">
             
             <!-- Search and Filter -->
-            <div class="card">
+            <div class="card opacity-0 translate-y-8 transition-all duration-700 ease-out"
+                 x-data="{}"
+                 x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 100)">
                 <form method="GET" action="{{ route('goals.index') }}" class="flex flex-col sm:flex-row gap-3">
                     <!-- Search -->
                     <div class="flex-1">
@@ -65,9 +67,11 @@
 
             <!-- Goals Grid -->
             @if($goals->count() > 0)
-                <div class="grid-3-cols-responsive">
-                    @foreach($goals as $goal)
-                        <div class="card hover:shadow-lg transition-shadow duration-200" x-data="{ showMenu: false }">
+                <div class="dashboard-grid-3-cols">
+                    @foreach($goals as $index => $goal)
+                        <div class="card hover:shadow-lg transition-shadow duration-200 opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                             x-data="{ showMenu: false }"
+                             x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), {{ $index % 6 * 100 }})">
                             <div class="flex items-start justify-between">
                                 <a href="{{ route('goals.show', $goal) }}" class="flex items-start space-x-3 flex-1 min-w-0">
                                     <div class="text-3xl">{{ $goal->icon ?? '🎯' }}</div>
@@ -223,16 +227,22 @@
                 </div>
             @else
                 <!-- Empty State -->
-                <div class="card text-center py-12">
-                    <div class="text-6xl mb-4">📚</div>
-                    <h3 class="h2 mb-2">
+                <div class="empty-state-card opacity-0 translate-y-8 transition-all duration-700 ease-out"
+                     x-data="{}"
+                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                    <div class="empty-state-icon">
+                        <svg class="w-12 h-12 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"/>
+                        </svg>
+                    </div>
+                    <h3 class="empty-state-title">
                         @if($search || $categoryId)
                             No goals found
                         @else
                             Your goal library is empty
                         @endif
                     </h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    <p class="empty-state-text">
                         @if($search || $categoryId)
                             Try adjusting your search or filters.
                         @else
@@ -240,7 +250,7 @@
                         @endif
                     </p>
                     @if(!$search && !$categoryId)
-                        <div class="flex justify-center">
+                        <div class="empty-state-cta">
                             <x-ui.app-button variant="primary" @click="$dispatch('open-modal', 'create-goal')">
                                 Add Your First Goal
                             </x-ui.app-button>

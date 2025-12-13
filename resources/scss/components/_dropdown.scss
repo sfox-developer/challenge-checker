@@ -1,0 +1,42 @@
+// ============================================================================
+// DROPDOWN - Dropdown Menu Component
+// ============================================================================
+
+.dropdown-wrapper {
+    @apply absolute z-50 mt-2;
+    @apply rounded-lg;
+    @apply bg-white dark:bg-gray-800;
+    @apply shadow-lg;
+    @apply border border-gray-200 dark:border-gray-700;
+    
+    &.align-right {
+        @apply right-0 origin-top-right;
+    }
+    
+    &.align-left {
+        @apply left-0 origin-top-left;
+    }
+    
+    &.align-top {
+        @apply bottom-full mb-2 origin-bottom;
+    }
+}
+
+.dropdown-menu {
+    @apply py-1;
+}
+
+.dropdown-link {
+    @apply block w-full px-4 py-2 text-left text-sm;
+    @apply text-gray-700 dark:text-gray-300;
+    @apply hover:bg-gray-100 dark:hover:bg-gray-700;
+    @apply transition-colors;
+    
+    &:first-child {
+        @apply rounded-t-lg;
+    }
+    
+    &:last-child {
+        @apply rounded-b-lg;
+    }
+}

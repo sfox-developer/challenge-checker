@@ -3,11 +3,16 @@
     'value'
 ])
 
-<div class="stat-card">
-    <div class="stat-value">
-        {{ $value }}{{ $suffix ?? '' }}
+<div class="dashboard-stat-card">
+    @isset($icon)
+    <div class="dashboard-stat-icon">
+        {{ $icon }}
     </div>
-    <div class="stat-label">
+    @endisset
+    <div class="dashboard-stat-value">
+        {{ $value }}
+    </div>
+    <div class="dashboard-stat-label">
         {{ $label }}
     </div>
 </div>

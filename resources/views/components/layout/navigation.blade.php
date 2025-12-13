@@ -1,130 +1,116 @@
-<nav class="nav-main">
-    <!-- Primary Navigation Menu -->
+<nav class="nav">
     <div class="nav-container">
-        <div class="nav-wrapper">
-            <div class="nav-left">
-                <!-- Logo -->
-                <div class="nav-logo">
-                    <a href="{{ route('feed.index') }}" class="flex items-center space-x-2">
-                        <span class="nav-logo-text">Challenge Checker</span>
-                    </a>
-                </div>
+        <a href="{{ route('feed.index') }}" class="nav-brand">
+            <span>Challenge Checker</span>
+        </a>
+        
+        <div class="flex items-center gap-3">
+            <!-- Desktop Navigation Links -->
+            <div class="hidden md:flex items-center gap-1">
+                <x-shared.nav-link :href="route('feed.index')" :active="request()->routeIs('feed.*')">
+                    {{ __('Feed') }}
+                </x-shared.nav-link>
+                <x-shared.nav-link :href="route('challenges.index')" :active="request()->routeIs('challenges.*')">
+                    {{ __('Challenges') }}
+                </x-shared.nav-link>
+                <x-shared.nav-link :href="route('habits.index')" :active="request()->routeIs('habits.*')">
+                    {{ __('Habits') }}
+                </x-shared.nav-link>
+                <x-shared.nav-link :href="route('goals.index')" :active="request()->routeIs('goals.*')">
+                    {{ __('Goals') }}
+                </x-shared.nav-link>
+                <x-shared.nav-link :href="route('users.search')" :active="request()->routeIs('users.*')">
+                    {{ __('Discover') }}
+                </x-shared.nav-link>
+                @if(Auth::check() && Auth::user()->is_admin)
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" 
+                                class="nav-link {{ request()->routeIs('admin.*') ? 'nav-link-active' : '' }} flex items-center gap-1">
+                            <span>{{ __('Admin') }}</span>
+                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
 
-                <!-- Navigation Links -->
-                <div class="nav-links-desktop">
-                    <x-shared.nav-link :href="route('feed.index')" :active="request()->routeIs('feed.*')">
-                        {{ __('Feed') }}
-                    </x-shared.nav-link>
-                    <x-shared.nav-link :href="route('challenges.index')" :active="request()->routeIs('challenges.*')">
-                        {{ __('Challenges') }}
-                    </x-shared.nav-link>
-                    <x-shared.nav-link :href="route('habits.index')" :active="request()->routeIs('habits.*')">
-                        {{ __('Habits') }}
-                    </x-shared.nav-link>
-                    <x-shared.nav-link :href="route('goals.index')" :active="request()->routeIs('goals.*')">
-                        {{ __('Goals') }}
-                    </x-shared.nav-link>
-                    <x-shared.nav-link :href="route('users.search')" :active="request()->routeIs('users.*')">
-                        {{ __('Discover') }}
-                    </x-shared.nav-link>
-                    @if(Auth::check() && Auth::user()->is_admin)
-                        <div class="nav-admin-wrapper" x-data="{ open: false }">
-                            <button @click="open = !open" 
-                                    class="nav-admin-button {{ request()->routeIs('admin.*') ? 'active' : '' }}">
-                                <span>{{ __('Admin') }}</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-
-                            <!-- Admin Dropdown Menu -->
-                            <div x-show="open" 
-                                 @click.away="open = false"
-                                 x-transition:enter="transition ease-out duration-200"
-                                 x-transition:enter-start="opacity-0 scale-95"
-                                 x-transition:enter-end="opacity-100 scale-100"
-                                 x-transition:leave="transition ease-in duration-75"
-                                 x-transition:leave-start="opacity-100 scale-100"
-                                 x-transition:leave-end="opacity-0 scale-95"
-                                 class="nav-dropdown"
-                                 style="display: none;">
-                                <a href="{{ route('admin.dashboard') }}" class="nav-dropdown-item">
-                                    <svg fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                    </svg>
+                        <!-- Admin Dropdown Menu -->
+                        <div x-show="open" 
+                             @click.away="open = false"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 scale-95"
+                             x-transition:enter-end="opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-75"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95"
+                             class="absolute right-0 mt-2 w-48 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50"
+                             style="display: none;">
+                                <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
                                     <span>Dashboard</span>
                                 </a>
-                                <a href="{{ route('admin.categories.index') }}" class="nav-dropdown-item">
-                                    <svg fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
-                                    </svg>
+                                <a href="{{ route('admin.categories.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
                                     <span>Categories</span>
                                 </a>
-                                <a href="{{ route('admin.changelogs.index') }}" class="nav-dropdown-item">
-                                    <svg fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
-                                    </svg>
+                                <a href="{{ route('admin.changelogs.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
                                     <span>Changelogs</span>
                                 </a>
-                            </div>
                         </div>
-                    @endif
-                </div>
+                    </div>
+                @endif
             </div>
 
-            <!-- Mobile Theme Toggle -->
-            <div class="flex items-center sm:hidden">
-                <x-layout.theme-toggle size="w-6 h-6" />
-            </div>
+            <!-- Theme Toggle -->
+            <button @click="toggleTheme()" 
+                    class="theme-toggle"
+                    title="Toggle theme"
+                    x-data="themeManager()">
+                <svg x-show="getThemeIcon() === 'sun'" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <svg x-show="getThemeIcon() === 'moon'" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </button>
 
-            <!-- Settings Dropdown -->
-            <div class="nav-settings">
-                <!-- Theme Toggle -->
-                <x-layout.theme-toggle />
+            <!-- User Dropdown -->
+            <x-ui.dropdown align="right" width="48">
+                <x-slot name="trigger">
+                    <button class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <img src="{{ Auth::check() ? Auth::user()->getAvatarUrl() : '' }}" alt="{{ Auth::check() ? Auth::user()->name : '' }}" class="w-8 h-8 rounded-full">
+                        <span class="hidden md:block">{{ Auth::check() ? Auth::user()->name : '' }}</span>
+                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </x-slot>
 
-                <x-ui.dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="nav-user-trigger">
-                            <img src="{{ Auth::check() ? Auth::user()->getAvatarUrl() : '' }}" alt="{{ Auth::check() ? Auth::user()->name : '' }}">
-                            <div>{{ Auth::check() ? Auth::user()->name : '' }}</div>
-
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        @if(Auth::check())
-                            <x-ui.dropdown-link :href="route('users.show', Auth::user())">
-                                {{ __('My Profile') }}
-                            </x-ui.dropdown-link>
-                        @endif
-                        
-                        <x-ui.dropdown-link :href="route('profile.edit')">
-                            {{ __('Settings') }}
+                <x-slot name="content">
+                    @if(Auth::check())
+                        <x-ui.dropdown-link :href="route('users.show', Auth::user())">
+                            {{ __('My Profile') }}
                         </x-ui.dropdown-link>
+                    @endif
+                    
+                    <x-ui.dropdown-link :href="route('profile.edit')">
+                        {{ __('Settings') }}
+                    </x-ui.dropdown-link>
 
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
 
-                            <x-ui.dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-ui.dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-ui.dropdown>
-            </div>
+                        <x-ui.dropdown-link :href="route('logout')"
+                                onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-ui.dropdown-link>
+                    </form>
+                </x-slot>
+            </x-ui.dropdown>
         </div>
     </div>
 </nav>
 
-<!-- Mobile Bottom Navigation -->
+<!-- Mobile Bottom Navigation - TEMPORARILY HIDDEN -->
+{{-- 
 <nav class="bottom-nav">
     <div class="bottom-nav-grid">
         <!-- Feed -->
@@ -178,3 +164,4 @@
         </a>
     </div>
 </nav>
+--}}

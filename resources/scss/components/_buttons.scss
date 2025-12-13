@@ -72,3 +72,45 @@ html.dark .btn-primary {
     @apply text-red-600 dark:text-red-400;
     @apply hover:bg-red-200 dark:hover:bg-red-900/50;
 }
+
+// ----------------------------------------------------------------------------
+// FLOATING ACTION BUTTON (FAB)
+// ----------------------------------------------------------------------------
+
+.fab {
+    @apply fixed bottom-6 right-6;
+    @apply w-14 h-14 rounded-full;
+    @apply flex items-center justify-center;
+    @apply shadow-lg hover:shadow-xl;
+    @apply transition-all duration-200;
+    @apply z-40;
+    background: var(--gradient-accent);
+    @apply text-white;
+    
+    &:hover {
+        @apply scale-110;
+        filter: brightness(0.9);
+    }
+    
+    // Hidden on mobile (bottom nav handles actions)
+    @apply hidden lg:flex;
+}
+
+html.dark .fab {
+    background: var(--gradient-accent-dark);
+    
+    &:hover {
+        filter: brightness(0.95);
+    }
+}
+
+.fab-tooltip {
+    @apply absolute right-full mr-3;
+    @apply bg-gray-900 dark:bg-gray-700;
+    @apply text-white text-sm;
+    @apply px-3 py-1.5 rounded-lg;
+    @apply opacity-0 group-hover:opacity-100;
+    @apply transition-opacity duration-200;
+    @apply pointer-events-none;
+    @apply whitespace-nowrap;
+}

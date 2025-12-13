@@ -1,5 +1,5 @@
 @props([
-    'variant' => 'primary',     // primary, secondary, success, danger, blue
+    'variant' => 'primary',     // primary, secondary, success, danger
     'size' => 'md',             // sm, md, lg
     'type' => 'button',         // button, submit, reset
     'href' => null,             // If provided, renders as <a> instead of <button>
@@ -14,26 +14,16 @@
         'secondary' => 'btn-secondary',
         'success' => 'btn-success',
         'danger' => 'btn-danger',
-        'blue' => 'btn-blue',
-        'modal-cancel' => 'btn-modal-cancel',
-        'modal-confirm' => 'btn-modal-confirm',
-        'action-sm' => 'btn-action-sm',
-        'action-pause' => 'btn-action-pause',
-        'action-complete' => 'btn-action-complete',
-    ];
-
-    // Map size to CSS class for variants that support sizing
-    $sizeClasses = [
-        'sm' => 'btn-success-sm',
-        'md' => 'btn-success',
-        'lg' => 'btn-success',
     ];
 
     // Determine the base class
-    if ($variant === 'success' && $size === 'sm') {
-        $baseClass = 'btn-success-sm';
-    } else {
-        $baseClass = $variantClasses[$variant] ?? 'btn-primary';
+    $baseClass = $variantClasses[$variant] ?? 'btn-primary';
+    
+    // Add size modifiers
+    if ($size === 'sm') {
+        $baseClass .= ' btn-sm';
+    } elseif ($size === 'lg') {
+        $baseClass .= ' btn-lg';
     }
 
     // Merge with additional classes from $attributes
@@ -44,25 +34,25 @@
 @if($href)
     <a href="{{ $href }}" {{ $attributes->merge(['class' => $finalClasses]) }}>
         @if($icon && $iconPosition === 'left')
-            <span class="icon-left">{{ $icon }}</span>
+            {{ $icon }}
         @endif
         
-        <span>{{ $slot }}</span>
+        {{ $slot }}
         
         @if($icon && $iconPosition === 'right')
-            <span class="icon-right">{{ $icon }}</span>
+            {{ $icon }}
         @endif
     </a>
 @else
     <button type="{{ $type }}" {{ $attributes->merge(['class' => $finalClasses]) }}>
         @if($icon && $iconPosition === 'left')
-            <span class="icon-left">{{ $icon }}</span>
+            {{ $icon }}
         @endif
         
-        <span>{{ $slot }}</span>
+        {{ $slot }}
         
         @if($icon && $iconPosition === 'right')
-            <span class="icon-right">{{ $icon }}</span>
+            {{ $icon }}
         @endif
     </button>
 @endif

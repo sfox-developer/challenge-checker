@@ -1,0 +1,176 @@
+// ============================================================================
+// DASHBOARD PAGES - Authenticated User Area
+// ============================================================================
+// Dashboard-specific layouts and patterns
+// Use for patterns that appear 3+ times across dashboard pages
+// NOTE: .section and .container are in base/_utilities.scss
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// LAYOUT PATTERNS
+// ----------------------------------------------------------------------------
+
+// Stats grid - responsive 2 to 4 columns
+.dashboard-grid-stats {
+    @apply grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6;
+}
+
+// Cards grid - responsive 1 to 3 columns
+.dashboard-grid-cards {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6;
+}
+
+// 3-column grid for goals/items
+.dashboard-grid-3-cols {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6;
+}
+
+// ----------------------------------------------------------------------------
+// TAB NAVIGATION
+// ----------------------------------------------------------------------------
+
+.tab-header {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700;
+    @apply p-2;
+    @apply mb-6;
+}
+
+.tab-nav {
+    @apply flex flex-wrap gap-2;
+}
+
+.tab-button {
+    @apply px-4 py-2 rounded-md text-sm font-medium;
+    @apply text-gray-600 dark:text-gray-400;
+    @apply hover:bg-gray-100 dark:hover:bg-gray-700;
+    @apply transition-colors duration-200;
+    @apply flex items-center gap-2;
+    
+    &.active {
+        @apply bg-slate-700 dark:bg-slate-600;
+        @apply text-white;
+    }
+}
+
+// Color variants for tab headers
+.tab-header-purple .tab-button.active {
+    @apply bg-purple-600 dark:bg-purple-500;
+}
+
+.tab-header-teal .tab-button.active {
+    @apply bg-teal-600 dark:bg-teal-500;
+}
+
+.tab-header-blue .tab-button.active {
+    @apply bg-blue-600 dark:bg-blue-500;
+}
+
+// ----------------------------------------------------------------------------
+// SEARCH & FILTER PATTERNS
+// ----------------------------------------------------------------------------
+
+.search-filter-bar {
+    @apply flex flex-col sm:flex-row gap-3;
+    @apply mb-6;
+}
+
+// ----------------------------------------------------------------------------
+// EMPTY STATES (Dashboard-specific)
+// ----------------------------------------------------------------------------
+
+.empty-state-card {
+    @apply card;
+    @apply p-12 text-center;
+}
+
+.empty-state-message {
+    @apply text-gray-600 dark:text-gray-400;
+    @apply mb-6;
+}
+
+.empty-state-action {
+    @apply mt-6;
+}
+
+// ----------------------------------------------------------------------------
+// CARD LIST PATTERNS
+// ----------------------------------------------------------------------------
+
+.challenge-card-list,
+.habit-card-list {
+    @apply space-y-4;
+}
+
+// ----------------------------------------------------------------------------
+// PROGRESS DISPLAYS
+// ----------------------------------------------------------------------------
+
+.progress-section {
+    @apply mb-6;
+}
+
+.progress-header {
+    @apply flex items-center justify-between;
+    @apply mb-3;
+}
+
+.progress-label {
+    @apply text-sm font-medium;
+    @apply text-gray-700 dark:text-gray-300;
+}
+
+.progress-value {
+    @apply text-sm font-semibold;
+    @apply text-gray-900 dark:text-white;
+}
+
+// ----------------------------------------------------------------------------
+// QUICK ACTION PATTERNS
+// ----------------------------------------------------------------------------
+
+.quick-actions-bar {
+    @apply flex flex-wrap gap-2;
+    @apply mb-4;
+}
+
+// ----------------------------------------------------------------------------
+// INFO BOXES (Dashboard-specific)
+// ----------------------------------------------------------------------------
+
+.info-box {
+    @apply p-4 rounded-lg border;
+    @apply mb-4;
+}
+
+.info-box-primary {
+    @apply bg-blue-50 dark:bg-blue-900/20;
+    @apply border-blue-200 dark:border-blue-800;
+}
+
+.info-box-success {
+    @apply bg-green-50 dark:bg-green-900/20;
+    @apply border-green-200 dark:border-green-800;
+}
+
+.info-box-warning {
+    @apply bg-yellow-50 dark:bg-yellow-900/20;
+    @apply border-yellow-200 dark:border-yellow-800;
+}
+
+// ----------------------------------------------------------------------------
+// DASHBOARD HEADER PATTERNS
+// ----------------------------------------------------------------------------
+
+.dashboard-header {
+    @apply mb-6;
+}
+
+.dashboard-title {
+    @apply text-2xl md:text-3xl font-bold;
+    @apply text-gray-900 dark:text-white;
+    @apply mb-2;
+}
+
+.dashboard-subtitle {
+    @apply text-gray-600 dark:text-gray-400;
+}

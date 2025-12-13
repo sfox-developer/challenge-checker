@@ -20,8 +20,10 @@
 // ----------------------------------------------------------------------------
 // 3. COMPONENTS - Minimal, reusable components
 // ----------------------------------------------------------------------------
+@use 'components/headers' as headers;
 @use 'components/buttons' as buttons;
 @use 'components/nav' as nav;
+@use 'components/dropdown' as dropdown;
 @use 'components/cards' as cards;
 @use 'components/forms' as forms;
 @use 'components/badges' as badges;
@@ -33,6 +35,7 @@
 // 4. PAGES - Page-specific styles (add as needed)
 // ----------------------------------------------------------------------------
 @use 'pages/welcome' as welcome;
+@use 'pages/dashboard' as dashboard;
 
 // ----------------------------------------------------------------------------
 // 5. VENDORS - Third-party overrides

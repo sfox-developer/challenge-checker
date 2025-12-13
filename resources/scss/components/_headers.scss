@@ -1,0 +1,65 @@
+// ============================================================================
+// HEADERS - Page Headers and Section Headers
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// LAYOUT HEADER (Top-level page header below navigation)
+// ----------------------------------------------------------------------------
+
+.header {
+    @apply border-b border-gray-200;
+    background-color: rgba(245, 244, 242, 0.8); /* 80% opacity of #F5F4F2 */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+html.dark .header {
+    @apply border-b border-gray-800;
+    background-color: rgba(17, 24, 39, 0.8); /* 80% opacity of gray-900 */
+}
+
+// ----------------------------------------------------------------------------
+// PAGE HEADER (Used in page content with x-ui.page-header component)
+// ----------------------------------------------------------------------------
+
+.page-header {
+    @apply flex flex-col sm:flex-row sm:items-center sm:justify-between;
+    @apply gap-4;
+}
+
+.page-header-content {
+    @apply flex items-center gap-3;
+}
+
+.page-header-icon {
+    @apply flex-shrink-0;
+}
+
+.page-header-title {
+    @apply text-2xl md:text-3xl font-bold;
+    @apply text-gray-900 dark:text-white;
+}
+
+.page-header-actions {
+    @apply flex items-center gap-2;
+}
+
+// ----------------------------------------------------------------------------
+// SECTION HEADERS (Used in page sections)
+// ----------------------------------------------------------------------------
+
+.section-header {
+    @apply text-center mb-12;
+}
+
+.section-title {
+    @apply text-3xl md:text-4xl font-bold;
+    @apply text-gray-900 dark:text-white;
+    @apply mb-4;
+}
+
+.section-subtitle {
+    @apply text-lg md:text-xl;
+    @apply text-gray-600 dark:text-gray-400;
+    @apply max-w-2xl mx-auto;
+}

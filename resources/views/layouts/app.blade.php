@@ -27,35 +27,29 @@
             })();
         </script>
     </head>
-    <body class="font-sans antialiased">
-        <div class="app-container" 
-             x-data="{ 
-                 ...quickGoalsModal(), 
-                 ...themeManager() 
-             }" 
-             @open-goals.window="open()">
-            @include('components.layout.navigation')
+    <body class="page" x-data="{ ...quickGoalsModal(), ...themeManager() }" @open-goals.window="open()">
+        @include('components.layout.navigation')
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="app-header">
-                    <div class="app-header-container">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+        <!-- Page Heading -->
+        @isset($header)
+            <header class="header">
+                <div class="container py-6">
+                    {{ $header }}
+                </div>
+            </header>
+        @endisset
 
-            <!-- Page Content -->
-            <main class="flex-grow">
-                {{ $slot }}
-            </main>
+        <!-- Page Content -->
+        <main>
+            {{ $slot }}
+        </main>
 
-            <!-- Footer -->
-            <x-layout.footer />
+        <!-- Footer -->
+        <x-layout.footer />
 
-            <!-- Desktop FAB for Quick Goal Completion (Hidden on Mobile and Challenge Detail Page) -->
-            @if(!request()->routeIs('challenges.show'))
-            <button @click="open()" class="fab group">
+        <!-- Desktop FAB for Quick Goal Completion (Hidden on Mobile and Challenge Detail Page) -->
+        @if(!request()->routeIs('challenges.show'))
+        <button @click="open()" class="fab group">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                 </svg>
@@ -143,8 +137,7 @@
                     </div>
                 </div>
             </div>
-            @endif
-        </div>
+        @endif
 
         <!-- Flash Messages Data for Toast System -->
         @if(session()->has('success') || session()->has('error') || session()->has('info') || session()->has('warning'))
