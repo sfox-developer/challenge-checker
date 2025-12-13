@@ -47,6 +47,16 @@
         <div class="hero-visual animate animate-hidden-scale-up" 
              x-data="{}" 
              x-intersect="$el.classList.remove('animate-hidden-scale-up')">
+            
+            <!-- Lottie Cat Animation -->
+            <div class="lottie-container animate animate-hidden-fade-up" 
+                 x-data="{}" 
+                 x-intersect="$el.classList.remove('animate-hidden-fade-up')">
+                <div class="lottie-animation" 
+                     x-lottie="{ path: '/animations/loader-cat.json', interval: 6000 }">
+                </div>
+            </div>
+            
             <!-- Main Screenshot/Image -->
             <div class="hero-video-container">
                 <!-- Replace with your actual video -->
@@ -63,9 +73,9 @@
     <!-- Features Section -->
     <div class="section features">
         <div class="container">
-            <div class=\"section-header animate animate-hidden-fade-up\" 
-                 x-data=\"{}\" 
-                 x-intersect=\"$el.classList.remove('animate-hidden-fade-up')\">
+            <div class="section-header animate animate-hidden-fade-up" 
+                 x-data="{}" 
+                 x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="section-title">Everything You Need to Succeed</h2>
                 <p class="section-subtitle">
                     Powerful features designed to help you build habits that stick and achieve goals that matter.

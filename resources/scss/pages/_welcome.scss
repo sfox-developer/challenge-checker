@@ -32,6 +32,22 @@
     @apply -mt-8; // Pull up slightly to reduce gap
 }
 
+// Lottie animation container - positioned above video
+.lottie-container {
+    @apply relative z-10;
+    @apply flex justify-center items-center;
+    @apply mb-8;
+}
+
+.lottie-animation {
+    @apply w-32 h-32 md:w-40 md:h-40;
+    // Animation renders at natural size, container constrains it
+    position: absolute;
+    transform: translateY(-47%);
+    right: 0;
+    top: 0;
+}
+
 .hero-image {
     @apply w-full rounded-2xl shadow-2xl;
     @apply border border-gray-200 dark:border-gray-700;

@@ -638,9 +638,16 @@ resources/scss/
 - `.stats-grid` - Stats layout
 
 **Animation:**
-- Initial: `opacity-0 translate-y-8 transition-all duration-700 ease-out`
-- Trigger: `x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')"`
-- Stagger: `setTimeout(..., 100)`
+- `.animate` + `.animate-hidden-fade-up` - Scroll-triggered fade up
+- `.animate-delay-100/200/300/400` - Stagger delays
+- `x-intersect="$el.classList.remove('animate-hidden-fade-up')"` - Trigger
+- `x-init="setTimeout(() => { $el.classList.remove('...') }, 100)"` - Immediate
+
+**Lottie Animations:**
+- `.lottie-container` - Wrapper with centering
+- `.lottie-animation` - Size constraints (w-32 h-32 md:w-40 md:h-40)
+- `x-lottie="{ path: '/animations/file.json', loop: true }"` - Alpine directive
+- Assets in `public/animations/` with kebab-case naming
 
 ---
 

@@ -832,6 +832,60 @@ text-center text-left text-right
 **Question:** "How do I style a primary button?"  
 **Answer:** Use `.btn .btn-primary`
 
+**Question:** "How do I add a Lottie animation?"  
+**Answer:** Use `.lottie-container` and `.lottie-animation` with Alpine.js `x-lottie` directive
+
+---
+
+## 🎬 Lottie Animations
+
+**Integration:** Lottie-web with Alpine.js directive  
+**Assets Location:** `public/animations/`  
+**Helper Module:** `resources/js/lottie.js`
+
+### Lottie Classes
+
+Located in `pages/_welcome.scss` (page-specific):
+
+```scss
+.lottie-container {
+    @apply relative z-10;
+    @apply flex justify-center items-center;
+    @apply mb-8;
+}
+
+.lottie-animation {
+    @apply w-32 h-32 md:w-40 md:h-40;
+    // Animation renders at natural size, container constrains it
+}
+```
+
+### Usage Example
+
+```blade
+<!-- Basic Lottie animation -->
+<div class="lottie-container">
+    <div class="lottie-animation" 
+         x-lottie="{ path: '/animations/loader-cat.json', loop: true, autoplay: true }">
+    </div>
+</div>
+
+<!-- With scroll animation -->
+<div class="lottie-container animate animate-hidden-fade-up" 
+     x-data="{}" 
+     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
+    <div class="lottie-animation" 
+         x-lottie="{ path: '/animations/loader-cat.json' }">
+    </div>
+</div>
+```
+
+### File Organization
+
+- Store JSON files in `public/animations/`
+- Use kebab-case naming: `loader-cat.json`, `success-animation.json`
+- Reference with absolute paths: `/animations/filename.json`
+
 ---
 
 For page-specific examples and complete implementation patterns, see **06-public-pages-blueprint.md**.

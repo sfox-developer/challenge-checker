@@ -745,6 +745,51 @@ x-if="condition"
 x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')"
 ```
 
+**Lottie Animations:**
+```blade
+<div x-lottie="{ path: '/animations/loader-cat.json', loop: true, autoplay: true }"></div>
+```
+
+---
+
+## 🎬 Lottie Animations
+
+**Package:** `lottie-web`  
+**Location:** `resources/js/lottie.js`  
+**Assets:** `public/animations/`
+
+### Usage
+
+**Basic Animation:**
+```blade
+<div class="lottie-animation" 
+     x-lottie="{ path: '/animations/loader-cat.json' }">
+</div>
+```
+
+**With Options:**
+```blade
+<div class="lottie-animation"
+     x-lottie="{
+         path: '/animations/animation-name.json',
+         loop: true,
+         autoplay: true,
+         renderer: 'svg'
+     }">
+</div>
+```
+
+**Configuration Options:**
+- `path` - Path to JSON file (required)
+- `loop` - Boolean, loop animation (default: true)
+- `autoplay` - Boolean, start automatically (default: true)
+- `renderer` - 'svg', 'canvas', or 'html' (default: 'svg')
+
+**File Organization:**
+- Store JSON files in `public/animations/`
+- Use kebab-case naming: `loader-cat.json`, `success-checkmark.json`
+- Reference with absolute path: `/animations/filename.json`
+
 ---
 
 For complete implementation examples, see **06-public-pages-blueprint.md**.

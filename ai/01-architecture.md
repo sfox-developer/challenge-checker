@@ -25,6 +25,7 @@ Challenge Checker is a personal goal-tracking and habit-building web application
 ### Frontend
 - **Blade Templates** - Laravel's templating engine
 - **Alpine.js** - Lightweight reactive JavaScript (with Intersect plugin)
+- **Lottie-web** - Animation library integrated via Alpine.js directive
 - **Tailwind CSS v3** - Utility-first CSS framework with JIT compiler
 - **SCSS** - CSS preprocessing for component classes
 - **Vite** - Modern build tool for asset bundling

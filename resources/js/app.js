@@ -11,11 +11,15 @@ import './goal-toggle.js';
 // Import toast notification system
 import './toast.js';
 
+// Import Lottie animation helper
+import { initLottie } from './lottie.js';
+
 import Alpine from 'alpinejs';
 import intersect from '@alpinejs/intersect';
 
 window.Alpine = Alpine;
 
 Alpine.plugin(intersect);
+initLottie(Alpine);
 
 Alpine.start();
