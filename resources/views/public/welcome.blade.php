@@ -4,21 +4,21 @@
     <!-- Hero Section -->
     <div class="hero">
         <div class="container">
-            <h1 class="hero-title opacity-0 translate-y-4 transition-all duration-700 ease-out" 
+            <h1 class="hero-title animate animate-hidden-fade-up-sm" 
                 x-data="{}" 
-                x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-4') }, 100)">
+                x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up-sm') }, 100)">
                 Turn Goals Into Habits.<br>Habits Into Results.
             </h1>
             
-            <p class="hero-subtitle opacity-0 translate-y-4 transition-all duration-700 ease-out" 
+            <p class="hero-subtitle animate animate-hidden-fade-up-sm animate-delay-100" 
                x-data="{}" 
-               x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-4') }, 200)">
+               x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up-sm') }, 100)">
                 Track daily challenges, build lasting habits, and achieve your goals with a supportive community. Simple. Powerful. Effective.
             </p>
 
-            <div class="hero-cta opacity-0 translate-y-4 transition-all duration-700 ease-out" 
+            <div class="hero-cta animate animate-hidden-fade-up-sm animate-delay-200" 
                  x-data="{}" 
-                 x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-4') }, 300)">
+                 x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up-sm') }, 100)">
                 @auth
                     <a href="{{ route('feed.index') }}" class="btn btn-primary btn-lg">
                         Go to Your Feed
@@ -44,9 +44,9 @@
 
     <!-- Hero Visual Showcase -->
     <div class="section">
-        <div class="hero-visual opacity-0 scale-95 transition-all duration-700 ease-out" 
+        <div class="hero-visual animate animate-hidden-scale-up" 
              x-data="{}" 
-             x-intersect="$el.classList.remove('opacity-0', 'scale-95')">
+             x-intersect="$el.classList.remove('animate-hidden-scale-up')">
             <!-- Main Screenshot/Image -->
             <div class="hero-video-container">
                 <!-- Replace with your actual video -->
@@ -63,9 +63,9 @@
     <!-- Features Section -->
     <div class="section features">
         <div class="container">
-            <div class="section-header opacity-0 translate-y-8 transition-all duration-700 ease-out" 
-                 x-data="{}" 
-                 x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+            <div class=\"section-header animate animate-hidden-fade-up\" 
+                 x-data=\"{}\" 
+                 x-intersect=\"$el.classList.remove('animate-hidden-fade-up')\">
                 <h2 class="section-title">Everything You Need to Succeed</h2>
                 <p class="section-subtitle">
                     Powerful features designed to help you build habits that stick and achieve goals that matter.
@@ -74,9 +74,9 @@
 
             <div class="features-grid">
                 <!-- Feature 1: Challenges -->
-                <div class="feature-card opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                <div class="feature-card animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), 0)">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                     <div class="feature-icon">
                         <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -89,9 +89,9 @@
                 </div>
 
                 <!-- Feature 2: Habits -->
-                <div class="feature-card opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                <div class="feature-card animate animate-hidden-fade-up animate-delay-100" 
                      x-data="{}" 
-                     x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), 100)">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                     <div class="feature-icon">
                         <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -104,9 +104,9 @@
                 </div>
 
                 <!-- Feature 3: Analytics -->
-                <div class="feature-card opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                <div class="feature-card animate animate-hidden-fade-up animate-delay-200" 
                      x-data="{}" 
-                     x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), 200)">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                     <div class="feature-icon">
                         <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -119,9 +119,9 @@
                 </div>
 
                 <!-- Feature 4: Social -->
-                <div class="feature-card opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                <div class="feature-card animate animate-hidden-fade-up animate-delay-300" 
                      x-data="{}" 
-                     x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), 300)">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                     <div class="feature-icon">
                         <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -139,9 +139,9 @@
     <!-- How It Works Section -->
     <div class="section how-it-works">
         <div class="container">
-            <div class="section-header opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <div class="section-header animate animate-hidden-fade-up" 
                  x-data="{}" 
-                 x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                 x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="section-title">How It Works</h2>
                 <p class="section-subtitle">
                     Get started in minutes. See results in days. Build lasting change in weeks.
@@ -150,9 +150,9 @@
 
             <div class="steps-grid">
                 <!-- Step 1 -->
-                <div class="step-card opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                <div class="step-card animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), 0)">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                     <div class="step-number">1</div>
                     <h3 class="step-title">Set Your Goals</h3>
                     <p class="step-description">
@@ -161,9 +161,9 @@
                 </div>
 
                 <!-- Step 2 -->
-                <div class="step-card opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                <div class="step-card animate animate-hidden-fade-up animate-delay-100" 
                      x-data="{}" 
-                     x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), 100)">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                     <div class="step-number">2</div>
                     <h3 class="step-title">Track Daily Progress</h3>
                     <p class="step-description">
@@ -172,9 +172,9 @@
                 </div>
 
                 <!-- Step 3 -->
-                <div class="step-card opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                <div class="step-card animate animate-hidden-fade-up animate-delay-200" 
                      x-data="{}" 
-                     x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), 200)">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                     <div class="step-number">3</div>
                     <h3 class="step-title">Celebrate Success</h3>
                     <p class="step-description">
@@ -191,16 +191,16 @@
             <div class="benefits-grid">
                 <!-- Content -->
                 <div class="benefit-content">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 animate animate-hidden-fade-up" 
                         x-data="{}" 
-                        x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                        x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                         Why Challenge Checker Works
                     </h2>
 
                     <div class="space-y-6">
-                        <div class="benefit-item opacity-0 translate-x-[-20px] transition-all duration-700 ease-out" 
+                        <div class="benefit-item animate animate-hidden-slide-left" 
                              x-data="{}" 
-                             x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-x-[-20px]'), 0)">
+                             x-intersect="$el.classList.remove('animate-hidden-slide-left')">
                             <div class="benefit-icon">
                                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -212,9 +212,9 @@
                             </div>
                         </div>
 
-                        <div class="benefit-item opacity-0 translate-x-[-20px] transition-all duration-700 ease-out" 
+                        <div class="benefit-item animate animate-hidden-slide-left animate-delay-100" 
                              x-data="{}" 
-                             x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-x-[-20px]'), 100)">
+                             x-intersect="$el.classList.remove('animate-hidden-slide-left')">
                             <div class="benefit-icon">
                                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -226,9 +226,9 @@
                             </div>
                         </div>
 
-                        <div class="benefit-item opacity-0 translate-x-[-20px] transition-all duration-700 ease-out" 
+                        <div class="benefit-item animate animate-hidden-slide-left animate-delay-200" 
                              x-data="{}" 
-                             x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-x-[-20px]'), 200)">
+                             x-intersect="$el.classList.remove('animate-hidden-slide-left')">
                             <div class="benefit-icon">
                                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -240,9 +240,9 @@
                             </div>
                         </div>
 
-                        <div class="benefit-item opacity-0 translate-x-[-20px] transition-all duration-700 ease-out" 
+                        <div class="benefit-item animate animate-hidden-slide-left animate-delay-300" 
                              x-data="{}" 
-                             x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-x-[-20px]'), 300)">
+                             x-intersect="$el.classList.remove('animate-hidden-slide-left')">
                             <div class="benefit-icon">
                                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -257,9 +257,9 @@
                 </div>
 
                 <!-- Visual Placeholder -->
-                <div class="benefit-visual opacity-0 translate-x-8 transition-all duration-700 ease-out" 
+                <div class="benefit-visual animate animate-hidden-slide-right" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-x-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-slide-right')">
                     <div class="placeholder-image">
                         [SCREENSHOT: Dashboard with active challenge showing daily goals, progress bars, and streak counter]
                     </div>
@@ -272,27 +272,27 @@
     <div class="section stats">
         <div class="container">
             <div class="stats-grid">
-                <div class="stat-item opacity-0 scale-95 transition-all duration-700 ease-out" 
+                <div class="stat-item animate animate-hidden-scale-up" 
                      x-data="{}" 
-                     x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'scale-95'), 0)">
+                     x-intersect="$el.classList.remove('animate-hidden-scale-up')">
                     <div class="stat-value">10,000+</div>
                     <div class="stat-label">Goals Completed</div>
                 </div>
-                <div class="stat-item opacity-0 scale-95 transition-all duration-700 ease-out" 
+                <div class="stat-item animate animate-hidden-scale-up animate-delay-100" 
                      x-data="{}" 
-                     x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'scale-95'), 100)">
+                     x-intersect="$el.classList.remove('animate-hidden-scale-up')">
                     <div class="stat-value">500+</div>
                     <div class="stat-label">Active Users</div>
                 </div>
-                <div class="stat-item opacity-0 scale-95 transition-all duration-700 ease-out" 
+                <div class="stat-item animate animate-hidden-scale-up animate-delay-200" 
                      x-data="{}" 
-                     x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'scale-95'), 200)">
+                     x-intersect="$el.classList.remove('animate-hidden-scale-up')">
                     <div class="stat-value">1,200+</div>
                     <div class="stat-label">Challenges Created</div>
                 </div>
-                <div class="stat-item opacity-0 scale-95 transition-all duration-700 ease-out" 
+                <div class="stat-item animate animate-hidden-scale-up animate-delay-300" 
                      x-data="{}" 
-                     x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'scale-95'), 300)">
+                     x-intersect="$el.classList.remove('animate-hidden-scale-up')">
                     <div class="stat-value">85%</div>
                     <div class="stat-label">Success Rate</div>
                 </div>
@@ -303,19 +303,19 @@
     <!-- Final CTA Section -->
     <div class="section final-cta">
         <div class="container">
-            <h2 class="final-cta-title opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <h2 class="final-cta-title animate animate-hidden-fade-up" 
                 x-data="{}" 
-                x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 Ready to Build Better Habits?
             </h2>
-            <p class="final-cta-subtitle opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <p class="final-cta-subtitle animate animate-hidden-fade-up animate-delay-100" 
                x-data="{}" 
-               x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), 100)">
+               x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 Join thousands of people transforming their goals into daily wins. Start your first challenge today — completely free.
             </p>
-            <div class="hero-cta opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <div class="hero-cta animate animate-hidden-fade-up animate-delay-200" 
                  x-data="{}" 
-                 x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), 200)">
+                 x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 @auth
                     <a href="{{ route('challenges.create') }}" class="btn btn-primary btn-lg">
                         Create Your First Challenge

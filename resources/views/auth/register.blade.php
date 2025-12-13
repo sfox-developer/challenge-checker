@@ -2,7 +2,9 @@
     <div class="section">
         <div class="container max-w-xl">
             <!-- Header -->
-            <div class="text-center mb-12">
+            <div class="text-center mb-12 animate animate-hidden-fade-up" 
+                 x-data="{}" 
+                 x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">
                 <h1>
                     Create your account
                 </h1>
@@ -11,7 +13,9 @@
                 </p>
             </div>
 
-            <form method="POST" action="{{ route('register') }}" class="space-y-6">
+            <form method="POST" action="{{ route('register') }}" class="space-y-6 animate animate-hidden-fade-up animate-delay-100" 
+                  x-data="{}" 
+                  x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">
         @csrf
 
         <!-- Name -->
@@ -78,7 +82,7 @@
                 </a>
             </p>
         </div>
-    </form>
+            </form>
         </div>
     </div>
 </x-public-layout>

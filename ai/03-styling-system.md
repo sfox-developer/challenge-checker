@@ -1,6 +1,6 @@
 # Styling System - SCSS + Tailwind
 
-**Last Updated:** December 10, 2025  
+**Last Updated:** December 13, 2025  
 **Purpose:** Complete guide to SCSS architecture and Tailwind patterns
 
 ---
@@ -44,6 +44,7 @@ resources/scss/
 │   ├── _typography.scss       # h1, h2, text classes
 │   └── _utilities.scss        # .section, .container
 ├── components/                 # Reusable component classes
+│   ├── _animations.scss       # Scroll & immediate animations
 │   ├── _badges.scss           # Status badges
 │   ├── _buttons.scss          # Button variants
 │   ├── _cards.scss            # Card patterns
@@ -180,6 +181,69 @@ body {
     </div>
 </div>
 ```
+
+---
+
+### Animations (`components/_animations.scss`)
+
+**Two-class system for scroll/load animations:**
+
+1. **Base class** (always present): `.animate` - defines transition properties
+2. **State class** (removed to trigger): `.animate-hidden-*` - defines initial hidden state
+
+**Available animation states:**
+```scss
+.animate-hidden-fade-up-sm    // Small upward movement (1rem)
+.animate-hidden-fade-up       // Larger upward movement (2rem)
+.animate-hidden-scale-up      // Scale from 95%
+.animate-hidden-slide-left    // Slide from left (-1.25rem)
+.animate-hidden-slide-right   // Slide from right (2rem)
+.animate-hidden-fade          // Simple fade (no movement)
+```
+
+**Stagger delays:**
+```scss
+.animate-delay-100    // 100ms delay
+.animate-delay-200    // 200ms delay
+.animate-delay-300    // 300ms delay
+.animate-delay-400    // 400ms delay
+```
+
+**Usage with Alpine.js:**
+```blade
+<!-- Immediate animation (page load) -->
+<h1 class="hero-title animate animate-hidden-fade-up-sm" 
+    x-data="{}" 
+    x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up-sm') }, 100)">
+    Hero Title
+</h1>
+
+<!-- Scroll-triggered animation -->
+<div class="feature-card animate animate-hidden-fade-up" 
+     x-data="{}" 
+     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
+    Content fades in when scrolled into view
+</div>
+
+<!-- With stagger delay -->
+<div class="feature-card animate animate-hidden-fade-up animate-delay-200" 
+     x-data="{}" 
+     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
+    Delayed by 200ms
+</div>
+```
+
+**Why this approach:**
+- Base `.animate` class stays on element, maintaining transition properties
+- Removing state class (`.animate-hidden-*`) triggers the animation
+- Transition remains active throughout element's lifecycle
+- Works with Alpine.js `x-intersect` for scroll animations
+- Works with `x-init` + setTimeout for immediate/staggered page load animations
+
+**Properties:**
+- Duration: 700ms
+- Easing: cubic-bezier(0, 0, 0.2, 1) (ease-out)
+- Transition: opacity and transform properties
 
 ---
 

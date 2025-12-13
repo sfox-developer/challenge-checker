@@ -4,17 +4,17 @@
     <div class="section">
         <div class="container max-w-3xl">
 
-            <h1 class="h1 opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <h1 class="h1 animate animate-hidden-fade-up" 
                 x-data="{}" 
-                x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 100)">Terms of Service</h1>
-            <p class="subtitle mb-10 opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">Terms of Service</h1>
+            <p class="subtitle mb-10 animate animate-hidden-fade-up animate-delay-100" 
                x-data="{}" 
-               x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 200)">Last updated: December 5, 2025</p>
+               x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 200)">Last updated: December 5, 2025</p>
 
             <div class="space-y-10">
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Agreement to Terms</h2>
                 <div>
                     <p>
@@ -24,9 +24,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Description of Service</h2>
                 <div>
                     <p>{{ config('app.name') }} is a personal goal tracking and challenge management platform that allows users to:</p>
@@ -40,9 +40,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">User Accounts</h2>
                 <div>
                     <p><strong>Account Creation</strong></p>
@@ -64,9 +64,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">User Content</h2>
                 <div>
                     <p><strong>Your Content</strong></p>
@@ -89,9 +89,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Privacy Settings</h2>
                 <div>
                     <p>
@@ -102,9 +102,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Social Features</h2>
                 <div>
                     <p>Our service includes social features such as following other users and viewing public activities. When using these features:</p>
@@ -116,9 +116,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Prohibited Activities</h2>
                 <div>
                     <p>You may not:</p>
@@ -133,9 +133,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Service Availability</h2>
                 <div>
                     <p>
@@ -145,9 +145,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Intellectual Property</h2>
                 <div>
                     <p>
@@ -157,9 +157,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Termination</h2>
                 <div>
                     <p>We may terminate or suspend your account and access to the service immediately, without prior notice, if you:</p>
@@ -175,9 +175,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Disclaimer of Warranties</h2>
                 <div>
                     <p>
@@ -187,9 +187,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Limitation of Liability</h2>
                 <div>
                     <p>
@@ -199,9 +199,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Changes to Terms</h2>
                 <div>
                     <p>
@@ -212,9 +212,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Governing Law</h2>
                 <div>
                     <p>
@@ -224,9 +224,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Contact Information</h2>
                 <div>
                     <p>
@@ -236,9 +236,9 @@
                 </div>
             </section>
 
-            <section class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                 <h2 class="h2">Acknowledgment</h2>
                 <div>
                     <p>

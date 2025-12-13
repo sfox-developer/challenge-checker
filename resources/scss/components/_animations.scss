@@ -1,0 +1,67 @@
+/**
+ * Animation Classes
+ * 
+ * Two-class system for scroll-triggered and immediate animations.
+ * 
+ * Usage:
+ * 1. Base class (.animate) - always present, defines transition
+ * 2. State class (.animate-hidden-*) - removed to trigger animation
+ * 
+ * With Alpine.js:
+ * - Page load: x-init="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), 100)"
+ * - On scroll: x-intersect="$el.classList.remove('animate-hidden-fade-up')"
+ */
+
+// Base transition class - always keep on element
+.animate {
+    transition-property: opacity, transform;
+    transition-duration: 700ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1); // ease-out
+}
+
+// Initial hidden states - removed to trigger animation
+.animate-hidden-fade-up-sm {
+    opacity: 0 !important;
+    transform: translateY(1rem) !important;
+}
+
+.animate-hidden-fade-up {
+    opacity: 0 !important;
+    transform: translateY(2rem) !important;
+}
+
+.animate-hidden-scale-up {
+    opacity: 0 !important;
+    transform: scale(0.95) !important;
+}
+
+.animate-hidden-slide-left {
+    opacity: 0 !important;
+    transform: translateX(-1.25rem) !important;
+}
+
+.animate-hidden-slide-right {
+    opacity: 0 !important;
+    transform: translateX(2rem) !important;
+}
+
+.animate-hidden-fade {
+    opacity: 0 !important;
+}
+
+// Stagger delays for sequential animations
+.animate-delay-100 {
+    transition-delay: 100ms;
+}
+
+.animate-delay-200 {
+    transition-delay: 200ms;
+}
+
+.animate-delay-300 {
+    transition-delay: 300ms;
+}
+
+.animate-delay-400 {
+    transition-delay: 400ms;
+}

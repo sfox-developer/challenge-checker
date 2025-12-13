@@ -4,18 +4,19 @@
     <div class="section">
         <div class="container max-w-3xl">
 
-            <h1 class="opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+            <h1 class="animate animate-hidden-fade-up" 
                 x-data="{}" 
-                x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 100)">Changelog</h1>
-            <p class="subtitle mb-10 opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">Changelog</h1>
+            <p class="subtitle mb-10 animate animate-hidden-fade-up animate-delay-100" 
                x-data="{}" 
-               x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 200)">Latest updates and new features</p>
+               x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">Latest updates and new features</p>
 
             <div class="changelog-list">
                 @forelse($changelogs as $index => $changelog)
-                    <article class="changelog-item opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                    <article class="changelog-item animate animate-hidden-fade-up" 
+                             :class="'animate-delay-' + ({{ $index }} % 3 * 100)" 
                              x-data="{}" 
-                             x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), {{ $index % 3 * 100 }})">
+                             x-intersect="$el.classList.remove('animate-hidden-fade-up')">
                         <header class="changelog-header">
                             <div class="changelog-version">
                                 <h2 class="changelog-version-number">
