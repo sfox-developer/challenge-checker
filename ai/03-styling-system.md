@@ -44,6 +44,7 @@ resources/scss/
 │   ├── _typography.scss       # h1, h2, text classes
 │   └── _utilities.scss        # .section, .container
 ├── components/                 # Reusable component classes
+│   ├── _accents.scss          # Decorative accents (eyebrows, badges, dividers)
 │   ├── _animations.scss       # Scroll & immediate animations
 │   ├── _badges.scss           # Status badges
 │   ├── _buttons.scss          # Button variants
@@ -51,6 +52,7 @@ resources/scss/
 │   ├── _changelog.scss        # Changelog styles
 │   ├── _empty-states.scss     # Empty state patterns
 │   ├── _forms.scss            # Form components
+│   ├── _lists.scss            # List styles
 │   ├── _modals.scss           # Modal styles
 │   └── _nav.scss              # Navigation
 ├── pages/                      # Page-specific styles ONLY
@@ -435,6 +437,64 @@ body {
     <li>Error message two</li>
 </ul>
 ```
+
+---
+
+### Accents (`components/_accents.scss`)
+
+Decorative elements that add visual interest and polish to landing pages.
+
+```scss
+.eyebrow                  // Small label above headings
+.lottie-underline         // Animated Lottie underline wrapper
+.lottie-underline-animation // Lottie animation container
+.accent-badge             // Pill-shaped badge (neutral)
+.accent-badge-primary     // Primary colored badge
+.accent-badge-success     // Success/green badge
+.accent-circle            // Decorative background circle
+.accent-circle-sm         // Small circle (16-24px)
+.accent-circle-lg         // Large circle (32-48px)
+.accent-dots              // Dot pattern background
+.step-number-enhanced     // Gradient number badge
+.icon-accent              // Icon with subtle glow
+.section-divider          // Horizontal divider with dot
+.text-highlight           // Highlighted text with background
+```
+
+**Usage Examples:**
+```blade
+<!-- Eyebrow text -->
+<div class="eyebrow text-center">Features</div>
+<h2>Main Heading</h2>
+
+<!-- Lottie animated underline (static) -->
+<h2>Transform Your <span class="lottie-underline">Habits<span class="lottie-underline-animation" 
+    x-lottie="{ path: '/animations/line.json', loop: false, autoplay: true, stretch: true }"></span></span></h2>
+
+<!-- Lottie animated underline (scroll-based) -->
+<h2>Everything You Need to <span class="lottie-underline">Succeed<span class="lottie-underline-animation" 
+    x-lottie="{ path: '/animations/line.json', loop: false, autoplay: false, stretch: true, scrollProgress: true }"></span></span></h2>
+
+<!-- Badges -->
+<span class="accent-badge">New</span>
+<span class="accent-badge-success">✓ 100% Free</span>
+
+<!-- Enhanced step numbers -->
+<div class="step-number-enhanced">1</div>
+
+<!-- Section divider -->
+<div class="section-divider"></div>
+
+<!-- Text highlight -->
+<p>This is <span class="text-highlight">important</span> text.</p>
+```
+
+**Design Principles:**
+- Use eyebrows sparingly (1-2 per page)
+- Lottie underlines for key words in headings (static or scroll-based)
+- Badges for status or promotional messages
+- Enhanced numbers for step-by-step sections
+- Section dividers between major content blocks
 
 ---
 

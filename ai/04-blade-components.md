@@ -779,11 +779,39 @@ x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')"
 </div>
 ```
 
+**Interval Replay:**
+```blade
+<div class="lottie-animation"
+     x-lottie="{
+         path: '/animations/loader-cat.json',
+         interval: 6000  // Replay every 6 seconds
+     }">
+</div>
+```
+
+**Scroll-Based Progress:**
+```blade
+<span class="lottie-underline">Word
+    <span class="lottie-underline-animation" 
+        x-lottie="{
+            path: '/animations/line.json',
+            loop: false,
+            autoplay: false,
+            stretch: true,
+            scrollProgress: true  // Animate based on scroll position
+        }">
+    </span>
+</span>
+```
+
 **Configuration Options:**
 - `path` - Path to JSON file (required)
-- `loop` - Boolean, loop animation (default: true)
+- `loop` - Boolean, loop animation (default: true unless interval is set)
 - `autoplay` - Boolean, start automatically (default: true)
 - `renderer` - 'svg', 'canvas', or 'html' (default: 'svg')
+- `interval` - Number (ms), replay animation at interval (disables loop)
+- `stretch` - Boolean, stretch SVG to fill container (sets preserveAspectRatio="none")
+- `scrollProgress` - Boolean, animate based on element scroll position (disables autoplay)
 
 **File Organization:**
 - Store JSON files in `public/animations/`

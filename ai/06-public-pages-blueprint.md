@@ -637,6 +637,14 @@ resources/scss/
 - `.feature-card` - Feature card
 - `.stats-grid` - Stats layout
 
+**Accents (Decorative Details):**
+- `.eyebrow` - Small label above headings
+- `.lottie-underline` + `.lottie-underline-animation` - Animated Lottie underline
+- `.accent-badge` / `.accent-badge-success` - Pill badges
+- `.step-number-enhanced` - Gradient step numbers
+- `.section-divider` - Horizontal divider with dot
+- `.text-highlight` - Highlighted text background
+
 **Animation:**
 - `.animate` + `.animate-hidden-fade-up` - Scroll-triggered fade up
 - `.animate-delay-100/200/300/400` - Stagger delays
@@ -647,6 +655,9 @@ resources/scss/
 - `.lottie-container` - Wrapper with centering
 - `.lottie-animation` - Size constraints (w-32 h-32 md:w-40 md:h-40)
 - `x-lottie="{ path: '/animations/file.json', loop: true }"` - Alpine directive
+- `scrollProgress: true` - Animate based on scroll position
+- `stretch: true` - Stretch SVG to fill container width
+- `interval: 6000` - Replay animation every N milliseconds
 - Assets in `public/animations/` with kebab-case naming
 
 ---

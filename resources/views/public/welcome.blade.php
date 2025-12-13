@@ -4,10 +4,16 @@
     <!-- Hero Section -->
     <div class="hero">
         <div class="container">
+            <div class="eyebrow text-center animate animate-hidden-fade-up-sm" 
+                 x-data="{}" 
+                 x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up-sm') }, 50)">
+                Your Journey Starts Here
+            </div>
+            
             <h1 class="hero-title animate animate-hidden-fade-up-sm" 
                 x-data="{}" 
                 x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up-sm') }, 100)">
-                Turn Goals Into Habits.<br>Habits Into Results.
+                Turn Goals Into <span class="lottie-underline">Habits<span class="lottie-underline-animation" x-lottie="{ path: '/animations/line.json', loop: false, autoplay: true, stretch: true }"></span></span>.<br>Habits Into Results.
             </h1>
             
             <p class="hero-subtitle animate animate-hidden-fade-up-sm animate-delay-100" 
@@ -76,7 +82,8 @@
             <div class="section-header animate animate-hidden-fade-up" 
                  x-data="{}" 
                  x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="section-title">Everything You Need to Succeed</h2>
+                <div class="eyebrow text-center">Features</div>
+                <h2 class="section-title">Everything You Need to <span class="lottie-underline">Succeed<span class="lottie-underline-animation" x-lottie="{ path: '/animations/line.json', loop: false, autoplay: false, stretch: true, scrollProgress: true }"></span></span></h2>
                 <p class="section-subtitle">
                     Powerful features designed to help you build habits that stick and achieve goals that matter.
                 </p>
@@ -152,7 +159,8 @@
             <div class="section-header animate animate-hidden-fade-up" 
                  x-data="{}" 
                  x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="section-title">How It Works</h2>
+                <div class="eyebrow text-center">Simple Process</div>
+                <h2 class="section-title">How It <span class="lottie-underline">Works<span class="lottie-underline-animation" x-lottie="{ path: '/animations/line.json', loop: false, autoplay: false, stretch: true, scrollProgress: true }"></span></span></h2>
                 <p class="section-subtitle">
                     Get started in minutes. See results in days. Build lasting change in weeks.
                 </p>
@@ -201,10 +209,13 @@
             <div class="benefits-grid">
                 <!-- Content -->
                 <div class="benefit-content">
+                    <div class="eyebrow animate animate-hidden-fade-up" 
+                         x-data="{}" 
+                         x-intersect="$el.classList.remove('animate-hidden-fade-up')">Why Choose Us</div>
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 animate animate-hidden-fade-up" 
                         x-data="{}" 
                         x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                        Why Challenge Checker Works
+                        Why Challenge Checker <span class="text-highlight">Works</span>
                     </h2>
 
                     <div class="space-y-6">
