@@ -548,6 +548,81 @@ Alpine.start();
     x-data="{}"
     x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-4') }, 100)">
     Hero Title
+```
+
+**6. Multi-Step Form (Progressive Disclosure - External Component):**
+
+**Best Practice:** Extract complex Alpine.js logic to separate JavaScript files.
+
+```javascript
+// resources/js/components/registration-form.js
+export default (initialData = {}) => ({
+    step: initialData.hasErrors ? 3 : 1,
+    email: initialData.email || '',
+    emailValid: Boolean(initialData.email),
+    
+    validateEmail() {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        this.emailValid = emailRegex.test(this.email);
+        return this.emailValid;
+    },
+    
+    goToStep2() {
+        if (this.validateEmail()) {
+            this.step = 2;
+            this.$nextTick(() => {
+                document.getElementById('name')?.focus();
+            });
+        }
+    }
+});
+
+// Register in resources/js/components/index.js
+import registrationForm from './registration-form.js';
+window.registrationForm = registrationForm;
+```
+
+**Usage in Blade:**
+```blade
+<div x-data="registrationForm({ 
+        email: '{{ old('email') }}',
+        hasErrors: {{ $errors->any() ? 'true' : 'false' }}
+     })">
+    
+    <!-- Header - Only step 1 -->
+    <div x-show="step === 1">
+        <h1>Create your account</h1>
+    </div>
+    
+    <!-- Progress - Steps 2-3 -->
+    <div x-show="step > 1">
+        <div :class="step >= 1 ? 'active' : ''">1</div>
+        <div :class="step >= 2 ? 'active' : ''">2</div>
+    </div>
+    
+    <!-- Step 1: Email -->
+    <div x-show="step === 1">
+        <input x-model="email" @input="validateEmail()" />
+        <button @click="goToStep2" :disabled="!emailValid">
+            Continue
+        </button>
+    </div>
+    
+    <!-- Step 2: Name -->
+    <div x-show="step === 2">
+        <input id="name" x-model="name" />
+        <button @click="step = 1">Back</button>
+    </div>
+</div>
+```
+
+**Key Features:**
+- **Extreme focus** - Hide ALL unnecessary elements per step
+- **No animations** - Use `x-show` without `x-transition` for instant changes
+- **External JavaScript** - Complex logic in separate file for maintainability
+- **Progressive disclosure** - Each step shows minimal UI
+- **Auto-focus** - Use `$nextTick()` for proper focus management
+- **Laravel integration** - Handles validation errors gracefully
 </h1>
 ```
 

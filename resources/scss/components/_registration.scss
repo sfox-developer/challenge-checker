@@ -1,0 +1,95 @@
+// ============================================================================
+// REGISTRATION - Multi-Step Form Components
+// ============================================================================
+// Consolidated styles for registration page to reduce HTML class clutter
+// ============================================================================
+
+// Trust signals container
+.registration-trust {
+    @apply flex items-center justify-center gap-6 mb-8;
+    @apply text-sm text-help;
+}
+
+.registration-trust-item {
+    @apply flex items-center gap-2;
+}
+
+// Progress indicator
+.registration-progress {
+    @apply flex items-center justify-center gap-2 mb-8;
+}
+
+.registration-progress-group {
+    @apply flex items-center gap-2;
+}
+
+.registration-progress-step {
+    @apply flex items-center justify-center;
+    @apply w-8 h-8 rounded-full;
+    @apply text-sm font-medium;
+    
+    &.is-active,
+    &.is-complete {
+        @apply bg-slate-700 dark:bg-slate-600 text-white;
+    }
+    
+    &.is-pending {
+        @apply bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400;
+    }
+}
+
+.registration-progress-line {
+    @apply w-8 h-px;
+    
+    &.is-active {
+        @apply bg-slate-700 dark:bg-slate-600;
+    }
+    
+    &.is-pending {
+        @apply bg-gray-300 dark:bg-gray-600;
+    }
+}
+
+.registration-progress-label {
+    @apply text-sm font-medium;
+    
+    &.is-active {
+        @apply text-gray-900 dark:text-white;
+    }
+    
+    &.is-pending {
+        @apply text-gray-500 dark:text-gray-400;
+    }
+}
+
+// Step header/intro text
+.registration-step-intro {
+    @apply text-center mb-6;
+}
+
+.registration-step-title {
+    @apply text-body;
+}
+
+.registration-step-subtitle {
+    @apply text-sm text-help mt-1;
+}
+
+// Button group for back/continue layout
+.registration-buttons {
+    @apply flex gap-3;
+}
+
+// Validation error message
+.registration-error {
+    @apply mt-2 text-sm text-red-600 dark:text-red-400;
+}
+
+// Footer links
+.registration-footer {
+    @apply text-center text-sm;
+}
+
+.registration-footer-link {
+    @apply link font-medium;
+}

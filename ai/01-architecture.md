@@ -64,6 +64,7 @@ resources/views/
 │   └── verify-email.blade.php
 │
 ├── dashboard/                       # Authenticated user area 🚧 IN PROGRESS
+│   ├── welcome.blade.php            # Post-registration onboarding ✅ NEW
 │   ├── challenges/
 │   │   ├── index.blade.php
 │   │   ├── create.blade.php

@@ -28,6 +28,10 @@ Route::view('/terms-of-service', 'public.terms-of-service')->name('terms.service
 Route::view('/imprint', 'public.imprint')->name('imprint');
 
 Route::middleware('auth')->group(function () {
+    // Dashboard welcome (post-registration onboarding)
+    Route::get('/welcome', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'welcome'])
+        ->name('dashboard.welcome');
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/menu', [ProfileController::class, 'menu'])->name('profile.menu');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

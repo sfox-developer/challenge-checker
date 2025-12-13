@@ -27,6 +27,13 @@ import { createChallengeForm } from './challenge.js';
 import { toggleHabit, completeWithNotes } from './habitToggle.js';
 import { showToast, showError, showSuccess, showInfo, showWarning, getCsrfToken, createHeaders, post } from '../utils/ui.js';
 import { createEmojiPicker } from './emojiPicker.js';
+import registrationForm from './registration-form.js';
+
+/**
+ * Registration Form Component
+ * Multi-step registration with email, name, and password
+ * Follows Single Responsibility Principle - handles only registration flow
+ */
 
 // Register components globally for Alpine.js to access
 window.themeManager = createThemeManager;
@@ -38,6 +45,7 @@ window.habitFormWithGoalToggle = createHabitFormWithGoalToggle;
 window.habitEditForm = createHabitEditForm;
 window.challengeForm = createChallengeForm;
 window.emojiPicker = createEmojiPicker;
+window.registrationForm = registrationForm;
 
 // Register modal utility functions globally
 window.showModal = showModal;

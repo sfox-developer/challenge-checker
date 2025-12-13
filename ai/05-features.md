@@ -80,7 +80,8 @@ isSocialUser(): bool  // Check if user registered via social auth
 - Trust signals (Secure, No spam, Free)
 - Password strength indicator
 - Account linking for existing emails
-- Automatic redirect to dashboard
+- Post-registration success view with onboarding guidance
+- Redirect to dashboard via success page
 
 **Security:**
 - Rate limiting (10 attempts/minute)
@@ -89,12 +90,20 @@ isSocialUser(): bool  // Check if user registered via social auth
 - Secure token storage (hidden from serialization)
 - OAuth state parameter verification
 
-**Controller:** `App\Http\Controllers\Auth\SocialAuthController`
+**Controllers:** 
+- `App\Http\Controllers\Auth\SocialAuthController` (OAuth)
+- `App\Http\Controllers\Auth\RegisteredUserController` (Standard registration)
 
 **Routes:**
 ```php
+// Social auth
 GET  /auth/{provider}/redirect  // Redirect to OAuth provider
 GET  /auth/{provider}/callback  // Handle OAuth callback
+
+// Standard registration
+GET  /register                   // Show registration form
+POST /register                   // Process registration
+GET  /welcome                    // Dashboard welcome/onboarding view (auth required)
 ```
 
 **Configuration:**

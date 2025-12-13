@@ -32,7 +32,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
@@ -45,6 +45,14 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('feed.index', absolute: false));
+        return redirect(route('dashboard.welcome', absolute: false));
+    }
+
+    /**
+     * Display the dashboard welcome view.
+     */
+    public function welcome(): View
+    {
+        return view('dashboard.welcome');
     }
 }
