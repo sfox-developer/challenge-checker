@@ -6,7 +6,7 @@
             
             <h1 class="h1 animate animate-hidden-fade-up" 
                 x-data="{}" 
-                x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">Privacy Policy</h1>
+                x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">Privacy policy</h1>
             <p class="subtitle mb-10 animate animate-hidden-fade-up animate-delay-100" 
                x-data="{}" 
                x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">Last updated: December 5, 2025</p>
@@ -27,7 +27,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Information We Collect</h2>
+                <h2 class="h2">Information we collect</h2>
                 <div>
                     <p><strong>Personal Information:</strong></p>
                     <p>We collect the following personal information when you use our service:</p>
@@ -51,7 +51,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">How We Use Your Information</h2>
+                <h2 class="h2">How we use your information</h2>
                 <div>
                     <p>We use your personal data for the following purposes:</p>
                     <ul class="list-styled">
@@ -68,7 +68,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Data Sharing and Disclosure</h2>
+                <h2 class="h2">Data sharing and disclosure</h2>
                 <div>
                     <p>We do not sell your personal data. We may share your information in the following situations:</p>
                     <ul class="list-styled">
@@ -82,7 +82,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Data Security</h2>
+                <h2 class="h2">Data security</h2>
                 <div>
                     <p>
                         We implement appropriate technical and organizational security measures to protect your personal data. 
@@ -95,7 +95,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Your Privacy Rights</h2>
+                <h2 class="h2">Your privacy rights</h2>
                 <div>
                     <p>You have the following rights regarding your personal data:</p>
                     <ul class="list-styled">
@@ -111,7 +111,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Data Retention</h2>
+                <h2 class="h2">Data retention</h2>
                 <div>
                     <p>
                         We retain your personal data for as long as your account is active or as needed to provide you services. 
@@ -123,7 +123,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Cookies and Tracking</h2>
+                <h2 class="h2">Cookies and tracking</h2>
                 <div>
                     <p>
                         We use session cookies to maintain your login state and remember your preferences (like theme selection). 
@@ -135,7 +135,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Children's Privacy</h2>
+                <h2 class="h2">Children's privacy</h2>
                 <div>
                     <p>
                         Our service is not intended for children under 13 years of age. We do not knowingly collect personal 
@@ -147,7 +147,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Changes to This Policy</h2>
+                <h2 class="h2">Changes to this policy</h2>
                 <div>
                     <p>
                         We may update this privacy policy from time to time. We will notify you of any changes by posting the 
@@ -159,7 +159,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Contact Us</h2>
+                <h2 class="h2">Contact us</h2>
                 <div>
                     <p>
                         If you have any questions about this privacy policy or our privacy practices, please contact us through 

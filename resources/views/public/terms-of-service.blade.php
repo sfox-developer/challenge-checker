@@ -6,7 +6,7 @@
 
             <h1 class="h1 animate animate-hidden-fade-up" 
                 x-data="{}" 
-                x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">Terms of Service</h1>
+                x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">Terms of service</h1>
             <p class="subtitle mb-10 animate animate-hidden-fade-up animate-delay-100" 
                x-data="{}" 
                x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 200)">Last updated: December 5, 2025</p>
@@ -15,7 +15,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Agreement to Terms</h2>
+                <h2 class="h2">Agreement to terms</h2>
                 <div>
                     <p>
                         By accessing or using {{ config('app.name') }}, you agree to be bound by these Terms of Service. 
@@ -27,7 +27,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Description of Service</h2>
+                <h2 class="h2">Description of service</h2>
                 <div>
                     <p>{{ config('app.name') }} is a personal goal tracking and challenge management platform that allows users to:</p>
                     <ul class="list-styled">
@@ -43,7 +43,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">User Accounts</h2>
+                <h2 class="h2">User accounts</h2>
                 <div>
                     <p><strong>Account Creation</strong></p>
                     <p>To use our service, you must:</p>
@@ -67,7 +67,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">User Content</h2>
+                <h2 class="h2">User content</h2>
                 <div>
                     <p><strong>Your Content</strong></p>
                     <p>You retain all rights to the content you create (challenges, goals, habits, activities). By using our service, you grant us a license to:</p>
@@ -92,7 +92,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Privacy Settings</h2>
+                <h2 class="h2">Privacy settings</h2>
                 <div>
                     <p>
                         You control the visibility of your challenges and activities through privacy settings. Content marked as "public" 
@@ -105,7 +105,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Social Features</h2>
+                <h2 class="h2">Social features</h2>
                 <div>
                     <p>Our service includes social features such as following other users and viewing public activities. When using these features:</p>
                     <ul class="list-styled">
@@ -119,7 +119,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Prohibited Activities</h2>
+                <h2 class="h2">Prohibited activities</h2>
                 <div>
                     <p>You may not:</p>
                     <ul class="list-styled">
@@ -136,7 +136,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Service Availability</h2>
+                <h2 class="h2">Service availability</h2>
                 <div>
                     <p>
                         We strive to provide reliable service, but we do not guarantee that the service will be uninterrupted or error-free. 
@@ -148,7 +148,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Intellectual Property</h2>
+                <h2 class="h2">Intellectual property</h2>
                 <div>
                     <p>
                         The service, including its design, functionality, and content (excluding user-generated content), is owned by 
@@ -178,7 +178,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Disclaimer of Warranties</h2>
+                <h2 class="h2">Disclaimer of warranties</h2>
                 <div>
                     <p>
                         The service is provided "AS IS" and "AS AVAILABLE" without warranties of any kind, either express or implied. 
@@ -190,7 +190,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Limitation of Liability</h2>
+                <h2 class="h2">Limitation of liability</h2>
                 <div>
                     <p>
                         To the maximum extent permitted by law, {{ config('app.name') }} shall not be liable for any indirect, incidental, 
@@ -202,7 +202,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Changes to Terms</h2>
+                <h2 class="h2">Changes to terms</h2>
                 <div>
                     <p>
                         We reserve the right to modify these terms at any time. We will notify users of any material changes by 
@@ -215,7 +215,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Governing Law</h2>
+                <h2 class="h2">Governing law</h2>
                 <div>
                     <p>
                         These Terms shall be governed by and construed in accordance with applicable laws, without regard to 
@@ -227,7 +227,7 @@
             <section class="animate animate-hidden-fade-up" 
                      x-data="{}" 
                      x-intersect="$el.classList.remove('animate-hidden-fade-up')">
-                <h2 class="h2">Contact Information</h2>
+                <h2 class="h2">Contact information</h2>
                 <div>
                     <p>
                         If you have any questions about these Terms of Service, please contact us through your profile settings 
