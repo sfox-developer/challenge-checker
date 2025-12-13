@@ -1,15 +1,17 @@
-<x-guest-layout>
-    <!-- Header -->
-    <div class="text-center mb-12">
-        <h1>
-            Create your account
-        </h1>
-        <p class="subtitle">
-            Start tracking your challenges today
-        </p>
-    </div>
+<x-public-layout>
+    <div class="section">
+        <div class="container max-w-xl">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1>
+                    Create your account
+                </h1>
+                <p class="subtitle">
+                    Start tracking your challenges today
+                </p>
+            </div>
 
-    <form method="POST" action="{{ route('register') }}" class="space-y-6">
+            <form method="POST" action="{{ route('register') }}" class="space-y-6">
         @csrf
 
         <!-- Name -->
@@ -77,4 +79,6 @@
             </p>
         </div>
     </form>
-</x-guest-layout>
+        </div>
+    </div>
+</x-public-layout>

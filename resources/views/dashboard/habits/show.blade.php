@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-dashboard-layout>
     <x-slot name="header">
         <x-ui.page-header :title="$habit->goal->name">
             <x-slot name="icon">
@@ -275,4 +275,4 @@
             initModalListeners('archiveModal', hideArchiveModal);
         });
     </script>
-</x-app-layout>
+</x-dashboard-layout>

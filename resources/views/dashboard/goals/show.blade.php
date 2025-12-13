@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-dashboard-layout>
     <x-slot name="header">
         <x-ui.page-header :title="$goal->name">
             <x-slot name="icon">
@@ -247,4 +247,4 @@
         </div>
         </form>
     </x-ui.modal>
-</x-app-layout>
+</x-dashboard-layout>

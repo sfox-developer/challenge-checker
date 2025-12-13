@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-dashboard-layout>
     <x-slot name="header">
         <x-ui.page-header title="My Challenges">
             <x-slot name="icon">
@@ -177,4 +177,4 @@
             @endif
         </div>
     </div>
-</x-app-layout>
+</x-dashboard-layout>

@@ -1,16 +1,18 @@
-<x-guest-layout>
-    <!-- Header -->
-    <div class="text-center mb-12">
-        <h1>
-            Welcome back
-        </h1>
-        <p class="subtitle">
-            Sign in to your account to continue
-        </p>
-    </div>
+<x-public-layout>
+    <div class="section">
+        <div class="container max-w-xl">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1>
+                    Welcome back
+                </h1>
+                <p class="subtitle">
+                    Sign in to your account to continue
+                </p>
+            </div>
 
-    <!-- Session Status -->
-    <x-shared.auth-session-status class="mb-6" :status="session('status')" />
+            <!-- Session Status -->
+            <x-shared.auth-session-status class="mb-6" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}" class="space-y-6">
         @csrf
@@ -69,4 +71,6 @@
             </p>
         </div>
     </form>
-</x-guest-layout>
+        </div>
+    </div>
+</x-public-layout>

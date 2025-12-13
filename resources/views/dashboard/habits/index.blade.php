@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-dashboard-layout>
     <x-slot name="header">
         <x-ui.page-header 
             title="Habits">
@@ -138,4 +138,4 @@
     </div>
 
 
-</x-app-layout>
+</x-dashboard-layout>

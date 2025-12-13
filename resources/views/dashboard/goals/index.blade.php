@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-dashboard-layout>
     <x-slot name="header">
         <x-ui.page-header title="Goal Library">
             <x-slot name="icon">
@@ -323,4 +323,4 @@
             </form>
         </div>
     </x-ui.modal>
-</x-app-layout>
+</x-dashboard-layout>

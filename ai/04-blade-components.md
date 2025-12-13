@@ -1,6 +1,6 @@
 # Blade Components & Alpine.js
 
-**Last Updated:** December 10, 2025  
+**Last Updated:** December 13, 2025  
 **Purpose:** Component system, layouts, and frontend interactivity patterns
 
 ---
@@ -67,13 +67,13 @@ resources/views/components/
 
 ## 🏗 Layout Components
 
-### x-app-layout (Authenticated Layout)
+### x-dashboard-layout (Authenticated Layout)
 
-**Location:** `resources/views/layouts/app.blade.php`
+**Location:** `resources/views/layouts/dashboard.blade.php`
 
 **Usage:**
 ```blade
-<x-app-layout>
+<x-dashboard-layout>
     <x-slot name="title">Page Title</x-slot>
     
     <!-- Page content goes here -->
@@ -82,7 +82,7 @@ resources/views/components/
             <h1 class="h1">Welcome</h1>
         </div>
     </div>
-</x-app-layout>
+</x-dashboard-layout>
 ```
 
 **Features:**
@@ -94,7 +94,7 @@ resources/views/components/
 
 ---
 
-### x-public-layout (Public Layout)
+### x-public-layout (Public & Auth Layout)
 
 **Location:** `resources/views/layouts/public.blade.php`
 
@@ -108,9 +108,10 @@ resources/views/components/
 ```
 
 **Features:**
-- Public navigation (minimal)
+- Public navigation (minimal with login/register links)
 - Footer with links
 - Theme toggle
+- Used for public pages (welcome, legal) AND authentication pages (login, register)
 - No authentication required
 
 ---
@@ -126,7 +127,7 @@ resources/views/components/
 - User profile dropdown
 - Notification indicator
 
-**Usage:** Automatically included in `x-app-layout`
+**Usage:** Automatically included in `x-dashboard-layout`
 
 ---
 
@@ -140,7 +141,7 @@ resources/views/components/
 - Active state highlighting
 - Hidden on desktop (lg:hidden)
 
-**Usage:** Automatically included in `x-app-layout`
+**Usage:** Automatically included in `x-dashboard-layout`
 
 ---
 
@@ -701,8 +702,8 @@ Alpine.start();
 ### Most Used Components
 
 **Layouts:**
-- `<x-app-layout>` - Authenticated pages
-- `<x-public-layout>` - Public pages
+- `<x-dashboard-layout>` - Authenticated dashboard/admin pages
+- `<x-public-layout>` - Public pages and authentication pages
 
 **UI:**
 - `<x-ui.modal>` - Modal dialogs

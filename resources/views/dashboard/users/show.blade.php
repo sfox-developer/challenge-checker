@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-dashboard-layout>
     <x-slot name="header">
         <x-ui.page-header :title="$user->name">
             <x-slot name="icon">
@@ -81,4 +81,4 @@
                 defaultTab="activity" />
         </div>
     </div>
-</x-app-layout>
+</x-dashboard-layout>

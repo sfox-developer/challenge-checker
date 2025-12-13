@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-dashboard-layout>
     <x-slot name="header">
         <x-ui.page-header :title="$query ? 'Search Users' : 'Discover Users'">
             <x-slot name="icon">
@@ -120,4 +120,4 @@
             @endif
         </div>
     </div>
-</x-app-layout>
+</x-dashboard-layout>

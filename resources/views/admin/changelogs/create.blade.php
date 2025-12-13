@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-dashboard-layout>
     <x-slot name="header">
         <x-ui.page-header title="Create Changelog">
             <x-slot name="icon">
@@ -83,4 +83,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-dashboard-layout>

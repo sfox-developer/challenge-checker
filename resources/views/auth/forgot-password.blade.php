@@ -1,16 +1,18 @@
-<x-guest-layout>
-    <!-- Header -->
-    <div class="text-center mb-12">
-        <h1>
-            Forgot your password?
-        </h1>
-        <p class="subtitle max-w-lg mx-auto">
-            No problem. Just let us know your email address and we will email you a password reset link.
-        </p>
-    </div>
+<x-public-layout>
+    <div class="section">
+        <div class="container max-w-xl">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1>
+                    Forgot your password?
+                </h1>
+                <p class="subtitle max-w-lg mx-auto">
+                    No problem. Just let us know your email address and we will email you a password reset link.
+                </p>
+            </div>
 
-    <!-- Session Status -->
-    <x-shared.auth-session-status class="mb-6" :status="session('status')" />
+            <!-- Session Status -->
+            <x-shared.auth-session-status class="mb-6" :status="session('status')" />
 
     <form method="POST" action="{{ route('password.email') }}" class="space-y-6">
         @csrf
@@ -35,4 +37,6 @@
             </button>
         </div>
     </form>
-</x-guest-layout>
+        </div>
+    </div>
+</x-public-layout>

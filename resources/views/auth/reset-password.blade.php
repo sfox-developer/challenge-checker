@@ -1,15 +1,17 @@
-<x-guest-layout>
-    <!-- Header -->
-    <div class="text-center mb-12">
-        <h1>
-            Reset your password
-        </h1>
-        <p class="subtitle">
-            Enter your new password below
-        </p>
-    </div>
+<x-public-layout>
+    <div class="section">
+        <div class="container max-w-xl">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1>
+                    Reset your password
+                </h1>
+                <p class="subtitle">
+                    Enter your new password below
+                </p>
+            </div>
 
-    <form method="POST" action="{{ route('password.store') }}" class="space-y-6">
+            <form method="POST" action="{{ route('password.store') }}" class="space-y-6">
         @csrf
 
         <!-- Password Reset Token -->
@@ -60,4 +62,6 @@
             </button>
         </div>
     </form>
-</x-guest-layout>
+        </div>
+    </div>
+</x-public-layout>

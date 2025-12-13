@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-dashboard-layout>
     <x-slot name="header">
         <x-ui.page-header title="Today's Habits">
             <x-slot name="icon">
@@ -228,4 +228,4 @@
         window.completeWithNotesToday = (habitId) => completeWithNotes(habitId, '{{ now()->toDateString() }}');
         // showToast is already global
     </script>
-</x-app-layout>
+</x-dashboard-layout>

@@ -1,15 +1,17 @@
-<x-guest-layout>
-    <!-- Header -->
-    <div class="text-center mb-8">
-        <h1 class="h2">
-            Verify your email
-        </h1>
-        <p class="text-muted">
-            Thanks for signing up! Before getting started, please verify your email address by clicking on the link we just emailed to you.
-        </p>
-    </div>
+<x-public-layout>
+    <div class="section">
+        <div class="container max-w-xl">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="h2">
+                    Verify your email
+                </h1>
+                <p class="text-muted">
+                    Thanks for signing up! Before getting started, please verify your email address by clicking on the link we just emailed to you.
+                </p>
+            </div>
 
-    @if (session('status') == 'verification-link-sent')
+            @if (session('status') == 'verification-link-sent')
         <div class="mb-6 text-success">
             {{ __('A new verification link has been sent to the email address you provided during registration.') }}
         </div>
@@ -30,4 +32,6 @@
             </button>
         </form>
     </div>
-</x-guest-layout>
+        </div>
+    </div>
+</x-public-layout>

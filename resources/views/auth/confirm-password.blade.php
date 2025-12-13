@@ -1,15 +1,17 @@
-<x-guest-layout>
-    <!-- Header -->
-    <div class="text-center mb-8">
-        <h1 class="h2">
-            Confirm your password
-        </h1>
-        <p class="text-muted">
-            This is a secure area. Please confirm your password before continuing.
-        </p>
-    </div>
+<x-public-layout>
+    <div class="section">
+        <div class="container max-w-xl">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="h2">
+                    Confirm your password
+                </h1>
+                <p class="text-muted">
+                    This is a secure area. Please confirm your password before continuing.
+                </p>
+            </div>
 
-    <form method="POST" action="{{ route('password.confirm') }}" class="space-y-6">
+            <form method="POST" action="{{ route('password.confirm') }}" class="space-y-6">
         @csrf
 
         <!-- Password -->
@@ -31,4 +33,6 @@
             </button>
         </div>
     </form>
-</x-guest-layout>
+        </div>
+    </div>
+</x-public-layout>

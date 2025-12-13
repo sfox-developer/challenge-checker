@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-dashboard-layout>
     <div class="py-12">
         <div class="max-w-md mx-auto px-4">
             <!-- Profile Header -->
@@ -132,4 +132,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-dashboard-layout>
