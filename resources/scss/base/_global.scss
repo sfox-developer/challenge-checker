@@ -7,6 +7,7 @@
 body {
     font-family: 'Inter', 'Figtree', ui-sans-serif, system-ui, sans-serif;
     position: relative;
+    background-color: var(--color-bg-main);
     
     // Base pseudo-element for textures
     &::before {
@@ -27,7 +28,12 @@ body {
         background-image: 
             url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='perlin'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='4' seed='10'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.025 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23perlin)'/%3E%3C/svg%3E");
     }
-    &.dark.texture-perlin::before {
+}
+
+html.dark body {
+    background-color: var(--color-bg-main-dark);
+    
+    &.texture-perlin::before {
         background-image: 
             url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='perlin'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='4' seed='10'/%3E%3CfeColorMatrix values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23perlin)'/%3E%3C/svg%3E");
     }

@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('habits', function (Blueprint $table) {
-            $table->boolean('is_public')->default(false)->after('is_active');
+            if (!Schema::hasColumn('habits', 'is_public')) {
+                $table->boolean('is_public')->default(false)->after('is_active');
+            }
         });
     }
 

@@ -44,6 +44,9 @@
                           name="password" 
                           required 
                           autocomplete="new-password" />
+
+            <x-forms.password-strength inputId="password" />
+
             <x-forms.input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 

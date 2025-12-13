@@ -22,6 +22,15 @@ html.dark .page {
     @apply py-12 md:py-20;
 }
 
+// Background color utility
+.bg-main {
+    background-color: var(--color-bg-main);
+}
+
+html.dark .bg-main {
+    background-color: var(--color-bg-main-dark);
+}
+
 // Icon wrapper
 .icon {
     @apply w-12 h-12;

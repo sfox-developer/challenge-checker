@@ -97,6 +97,33 @@ html.dark select.form-input {
     @apply text-xs text-gray-500 dark:text-gray-500 mt-1;
 }
 
+// Auth separator (Or continue with email)
+.auth-separator {
+    @apply relative mb-8;
+    
+    .separator-line {
+        @apply absolute inset-0 flex items-center;
+        
+        &::before {
+            content: '';
+            @apply w-full border-t border-gray-300 dark:border-gray-600;
+        }
+    }
+    
+    .separator-text {
+        @apply relative flex justify-center text-sm;
+        
+        span {
+            @apply px-4 text-help;
+            background-color: var(--color-bg-main);
+        }
+    }
+}
+
+html.dark .auth-separator .separator-text span {
+    background-color: var(--color-bg-main-dark);
+}
+
 // Checkbox styles
 input[type="checkbox"].form-checkbox {
     @apply w-4 h-4;

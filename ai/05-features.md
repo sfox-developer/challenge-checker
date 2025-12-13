@@ -19,7 +19,10 @@ Personal library of reusable goals with categories.
 ### 4. Social Features
 Follow users, activity feed, and public challenge visibility.
 
-### 5. Admin Panel
+### 5. Social Authentication
+Google and Facebook OAuth for one-click signup/login.
+
+### 6. Admin Panel
 User management, challenge oversight, and changelog system.
 
 ---
@@ -46,6 +49,58 @@ isFollowing(User $user): bool
 follow(User $user): void
 unfollow(User $user): void
 ```
+
+**Authentication Methods:**
+```php
+isSocialUser(): bool  // Check if user registered via social auth
+```
+
+**Attributes:**
+- Social auth fields: `provider`, `provider_id`, `provider_token`, `provider_refresh_token`
+- Avatar handling: `avatar_url` (from provider) falls back to local `avatar`
+
+---
+
+## 🔐 Social Authentication
+
+**Supported Providers:**
+- Google (primary)
+- Facebook
+
+**Features:**
+- One-click signup/login
+- Auto email verification for social users
+- Avatar import from provider
+- Account linking (email-based)
+- Token refresh support
+- Secure token storage
+
+**User Experience:**
+- Social buttons on login/register pages
+- Trust signals (Secure, No spam, Free)
+- Password strength indicator
+- Account linking for existing emails
+- Automatic redirect to dashboard
+
+**Security:**
+- Rate limiting (10 attempts/minute)
+- CSRF protection
+- Provider whitelist validation
+- Secure token storage (hidden from serialization)
+- OAuth state parameter verification
+
+**Controller:** `App\Http\Controllers\Auth\SocialAuthController`
+
+**Routes:**
+```php
+GET  /auth/{provider}/redirect  // Redirect to OAuth provider
+GET  /auth/{provider}/callback  // Handle OAuth callback
+```
+
+**Configuration:**
+- Environment variables in `.env`
+- Service configuration in `config/services.php`
+- See `SOCIAL-AUTH-SETUP.md` for OAuth setup guide
 
 ---
 

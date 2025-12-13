@@ -30,7 +30,13 @@ class User extends Authenticatable
         'password',
         'is_admin',
         'avatar',
+        'avatar_url',
         'theme_preference',
+        'provider',
+        'provider_id',
+        'provider_token',
+        'provider_refresh_token',
+        'provider_token_expires_at',
     ];
 
     /**
@@ -41,6 +47,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'provider_token',
+        'provider_refresh_token',
     ];
 
     /**
@@ -54,7 +62,34 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_admin' => 'boolean',
+            'provider_token_expires_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Check if user authenticated via social provider
+     */
+    public function isSocialUser(): bool
+    {
+        return !is_null($this->provider);
+    }
+
+    /**
+     * Get the full avatar URL
+     */
+    public function getAvatarAttribute($value): ?string
+    {
+        // If we have a social avatar URL, use it
+        if ($this->avatar_url) {
+            return $this->avatar_url;
+        }
+
+        // If we have a local avatar file, return the path
+        if ($value) {
+            return asset('avatars/' . $value);
+        }
+
+        return null;
     }
 
     /**

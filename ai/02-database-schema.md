@@ -18,12 +18,24 @@ Primary user accounts table.
 - `name` - User's display name
 - `email` - Unique email address
 - `email_verified_at` - Email verification timestamp
-- `password` - Hashed password
+- `password` - Hashed password (nullable for social-only accounts)
 - `is_admin` - Boolean flag for admin privileges
 - `avatar` - Avatar filename (stored in `public/avatars/`)
+- `avatar_url` - Avatar URL from social provider
 - `theme_preference` - User's theme choice (light/dark)
 - `remember_token` - Remember me token
 - `created_at`, `updated_at` - Timestamps
+
+**Social Authentication Fields:**
+- `provider` - OAuth provider (google, facebook)
+- `provider_id` - Unique user ID from provider
+- `provider_token` - Access token from provider (max 500 chars)
+- `provider_refresh_token` - Refresh token for long-lived sessions (max 500 chars)
+- `provider_token_expires_at` - Token expiration timestamp
+
+**Constraints:**
+- Unique: `(provider, provider_id)` - One provider account per user
+- Index: `provider` - Fast lookups by provider type
 
 **Relationships:**
 - Has many: challenges, habits, goals_library, activities
