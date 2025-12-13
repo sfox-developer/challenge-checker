@@ -14,7 +14,7 @@
             @if($errors->any())
                 <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-lg">
                     <h3 class="font-semibold mb-2">Please fix the following errors:</h3>
-                    <ul class="list-disc list-inside">
+                    <ul class="list-styled-compact">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach

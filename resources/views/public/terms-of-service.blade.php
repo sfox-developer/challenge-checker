@@ -30,7 +30,7 @@
                 <h2 class="h2">Description of Service</h2>
                 <div>
                     <p>{{ config('app.name') }} is a personal goal tracking and challenge management platform that allows users to:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
+                    <ul class="list-styled">
                         <li>Create and track personal challenges</li>
                         <li>Manage daily habits and routines</li>
                         <li>Build and organize a goal library</li>
@@ -47,7 +47,7 @@
                 <div>
                     <p><strong>Account Creation</strong></p>
                     <p>To use our service, you must:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
+                    <ul class="list-styled">
                         <li>Be at least 13 years of age</li>
                         <li>Provide accurate and complete registration information</li>
                         <li>Maintain the security of your password</li>
@@ -56,7 +56,7 @@
                     
                     <p class="mt-4"><strong>Account Responsibilities</strong></p>
                     <p>You are responsible for:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
+                    <ul class="list-styled">
                         <li>All activities that occur under your account</li>
                         <li>Maintaining the confidentiality of your login credentials</li>
                         <li>All content you post or share through the service</li>
@@ -71,7 +71,7 @@
                 <div>
                     <p><strong>Your Content</strong></p>
                     <p>You retain all rights to the content you create (challenges, goals, habits, activities). By using our service, you grant us a license to:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
+                    <ul class="list-styled">
                         <li>Store and display your content as necessary to provide the service</li>
                         <li>Share your public content with other users as you specify</li>
                         <li>Use aggregated, anonymized data for service improvement</li>
@@ -79,7 +79,7 @@
                     
                     <p class="mt-4"><strong>Content Standards</strong></p>
                     <p>You agree not to post content that:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
+                    <ul class="list-styled">
                         <li>Is illegal, harmful, threatening, abusive, or harassing</li>
                         <li>Infringes on intellectual property rights</li>
                         <li>Contains viruses or malicious code</li>
@@ -108,7 +108,7 @@
                 <h2 class="h2">Social Features</h2>
                 <div>
                     <p>Our service includes social features such as following other users and viewing public activities. When using these features:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
+                    <ul class="list-styled">
                         <li>Respect other users' privacy and content</li>
                         <li>Do not spam, harass, or abuse the follow/like features</li>
                         <li>Be respectful in all interactions</li>
@@ -122,7 +122,7 @@
                 <h2 class="h2">Prohibited Activities</h2>
                 <div>
                     <p>You may not:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
+                    <ul class="list-styled">
                         <li>Use automated systems (bots) to access the service without permission</li>
                         <li>Attempt to gain unauthorized access to any part of the service</li>
                         <li>Interfere with or disrupt the service or servers</li>
@@ -163,7 +163,7 @@
                 <h2 class="h2">Termination</h2>
                 <div>
                     <p>We may terminate or suspend your account and access to the service immediately, without prior notice, if you:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
+                    <ul class="list-styled">
                         <li>Breach these Terms of Service</li>
                         <li>Engage in prohibited activities</li>
                         <li>Request account deletion</li>

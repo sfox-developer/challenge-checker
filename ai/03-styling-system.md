@@ -407,6 +407,37 @@ body {
 
 ---
 
+### Lists (`components/_lists.scss`)
+
+```scss
+.list-styled          // Standard list with spacing
+.list-styled-ordered  // Ordered list variant
+.list-styled-compact  // Compact version with less spacing
+```
+
+**Usage Example:**
+```blade
+<ul class="list-styled">
+    <li><strong>First item:</strong> Description here</li>
+    <li><strong>Second item:</strong> Another description</li>
+    <li>Regular list item</li>
+</ul>
+
+<!-- For ordered lists -->
+<ol class="list-styled-ordered">
+    <li>Step one</li>
+    <li>Step two</li>
+</ol>
+
+<!-- Compact version for UI elements -->
+<ul class="list-styled-compact">
+    <li>Error message one</li>
+    <li>Error message two</li>
+</ul>
+```
+
+---
+
 ### Empty States (`components/_empty-states.scss`)
 
 ```scss

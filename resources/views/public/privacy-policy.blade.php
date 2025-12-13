@@ -31,7 +31,7 @@
                 <div>
                     <p><strong>Personal Information:</strong></p>
                     <p>We collect the following personal information when you use our service:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
+                    <ul class="list-styled">
                         <li><strong>Account Information:</strong> Name, email address, and password (encrypted)</li>
                         <li><strong>Profile Information:</strong> Avatar image, theme preferences</li>
                         <li><strong>Usage Data:</strong> Challenges, goals, habits, and activity logs you create</li>
@@ -39,7 +39,7 @@
                     
                     <p class="mt-4"><strong>Automatically Collected Information:</strong></p>
                     <p>We automatically collect certain information when you use our service:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
+                    <ul class="list-styled">
                         <li>Browser type and version</li>
                         <li>IP address</li>
                         <li>Session data</li>
@@ -54,7 +54,7 @@
                 <h2 class="h2">How We Use Your Information</h2>
                 <div>
                     <p>We use your personal data for the following purposes:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
+                    <ul class="list-styled">
                         <li>To provide and maintain our service</li>
                         <li>To manage your account and provide customer support</li>
                         <li>To enable social features (following users, viewing public challenges)</li>
@@ -71,7 +71,7 @@
                 <h2 class="h2">Data Sharing and Disclosure</h2>
                 <div>
                     <p>We do not sell your personal data. We may share your information in the following situations:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
+                    <ul class="list-styled">
                         <li><strong>Public Information:</strong> Challenges and activities you mark as public are visible to other users</li>
                         <li><strong>Social Features:</strong> Your profile information is visible to users you follow and who follow you</li>
                         <li><strong>Legal Requirements:</strong> We may disclose your data if required by law or to protect our rights</li>
@@ -98,7 +98,7 @@
                 <h2 class="h2">Your Privacy Rights</h2>
                 <div>
                     <p>You have the following rights regarding your personal data:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
+                    <ul class="list-styled">
                         <li><strong>Access:</strong> Request a copy of your personal data</li>
                         <li><strong>Correction:</strong> Update your personal information in your profile settings</li>
                         <li><strong>Deletion:</strong> Delete your account and all associated data</li>

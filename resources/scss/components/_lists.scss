@@ -1,0 +1,46 @@
+// ============================================================================
+// LISTS COMPONENT
+// ============================================================================
+// Reusable list styles for content pages
+// ============================================================================
+
+.list-styled {
+  @apply list-disc list-inside space-y-2 ml-4;
+  
+  // Dark mode text color inheritance
+  color: inherit;
+  
+  li {
+    @apply pl-1;
+    
+    strong {
+      @apply font-semibold;
+    }
+  }
+}
+
+// Ordered list variant
+.list-styled-ordered {
+  @apply list-decimal list-inside space-y-2 ml-4;
+  
+  color: inherit;
+  
+  li {
+    @apply pl-1;
+    
+    strong {
+      @apply font-semibold;
+    }
+  }
+}
+
+// Compact variant with less spacing
+.list-styled-compact {
+  @apply list-disc list-inside space-y-1 ml-4;
+  
+  color: inherit;
+  
+  li {
+    @apply pl-1;
+  }
+}
