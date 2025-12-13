@@ -34,7 +34,7 @@
         })();
     </script>
 </head>
-<body class="page" x-data="themeManager()">
+<body class="page texture-perlin" x-data="themeManager()">
     <!-- Sticky Navigation with Blur -->
     <nav class="nav">
         <div class="nav-container">

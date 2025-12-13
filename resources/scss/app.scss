@@ -14,6 +14,7 @@
 // ----------------------------------------------------------------------------
 // 2. BASE - Typography and utilities
 // ----------------------------------------------------------------------------
+@use 'base/global' as global;
 @use 'base/typography' as typography;
 @use 'base/utilities' as utilities;
 
@@ -51,10 +52,3 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-
-// ----------------------------------------------------------------------------
-// 7. GLOBAL OVERRIDES
-// ----------------------------------------------------------------------------
-body {
-    font-family: 'Inter', 'Figtree', ui-sans-serif, system-ui, sans-serif;
-}
