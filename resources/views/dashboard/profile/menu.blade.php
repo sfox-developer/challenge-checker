@@ -120,7 +120,7 @@
                                 </svg>
                             </div>
                             <div class="flex-1 text-left">
-                                <h3 class="h3">Log Out</h3>
+                                <h3 class="h3">Log out</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400">Sign out of your account</p>
                             </div>
                             <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">

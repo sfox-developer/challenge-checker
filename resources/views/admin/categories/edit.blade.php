@@ -82,7 +82,7 @@
                             Cancel
                         </a>
                         <button type="submit" class="btn-primary">
-                            Update Category
+                            Update category
                         </button>
                     </div>
                 </form>

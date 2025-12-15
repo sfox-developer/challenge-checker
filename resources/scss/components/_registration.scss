@@ -80,9 +80,57 @@
     @apply flex gap-3;
 }
 
-// Validation error message
+// Validation error message (inline)
 .registration-error {
     @apply mt-2 text-sm text-red-600 dark:text-red-400;
+}
+
+// Enhanced error box for email existence - subtle and smooth
+.registration-error-box {
+    @apply mt-3 p-4 rounded-xl;
+    @apply bg-red-50/50 dark:bg-red-900/10;
+    @apply border border-red-200/60 dark:border-red-800/40;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.registration-error-title {
+    @apply flex items-center gap-2;
+    @apply text-sm font-medium text-red-700 dark:text-red-400;
+    @apply mb-3;
+}
+
+.registration-error-actions {
+    @apply flex flex-col sm:flex-row gap-2;
+}
+
+.registration-error-link {
+    @apply flex items-center justify-center gap-2;
+    @apply px-4 py-2.5 rounded-lg;
+    @apply text-sm font-medium;
+    @apply bg-white/80 dark:bg-gray-800/80;
+    @apply text-red-700 dark:text-red-400;
+    @apply border border-red-200 dark:border-red-700/50;
+    @apply transition-all duration-200;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    &:hover {
+        @apply bg-red-50 dark:bg-red-900/20;
+        @apply border-red-300 dark:border-red-600;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1);
+    }
+}
+
+// Success message box (for confirmations)
+.registration-success-box {
+    @apply p-4 rounded-xl;
+    @apply bg-green-50/50 dark:bg-green-900/10;
+    @apply border border-green-200/60 dark:border-green-800/40;
+    @apply text-sm font-medium text-green-700 dark:text-green-400;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 // Footer links

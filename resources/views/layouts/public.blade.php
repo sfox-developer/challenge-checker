@@ -64,7 +64,7 @@
                     </a>
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}" class="btn btn-primary btn-sm">
-                            Get Started
+                            Get started
                         </a>
                     @endif
                 @endauth

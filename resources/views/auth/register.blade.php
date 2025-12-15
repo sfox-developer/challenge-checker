@@ -70,36 +70,27 @@
             <!-- Progress Indicator - Show on steps 2 and 3 -->
             <div class="registration-progress" x-show="step > 1">
                 <div class="registration-progress-group">
-                    <div class="registration-progress-step" :class="step >= 1 ? 'is-complete' : 'is-pending'">
-                        <svg x-show="step > 2" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <div class="registration-progress-step" :class="step > 1 ? 'is-complete' : 'is-active'">
+                        <svg x-show="step > 1" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        <span x-show="step <= 2">1</span>
+                        <span x-show="step === 1">1</span>
                     </div>
-                    <span class="registration-progress-label" :class="step >= 1 ? 'is-active' : 'is-pending'">
-                        Email
-                    </span>
                 </div>
                 <div class="registration-progress-line" :class="step >= 2 ? 'is-active' : 'is-pending'"></div>
                 <div class="registration-progress-group">
-                    <div class="registration-progress-step" :class="step >= 2 ? 'is-active' : 'is-pending'">
-                        <svg x-show="step > 3" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <div class="registration-progress-step" :class="step === 2 ? 'is-active' : (step > 2 ? 'is-complete' : 'is-pending')">
+                        <svg x-show="step > 2" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        <span x-show="step <= 3">2</span>
+                        <span x-show="step === 2">2</span>
                     </div>
-                    <span class="registration-progress-label" :class="step >= 2 ? 'is-active' : 'is-pending'">
-                        Name
-                    </span>
                 </div>
                 <div class="registration-progress-line" :class="step >= 3 ? 'is-active' : 'is-pending'"></div>
                 <div class="registration-progress-group">
                     <div class="registration-progress-step" :class="step >= 3 ? 'is-active' : 'is-pending'">
                         3
                     </div>
-                    <span class="registration-progress-label" :class="step >= 3 ? 'is-active' : 'is-pending'">
-                        Password
-                    </span>
                 </div>
             </div>
 
@@ -124,18 +115,52 @@
                                placeholder="you@example.com"
                                autofocus
                                required />
-                        <div x-show="!emailValid && email.length > 0" class="registration-error">
+                        
+                        <!-- Format validation error -->
+                        <div x-show="!emailValid && email.length > 0 && !emailChecking" class="registration-error">
                             Please enter a valid email address
                         </div>
+                        
+                        <!-- Email exists error with helpful actions -->
+                        <div x-show="emailExists" class="registration-error-box">
+                            <div class="registration-error-title">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>This email is already registered</span>
+                            </div>
+                            <div class="registration-error-actions">
+                                <a href="{{ route('login') }}" class="registration-error-link">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                                    </svg>
+                                    Sign in instead
+                                </a>
+                                <a href="{{ route('password.request') }}" class="registration-error-link">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                                    </svg>
+                                    Reset password
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Server error -->
+                        <div x-show="emailCheckError" class="registration-error" x-text="emailCheckError"></div>
                     </div>
 
                     <button type="button"
                             @click="goToStep2"
-                            :disabled="!emailValid"
+                            :disabled="!emailValid || emailChecking"
                             class="btn btn-primary btn-block"
-                            :class="!emailValid ? 'opacity-50 cursor-not-allowed' : ''">
-                        <span>Continue</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            :class="(!emailValid || emailChecking) ? 'opacity-50 cursor-not-allowed' : ''">
+                        <svg x-show="emailChecking" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span x-show="!emailChecking">Continue</span>
+                        <span x-show="emailChecking">Checking...</span>
+                        <svg x-show="!emailChecking" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                         </svg>
                     </button>
@@ -232,7 +257,7 @@
                                     class="btn btn-primary flex-[70]"
                                     :disabled="passwordStrength < 3"
                                     :class="passwordStrength < 3 ? 'opacity-50 cursor-not-allowed' : ''">
-                                <span>Create my account</span>
+                                <span>Create account</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>

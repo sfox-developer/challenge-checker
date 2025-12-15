@@ -25,14 +25,14 @@
                 <form method="POST" action="{{ route('verification.send') }}">
                     @csrf
                     <button type="submit" class="btn btn-primary btn-block">
-                        {{ __('Resend Verification Email') }}
+                        Resend verification email
                     </button>
                 </form>
 
                 <form method="POST" action="{{ route('logout') }}" class="text-center">
                     @csrf
                     <button type="submit" class="link-muted">
-                        {{ __('Log Out') }}
+                        Log out
                     </button>
                 </form>
             </div>

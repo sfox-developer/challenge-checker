@@ -240,7 +240,7 @@
                 </div>
                 <div class="mt-4 text-center">
                     <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100" id="deleteUserModalTitle">
-                        Delete User Account
+                        Delete user account
                     </h3>
                     <div class="mt-2 px-7 py-3">
                         <p class="text-sm text-gray-500 dark:text-gray-400" id="deleteUserModalMessage">

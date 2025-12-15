@@ -9,6 +9,9 @@ export default (initialData = {}) => ({
     emailValid: Boolean(initialData.email),
     nameValid: Boolean(initialData.name),
     passwordStrength: 0,
+    emailChecking: false,
+    emailExists: false,
+    emailCheckError: '',
 
     /**
      * Validate email format
@@ -16,7 +19,50 @@ export default (initialData = {}) => ({
     validateEmail() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         this.emailValid = emailRegex.test(this.email);
+        
+        // Reset existence check when email changes
+        this.emailExists = false;
+        this.emailCheckError = '';
+        
         return this.emailValid;
+    },
+
+    /**
+     * Check if email already exists in database
+     */
+    async checkEmailAvailability() {
+        if (!this.emailValid) {
+            return false;
+        }
+
+        this.emailChecking = true;
+        this.emailExists = false;
+        this.emailCheckError = '';
+
+        try {
+            const response = await fetch('/register/check-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                },
+                body: JSON.stringify({ email: this.email }),
+            });
+
+            const data = await response.json();
+            
+            if (!data.available) {
+                this.emailExists = true;
+            }
+
+            return data.available;
+        } catch (error) {
+            console.error('Error checking email:', error);
+            this.emailCheckError = 'Unable to verify email. Please try again.';
+            return false;
+        } finally {
+            this.emailChecking = false;
+        }
     },
 
     /**
@@ -30,14 +76,23 @@ export default (initialData = {}) => ({
     /**
      * Advance to step 2 (name)
      */
-    goToStep2() {
-        if (this.validateEmail()) {
-            this.step = 2;
-            this.$nextTick(() => {
-                const nameInput = document.getElementById('name');
-                if (nameInput) nameInput.focus();
-            });
+    async goToStep2() {
+        if (!this.validateEmail()) {
+            return;
         }
+
+        // Check if email already exists
+        const available = await this.checkEmailAvailability();
+        
+        if (!available || this.emailExists) {
+            return;
+        }
+
+        this.step = 2;
+        this.$nextTick(() => {
+            const nameInput = document.getElementById('name');
+            if (nameInput) nameInput.focus();
+        });
     },
 
     /**

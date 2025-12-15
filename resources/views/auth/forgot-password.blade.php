@@ -14,7 +14,13 @@
             </div>
 
             <!-- Session Status -->
-            <x-shared.auth-session-status class="mb-6" :status="session('status')" />
+            @if (session('status'))
+                <div class="registration-success-box mb-6 animate animate-hidden-fade-up animate-delay-100"
+                     x-data="{}"
+                     x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">
+                    {{ session('status') }}
+                </div>
+            @endif
 
             <form method="POST" action="{{ route('password.email') }}" class="space-y-6 animate animate-hidden-fade-up animate-delay-100" 
                   x-data="{}" 
@@ -37,9 +43,17 @@
         <!-- Submit Button -->
         <div class="pt-2">
             <button type="submit" class="btn btn-primary btn-block">
-                {{ __('Email Password Reset Link') }}
+                Email password reset link
             </button>
         </div>
+
+        <!-- Sign in link -->
+        <p class="registration-footer">
+            <span class="text-help">Remember your password?</span>
+            <a href="{{ route('login') }}" class="registration-footer-link">
+                Sign in
+            </a>
+        </p>
             </form>
         </div>
     </div>

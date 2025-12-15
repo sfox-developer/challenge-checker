@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Http\JsonResponse;
 
 class RegisteredUserController extends Controller
 {
@@ -20,6 +21,22 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         return view('auth.register');
+    }
+
+    /**
+     * Check if an email is available for registration.
+     */
+    public function checkEmail(Request $request): JsonResponse
+    {
+        $request->validate([
+            'email' => ['required', 'email'],
+        ]);
+
+        $exists = User::where('email', strtolower($request->email))->exists();
+
+        return response()->json([
+            'available' => !$exists,
+        ]);
     }
 
     /**
