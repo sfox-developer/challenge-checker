@@ -23,7 +23,7 @@
 
         <!-- Email Address -->
         <div class="form-group">
-            <x-forms.input-label for="email" :value="__('Email')" class="form-label" />
+            <x-forms.input-label for="email" value="Email" class="form-label" />
             <x-forms.text-input id="email" 
                           class="form-input" 
                           type="email" 
@@ -37,7 +37,7 @@
 
         <!-- Password -->
         <div class="form-group">
-            <x-forms.input-label for="password" :value="__('Password')" class="form-label" />
+            <x-forms.input-label for="password" value="Password" class="form-label" />
             <x-forms.text-input id="password" 
                           class="form-input" 
                           type="password" 
@@ -52,7 +52,7 @@
 
         <!-- Confirm Password -->
         <div class="form-group">
-            <x-forms.input-label for="password_confirmation" :value="__('Confirm Password')" class="form-label" />
+            <x-forms.input-label for="password_confirmation" value="Confirm password" class="form-label" />
             <x-forms.text-input id="password_confirmation" 
                           class="form-input" 
                           type="password" 
@@ -65,9 +65,17 @@
         <!-- Submit Button -->
         <div class="pt-2">
             <button type="submit" class="btn btn-primary btn-block">
-                {{ __('Reset Password') }}
+                Reset password
             </button>
         </div>
+
+        <!-- Sign in link -->
+        <p class="registration-footer">
+            <span class="text-help">Remember your password?</span>
+            <a href="{{ route('login') }}" class="registration-footer-link">
+                Sign in
+            </a>
+        </p>
             </form>
         </div>
     </div>

@@ -5,17 +5,19 @@
             <div class="text-center mb-8 animate animate-hidden-fade-up" 
                  x-data="{}" 
                  x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">
-                <h1 class="h2">
+                <h1>
                     Verify your email
                 </h1>
-                <p class="text-muted">
+                <p class="subtitle">
                     Thanks for signing up! Before getting started, please verify your email address by clicking on the link we just emailed to you.
                 </p>
             </div>
 
             @if (session('status') == 'verification-link-sent')
-                <div class="mb-6 text-success">
-                    {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+                <div class="registration-success-box mb-6 animate animate-hidden-fade-up animate-delay-100"
+                     x-data="{}"
+                     x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">
+                    A new verification link has been sent to the email address you provided during registration.
                 </div>
             @endif
 
@@ -35,6 +37,12 @@
                         Log out
                     </button>
                 </form>
+
+                <p class="registration-footer mt-4">
+                    <a href="{{ route('login') }}" class="registration-footer-link">
+                        Back to login
+                    </a>
+                </p>
             </div>
         </div>
     </div>

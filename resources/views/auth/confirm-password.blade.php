@@ -5,10 +5,10 @@
             <div class="text-center mb-8 animate animate-hidden-fade-up" 
                  x-data="{}" 
                  x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)">
-                <h1 class="h2">
+                <h1>
                     Confirm your password
                 </h1>
-                <p class="text-muted">
+                <p class="subtitle">
                     This is a secure area. Please confirm your password before continuing.
                 </p>
             </div>
@@ -20,7 +20,7 @@
 
         <!-- Password -->
         <div class="form-group">
-            <x-forms.input-label for="password" :value="__('Password')" class="form-label" />
+            <x-forms.input-label for="password" value="Password" class="form-label" />
             <x-forms.text-input id="password" 
                           class="form-input" 
                           type="password" 
@@ -33,7 +33,7 @@
         <!-- Submit Button -->
         <div class="pt-2">
             <button type="submit" class="btn btn-primary btn-block">
-                {{ __('Confirm') }}
+                Confirm
             </button>
         </div>
             </form>

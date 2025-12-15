@@ -14,7 +14,13 @@
             </div>
 
             <!-- Session Status -->
-            <x-shared.auth-session-status class="mb-6" :status="session('status')" />
+            @if (session('status'))
+                <x-shared.auth-session-status 
+                    class="mb-6 animate animate-hidden-fade-up animate-delay-100" 
+                    :status="session('status')"
+                    x-data="{}"
+                    x-init="setTimeout(() => { $el.classList.remove('animate-hidden-fade-up') }, 100)" />
+            @endif
 
             <!-- Social Authentication Buttons -->
             <div class="space-y-3 mb-8 animate animate-hidden-fade-up animate-delay-100"
@@ -59,7 +65,7 @@
 
                 <!-- Email Address -->
                 <div class="form-group">
-                    <x-forms.input-label for="email" :value="__('Email')" class="form-label" />
+                    <x-forms.input-label for="email" value="Email" class="form-label" />
                     <x-forms.text-input id="email" 
                                 class="form-input" 
                                 type="email" 
@@ -73,7 +79,7 @@
 
                 <!-- Password -->
                 <div class="form-group">
-                    <x-forms.input-label for="password" :value="__('Password')" class="form-label" />
+                    <x-forms.input-label for="password" value="Password" class="form-label" />
                     <x-forms.text-input id="password" 
                                 class="form-input"
                                 type="password"
@@ -87,12 +93,12 @@
                 <div class="flex items-center justify-between text-sm">
                     <label for="remember_me" class="checkbox-label">
                         <input id="remember_me" type="checkbox" name="remember" class="form-checkbox">
-                        <span>{{ __('Remember me') }}</span>
+                        <span>Remember me</span>
                     </label>
 
                     @if (Route::has('password.request'))
                         <a class="link text-sm" href="{{ route('password.request') }}">
-                            {{ __('Forgot password?') }}
+                            Forgot password?
                         </a>
                     @endif
                 </div>
