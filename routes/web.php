@@ -15,10 +15,16 @@ use App\Http\Controllers\Api\QuickGoalsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect()->route('feed.index');
-    }
     return view('public.welcome');
+})->name('home');
+
+// Custom error pages with web middleware (for auth context)
+Route::get('/error-404', function () {
+    return response()->view('errors.404', [], 404);
+});
+
+Route::get('/error-403', function () {
+    return response()->view('errors.403', [], 403);
 });
 
 // Public static pages
@@ -109,4 +115,9 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Fallback route for 404 - must be last
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
 
