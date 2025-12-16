@@ -52,7 +52,7 @@
         <div class="auth-separator">
             <div class="separator-line"></div>
             <div class="separator-text">
-                <span class="texture-perlin">Or sign in with email</span>
+                <span class="">Or sign in with email</span>
             </div>
         </div>
 

@@ -63,7 +63,7 @@
             <div class="auth-separator" x-show="step === 1">
                 <div class="separator-line"></div>
                 <div class="separator-text">
-                    <span class="texture-perlin">Or continue with email</span>
+                    <span class="">Or continue with email</span>
                 </div>
             </div>
 

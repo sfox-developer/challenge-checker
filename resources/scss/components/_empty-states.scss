@@ -7,7 +7,15 @@
 }
 
 .empty-state-icon {
-    @apply text-6xl mb-4;
+    @apply flex items-center justify-center mx-auto;
+    @apply w-16 h-16 mb-4;
+    @apply bg-gray-100 dark:bg-gray-800;
+    @apply rounded-full;
+    
+    svg {
+        @apply w-8 h-8;
+        @apply text-gray-400 dark:text-gray-500;
+    }
 }
 
 .empty-state-title {
