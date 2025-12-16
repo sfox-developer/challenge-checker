@@ -1,15 +1,12 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Edit Challenge">
-            <x-slot name="icon">
-                <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
-                </svg>
-            </x-slot>
-        </x-ui.page-header>
-    </x-slot>
+    <x-slot name="title">Edit Challenge</x-slot>
 
-    <div class="py-8">
+    <x-dashboard.page-header 
+        eyebrow="Edit Challenge"
+        title="{{ $challenge->name }}"
+        description="Update your challenge settings" />
+
+    <div class="pb-12 md:pb-20">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <!-- Back Button -->
             <div class="mb-6">

@@ -1,15 +1,12 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Create New Challenge">
-            <x-slot name="icon">
-                <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
-                </svg>
-            </x-slot>
-        </x-ui.page-header>
-    </x-slot>
+    <x-slot name="title">Create New Challenge</x-slot>
 
-    <div class="py-8">
+    <x-dashboard.page-header 
+        eyebrow="New Challenge"
+        title="Create Challenge"
+        description="Set up your new time-bound challenge" />
+
+    <div class="pb-12 md:pb-20">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="card">
                 <form action="{{ route('challenges.store') }}" method="POST" id="challenge-form" x-data="{ ...challengeForm(), ...habitForm() }">

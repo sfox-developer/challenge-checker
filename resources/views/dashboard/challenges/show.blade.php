@@ -1,12 +1,14 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <x-ui.page-header :title="$challenge->name">
-            <x-slot name="icon">
-                <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                </svg>
-            </x-slot>
-            <x-slot name="action">
+    <x-slot name="title">{{ $challenge->name }}</x-slot>
+
+    <x-dashboard.page-header 
+        eyebrow="Challenge"
+        :title="$challenge->name" />
+
+    <!-- Action Buttons -->
+    <div class="pb-6">
+        <div class="container">
+            <div class="flex justify-center">
                 <div class="flex space-x-2">
                     @if(!$challenge->completed_at)
                         <x-ui.app-button variant="secondary" href="{{ route('challenges.index') }}">
@@ -110,12 +112,12 @@
                         @endif
                     @endif
                 </div>
-            </x-slot>
-        </x-ui.page-header>
-    </x-slot>
+            </div>
+        </div>
+    </div>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="pb-12 md:pb-20">
+        <div class="max-w-7xl mx-auto px-6 space-y-6">
             
             <!-- Statistics Cards -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">

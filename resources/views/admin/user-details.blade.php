@@ -1,23 +1,22 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="{{ $user->name }}">
-            <x-slot name="icon">
-                <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
-                </svg>
-            </x-slot>
-            <x-slot name="action">
-                <div class="flex space-x-2">
-                    <x-ui.app-button variant="secondary" href="{{ route('admin.dashboard') }}">
-                        <x-slot name="icon">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
-                            </svg>
-                        </x-slot>
-                        Back
-                    </x-ui.app-button>
-                    
-                    @if($user->is_admin)
+    <x-dashboard.page-header 
+        eyebrow="Admin" 
+        :title="$user->name" 
+    />
+
+    <div class="pb-12 md:pb-20">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-6">
+            <div class="flex space-x-2">
+                <x-ui.app-button variant="secondary" href="{{ route('admin.dashboard') }}">
+                    <x-slot name="icon">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </x-slot>
+                    Back
+                </x-ui.app-button>
+                
+                @if($user->is_admin)
                         <span class="px-4 py-2 rounded-lg text-sm font-medium bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-400 border border-red-200 dark:border-red-800 flex items-center">
                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
@@ -37,12 +36,8 @@
                             Delete
                         </x-ui.app-button>
                     @endif
-                </div>
-            </x-slot>
-        </x-ui.page-header>
-    </x-slot>
-
-    <div class="py-8">
+            </div>
+        </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <!-- User Details Card -->
             <div class="card">

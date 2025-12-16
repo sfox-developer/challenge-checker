@@ -1,29 +1,12 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <x-ui.page-header :title="$goal->name">
-            <x-slot name="icon">
-                <span class="text-4xl">{{ $goal->icon ?? '🎯' }}</span>
-            </x-slot>
-            <x-slot name="action">
-                <div class="flex gap-2">
-                    <x-ui.app-button variant="secondary" @click="$dispatch('open-modal', 'edit-goal-{{ $goal->id }}')">
-                        <x-slot name="icon">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
-                            </svg>
-                        </x-slot>
-                        Edit Goal
-                    </x-ui.app-button>
-                    
-                    <a href="{{ route('goals.index') }}" class="btn-secondary">
-                        Back to Library
-                    </a>
-                </div>
-            </x-slot>
-        </x-ui.page-header>
-    </x-slot>
+    <x-slot name="title">{{ $goal->name }}</x-slot>
 
-    <div class="py-8">
+    <x-dashboard.page-header 
+        eyebrow="Goal Library"
+        :title="$goal->name"
+        :description="$goal->category ? $goal->category->name : 'Goal details and usage'" />
+
+    <div class="pb-12 md:pb-20">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
             <!-- Goal Info Card -->

@@ -1,15 +1,12 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Edit Habit">
-            <x-slot name="icon">
-                <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
-                </svg>
-            </x-slot>
-        </x-ui.page-header>
-    </x-slot>
+    <x-slot name="title">Edit Habit</x-slot>
 
-    <div class="py-8">
+    <x-dashboard.page-header 
+        eyebrow="Edit Habit"
+        title="{{ $habit->goal->name }}"
+        description="Update your habit settings" />
+
+    <div class="pb-12 md:pb-20">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="card">
                 <form action="{{ route('habits.update', $habit) }}" method="POST" x-data="habitEditForm('{{ $habit->frequency_type->value }}', {{ $habit->frequency_count }})">

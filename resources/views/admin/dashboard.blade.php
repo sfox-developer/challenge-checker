@@ -1,15 +1,10 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Admin Dashboard">
-            <x-slot name="icon">
-                <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
-                </svg>
-            </x-slot>
-        </x-ui.page-header>
-    </x-slot>
+    <x-dashboard.page-header 
+        eyebrow="Admin" 
+        title="Dashboard" 
+    />
 
-    <div class="py-12">
+    <div class="pb-12 md:pb-20">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Quick Actions -->
             <div class="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-4">

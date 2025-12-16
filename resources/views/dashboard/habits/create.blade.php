@@ -1,15 +1,12 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Create New Habit">
-            <x-slot name="icon">
-                <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
-                </svg>
-            </x-slot>
-        </x-ui.page-header>
-    </x-slot>
+    <x-slot name="title">Create New Habit</x-slot>
 
-    <div class="py-8">
+    <x-dashboard.page-header 
+        eyebrow="New Habit"
+        title="Create Habit"
+        description="Build a new recurring habit" />
+
+    <div class="pb-12 md:pb-20">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="card">
                 <form action="{{ route('habits.store') }}" method="POST" id="habit-form" x-data="habitFormWithGoalToggle({{ count($goalsLibrary) > 0 ? 'true' : 'false' }})">

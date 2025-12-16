@@ -1,15 +1,12 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <x-ui.page-header :title="$user->name">
-            <x-slot name="icon">
-                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
-                </svg>
-            </x-slot>
-        </x-ui.page-header>
-    </x-slot>
+    <x-slot name="title">{{ $user->name }}</x-slot>
 
-    <div class="py-12">
+    <x-dashboard.page-header 
+        eyebrow="Community"
+        :title="$user->name"
+        description="Profile and activity" />
+
+    <div class="pb-12 md:pb-20">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
             <!-- Profile Info -->
@@ -44,7 +41,7 @@
                                     </x-ui.app-button>
                                 </form>
                             @else
-                                <form action="{{ route('users.follow', $user) }}" method="POST">
+                                <form action="{{ route('social.follow', $user) }}" method="POST">
                                     @csrf
                                     <x-ui.app-button variant="primary" type="submit" class="w-full sm:w-auto">
                                         Follow

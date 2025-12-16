@@ -1,20 +1,12 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Today's Habits">
-            <x-slot name="icon">
-                <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                </svg>
-            </x-slot>
-            <x-slot name="action">
-                <x-ui.app-button variant="secondary" href="{{ route('habits.index') }}">
-                    All Habits
-                </x-ui.app-button>
-            </x-slot>
-        </x-ui.page-header>
-    </x-slot>
+    <x-slot name="title">Today's Habits</x-slot>
 
-    <div class="py-8">
+    <x-dashboard.page-header 
+        eyebrow="Daily Tracking"
+        title="Today's Habits"
+        description="Complete your habits for {{ now()->format('l, F j') }}" />
+
+    <div class="pb-12 md:pb-20">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
             <!-- Today's Date and Stats -->

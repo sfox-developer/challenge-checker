@@ -1,13 +1,14 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <x-ui.page-header :title="$habit->goal->name">
-            <x-slot name="icon">
-                <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
-                </svg>
-            </x-slot>
-            <x-slot name="action">
+    <x-slot name="title">{{ $habit->goal->name }}</x-slot>
+
+    <x-dashboard.page-header 
+        eyebrow="Habit"
+        :title="$habit->goal->name" />
+
+    <!-- Action Buttons -->
+    <div class="pb-6">
+        <div class="container">
+            <div class="flex justify-center">
                 <div class="flex space-x-2">
                     @if(!$habit->archived_at)
                         <x-ui.app-button variant="secondary" href="{{ route('habits.index') }}">
@@ -51,12 +52,12 @@
                         </form>
                     @endif
                 </div>
-            </x-slot>
-        </x-ui.page-header>
-    </x-slot>
+            </div>
+        </div>
+    </div>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="pb-12 md:pb-20">
+        <div class="max-w-7xl mx-auto px-6 space-y-6">
             
             <!-- Statistics Cards -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
