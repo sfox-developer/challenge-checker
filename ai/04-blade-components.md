@@ -332,22 +332,52 @@ resources/views/components/
 
 **Component:** `resources/views/components/ui/stat-card.blade.php`
 
+**Purpose:** Displays a statistic card with a value and label. Uses gradient accent bars for visual emphasis.
+
 **Props:**
-- `label` - Stat label
-- `value` - Stat value
-- `icon` (optional) - SVG icon
+- `label` (required) - Stat label text
+- `value` (required) - Stat value (number or string)
+- `variant` (optional) - Visual variant, default: `null`
+  - `'top'` - Adds 3px gradient accent bar at top
+  - `null` - Plain card without accent
+
+**Slots:**
+- `suffix` (optional) - Text appended to value (e.g., "%")
+
+**Styling:**
+- Base class: `.dashboard-stat-card` (defined in `_cards.scss`)
+- Variant class: `.dashboard-stat-card-accent-top` (when variant="top")
+- Value class: `.dashboard-stat-value` (5xl bold with gradient text)
+- Label class: `.dashboard-stat-label` (sm uppercase with tracking)
+- Gradient: Linear gradient #667eea → #764ba2 (light mode), #818cf8 → #a78bfa (dark mode)
 
 **Usage:**
 ```blade
+<!-- Basic stat card with top accent -->
 <x-ui.stat-card 
     label="Active Challenges" 
-    value="{{ $activeChallenges }}"
->
-    <x-slot name="icon">
-        <svg>...</svg>
-    </x-slot>
+    :value="$activeChallenges"
+    variant="top" />
+
+<!-- Stat card with suffix -->
+<x-ui.stat-card 
+    label="Success Rate" 
+    :value="$successRate"
+    variant="top">
+    <x-slot name="suffix">%</x-slot>
 </x-ui.stat-card>
+
+<!-- Plain stat card without accent -->
+<x-ui.stat-card 
+    label="Total Users" 
+    :value="$totalUsers" />
 ```
+
+**Design Notes:**
+- No icons (removed for cleaner, data-focused design)
+- No hover effects (cards are non-interactive display elements)
+- Top accent variant matches modal design language (consistent 2-3px gradient bars)
+- Use within grid layouts: `grid grid-cols-2 md:grid-cols-4 gap-4`
 
 ---
 

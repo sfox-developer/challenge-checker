@@ -1,14 +1,10 @@
 @props([
     'label',
-    'value'
+    'value',
+    'variant' => null
 ])
 
-<div class="dashboard-stat-card">
-    @isset($icon)
-    <div class="dashboard-stat-icon">
-        {{ $icon }}
-    </div>
-    @endisset
+<div {{ $attributes->merge(['class' => 'dashboard-stat-card ' . ($variant ? 'dashboard-stat-card-accent-' . $variant : '')]) }}>
     <div class="dashboard-stat-value">
         {{ $value }}
     </div>

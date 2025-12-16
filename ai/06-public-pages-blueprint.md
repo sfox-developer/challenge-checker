@@ -1,6 +1,6 @@
 # Public Pages - Reference Blueprint
 
-**Last Updated:** December 10, 2025  
+**Last Updated:** December 16, 2025  
 **Status:** ✅ COMPLETE - Use as Gold Standard  
 **Purpose:** Completed public pages serve as the reference implementation for all future development
 
@@ -731,3 +731,30 @@ resources/scss/
 ---
 
 **These patterns are proven, tested, and production-ready. Use them as-is for consistency across the entire application.**
+
+---
+
+## 🔄 Dashboard Pages Using Blueprint Patterns
+
+### challenges/index.blade.php ✅ UPDATED
+**Status:** Refactored to use blueprint animation patterns (December 16, 2025)
+
+**Applied Patterns:**
+- Statistics cards: `.animate .animate-hidden-fade-up-sm` with staggered timing (100ms increments)
+- Create button: `.animate .animate-hidden-fade-up` with 500ms delay
+- Tabs section: `.animate .animate-hidden-fade-up` with 600ms delay
+- Challenge cards: Staggered `.animate-hidden-fade-up-sm` (index * 100ms)
+- Empty state: `.animate .animate-hidden-scale-up`
+- All animations triggered via `x-intersect` for scroll-based activation
+- Kept Alpine `x-show` for tab filtering logic (independent of scroll animations)
+
+**Animation Sequence:**
+1. Statistics cards fade up: 100ms, 200ms, 300ms, 400ms
+2. Create button fades up: 500ms
+3. Tabs fade up: 600ms
+4. Challenge cards stagger in as user scrolls
+
+**Key Learnings:**
+- Scroll animations (`.animate` classes) and show/hide logic (`x-show`) can coexist
+- Staggered timing creates smooth, professional entry animations
+- `x-intersect` provides better UX than `x-init` timeouts for below-fold content

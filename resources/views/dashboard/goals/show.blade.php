@@ -41,15 +41,15 @@
 
             <!-- Statistics Cards -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <x-ui.stat-card label="Total Completions" :value="$stats['total_completions']" />
+                <x-ui.stat-card label="Total Completions" :value="$stats['total_completions']" variant="top" />
                 
-                <x-ui.stat-card label="Avg Success Rate" :value="$stats['success_rate']">
+                <x-ui.stat-card label="Avg Success Rate" :value="$stats['success_rate']" variant="top">
                     <x-slot name="suffix">%</x-slot>
                 </x-ui.stat-card>
                 
-                <x-ui.stat-card label="Active Challenges" :value="$stats['active_challenges']" />
+                <x-ui.stat-card label="Active Challenges" :value="$stats['active_challenges']" variant="top" />
                 
-                <x-ui.stat-card label="Active Habits" :value="$stats['active_habits']" />
+                <x-ui.stat-card label="Active Habits" :value="$stats['active_habits']" variant="top" />
             </div>
 
             <!-- Timeline Info -->

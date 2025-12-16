@@ -30,19 +30,6 @@ html.dark .card {
     @apply flex flex-col items-center gap-4;
     @apply p-6;
     @apply relative overflow-hidden;
-    @apply transition-all duration-300;
-    @apply hover:scale-105 hover:shadow-xl;
-    
-    // Gradient overlay
-    &::before {
-        content: '';
-        @apply absolute inset-0 opacity-0 transition-opacity duration-300;
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-    }
-    
-    &:hover::before {
-        @apply opacity-100;
-    }
 }
 
 .dashboard-stat-icon {
@@ -71,15 +58,10 @@ html.dark .dashboard-stat-icon {
 .dashboard-stat-value {
     @apply relative z-10;
     @apply text-5xl font-bold;
-    @apply transition-all duration-300;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    
-    .dashboard-stat-card:hover & {
-        @apply scale-110;
-    }
 }
 
 html.dark .dashboard-stat-value {
@@ -92,10 +74,25 @@ html.dark .dashboard-stat-value {
 .dashboard-stat-label {
     @apply relative z-10;
     @apply text-sm font-semibold uppercase tracking-wider;
-    @apply transition-colors duration-300;
     color: var(--color-text);
 }
 
 html.dark .dashboard-stat-label {
     color: var(--color-text-dark);
+}
+
+// Top Accent Bar
+.dashboard-stat-card-accent-top {
+    &::after {
+        content: '';
+        @apply absolute top-0 left-0 right-0;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        opacity: 0.8;
+        z-index: 20;
+    }
+}
+
+html.dark .dashboard-stat-card-accent-top::after {
+    background: linear-gradient(90deg, #818cf8 0%, #a78bfa 100%);
 }

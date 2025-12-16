@@ -11,67 +11,47 @@
         <div class="container space-y-6">
             <!-- Challenge Statistics -->
             <div class="dashboard-grid-stats">
-                <div class="opacity-0 translate-y-8 transition-all duration-700 ease-out"
+                <div class="animate animate-hidden-fade-up-sm"
                      x-data="{}"
-                     x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 100)">
+                     x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), 100)">
                     <x-ui.stat-card 
+                        variant="top"
                         label="Total Challenges" 
-                        :value="$totalChallenges">
-                        <x-slot name="icon">
-                            <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
-                            </svg>
-                        </x-slot>
-                    </x-ui.stat-card>
+                        :value="$totalChallenges" />
                 </div>
 
-                <div class="opacity-0 translate-y-8 transition-all duration-700 ease-out"
+                <div class="animate animate-hidden-fade-up-sm"
                      x-data="{}"
-                     x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 200)">
+                     x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), 200)">
                     <x-ui.stat-card 
+                        variant="top"
                         label="Completed" 
-                        :value="$challenges->where('completed_at', '!=', null)->count()">
-                        <x-slot name="icon">
-                            <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                        </x-slot>
-                    </x-ui.stat-card>
+                        :value="$challenges->where('completed_at', '!=', null)->count()" />
                 </div>
 
-                <div class="opacity-0 translate-y-8 transition-all duration-700 ease-out"
+                <div class="animate animate-hidden-fade-up-sm"
                      x-data="{}"
-                     x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 300)">
+                     x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), 300)">
                     <x-ui.stat-card 
+                        variant="top"
                         label="Active Challenges" 
-                        :value="$activeChallenges">
-                        <x-slot name="icon">
-                            <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"></path>
-                            </svg>
-                        </x-slot>
-                    </x-ui.stat-card>
+                        :value="$activeChallenges" />
                 </div>
 
-                <div class="opacity-0 translate-y-8 transition-all duration-700 ease-out"
+                <div class="animate animate-hidden-fade-up-sm"
                      x-data="{}"
-                     x-init="setTimeout(() => { $el.classList.remove('opacity-0', 'translate-y-8') }, 400)">
+                     x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), 400)">
                     <x-ui.stat-card 
+                        variant="top"
                         label="Draft" 
-                        :value="$challenges->where('started_at', null)->count()">
-                        <x-slot name="icon">
-                            <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
-                            </svg>
-                        </x-slot>
-                    </x-ui.stat-card>
+                        :value="$challenges->where('started_at', null)->count()" />
                 </div>
             </div>
 
             <!-- Create Challenge CTA -->
-            <div class="flex justify-center opacity-0 translate-y-8 transition-all duration-700 ease-out"
+            <div class="flex justify-center animate animate-hidden-fade-up"
                  x-data="{}"
-                 x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                 x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 500)">
                 <x-ui.app-button variant="primary" href="{{ route('challenges.create') }}">
                     <x-slot name="icon">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -83,9 +63,9 @@
             </div>
 
             <!-- Filter Tabs -->
-            <div class="tab-header tab-header-purple opacity-0 translate-y-8 transition-all duration-700 ease-out"
+            <div class="tab-header tab-header-purple animate animate-hidden-fade-up"
                  x-data="{}"
-                 x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                 x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 600)">
                 <nav class="tab-nav">
                     <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'tab-button active' : 'tab-button'">
                         All
@@ -127,7 +107,7 @@
             </div>
 
             @if($challenges->isNotEmpty())
-            <div class="challenge-card-list" x-data="{}">
+            <div class="space-y-4" x-data="{}">
                 @foreach($challenges as $index => $challenge)
                     @php
                         $isArchived = $challenge->isArchived();
@@ -136,7 +116,9 @@
                         $isCompleted = $challenge->completed_at !== null && !$isArchived;
                         $isDraft = !$challenge->started_at && !$isArchived;
                     @endphp
-                    <div x-show="activeFilter === 'all' || 
+                    <div class="animate animate-hidden-fade-up-sm"
+                         x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), {{ $index * 100 }})"
+                         x-show="activeFilter === 'all' || 
                                 (activeFilter === 'archived' && {{ $isArchived ? 'true' : 'false' }}) || 
                                 (activeFilter === 'active' && {{ $isActive ? 'true' : 'false' }}) || 
                                 (activeFilter === 'paused' && {{ $isPaused ? 'true' : 'false' }}) || 
@@ -154,9 +136,9 @@
                 @endforeach
             </div>
             @else
-                <div class="empty-state-card opacity-0 translate-y-8 transition-all duration-700 ease-out"
+                <div class="empty-state-card animate animate-hidden-scale-up"
                      x-data="{}"
-                     x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                     x-intersect="$el.classList.remove('animate-hidden-scale-up')">
                     <div class="empty-state-icon">
                         <svg fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
