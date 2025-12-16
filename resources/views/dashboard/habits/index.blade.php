@@ -56,6 +56,20 @@
                 </div>
             </div>
 
+            <!-- Create Habit CTA -->
+            <div class="flex justify-center opacity-0 translate-y-8 transition-all duration-700 ease-out"
+                 x-data="{}"
+                 x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                <x-ui.app-button variant="primary" href="{{ route('habits.create') }}">
+                    <x-slot name="icon">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
+                        </svg>
+                    </x-slot>
+                    Create New Habit
+                </x-ui.app-button>
+            </div>
+
             <!-- Filter Tabs -->
             <div class="tab-header tab-header-teal opacity-0 translate-y-8 transition-all duration-700 ease-out"
                  x-data="{}"
