@@ -169,7 +169,33 @@ resources/views/components/
 
 **Props:**
 - `name` (required) - Unique modal identifier
-- `maxWidth` (optional) - Modal width (sm, md, lg, xl, 2xl)
+- `eyebrow` (optional) - Context label above title (e.g., "Your Collection", "Danger Zone")
+- `title` (optional) - Modal title displayed in header
+- `maxWidth` (optional) - Modal width: sm, md (default), lg, xl, 2xl
+- `showClose` (optional) - Show close button (default: true)
+
+**Design Features:**
+- **Top Accent Bar** - 2px slate-colored bar at top for visual anchor
+- **Eyebrow Label** - Optional context label using accent color
+- **Centered Layout** - Title and eyebrow centered for clean, modern look
+- **Improved Close Button** - Absolute positioned top-right with hover effect
+- **No Borders** - No header or footer borders for cleaner, minimal design
+- **Centered Footer** - Buttons centered (matches header alignment)
+- **Subtle Footer Background** - Light gray background for visual separation
+- **Responsive Buttons** - Stack vertically on mobile, horizontal on desktop
+- **Full-width Mobile Buttons** - Better touch targets on small screens
+
+**SCSS Classes Used:**
+- `.modal-wrapper` - Container with z-index management
+- `.modal-backdrop` - Backdrop with blur effect
+- `.modal-content` - Modal container with dark mode support
+- `.modal-accent` - Top 2px accent bar (slate color)
+- `.modal-header` - Centered header section
+- `.modal-eyebrow` - Eyebrow label styling
+- `.modal-title` - Title styling
+- `.modal-body` - Content wrapper (auto-applied)
+- `.modal-footer` - Action buttons footer
+- `.modal-close-button` - Improved close button styling
 
 **Usage:**
 ```blade
@@ -178,23 +204,71 @@ resources/views/components/
     Delete Challenge
 </button>
 
-<!-- Modal -->
-<x-ui.modal name="delete-challenge" maxWidth="md">
-    <h3 class="h3">Delete Challenge?</h3>
-    <p class="text-body mt-4">This action cannot be undone.</p>
+<!-- Simple Modal with Eyebrow -->
+<x-ui.modal 
+    name="delete-challenge" 
+    eyebrow="Danger Zone"
+    title="Delete Challenge?" 
+    maxWidth="md"
+>
+    <p class="text-body">This action cannot be undone.</p>
     
-    <div class="mt-6 flex gap-4">
-        <button class="btn btn-danger">Delete</button>
-        <button class="btn btn-secondary" @click="$dispatch('close-modal')">
+    <div class="modal-footer">
+        <button class="btn-secondary" @click="$dispatch('close-modal', 'delete-challenge')">
             Cancel
         </button>
+        <button class="btn-danger">Delete</button>
     </div>
+</x-ui.modal>
+
+<!-- Form Modal with Eyebrow and Validation -->
+<x-ui.modal 
+    name="edit-goal" 
+    eyebrow="Your Collection"
+    title="Edit Goal" 
+    :show="$errors->any()" 
+    maxWidth="lg"
+>
+    <form method="POST" action="{{ route('goals.update', $goal) }}">
+        @csrf
+        @method('PUT')
+        
+        <div class="space-y-4">
+            <x-forms.form-input name="name" label="Goal Name" :value="$goal->name" required />
+            <x-forms.form-textarea name="description" label="Description" :value="$goal->description" />
+        </div>
+        
+        <div class="modal-footer">
+            <button type="button" class="btn-secondary" @click="$dispatch('close-modal', 'edit-goal')">
+                Cancel
+            </button>
+            <button type="submit" class="btn-primary">Save Changes</button>
+        </div>
+    </form>
 </x-ui.modal>
 ```
 
 **Alpine.js Events:**
-- `open-modal` - Opens modal by name
-- `close-modal` - Closes current modal
+- `open-modal` - Opens modal by name: `@click="$dispatch('open-modal', 'modal-name')"`
+- `close-modal` - Closes modal by name: `@click="$dispatch('close-modal', 'modal-name')"`
+- `close` - Closes current modal: `@click="$dispatch('close')"`
+- Escape key automatically closes modal
+
+**Features:**
+- Full dark mode support via SCSS classes
+- Backdrop blur effect
+- Focus management (optional `focusable` attribute)
+- Keyboard navigation (Tab, Shift+Tab, Escape)
+- Prevents body scroll when open
+- Smooth animations (fade + scale)
+- Auto-shows on validation errors with `:show="$errors->any()"`
+
+**Architecture:**
+- Alpine.js logic extracted to `resources/js/components/modal.js`
+- Uses `modalData()` component for focus management
+- Styling consolidated in `resources/scss/components/_modals.scss`
+- Follows Single Responsibility Principle
+- Clean separation: JavaScript for behavior, SCSS for styling, Blade for structure
 
 ---
 

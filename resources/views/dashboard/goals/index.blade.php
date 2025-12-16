@@ -150,27 +150,24 @@
                         </div>
 
                         <!-- Edit Modal for this goal -->
-                        <x-ui.modal name="edit-goal-{{ $goal->id }}" :show="false">
-                            <div class="modal-header">
-                                <div class="modal-header-title">
-                                    <h3>Edit Goal</h3>
-                                    <button type="button" @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')" class="text-white hover:text-gray-200 text-2xl font-bold leading-none">&times;</button>
-                                </div>
-                            </div>
-                            
-                            <div class="modal-content">
-                                <form action="{{ route('goals.update', $goal) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    
+                        <x-ui.modal 
+                            name="edit-goal-{{ $goal->id }}"
+                            eyebrow="Your Collection" 
+                            title="Edit Goal"
+                            maxWidth="lg"
+                        >
+                            <form action="{{ route('goals.update', $goal) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                
+                                <div class="space-y-4">
                                     <x-forms.form-input
                                         name="name"
                                         label="Goal Name"
                                         :value="$goal->name"
-                                        required
-                                        class="mb-4" />
+                                        required />
 
-                                    <div class="grid grid-cols-2 gap-3 mb-4">
+                                    <div class="grid grid-cols-2 gap-3">
                                         <x-forms.emoji-picker 
                                             :id="'edit-goal-icon-' . $goal->id"
                                             name="icon" 
@@ -194,21 +191,20 @@
                                         name="description"
                                         label="Description"
                                         :value="$goal->description"
-                                        rows="3"
-                                        class="mb-4" />
+                                        rows="3" />
+                                </div>
 
-                                    <div class="flex justify-end space-x-3 mt-6">
-                                        <button type="button" 
-                                                @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')"
-                                                class="btn-secondary">
-                                            Cancel
-                                        </button>
-                                        <button type="submit" class="btn-primary">
-                                            Save Changes
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" 
+                                            @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')"
+                                            class="btn-secondary">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="btn-primary">
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </form>
                         </x-ui.modal>
                     @endforeach
                 </div>
@@ -250,26 +246,24 @@
     </div>
 
     <!-- Create Goal Modal -->
-    <x-ui.modal name="create-goal" :show="$errors->any()">
-        <div class="modal-header">
-            <div class="modal-header-title">
-                <h3>Add New Goal</h3>
-                <button type="button" @click="$dispatch('close-modal', 'create-goal')" class="text-white hover:text-gray-200 text-2xl font-bold leading-none">&times;</button>
-            </div>
-        </div>
-        
-        <div class="modal-content">
-            <form action="{{ route('goals.store') }}" method="POST">
-                @csrf
-                
+    <x-ui.modal 
+        name="create-goal" 
+        :show="$errors->any()"
+        eyebrow="Your Collection"
+        title="Add New Goal"
+        maxWidth="lg"
+    >
+        <form action="{{ route('goals.store') }}" method="POST">
+            @csrf
+            
+            <div class="space-y-4">
                 <x-forms.form-input
                     name="name"
                     label="Goal Name"
                     placeholder="e.g., Exercise, Read, Meditate"
-                    required
-                    class="mb-4" />
+                    required />
 
-                <div class="grid grid-cols-2 gap-3 mb-4">
+                <div class="grid grid-cols-2 gap-3">
                     <x-forms.emoji-picker 
                         id="create-goal-icon"
                         name="icon" 
@@ -294,20 +288,19 @@
                     label="Description"
                     placeholder="What is this goal about?"
                     rows="3"
-                    optional
-                    class="mb-4" />
+                    optional />
+            </div>
 
-                <div class="flex justify-end space-x-3 mt-6">
-                    <button type="button" 
-                            @click="$dispatch('close-modal', 'create-goal')"
-                            class="btn-secondary">
-                        Cancel
-                    </button>
-                    <button type="submit" class="btn-primary">
-                        Add Goal
-                    </button>
-                </div>
-            </form>
-        </div>
+            <div class="modal-footer">
+                <button type="button" 
+                        @click="$dispatch('close-modal', 'create-goal')"
+                        class="btn-secondary">
+                    Cancel
+                </button>
+                <button type="submit" class="btn-primary">
+                    Add Goal
+                </button>
+            </div>
+        </form>
     </x-ui.modal>
 </x-dashboard-layout>

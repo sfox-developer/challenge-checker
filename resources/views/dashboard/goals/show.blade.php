@@ -165,48 +165,43 @@
     </div>
 
     <!-- Edit Goal Modal -->
-    <x-ui.modal name="edit-goal-{{ $goal->id }}" maxWidth="2xl">
-        <div class="modal-header">
-            <div class="modal-header-title">
-                <h3>Edit Goal</h3>
-                <button type="button" @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')" class="text-white hover:text-gray-200 text-2xl font-bold leading-none">&times;</button>
-            </div>
-        </div>
-        
-        <div class="modal-content">
-            <form method="POST" action="{{ route('goals.update', $goal) }}">
-                @csrf
-                @method('PUT')
+    <x-ui.modal 
+        name="edit-goal-{{ $goal->id }}"
+        eyebrow="Your Collection" 
+        title="Edit Goal"
+        maxWidth="lg"
+    >
+        <form method="POST" action="{{ route('goals.update', $goal) }}">
+            @csrf
+            @method('PUT')
 
-            <x-forms.form-input
-                name="name"
-                label="Goal Name *"
-                :value="$goal->name"
-                required
-                class="mb-4" />
+            <div class="space-y-4">
+                <x-forms.form-input
+                    name="name"
+                    label="Goal Name *"
+                    :value="$goal->name"
+                    required />
 
-            <x-forms.form-textarea
-                name="description"
-                label="Description"
-                :value="$goal->description"
-                rows="3"
-                optional
-                class="mb-4" />
+                <x-forms.form-textarea
+                    name="description"
+                    label="Description"
+                    :value="$goal->description"
+                    rows="3"
+                    optional />
 
-            <div class="grid grid-cols-2 gap-4 mb-4">
-                <x-forms.form-select
-                    name="category_id"
-                    label="Category"
-                    :value="$goal->category_id"
-                    placeholder="None">
-                    @foreach($categories as $cat)
-                        <option value="{{ $cat->id }}" {{ $goal->category_id == $cat->id ? 'selected' : '' }}>
-                            {{ $cat->icon }} {{ $cat->name }}
-                        </option>
-                    @endforeach
-                </x-forms.form-select>
+                <div class="grid grid-cols-2 gap-4">
+                    <x-forms.form-select
+                        name="category_id"
+                        label="Category"
+                        :value="$goal->category_id"
+                        placeholder="None">
+                        @foreach($categories as $cat)
+                            <option value="{{ $cat->id }}" {{ $goal->category_id == $cat->id ? 'selected' : '' }}>
+                                {{ $cat->icon }} {{ $cat->name }}
+                            </option>
+                        @endforeach
+                    </x-forms.form-select>
 
-                <div>
                     <x-forms.emoji-picker 
                         :id="'edit-icon-' . $goal->id"
                         name="icon" 
@@ -216,18 +211,16 @@
                 </div>
             </div>
 
-                <div class="mt-6 flex justify-end gap-3">
-                    <button type="button" 
-                            @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')" 
-                            class="btn-secondary">
-                        Cancel
-                    </button>
-                    <button type="submit" class="btn-primary">
-                        Update Goal
-                    </button>
-                </div>
-            </form>
-        </div>
+            <div class="modal-footer">
+                <button type="button" 
+                        @click="$dispatch('close-modal', 'edit-goal-{{ $goal->id }}')" 
+                        class="btn-secondary">
+                    Cancel
+                </button>
+                <button type="submit" class="btn-primary">
+                    Update Goal
+                </button>
+            </div>
         </form>
     </x-ui.modal>
 </x-dashboard-layout>

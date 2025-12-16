@@ -20,7 +20,7 @@
 
 import { createThemeManager } from './theme.js';
 import { createActivityCard } from './activity.js';
-import { createQuickGoalsModal, showModal, hideModal, initModalListeners } from './modal.js';
+import { createModalData, createQuickGoalsModal, showModal, hideModal, initModalListeners } from './modal.js';
 import { createGoalToggleManager } from './goals.js';
 import { createHabitForm, createHabitFormWithGoalToggle, createHabitEditForm } from './habit.js';
 import { createChallengeForm } from './challenge.js';
@@ -38,6 +38,7 @@ import registrationForm from './registration-form.js';
 // Register components globally for Alpine.js to access
 window.themeManager = createThemeManager;
 window.activityCard = createActivityCard;
+window.modalData = createModalData;
 window.quickGoalsModal = createQuickGoalsModal;
 window.goalToggleManager = createGoalToggleManager;
 window.habitForm = createHabitForm;

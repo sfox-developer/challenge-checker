@@ -2,9 +2,15 @@
 // MODALS - Minimal Modal System
 // ============================================================================
 
-.modal-backdrop {
+.modal-wrapper {
     @apply fixed inset-0 z-50;
-    @apply bg-black/50 backdrop-blur-sm;
+    @apply flex items-center justify-center p-4 sm:p-6;
+}
+
+.modal-backdrop {
+    @apply fixed inset-0;
+    @apply bg-black/40 backdrop-blur-md;
+    z-index: -1;
 }
 
 .modal {
@@ -13,20 +19,53 @@
 }
 
 .modal-content {
-    @apply bg-white dark:bg-gray-800;
-    @apply rounded-2xl shadow-xl;
+    background-color: var(--color-bg-main);
+    @apply rounded-2xl;
     @apply max-w-md w-full;
-    @apply border border-gray-200 dark:border-gray-700;
+    @apply relative;
+    @apply overflow-hidden;
+    z-index: 10;
+    box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.35);
+    
+    .dark & {
+        background-color: var(--color-bg-main-dark);
+        box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+}
+
+.modal-accent {
+    @apply h-0.5 w-full;
+    background: linear-gradient(90deg, 
+        var(--color-accent) 0%, 
+        var(--color-accent) 100%);
+    
+    .dark & {
+        background: linear-gradient(90deg, 
+            var(--color-accent-dark) 0%, 
+            var(--color-accent-dark) 100%);
+    }
 }
 
 .modal-header {
-    @apply px-6 py-4;
-    @apply border-b border-gray-200 dark:border-gray-700;
+    @apply px-6 pt-6 pb-4;
+    @apply text-center;
+    @apply relative;
 }
 
 .modal-title {
-    @apply text-xl font-semibold;
+    @apply text-xl md:text-2xl font-bold;
     @apply text-gray-900 dark:text-white;
+}
+
+.modal-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-wider;
+    @apply mb-2;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    
+    .dark & {
+        color: var(--color-accent-dark);
+    }
 }
 
 .modal-body {
@@ -34,7 +73,24 @@
 }
 
 .modal-footer {
-    @apply px-6 py-4;
-    @apply border-t border-gray-200 dark:border-gray-700;
-    @apply flex justify-end gap-3;
+    @apply px-6 py-5 mt-2;
+    @apply flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-3;
+    
+    // Full-width buttons on mobile, auto on desktop
+    button, a {
+        @apply w-full sm:w-auto;
+    }
+}
+
+.modal-close-button {
+    @apply absolute top-4 right-4;
+    @apply w-8 h-8;
+    @apply flex items-center justify-center;
+    @apply rounded-lg;
+    @apply cursor-pointer;
+    z-index: 20;
+    @apply text-gray-400;
+    @apply hover:text-gray-600 dark:hover:text-gray-300;
+    @apply hover:bg-gray-100 dark:hover:bg-gray-700;
+    @apply transition-all;
 }
