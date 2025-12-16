@@ -463,6 +463,13 @@ transition: box-shadow 300ms, border-color 300ms, color 300ms;
 .dashboard-stat-card-accent-top   // Stat card with top gradient accent bar
 ```
 
+**Dashboard Layouts:**
+```scss
+.dashboard-grid-stats    // 2 to 4 column responsive grid for stat cards (equal heights)
+.dashboard-grid-cards    // 1 to 3 column responsive grid for cards
+.dashboard-grid-3-cols   // 3 column responsive grid for goals/items
+```
+
 **List Item Components:**
 ```scss
 .challenge-list-item    // Challenge list item (components/_challenges.scss)

@@ -154,7 +154,7 @@
     </div>
 
     <!-- How It Works Section -->
-    <div class="section how-it-works">
+    <div class="section section-bg-light how-it-works">
         <div class="container">
             <div class="section-header animate animate-hidden-fade-up" 
                  x-data="{}" 

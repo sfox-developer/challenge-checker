@@ -6,158 +6,83 @@
         title="Challenges"
         description="Track your progress on time-bound challenges" />
 
-    <!-- Content -->
-    <div class="pb-12 md:pb-20" x-data="{ activeFilter: 'all' }">
-        <div class="max-w-4xl mx-auto px-6 space-y-6">
-            <!-- Challenge Statistics -->
-            <div class="dashboard-grid-stats">
-                <div class="animate animate-hidden-fade-up-sm"
-                     x-data="{}"
-                     x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), 100)">
-                    <x-ui.stat-card 
-                        variant="top"
-                        label="Total Challenges" 
-                        :value="$totalChallenges" />
-                </div>
+    <div x-data="{ activeFilter: 'all' }">
+        {{-- Stats Section --}}
+        <x-challenges.stats-section 
+            :totalChallenges="$totalChallenges" 
+            :completedCount="$challenges->where('completed_at', '!=', null)->count()" />
 
-                <div class="animate animate-hidden-fade-up-sm"
-                     x-data="{}"
-                     x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), 200)">
-                    <x-ui.stat-card 
-                        variant="top"
-                        label="Completed" 
-                        :value="$challenges->where('completed_at', '!=', null)->count()" />
-                </div>
+        {{-- Hero Section --}}
+        <x-challenges.hero-section :isEmpty="$challenges->isEmpty()" />
 
-                <div class="animate animate-hidden-fade-up-sm"
-                     x-data="{}"
-                     x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), 300)">
-                    <x-ui.stat-card 
-                        variant="top"
-                        label="Active Challenges" 
-                        :value="$activeChallenges" />
-                </div>
-
-                <div class="animate animate-hidden-fade-up-sm"
-                     x-data="{}"
-                     x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), 400)">
-                    <x-ui.stat-card 
-                        variant="top"
-                        label="Draft" 
-                        :value="$challenges->where('started_at', null)->count()" />
-                </div>
-            </div>
-
-            <!-- Create Challenge CTA -->
-            <div class="flex justify-center animate animate-hidden-fade-up"
-                 x-data="{}"
-                 x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 500)">
-                <x-ui.app-button variant="primary" href="{{ route('challenges.create') }}">
-                    <x-slot name="icon">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
-                        </svg>
-                    </x-slot>
-                    Create New Challenge
-                </x-ui.app-button>
-            </div>
-
-            <!-- Filter Tabs -->
-            <div class="tab-header animate animate-hidden-fade-up"
-                 x-data="{}"
-                 x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 600)">
-                <nav class="tab-nav">
-                    <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'tab-button active' : 'tab-button'" :disabled="{{ $allCount === 0 }}">
-                        All
-                        <span class="tab-count-badge" :class="activeFilter === 'all' ? 'active' : 'inactive'">
-                            {{ $allCount }}
-                        </span>
-                    </button>
-                    <button @click="activeFilter = 'active'" :class="activeFilter === 'active' ? 'tab-button active' : 'tab-button'" :disabled="{{ $activeCount === 0 }}">
-                        Active
-                        <span class="tab-count-badge" :class="activeFilter === 'active' ? 'active' : 'inactive'">
-                            {{ $activeCount }}
-                        </span>
-                    </button>
-                    <button @click="activeFilter = 'paused'" :class="activeFilter === 'paused' ? 'tab-button active' : 'tab-button'" :disabled="{{ $pausedCount === 0 }}">
-                        Paused
-                        <span class="tab-count-badge" :class="activeFilter === 'paused' ? 'active' : 'inactive'">
-                            {{ $pausedCount }}
-                        </span>
-                    </button>
-                    <button @click="activeFilter = 'completed'" :class="activeFilter === 'completed' ? 'tab-button active' : 'tab-button'" :disabled="{{ $completedCount === 0 }}">
-                        Completed
-                        <span class="tab-count-badge" :class="activeFilter === 'completed' ? 'active' : 'inactive'">
-                            {{ $completedCount }}
-                        </span>
-                    </button>
-                    <button @click="activeFilter = 'draft'" :class="activeFilter === 'draft' ? 'tab-button active' : 'tab-button'" :disabled="{{ $draftCount === 0 }}">
-                        Draft
-                        <span class="tab-count-badge" :class="activeFilter === 'draft' ? 'active' : 'inactive'">
-                            {{ $draftCount }}
-                        </span>
-                    </button>
-                    <button @click="activeFilter = 'archived'" :class="activeFilter === 'archived' ? 'tab-button active' : 'tab-button'" :disabled="{{ $archivedCount === 0 }}">
-                        Archived
-                        <span class="tab-count-badge" :class="activeFilter === 'archived' ? 'active' : 'inactive'">
-                            {{ $archivedCount }}
-                        </span>
-                    </button>
-                </nav>
-            </div>
-
-            @if($challenges->isNotEmpty())
-            <div class="space-y-4" x-data="{}">
-                @foreach($challenges as $index => $challenge)
-                    @php
-                        $isArchived = $challenge->isArchived();
-                        $isActive = $challenge->started_at && $challenge->is_active && !$challenge->completed_at && !$isArchived;
-                        $isPaused = $challenge->started_at && !$challenge->is_active && !$challenge->completed_at && !$isArchived;
-                        $isCompleted = $challenge->completed_at !== null && !$isArchived;
-                        $isDraft = !$challenge->started_at && !$isArchived;
-                    @endphp
-                    <div class="animate animate-hidden-fade-up-sm"
-                         x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), {{ $index * 100 }})"
-                         x-show="activeFilter === 'all' || 
-                                (activeFilter === 'archived' && {{ $isArchived ? 'true' : 'false' }}) || 
-                                (activeFilter === 'active' && {{ $isActive ? 'true' : 'false' }}) || 
-                                (activeFilter === 'paused' && {{ $isPaused ? 'true' : 'false' }}) || 
-                                (activeFilter === 'completed' && {{ $isCompleted ? 'true' : 'false' }}) || 
-                                (activeFilter === 'draft' && {{ $isDraft ? 'true' : 'false' }})"
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 transform scale-95"
-                         x-transition:enter-end="opacity-100 transform scale-100"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 transform scale-100"
-                         x-transition:leave-end="opacity-0 transform scale-95">
-                        
-                        <x-challenges.challenge-list-item :challenge="$challenge" />
-                    </div>
-                @endforeach
-            </div>
-            @else
-                <div class="empty-state-card animate animate-hidden-scale-up"
-                     x-data="{}"
-                     x-intersect="$el.classList.remove('animate-hidden-scale-up')">
-                    <div class="empty-state-icon">
-                        <svg fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <h3 class="empty-state-title">Ready to Start Your Journey?</h3>
-                    <p class="empty-state-text">Create your first challenge and begin tracking your progress towards your goals!</p>
-                    <div class="empty-state-cta">
-                        <x-ui.app-button variant="primary" href="{{ route('challenges.create') }}" class="inline-flex">
+        {{-- Challenges List Section --}}
+        <div class="section pt-0">
+            <div class="container max-w-4xl">
+                @if($challenges->isNotEmpty())
+                    {{-- Create Challenge CTA --}}
+                    <div class="flex justify-center mb-8 animate animate-hidden-fade-up"
+                         x-data="{}"
+                         x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 500)">
+                        <x-ui.app-button variant="primary" href="{{ route('challenges.create') }}">
                             <x-slot name="icon">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                     <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
                                 </svg>
                             </x-slot>
-                            Create Your First Challenge
+                            Create New Challenge
                         </x-ui.app-button>
                     </div>
-                </div>
-            @endif
+                @endif
+
+                {{-- Filter Tabs --}}
+                <x-challenges.filter-tabs 
+                    :allCount="$allCount"
+                    :activeCount="$activeCount"
+                    :pausedCount="$pausedCount"
+                    :completedCount="$completedCount"
+                    :draftCount="$draftCount"
+                    :archivedCount="$archivedCount" />
+
+                {{-- Challenge List or Empty State --}}
+                @if($challenges->isNotEmpty())
+                    <div class="space-y-4 mt-8">
+                        @foreach($challenges as $index => $challenge)
+                            @php
+                                $isArchived = $challenge->isArchived();
+                                $isActive = $challenge->started_at && $challenge->is_active && !$challenge->completed_at && !$isArchived;
+                                $isPaused = $challenge->started_at && !$challenge->is_active && !$challenge->completed_at && !$isArchived;
+                                $isCompleted = $challenge->completed_at !== null && !$isArchived;
+                                $isDraft = !$challenge->started_at && !$isArchived;
+                            @endphp
+                            <div class="animate animate-hidden-fade-up-sm"
+                                 x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), {{ $index * 100 }})"
+                                 x-show="activeFilter === 'all' || 
+                                        (activeFilter === 'archived' && {{ $isArchived ? 'true' : 'false' }}) || 
+                                        (activeFilter === 'active' && {{ $isActive ? 'true' : 'false' }}) || 
+                                        (activeFilter === 'paused' && {{ $isPaused ? 'true' : 'false' }}) || 
+                                        (activeFilter === 'completed' && {{ $isCompleted ? 'true' : 'false' }}) || 
+                                        (activeFilter === 'draft' && {{ $isDraft ? 'true' : 'false' }})"
+                                 x-transition:enter="transition ease-out duration-200"
+                                 x-transition:enter-start="opacity-0 transform scale-95"
+                                 x-transition:enter-end="opacity-100 transform scale-100"
+                                 x-transition:leave="transition ease-in duration-150"
+                                 x-transition:leave-start="opacity-100 transform scale-100"
+                                 x-transition:leave-end="opacity-0 transform scale-95">
+                                
+                                <x-challenges.challenge-list-item :challenge="$challenge" />
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <x-challenges.empty-state />
+                @endif
+            </div>
         </div>
+
+        {{-- Benefits Section --}}
+        <x-challenges.benefits-section />
+
+        {{-- FAQ Section --}}
+        <x-challenges.faq-section />
     </div>
 </x-dashboard-layout>

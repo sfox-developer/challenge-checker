@@ -38,6 +38,7 @@ html.dark .card {
     @apply flex flex-col items-center gap-4;
     @apply p-6;
     @apply relative overflow-hidden;
+    @apply h-full;
 }
 
 .dashboard-stat-icon {
@@ -104,4 +105,53 @@ html.dark .dashboard-stat-label {
 
 html.dark .dashboard-stat-card-accent-top::after {
     background: linear-gradient(90deg, #818cf8 0%, #a78bfa 100%);
+}
+
+// ----------------------------------------------------------------------------
+// FEATURE CARDS - Reusable across pages
+// ----------------------------------------------------------------------------
+
+.feature-card {
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    @apply rounded-2xl p-8;
+    @apply border border-gray-200 dark:border-gray-700;
+    @apply text-center space-y-4;
+    @apply transition-all duration-300;
+    @apply relative overflow-hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    &::after {
+        content: '';
+        @apply absolute top-0 left-0 right-0;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        opacity: 0.8;
+        z-index: 20;
+    }
+
+    html.dark & {
+        background-color: rgba(31, 41, 55, 0.5);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    html.dark &::after {
+        background: linear-gradient(90deg, #818cf8 0%, #a78bfa 100%);
+    }
+}
+
+.feature-icon {
+    @apply w-14 h-14 mx-auto;
+    @apply bg-slate-100 dark:bg-slate-900;
+    @apply rounded-2xl flex items-center justify-center;
+    @apply text-slate-700 dark:text-slate-400;
+}
+
+.feature-title {
+    @apply text-lg font-semibold text-gray-900 dark:text-white;
+}
+
+.feature-description {
+    @apply text-sm text-gray-600 dark:text-gray-400 leading-relaxed;
 }

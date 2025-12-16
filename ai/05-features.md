@@ -393,6 +393,50 @@ Route::post('challenges/{challenge}/restore', [ChallengeController::class, 'rest
 
 **Authorization:** Via `ChallengePolicy`
 
+**Challenge Index Page:**
+
+The challenge index page (`challenges.index`) provides:
+
+1. **Statistics Cards** (4-column grid, equal heights)
+   - Total Challenges
+   - Completed Challenges
+   - Active Challenges
+   - Draft Challenges
+
+2. **Progress Insights Card** (displayed when challenges exist)
+   - Total Goals: Count across all challenges
+   - Goals Completed: All-time achievement count
+   - Weekly Completion Rate: Last 7 days average percentage
+
+3. **Tab Filters** (disabled when count is 0)
+   - All, Active, Paused, Completed, Draft, Archived
+   - Alpine.js client-side filtering
+   - Count badges
+
+4. **Challenge List** with animations
+   - Status-based filtering via Alpine.js
+   - Staggered fade-up animations
+
+5. **Benefits & FAQ Section** (static content below listing)
+   - 3 benefit cards: Clear Deadlines, Track Progress, Build Habits
+   - 4 FAQ items about challenges
+
+**Data Provided to View:**
+```php
+$challenges          // Collection of user's challenges
+$totalChallenges     // Total count
+$activeChallenges    // Active count
+$allCount            // All challenges count
+$activeCount         // Active filter count
+$pausedCount         // Paused filter count
+$completedCount      // Completed filter count
+$draftCount          // Draft filter count
+$archivedCount       // Archived filter count
+$totalGoals          // Total goals across all challenges
+$completedGoalsCount // All-time completed goals
+$completionRate      // Weekly completion percentage (last 7 days)
+```
+
 ---
 
 ### Habit Routes
