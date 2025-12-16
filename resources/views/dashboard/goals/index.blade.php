@@ -1,26 +1,13 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Goal Library">
-            <x-slot name="icon">
-                <svg class="w-6 h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"/>
-                </svg>
-            </x-slot>
-            <x-slot name="action">
-                <x-ui.app-button variant="primary" @click="$dispatch('open-modal', 'create-goal')" class="w-full sm:w-auto">
-                    <x-slot name="icon">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
-                        </svg>
-                    </x-slot>
-                    <span class="hidden sm:inline">Add New Goal</span>
-                    <span class="sm:hidden">New Goal</span>
-                </x-ui.app-button>
-            </x-slot>
-        </x-ui.page-header>
-    </x-slot>
+    <x-slot name="title">Goal Library</x-slot>
 
-    <div class="section">
+    <x-dashboard.page-header 
+        eyebrow="Your Collection"
+        title="Goal Library"
+        description="Reusable goals for your challenges and habits" />
+
+    <!-- Content -->
+    <div class="pb-12 md:pb-20">
         <div class="container space-y-6">
             
             <!-- Search and Filter -->

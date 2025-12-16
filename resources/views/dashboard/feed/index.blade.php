@@ -1,7 +1,13 @@
 <x-dashboard-layout>
     <x-slot name="title">Activity Feed</x-slot>
 
-    <div class="section flex-1">
+    <x-dashboard.page-header 
+        eyebrow="Community"
+        title="Feed"
+        description="See what others are achieving in their challenges" />
+
+    <!-- Content -->
+    <div class="pb-12 md:pb-20 flex-1">
         <div class="max-w-4xl mx-auto px-6">
             <div class="space-y-4">
                 @forelse($activities as $index => $activity)
