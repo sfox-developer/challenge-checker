@@ -186,6 +186,103 @@ body {
 
 ---
 
+### Shadow System
+
+**Design Philosophy:**  
+Unified two-tier shadow system provides consistent depth hierarchy across all card-like elements. Shadows are subtle in light mode and stronger in dark mode for proper visibility.
+
+**Tier 1 - Base State:**  
+Subtle elevation for resting state of cards and list items.
+
+```scss
+// Light mode
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+// Dark mode
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+```
+
+**Tier 2 - Interactive State:**  
+Enhanced elevation for hover states and prominent elements (hero sections, featured content).
+
+```scss
+// Light mode
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+// Dark mode
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+```
+
+**Application Examples:**
+
+```scss
+// Base card component
+.card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    
+    .dark & {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+}
+
+// Interactive card with hover
+.card-link {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 300ms;
+    
+    .dark & {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+    
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        
+        .dark & {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+    }
+}
+
+// Prominent hero elements (no hover needed)
+.hero-image {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    
+    .dark & {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+}
+```
+
+**Where Applied:**
+- `.card` and `.card-link` (components/_cards.scss)
+- `.challenge-list-item` (components/_challenges.scss)
+- `.habit-list-item` (components/_habits.scss)
+- `.feature-card` on welcome page (pages/_welcome.scss)
+- `.hero-image` and `.hero-video-container` (pages/_welcome.scss)
+- `.dashboard-stat-icon` (reduced intensity for icon backgrounds)
+
+**Exceptions:**
+- **Modals and dropdowns**: Keep heavier shadows (e.g., `shadow-2xl`) to emphasize overlay depth
+- **Tabs**: No shadow - uses border and background for differentiation
+- **Flat UI elements**: Buttons, badges, inputs use borders/backgrounds instead
+
+**Transition Timing:**  
+Always use `duration-300` for shadow transitions to match border and color changes:
+
+```scss
+transition: box-shadow 300ms, border-color 300ms, color 300ms;
+// or with Tailwind
+@apply transition-all duration-300;
+```
+
+**Design Rationale:**
+1. **Two tiers only** - Prevents shadow proliferation and maintains clear hierarchy
+2. **Subtle by default** - Modern UIs favor minimalism; depth should enhance, not dominate
+3. **Stronger in dark mode** - Compensates for reduced contrast in dark backgrounds
+4. **Consistent spread** - Same values everywhere make the system predictable and maintainable
+
+---
+
 ### Animations (`components/_animations.scss`)
 
 **Two-class system for scroll/load animations:**

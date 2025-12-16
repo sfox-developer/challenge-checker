@@ -10,16 +10,24 @@
     @apply rounded-xl p-6;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
     @apply transition-all duration-200;
-    @apply hover:shadow-md hover:border-gray-300 dark:hover:border-gray-600;
+    @apply hover:border-gray-300 dark:hover:border-gray-600;
     @apply cursor-pointer;
     @apply relative;
     @apply overflow-hidden;
     
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    
     html.dark & {
         background-color: rgba(31, 41, 55, 0.5);
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
+        
+        &:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
     }
     
     // Gradient accent bar on left
