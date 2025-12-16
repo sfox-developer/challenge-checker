@@ -75,6 +75,7 @@ html.dark .dashboard-stat-value {
     @apply relative z-10;
     @apply text-sm font-semibold uppercase tracking-wider;
     color: var(--color-text);
+    text-align: center;
 }
 
 html.dark .dashboard-stat-label {

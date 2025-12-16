@@ -15,11 +15,74 @@
 
     &:hover {
         @apply border-gray-300 dark:border-gray-600;
+        
+        .challenge-list-title {
+            @apply text-slate-700;
+        }
+        
+        .challenge-list-arrow {
+            @apply text-slate-600;
+        }
     }
 
     .dark & {
         color: var(--color-text-dark);
+        
+        &:hover .challenge-list-title {
+            @apply text-slate-400;
+        }
+        
+        &:hover .challenge-list-arrow {
+            @apply text-slate-400;
+        }
     }
+}
+
+.challenge-list-content {
+    @apply flex items-center gap-6;
+}
+
+.challenge-list-title {
+    @apply truncate min-w-0 flex-1;
+    @apply transition-colors duration-300;
+}
+
+.challenge-list-stats {
+    @apply hidden lg:flex items-center gap-4 text-xs flex-shrink-0;
+    color: var(--color-text);
+    
+    .dark & {
+        color: var(--color-text-dark);
+    }
+}
+
+.challenge-list-stat {
+    @apply flex items-center gap-1.5;
+    
+    svg {
+        @apply w-4 h-4 flex-shrink-0;
+    }
+    
+    span {
+        @apply whitespace-nowrap;
+    }
+}
+
+.challenge-list-stat-progress span {
+    @apply font-medium;
+}
+
+.challenge-list-separator {
+    @apply w-px h-4 bg-gray-300 dark:bg-gray-600;
+}
+
+.challenge-list-actions {
+    @apply flex items-center gap-3 flex-shrink-0;
+}
+
+.challenge-list-arrow {
+    @apply w-5 h-5 flex-shrink-0 text-gray-400;
+    @apply transition-colors duration-300;
 }
 
 

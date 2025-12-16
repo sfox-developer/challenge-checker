@@ -8,7 +8,7 @@
 
     <!-- Content -->
     <div class="pb-12 md:pb-20" x-data="{ activeFilter: 'all' }">
-        <div class="container space-y-6">
+        <div class="max-w-4xl mx-auto px-6 space-y-6">
             <!-- Challenge Statistics -->
             <div class="dashboard-grid-stats">
                 <div class="animate animate-hidden-fade-up-sm"

@@ -37,3 +37,55 @@
     @apply bg-blue-100 dark:bg-blue-900/30;
     @apply text-blue-700 dark:text-blue-400;
 }
+// ============================================================================
+// STATUS TEXT - Text-only status labels (no background)
+// ============================================================================
+
+.status-text {
+    @apply text-xs font-medium;
+}
+
+.status-active {
+    @extend .status-text;
+    @apply text-green-600;
+    
+    .dark & {
+        @apply text-green-400;
+    }
+}
+
+.status-completed {
+    @extend .status-text;
+    color: var(--color-text);
+    
+    .dark & {
+        color: var(--color-text-dark);
+    }
+}
+
+.status-paused {
+    @extend .status-text;
+    @apply text-yellow-600;
+    
+    .dark & {
+        @apply text-yellow-400;
+    }
+}
+
+.status-draft {
+    @extend .status-text;
+    @apply text-gray-600;
+    
+    .dark & {
+        @apply text-gray-400;
+    }
+}
+
+.status-archived {
+    @extend .status-text;
+    @apply text-gray-600;
+    
+    .dark & {
+        @apply text-gray-400;
+    }
+}
