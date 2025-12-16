@@ -16,13 +16,13 @@
                 
                 <!-- Status Badge -->
                 @if($habit->isArchived())
-                    <span class="badge-challenge-paused flex-shrink-0">📁 Archived</span>
+                    <span class="status-archived flex-shrink-0">Archived</span>
                 @elseif($habit->isCompletedToday())
-                    <span class="badge-completed flex-shrink-0">✓ Done Today</span>
+                    <span class="status-completed flex-shrink-0">Completed</span>
                 @elseif($habit->is_active)
-                    <span class="badge-challenge-active flex-shrink-0">🏃 Active</span>
+                    <span class="status-active flex-shrink-0">Active</span>
                 @else
-                    <span class="badge-challenge-paused flex-shrink-0">⏸️ Paused</span>
+                    <span class="status-paused flex-shrink-0">Paused</span>
                 @endif
             </div>
             
