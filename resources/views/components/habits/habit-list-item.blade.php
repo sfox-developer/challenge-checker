@@ -1,6 +1,6 @@
 @props(['habit', 'adminView' => false])
 
-<a href="{{ route('habits.show', $habit) }}" class="card card-link group">
+<a href="{{ route('habits.show', $habit) }}" class="habit-list-item group">
     <div class="flex items-center gap-4">
         <!-- Icon -->
         <div class="flex-shrink-0 w-12 h-12 bg-slate-100 dark:bg-slate-900 rounded-lg flex items-center justify-center text-slate-700 dark:text-slate-400 text-2xl">

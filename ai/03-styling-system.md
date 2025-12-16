@@ -353,21 +353,37 @@ body {
 
 **Base Card:**
 ```scss
-.card              // Base card container
+.card              // Base card container with glassmorphism effect
+.card-link         // Clickable card with hover states
 .card-header       // Card header section
 .card-body         // Card main content
 .card-footer       // Card footer section
 ```
 
-**Specialized Cards:**
+**Dashboard Cards:**
 ```scss
-.stat-card         // Statistics display card
-.challenge-card    // Challenge overview card
-.habit-card        // Habit overview card
+.dashboard-stat-card              // Statistics display card
+.dashboard-stat-card-accent-top   // Stat card with top gradient accent bar
 ```
 
-**Usage Example:**
+**List Item Components:**
+```scss
+.challenge-list-item    // Challenge list item (components/_challenges.scss)
+.habit-list-item        // Habit list item (components/_habits.scss)
+.challenge-stat-item    // Inline stat item (icon + text)
+```
+
+**Features:**
+- Gradient accent bars (4px on left for list items, 3px on top for stat cards)
+- Glassmorphism effect with backdrop blur
+- Hover states with smooth transitions
+- Dark mode support with different shadows/backgrounds
+- Consistent gradient: #667eea → #764ba2 (light), #818cf8 → #a78bfa (dark)
+- Challenge and habit styles in separate component files for better organization
+
+**Usage Examples:**
 ```blade
+<!-- Basic card -->
 <div class="card">
     <div class="card-header">
         <h3>Card Title</h3>
@@ -375,11 +391,40 @@ body {
     <div class="card-body">
         <p>Card content goes here.</p>
     </div>
-    <div class="card-footer">
-        <button class="btn btn-primary">Action</button>
-    </div>
 </div>
+
+<!-- Challenge list item (used in x-challenges.challenge-list-item component) -->
+<a href="..." class="challenge-list-item group">
+    <!-- Has automatic left gradient accent bar -->
+    <div class="flex items-center gap-4">
+        <div class="flex-1">
+            <h4>Challenge Name</h4>
+            <div class="flex gap-4">
+                <div class="challenge-stat-item">
+                    <svg>...</svg>
+                    <span>30 days</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+
+<!-- Habit list item (used in x-habits.habit-list-item component) -->
+<a href="..." class="habit-list-item group">
+    <!-- Has automatic left gradient accent bar -->
+    <div class="flex items-center gap-4">
+        <div class="icon">...</div>
+        <div class="flex-1">
+            <h4>Habit Name</h4>
+        </div>
+    </div>
+</a>
 ```
+
+**Design Notes:**
+- List items have 4px gradient accent on left that expands to 5px on hover
+- Accent bar matches modal/stat-card/tab design language
+- All use same gradient for consistency across application
 
 ---
 

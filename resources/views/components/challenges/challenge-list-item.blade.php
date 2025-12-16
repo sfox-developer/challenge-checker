@@ -1,7 +1,7 @@
 @props(['challenge', 'adminView' => false])
 
 <a href="{{ $adminView ? route('admin.challenge', $challenge) : route('challenges.show', $challenge) }}" 
-   class="card card-link group">
+   class="challenge-list-item group">
     <div class="flex items-center gap-4">
         <!-- Content -->
         <div class="flex-1 min-w-0">

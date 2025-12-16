@@ -785,9 +785,41 @@ resources/scss/
 
 ---
 
+---
+
+### List Item Components ✅ UPDATED
+**Status:** Added gradient accent bars (December 16, 2025)
+
+**Components Updated:**
+- `x-challenges.challenge-list-item` - Challenge list item
+- `x-habits.habit-list-item` - Habit list item
+
+**Applied Design Pattern:**
+- 4px gradient accent bar on left edge
+- Expands to 5px on hover
+- Uses same gradient as modals, stat cards, and tabs (#667eea → #764ba2)
+- Created semantic SCSS classes: `.challenge-list-item`, `.habit-list-item`
+- Defined `.challenge-stat-item` for inline stats (was missing)
+
+**SCSS Classes Created:**
+```scss
+.challenge-list-item    // Extends .card-link, adds left gradient accent
+.habit-list-item        // Extends .card-link, adds left gradient accent
+.challenge-stat-item    // Inline stat item styling (flex, gap, icon sizing)
+```
+
+**Design Benefits:**
+- Unified gradient accent across entire app (modals, stat cards, tabs, list items)
+- Better visual hierarchy in list views
+- Improved hover feedback
+- Semantic class names instead of generic `.card .card-link`
+
+---
+
 **Key Learnings:**
 - Scroll animations (`.animate` classes) and show/hide logic (`x-show`) can coexist
 - Staggered timing creates smooth, professional entry animations
 - `x-intersect` provides better UX than `x-init` timeouts for below-fold content
 - Client-side filtering (Alpine.js) preferred over server-side for better UX
-- All tab components now use consistent gradient accent design
+- All components now use consistent gradient accent design (modals, stats, tabs, lists)
+- Semantic SCSS classes improve maintainability and readability
