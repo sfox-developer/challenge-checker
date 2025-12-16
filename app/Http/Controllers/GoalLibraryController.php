@@ -36,7 +36,26 @@ class GoalLibraryController extends Controller
         // Get active categories from database
         $categories = Category::active()->ordered()->get();
 
-        return view('dashboard.goals.index', compact('goals', 'categories', 'search', 'categoryId'));
+        // Calculate stats
+        $totalGoals = auth()->user()->goalsLibrary()->count();
+        $usedInChallenges = auth()->user()->goalsLibrary()
+            ->has('challengeGoals')
+            ->distinct()
+            ->count();
+        $usedInHabits = auth()->user()->goalsLibrary()
+            ->has('habits')
+            ->distinct()
+            ->count();
+
+        return view('dashboard.goals.index', compact(
+            'goals', 
+            'categories', 
+            'search', 
+            'categoryId',
+            'totalGoals',
+            'usedInChallenges',
+            'usedInHabits'
+        ));
     }
 
     /**
