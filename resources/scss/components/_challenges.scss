@@ -2,51 +2,24 @@
 // CHALLENGES - Challenge List Item Component
 // ============================================================================
 
-// Challenge list item
 .challenge-list-item {
     @apply block;
+    @apply rounded-xl;
     @apply bg-white dark:bg-gray-800;
     @apply border border-gray-200 dark:border-gray-700;
-    @apply rounded-xl p-6;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-    @apply transition-all duration-200;
-    @apply hover:shadow-md hover:border-gray-300 dark:hover:border-gray-600;
-    @apply cursor-pointer;
-    @apply relative;
-    @apply overflow-hidden;
-    
-    html.dark & {
-        background-color: rgba(31, 41, 55, 0.5);
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    @apply p-5;
+    @apply transition-all duration-300;
+    @apply backdrop-blur-sm;
+    @apply hover:shadow-lg;
+    color: var(--color-text);
+
+    &:hover {
+        @apply border-gray-300 dark:border-gray-600;
     }
-    
-    // Gradient accent bar on left
-    &::before {
-        content: '';
-        @apply absolute top-0 left-0 bottom-0;
-        width: 4px;
-        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
-        opacity: 0.8;
-        z-index: 20;
-    }
-    
-    &:hover::before {
-        opacity: 1;
-        width: 5px;
+
+    .dark & {
+        color: var(--color-text-dark);
     }
 }
 
-html.dark .challenge-list-item::before {
-    background: linear-gradient(180deg, #818cf8 0%, #a78bfa 100%);
-}
 
-// Challenge stat item (inline stats)
-.challenge-stat-item {
-    @apply flex items-center gap-1.5;
-    
-    svg {
-        @apply flex-shrink-0;
-    }
-}
