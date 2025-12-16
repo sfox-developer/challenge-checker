@@ -45,7 +45,7 @@
                             <div class="relative">
                                 <input type="number" name="days_duration" id="days_duration" value="{{ old('days_duration', '') }}" 
                                        min="1" max="365"
-                                       class="app-input pr-16" placeholder="30">
+                                       class="form-input pr-16" placeholder="30">
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                     <span class="text-gray-500 text-sm">days</span>
                                 </div>
@@ -146,7 +146,7 @@
                                             <input type="text" 
                                                    :name="`new_goals[${index}][name]`"
                                                    x-model="goal.name"
-                                                   class="app-input text-sm" 
+                                                   class="form-input text-sm" 
                                                    placeholder="Goal name"
                                                    required>
                                             <div class="grid grid-cols-2 gap-3">
@@ -155,7 +155,7 @@
                                                         <input type="text" 
                                                                :name="`new_goals[${index}][icon]`"
                                                                x-model="goal.icon"
-                                                               class="app-input text-sm pr-12" 
+                                                               class="form-input text-sm pr-12" 
                                                                placeholder="🎯"
                                                                maxlength="2">
                                                         <button 
@@ -208,7 +208,7 @@
                                                 </div>
                                                 <select :name="`new_goals[${index}][category_id]`" 
                                                         x-model="goal.category_id"
-                                                        class="app-input text-sm">
+                                                        class="form-input text-sm">
                                                     <option value="">Category</option>
                                                     @foreach($categories as $cat)
                                                         <option value="{{ $cat->id }}">{{ $cat->icon }} {{ $cat->name }}</option>
@@ -218,7 +218,7 @@
                                             <textarea :name="`new_goals[${index}][description]`"
                                                       x-model="goal.description"
                                                       rows="2" 
-                                                      class="app-input text-sm" 
+                                                      class="form-input text-sm" 
                                                       placeholder="Description (optional)"></textarea>
                                         </div>
                                     </div>

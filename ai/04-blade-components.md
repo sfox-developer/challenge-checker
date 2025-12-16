@@ -377,26 +377,65 @@ resources/views/components/
 
 ## 📝 Form Components
 
-### x-forms.form-field
+All form components use the **`.form-input`** class for consistent styling across dashboard and auth forms.
 
-**Component:** `resources/views/components/forms/form-field.blade.php`
+### Design System
+
+**Styling:** Defined in `resources/scss/components/_forms.scss`
+
+**Key Features:**
+- **Glassmorphic Design** - Backdrop blur with semi-transparent backgrounds
+- **Rounded Corners** - 12px border-radius for modern look
+- **Custom Focus States** - Accent color borders with subtle shadow
+- **Dark Mode Support** - Complete styling for light and dark themes
+- **Consistent Spacing** - 0.75rem padding for comfortable input
+- **Custom Select Styling** - Styled dropdown arrows matching design system
+
+**SCSS Classes:**
+- `.form-input` - Applied to all input, textarea, and select elements
+- `.form-label` - Label styling with proper hierarchy
+- `.form-checkbox` - Custom checkbox styling with glassmorphic effect
+- `.form-error` - Error message styling
+- `.form-help` - Help text styling
+
+---
+
+### x-forms.form-input
+
+**Component:** `resources/views/components/forms/form-input.blade.php`
 
 **Props:**
-- `label` - Field label
-- `name` - Input name
-- `type` (optional) - Input type (text, email, password, etc.)
-- `required` (optional) - Required field
-- `help` (optional) - Help text
+- `label` (optional) - Field label text
+- `name` (required) - Input name attribute
+- `type` (optional) - Input type (default: 'text')
+- `value` (optional) - Input value
+- `placeholder` (optional) - Placeholder text
+- `required` (optional) - Mark as required field
+- `icon` (optional) - Icon to display next to label
+- `iconColor` (optional) - Icon color class (default: 'blue')
+- `optional` (optional) - Show "(Optional)" label
+- `hint` (optional) - Help text below input
+- `min` (optional) - Min value (for number inputs)
+- `max` (optional) - Max value (for number inputs)
 
 **Usage:**
 ```blade
-<x-forms.form-field 
-    label="Challenge Name" 
-    name="name" 
-    type="text"
-    required
-    help="Enter a descriptive name for your challenge"
-/>
+<!-- Basic Input -->
+<x-forms.form-input
+    name="name"
+    label="Goal Name"
+    placeholder="e.g., Exercise, Read, Meditate"
+    required />
+
+<!-- Number Input with Range -->
+<x-forms.form-input
+    name="days_duration"
+    label="Duration (Days)"
+    type="number"
+    placeholder="30"
+    min="1"
+    max="365"
+    optional />
 ```
 
 ---
@@ -406,18 +445,25 @@ resources/views/components/
 **Component:** `resources/views/components/forms/form-textarea.blade.php`
 
 **Props:**
-- `label` - Field label
-- `name` - Textarea name
-- `rows` (optional) - Number of rows
-- `required` (optional) - Required field
+- `label` (optional) - Field label text
+- `name` (required) - Textarea name attribute
+- `value` (optional) - Textarea value
+- `placeholder` (optional) - Placeholder text
+- `rows` (optional) - Number of rows (default: 3)
+- `required` (optional) - Mark as required field
+- `icon` (optional) - Icon to display next to label
+- `iconColor` (optional) - Icon color class (default: 'purple')
+- `optional` (optional) - Show "(Optional)" label (default: true)
+- `hint` (optional) - Help text below textarea
 
 **Usage:**
 ```blade
-<x-forms.form-textarea 
-    label="Description" 
+<x-forms.form-textarea
     name="description"
-    rows="5"
-/>
+    label="Description"
+    placeholder="What is this goal about?"
+    rows="3"
+    optional />
 ```
 
 ---
@@ -427,23 +473,105 @@ resources/views/components/
 **Component:** `resources/views/components/forms/form-select.blade.php`
 
 **Props:**
-- `label` - Field label
-- `name` - Select name
-- `options` - Array of options
-- `required` (optional) - Required field
+- `label` (optional) - Field label text
+- `name` (required) - Select name attribute
+- `value` (optional) - Selected value
+- `options` (optional) - Array of options
+- `required` (optional) - Mark as required field
+- `icon` (optional) - Icon to display next to label
+- `iconColor` (optional) - Icon color class (default: 'blue')
+- `optional` (optional) - Show "(Optional)" label
+- `hint` (optional) - Help text below select
+- `placeholder` (optional) - Placeholder option text (default: 'Select an option...')
 
 **Usage:**
 ```blade
-<x-forms.form-select 
-    label="Duration" 
-    name="days_duration"
-    :options="[
-        30 => '30 days',
-        60 => '60 days',
-        90 => '90 days'
-    ]"
-    required
-/>
+<x-forms.form-select
+    name="category_id"
+    label="Category"
+    placeholder="None">
+    @foreach($categories as $cat)
+        <option value="{{ $cat->id }}">
+            {{ $cat->icon }} {{ $cat->name }}
+        </option>
+    @endforeach
+</x-forms.form-select>
+```
+
+---
+
+### x-forms.form-checkbox
+
+**Component:** `resources/views/components/forms/form-checkbox.blade.php`
+
+**Props:**
+- `label` (required) - Checkbox label text
+- `name` (required) - Checkbox name attribute
+- `value` (optional) - Checkbox value (default: '1')
+- `checked` (optional) - Initial checked state
+- `description` (optional) - Description text below label
+- `icon` (optional) - Icon to display next to label
+- `iconColor` (optional) - Icon color class (default: 'blue')
+
+**Usage:**
+```blade
+<x-forms.form-checkbox
+    name="is_public"
+    label="Make this public"
+    description="Anyone can view this challenge" />
+```
+
+---
+
+### x-forms.emoji-picker
+
+**Component:** `resources/views/components/forms/emoji-picker.blade.php`
+
+**Props:**
+- `id` (optional) - Input ID (auto-generated if not provided)
+- `name` (optional) - Input name (default: 'icon')
+- `value` (optional) - Initial emoji value
+- `placeholder` (optional) - Placeholder emoji (default: '🎯')
+- `label` (optional) - Field label (default: 'Icon (emoji)')
+- `maxlength` (optional) - Max characters (default: '2')
+- `disabled` (optional) - Disable input
+- `required` (optional) - Mark as required field
+
+**Usage:**
+```blade
+<x-forms.emoji-picker 
+    name="icon" 
+    :value="$goal->icon"
+    label="Icon (emoji)"
+    placeholder="🎯" />
+```
+
+---
+
+### x-forms.form-field
+
+**Component:** `resources/views/components/forms/form-field.blade.php`
+
+**Purpose:** Wrapper component for labels, hints, and errors. Used internally by other form components.
+
+**Props:**
+- `label` (optional) - Field label
+- `name` (required) - Input name for error handling
+- `icon` (optional) - Icon to display next to label
+- `iconColor` (optional) - Icon color class
+- `optional` (optional) - Show "(Optional)" label
+- `hint` (optional) - Help text
+
+**Usage (Direct):**
+```blade
+<x-forms.form-field 
+    label="Custom Field" 
+    name="custom_field"
+    hint="This is a custom input">
+    
+    <!-- Your custom input here -->
+    <input type="text" name="custom_field" class="form-input">
+</x-forms.form-field>
 ```
 
 ---

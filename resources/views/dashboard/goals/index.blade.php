@@ -21,12 +21,12 @@
                                name="search" 
                                value="{{ $search ?? '' }}"
                                placeholder="Search goals..." 
-                               class="app-input">
+                               class="form-input">
                     </div>
 
                     <!-- Category Filter -->
                     <div class="sm:w-48">
-                        <select name="category" class="app-input">
+                        <select name="category" class="form-input">
                             <option value="">All Categories</option>
                             @foreach($categories as $cat)
                                 <option value="{{ $cat->id }}" {{ $categoryId == $cat->id ? 'selected' : '' }}>

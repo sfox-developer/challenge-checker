@@ -11,14 +11,14 @@
 
 <div>
     @if($label)
-        <label for="{{ $id }}" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+        <label for="{{ $id }}" class="form-label form-label-icon">
             {{ $label }}
         </label>
     @endif
     
     <div x-data="emojiPicker('{{ $id }}')" class="relative">
         <!-- Input with integrated button -->
-        <div class="relative">
+        <div class="relative" x-ref="emojiInput">
             <input 
                 type="text" 
                 id="{{ $id }}"
@@ -28,7 +28,7 @@
                 maxlength="{{ $maxlength }}"
                 {{ $disabled ? 'disabled' : '' }}
                 {{ $required ? 'required' : '' }}
-                {{ $attributes->merge(['class' => 'app-input pr-12']) }}
+                {{ $attributes->merge(['class' => 'form-input pr-12']) }}
             />
             
             <!-- Emoji Picker Button - positioned inside input on the right -->
@@ -52,8 +52,9 @@
             x-transition:leave="transition ease-in duration-75"
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-95"
-            class="absolute left-0 right-0 sm:left-auto sm:right-0 mt-2 w-full sm:w-72 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50 p-4"
-            style="display: none;"
+            x-anchor.bottom-start="$refs.emojiInput"
+            class="fixed w-full sm:w-72 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 p-4"
+            style="display: none; z-index: 9999;"
             @click.stop>
             
             <div class="mb-3 flex justify-between items-center">

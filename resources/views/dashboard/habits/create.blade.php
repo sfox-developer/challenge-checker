@@ -40,7 +40,7 @@
 
                         <!-- Existing Goal Selection -->
                         <div x-show="useExisting" x-transition>
-                            <select name="goal_library_id" id="goal_library_id" class="app-input" x-model="selectedGoalId" :disabled="!useExisting">
+                            <select name="goal_library_id" id="goal_library_id" class="form-input" x-model="selectedGoalId" :disabled="!useExisting">
                                 <option value="">Select a goal...</option>
                                 @foreach($goalsLibrary as $goal)
                                     <option value="{{ $goal->id }}">
@@ -68,7 +68,7 @@
                                     <input type="text" 
                                            name="new_goal_name" 
                                            id="new_goal_name" 
-                                           class="app-input" 
+                                           class="form-input" 
                                            placeholder="Goal name (e.g., Drink water, Exercise, Read)"
                                            :disabled="useExisting"
                                            value="{{ old('new_goal_name') }}">
@@ -93,7 +93,7 @@
                                             x-bind:disabled="useExisting" />
                                     </div>
                                     <div>
-                                        <select name="new_goal_category_id" id="new_goal_category_id" class="app-input" :disabled="useExisting">
+                                        <select name="new_goal_category_id" id="new_goal_category_id" class="form-input" :disabled="useExisting">
                                             <option value="">Category (optional)</option>
                                             @foreach($categories as $cat)
                                                 <option value="{{ $cat->id }}">
@@ -108,7 +108,7 @@
                                     <textarea name="new_goal_description" 
                                               id="new_goal_description" 
                                               rows="2" 
-                                              class="app-input" 
+                                              class="form-input" 
                                               placeholder="Description (optional)"
                                               :disabled="useExisting">{{ old('new_goal_description') }}</textarea>
                                 </div>

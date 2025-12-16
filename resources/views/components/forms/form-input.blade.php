@@ -26,7 +26,7 @@
         name="{{ $name }}" 
         id="{{ $name }}" 
         value="{{ old($name, $value) }}" 
-        class="app-input" 
+        class="form-input" 
         @if($placeholder) placeholder="{{ $placeholder }}" @endif
         @if($required) required @endif
         @if($min !== null) min="{{ $min }}" @endif

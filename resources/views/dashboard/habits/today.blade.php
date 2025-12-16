@@ -147,7 +147,7 @@
                                                 </label>
                                                 <textarea x-model="notes" 
                                                           rows="2" 
-                                                          class="app-input text-sm"
+                                                          class="form-input text-sm"
                                                           placeholder="How did it go? Any thoughts?"></textarea>
                                             </div>
 
@@ -159,7 +159,7 @@
                                                     <input type="number" 
                                                            x-model="duration" 
                                                            min="1" 
-                                                           class="app-input text-sm"
+                                                           class="form-input text-sm"
                                                            placeholder="30">
                                                 </div>
 
@@ -167,7 +167,7 @@
                                                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
                                                         How do you feel?
                                                     </label>
-                                                    <select x-model="mood" class="app-input text-sm">
+                                                    <select x-model="mood" class="form-input text-sm">
                                                         <option value="">Select mood...</option>
                                                         <option value="great">😄 Great</option>
                                                         <option value="good">🙂 Good</option>

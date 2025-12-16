@@ -67,7 +67,7 @@
                             <div class="relative">
                                 <input type="number" name="days_duration" id="days_duration" value="{{ old('days_duration', $challenge->days_duration) }}" 
                                        min="1" max="365"
-                                       class="app-input pr-16" placeholder="30">
+                                       class="form-input pr-16" placeholder="30">
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                     <span class="text-gray-500 text-sm">days</span>
                                 </div>
