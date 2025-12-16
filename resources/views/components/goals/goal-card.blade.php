@@ -1,10 +1,9 @@
 @props(['goal', 'index', 'categories'])
 
-<div class="goal-card animate animate-hidden-fade-up-sm" 
-     x-data="{ showMenu: false }"
-     x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), {{ $index % 6 * 100 }})">
+<a href="{{ route('goals.show', $goal) }}" class="goal-card group animate animate-hidden-fade-up-sm" 
+   x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), {{ $index % 6 * 100 }})">
     <div class="goal-card-content">
-        <a href="{{ route('goals.show', $goal) }}" class="goal-card-link">
+        <div class="goal-card-link">
             <div class="goal-card-icon">{{ $goal->icon ?? '🎯' }}</div>
             <div class="goal-card-body">
                 <h3 class="goal-card-title">
@@ -37,58 +36,16 @@
                     @endif
                 </div>
             </div>
-        </a>
+        </div>
 
-        <!-- Actions Menu -->
-        <div class="goal-card-menu" x-data="{ open: false }">
-            <button @click="open = !open" class="goal-card-menu-btn">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
-                </svg>
-            </button>
-
-            <div x-show="open" 
-                 @click.away="open = false"
-                 x-transition
-                 class="goal-card-dropdown">
-                <a href="{{ route('goals.show', $goal) }}" class="goal-card-dropdown-item">
-                    <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
-                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
-                    </svg>
-                    View Details
-                </a>
-                
-                <button @click="$dispatch('open-modal', 'edit-goal-{{ $goal->id }}'); open = false"
-                        class="goal-card-dropdown-item">
-                    <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
-                    </svg>
-                    Edit
-                </button>
-                
-                @if($goal->challenge_goals_count === 0 && $goal->habits_count === 0)
-                    <form action="{{ route('goals.destroy', $goal) }}" 
-                          method="POST" 
-                          onsubmit="return confirm('Delete this goal from your library?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="goal-card-dropdown-item goal-card-dropdown-item-danger">
-                            <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                            </svg>
-                            Delete
-                        </button>
-                    </form>
-                @else
-                    <div class="goal-card-dropdown-disabled">
-                        In use - cannot delete
-                    </div>
-                @endif
-            </div>
+        <!-- Arrow -->
+        <div class="flex-shrink-0">
+            <svg class="w-5 h-5 text-gray-400 group-hover:text-slate-600 dark:group-hover:text-slate-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
         </div>
     </div>
-</div>
+</a>
 
 <!-- Edit Modal -->
 <x-ui.modal 
@@ -145,4 +102,33 @@
             </button>
         </div>
     </form>
+</x-ui.modal>
+
+
+<!-- Delete Confirmation Modal -->
+<x-ui.modal 
+    name="delete-goal-{{ $goal->id }}"
+    eyebrow="Delete Goal" 
+    title="Are you sure?"
+    maxWidth="md">
+    <div class="space-y-4">
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+            This goal will be permanently deleted from your library. This action cannot be undone.
+        </p>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" 
+                @click="$dispatch('close-modal', 'delete-goal-{{ $goal->id }}')"
+                class="btn-secondary">
+            Cancel
+        </button>
+        <form method="POST" action="{{ route('goals.destroy', $goal) }}" class="inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn-primary">
+                Delete Goal
+            </button>
+        </form>
+    </div>
 </x-ui.modal>

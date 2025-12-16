@@ -25,6 +25,12 @@
     } elseif ($size === 'lg') {
         $baseClass .= ' btn-lg';
     }
+    
+    // Add disabled class if disabled attribute is present
+    $isDisabled = $attributes->get('disabled', false);
+    if ($isDisabled) {
+        $baseClass .= ' btn-disabled';
+    }
 
     // Merge with additional classes from $attributes
     $classes = $attributes->get('class', '');

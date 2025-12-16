@@ -6,6 +6,46 @@
         :title="$goal->name"
         :description="$goal->category ? $goal->category->name : 'Goal details and usage'" />
 
+    <!-- Action Buttons -->
+    <div class="pb-6">
+        <div class="container">
+            <div class="flex justify-center">
+                <div class="flex space-x-2">
+                    <x-ui.app-button variant="secondary" href="{{ route('goals.index') }}">
+                        <x-slot name="icon">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </x-slot>
+                        Back
+                    </x-ui.app-button>
+                    
+                    <x-ui.app-button variant="secondary" type="button" x-data="" @click="$dispatch('open-modal', 'edit-goal-{{ $goal->id }}')">
+                        <x-slot name="icon">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                            </svg>
+                        </x-slot>
+                        Edit
+                    </x-ui.app-button>
+                    
+                    <x-ui.app-button 
+                        variant="secondary" 
+                        type="button" 
+                        x-data="" 
+                        class="{{ ($challenges->count() > 0 || $habits->count() > 0) ? 'opacity-50' : '' }}"
+                        @click="$dispatch('open-modal', '{{ ($challenges->count() > 0 || $habits->count() > 0) ? 'cannot-delete-goal-' . $goal->id : 'delete-goal-' . $goal->id }}')">
+                        <x-slot name="icon">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                        </x-slot>
+                        Delete
+                    </x-ui.app-button>
+            </div>
+        </div>
+    </div>
+
     <div class="pb-12 md:pb-20">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
@@ -222,5 +262,77 @@
                 </button>
             </div>
         </form>
+    </x-ui.modal>
+
+<!-- Cannot Delete Info Modal -->
+    <x-ui.modal 
+        name="cannot-delete-goal-{{ $goal->id }}"
+        eyebrow="Cannot Delete" 
+        title="Goal is in use"
+        maxWidth="md">
+        <div class="space-y-4">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                This goal cannot be deleted because it is currently being used by:
+            </p>
+            
+            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                @if($challenges->count() > 0)
+                    <li class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>{{ $challenges->count() }} challenge(s)</span>
+                    </li>
+                @endif
+                @if($habits->count() > 0)
+                    <li class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>{{ $habits->count() }} habit(s)</span>
+                    </li>
+                @endif
+            </ul>
+            
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                Please remove this goal from all challenges and habits before deleting it.
+            </p>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" 
+                    @click="$dispatch('close-modal', 'cannot-delete-goal-{{ $goal->id }}')" 
+                    class="btn-primary">
+                Got it
+            </button>
+        </div>
+    </x-ui.modal>
+
+    <!-- Delete Confirmation Modal -->
+    <x-ui.modal 
+        name="delete-goal-{{ $goal->id }}"
+        eyebrow="Delete Goal" 
+        title="Are you sure?"
+        maxWidth="md">
+        <div class="space-y-4">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                This goal will be permanently deleted from your library. This action cannot be undone.
+            </p>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" 
+                    @click="$dispatch('close-modal', 'delete-goal-{{ $goal->id }}')"
+                    class="btn-secondary">
+                Cancel
+            </button>
+            <form method="POST" action="{{ route('goals.destroy', $goal) }}" class="inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn-primary">
+                    Delete Goal
+                </button>
+            </form>
+        </div>
     </x-ui.modal>
 </x-dashboard-layout>

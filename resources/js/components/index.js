@@ -20,7 +20,7 @@
 
 import { createThemeManager } from './theme.js';
 import { createActivityCard } from './activity.js';
-import { createModalData, createQuickGoalsModal, showModal, hideModal, initModalListeners } from './modal.js';
+import { createModalData, createQuickGoalsModal } from './modal.js';
 import { createGoalToggleManager } from './goals.js';
 import { createHabitForm, createHabitFormWithGoalToggle, createHabitEditForm } from './habit.js';
 import { createChallengeForm } from './challenge.js';
@@ -47,11 +47,6 @@ window.habitEditForm = createHabitEditForm;
 window.challengeForm = createChallengeForm;
 window.emojiPicker = createEmojiPicker;
 window.registrationForm = registrationForm;
-
-// Register modal utility functions globally
-window.showModal = showModal;
-window.hideModal = hideModal;
-window.initModalListeners = initModalListeners;
 
 // Register habit toggle functions globally
 window.toggleHabit = toggleHabit;
