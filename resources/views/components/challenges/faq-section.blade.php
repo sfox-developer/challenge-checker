@@ -8,7 +8,9 @@
         </div>
         
         <div class="space-y-4 max-w-3xl mx-auto mt-12">
-            <div class="card">
+            <div class="card animate animate-hidden-fade-up"
+                 x-data="{}"
+                 x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 100)">
                 <div class="card-body">
                     <h4 class="font-semibold text-gray-900 dark:text-white mb-2">
                         How long should a challenge be?
@@ -19,7 +21,9 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card animate animate-hidden-fade-up"
+                 x-data="{}"
+                 x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 200)">
                 <div class="card-body">
                     <h4 class="font-semibold text-gray-900 dark:text-white mb-2">
                         Can I pause a challenge?
@@ -30,7 +34,9 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card animate animate-hidden-fade-up"
+                 x-data="{}"
+                 x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 300)">
                 <div class="card-body">
                     <h4 class="font-semibold text-gray-900 dark:text-white mb-2">
                         What's the difference between challenges and habits?
