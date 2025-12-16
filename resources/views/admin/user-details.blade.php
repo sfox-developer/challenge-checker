@@ -27,7 +27,8 @@
                         <x-ui.app-button 
                             variant="secondary" 
                             type="button"
-                            onclick="window.showDeleteUserModal('{{ $user->name }}', '{{ route('admin.user.delete', $user) }}')">
+                            x-data=""
+                            @click="$dispatch('open-modal', 'delete-user')">
                             <x-slot name="icon">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
@@ -225,107 +226,62 @@
     </div>
 
     <!-- Delete User Confirmation Modal -->
-    <div id="deleteUserModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
-            <div class="mt-3">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
-                    <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                    </svg>
-                </div>
-                <div class="mt-4 text-center">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100" id="deleteUserModalTitle">
-                        Delete user account
-                    </h3>
-                    <div class="mt-2 px-7 py-3">
-                        <p class="text-sm text-gray-500 dark:text-gray-400" id="deleteUserModalMessage">
-                            Are you sure you want to delete this user? This action cannot be undone.
-                        </p>
-                        <p class="text-sm text-red-600 dark:text-red-400 font-semibold mt-3">
-                            All user data including challenges, habits, activities, and social connections will be permanently deleted.
-                        </p>
-                    </div>
-                    <div class="flex justify-center space-x-4 px-4 py-3">
-                        <button 
-                            onclick="window.hideDeleteUserModal()"
-                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-base font-medium rounded-md shadow-sm hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-colors duration-200">
-                            Cancel
-                        </button>
-                        <button 
-                            id="confirmDeleteButton"
-                            onclick="window.confirmDeleteUser()"
-                            class="px-4 py-2 bg-red-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors duration-200">
-                            Delete User
-                        </button>
-                    </div>
-                </div>
+    <x-ui.modal 
+        name="delete-user"
+        eyebrow="Danger Zone" 
+        title="Delete User Account"
+        maxWidth="md">
+        <div class="space-y-4" x-data="{ deleting: false }">
+            <div class="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p class="text-sm font-medium text-red-800 dark:text-red-300">
+                    Are you sure you want to delete <strong>{{ $user->name }}</strong>?
+                </p>
+                <p class="mt-2 text-sm text-red-700 dark:text-red-400">
+                    All user data including challenges, habits, activities, and social connections will be permanently deleted. This action cannot be undone.
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" 
+                        @click="$dispatch('close-modal', 'delete-user')"
+                        class="btn-secondary"
+                        :disabled="deleting">
+                    Cancel
+                </button>
+                <button type="button" 
+                        @click="
+                            deleting = true;
+                            fetch('{{ route('admin.user.delete', $user) }}', {
+                                method: 'DELETE',
+                                headers: {
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+                                    'Accept': 'application/json'
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    window.showSuccess(data.message);
+                                    setTimeout(() => window.location.href = '{{ route('admin.dashboard') }}', 1500);
+                                } else {
+                                    window.showError(data.message);
+                                    deleting = false;
+                                    $dispatch('close-modal', 'delete-user');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Delete error:', error);
+                                window.showError('An error occurred. Please try again.');
+                                deleting = false;
+                                $dispatch('close-modal', 'delete-user');
+                            })
+                        "
+                        class="btn-primary bg-red-600 hover:bg-red-700 focus:ring-red-500"
+                        :disabled="deleting">
+                    <span x-show="!deleting">Delete User</span>
+                    <span x-show="deleting">Deleting...</span>
+                </button>
             </div>
         </div>
-    </div>
-
-    <script>
-        let deleteUserUrl = null;
-        let deleteUserName = null;
-
-        window.showDeleteUserModal = function(userName, url) {
-            deleteUserUrl = url;
-            deleteUserName = userName;
-            document.getElementById('deleteUserModalMessage').innerHTML = 
-                `Are you sure you want to delete <strong>${userName}</strong>? This action cannot be undone.`;
-            document.getElementById('deleteUserModal').classList.remove('hidden');
-        };
-
-        window.hideDeleteUserModal = function() {
-            document.getElementById('deleteUserModal').classList.add('hidden');
-            deleteUserUrl = null;
-            deleteUserName = null;
-        };
-
-        window.confirmDeleteUser = async function() {
-            if (!deleteUserUrl) return;
-
-            const button = document.getElementById('confirmDeleteButton');
-            button.disabled = true;
-            button.textContent = 'Deleting...';
-
-            try {
-                const response = await fetch(deleteUserUrl, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    window.showSuccess(data.message);
-                    // Redirect to admin dashboard after successful deletion
-                    setTimeout(() => {
-                        window.location.href = '{{ route('admin.dashboard') }}';
-                    }, 1500);
-                } else {
-                    window.showError(data.message);
-                    window.hideDeleteUserModal();
-                    button.disabled = false;
-                    button.textContent = 'Delete User';
-                }
-            } catch (error) {
-                console.error('Delete error:', error);
-                window.showError('An error occurred while deleting the user. Please try again.');
-                window.hideDeleteUserModal();
-                button.disabled = false;
-                button.textContent = 'Delete User';
-            }
-        };
-
-        // Close modal when clicking outside
-        document.getElementById('deleteUserModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                window.hideDeleteUserModal();
-            }
-        });
-    </script>
+    </x-ui.modal>
 </x-dashboard-layout>

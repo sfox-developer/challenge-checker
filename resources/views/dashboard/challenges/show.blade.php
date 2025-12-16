@@ -56,7 +56,7 @@
                                 </form>
                             @endif
                             
-                            <x-ui.app-button variant="secondary" type="button" onclick="showCompleteModal()">
+                            <x-ui.app-button variant="secondary" type="button" @click="$dispatch('open-modal', 'complete-challenge')">
                                 <x-slot name="icon">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
@@ -88,7 +88,7 @@
                         </x-ui.app-button>
                         
                         @if(!$challenge->isArchived())
-                            <x-ui.app-button variant="secondary" type="button" onclick="showArchiveModal()">
+                            <x-ui.app-button variant="secondary" type="button" @click="$dispatch('open-modal', 'archive-challenge')">
                                 <x-slot name="icon">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"/>
@@ -96,6 +96,15 @@
                                     </svg>
                                 </x-slot>
                                 Archive
+                            </x-ui.app-button>
+                            
+                            <x-ui.app-button variant="secondary" type="button" x-data="" @click="$dispatch('open-modal', 'delete-challenge')">
+                                <x-slot name="icon">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                    </svg>
+                                </x-slot>
+                                Delete
                             </x-ui.app-button>
                         @else
                             <form method="POST" action="{{ route('challenges.restore', $challenge) }}">
@@ -590,82 +599,84 @@
     </div>
 
     <!-- Completion Confirmation Modal -->
-    <div id="completeModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div class="mt-3 text-center">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100">
-                    <svg class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 13.5c-.77.833-.232 2.5 1.732 2.5z"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg leading-6 font-medium text-gray-800 dark:text-gray-100 mt-4">Complete Challenge?</h3>
-                <div class="mt-2 px-7 py-3">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">
-                        Are you sure you want to mark this challenge as complete? This action cannot be undone and will stop tracking your daily progress.
-                    </p>
-                </div>
-                <div class="items-center px-4 py-3">
-                    <div class="flex space-x-3">
-                        <x-ui.app-button variant="modal-cancel" type="button" onclick="hideCompleteModal()">
-                            Cancel
-                        </x-ui.app-button>
-                        <form method="POST" action="{{ route('challenges.complete', $challenge) }}" class="w-full">
-                            @csrf
-                            <x-ui.app-button variant="modal-confirm" type="submit">
-                                Complete Challenge
-                            </x-ui.app-button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <x-ui.modal 
+        name="complete-challenge"
+        eyebrow="Complete Challenge" 
+        title="Are you sure?"
+        maxWidth="md">
+        <div class="space-y-4">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                Are you sure you want to mark this challenge as complete? This action cannot be undone and will stop tracking your daily progress.
+            </p>
         </div>
-    </div>
+
+        <div class="modal-footer">
+            <button type="button" 
+                    @click="$dispatch('close-modal', 'complete-challenge')"
+                    class="btn-secondary">
+                Cancel
+            </button>
+            <form method="POST" action="{{ route('challenges.complete', $challenge) }}" class="inline">
+                @csrf
+                <button type="submit" class="btn-primary">
+                    Complete Challenge
+                </button>
+            </form>
+        </div>
+    </x-ui.modal>
 
     <!-- Archive Confirmation Modal -->
-    <div id="archiveModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
-            <div class="mt-3 text-center">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100 dark:bg-yellow-900/30">
-                    <svg class="h-6 w-6 text-yellow-600 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"/>
-                        <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mt-4">Archive Challenge?</h3>
-                <div class="mt-2 px-7 py-3">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">
-                        This challenge will be hidden from your active list. You can restore it later if needed.
-                    </p>
-                </div>
-                <div class="items-center px-4 py-3">
-                    <div class="flex space-x-3">
-                        <x-ui.app-button variant="modal-cancel" type="button" onclick="hideArchiveModal()">
-                            Cancel
-                        </x-ui.app-button>
-                        <form method="POST" action="{{ route('challenges.archive', $challenge) }}" class="w-full">
-                            @csrf
-                            <x-ui.app-button variant="modal-confirm" type="submit">
-                                Archive Challenge
-                            </x-ui.app-button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <x-ui.modal 
+        name="archive-challenge"
+        eyebrow="Archive Challenge" 
+        title="Are you sure?"
+        maxWidth="md">
+        <div class="space-y-4">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                This challenge will be hidden from your active list. You can restore it later if needed.
+            </p>
         </div>
-    </div>
 
-    <script>
-        // Goal toggle functionality is now handled by goal-toggle.js
-        // Modal functions are now global
-        window.showCompleteModal = () => showModal('completeModal');
-        window.hideCompleteModal = () => hideModal('completeModal');
-        window.showArchiveModal = () => showModal('archiveModal');
-        window.hideArchiveModal = () => hideModal('archiveModal');
-        
-        // Initialize modal listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            initModalListeners('completeModal', hideCompleteModal);
-            initModalListeners('archiveModal', hideArchiveModal);
-        });
-    </script>
+        <div class="modal-footer">
+            <button type="button" 
+                    @click="$dispatch('close-modal', 'archive-challenge')"
+                    class="btn-secondary">
+                Cancel
+            </button>
+            <form method="POST" action="{{ route('challenges.archive', $challenge) }}" class="inline">
+                @csrf
+                <button type="submit" class="btn-primary">
+                    Archive Challenge
+                </button>
+            </form>
+        </div>
+    </x-ui.modal>
+
+    <!-- Delete Confirmation Modal -->
+    <x-ui.modal 
+        name="delete-challenge"
+        eyebrow="Delete Challenge" 
+        title="Are you sure?"
+        maxWidth="md">
+        <div class="space-y-4">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                All challenge data, goals, and completion history will be permanently deleted. This action cannot be undone.
+            </p>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" 
+                    @click="$dispatch('close-modal', 'delete-challenge')"
+                    class="btn-secondary">
+                Cancel
+            </button>
+            <form method="POST" action="{{ route('challenges.destroy', $challenge) }}" class="inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn-primary">
+                    Delete Challenge
+                </button>
+            </form>
+        </div>
+    </x-ui.modal>
 </x-dashboard-layout>
