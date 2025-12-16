@@ -409,6 +409,80 @@ body {
 
 ---
 
+### Tabs (`components/_tabs.scss`)
+
+Navigation tabs for filtering and switching between content views.
+
+**Classes:**
+```scss
+.tab-header           // Tab container with border and background
+.tab-nav              // Flex wrapper for tab buttons
+.tab-button           // Individual tab button
+.tab-button.active    // Active tab state with gradient accent
+.tab-count-badge      // Count badge inside tabs
+```
+
+**Features:**
+- Gradient accent bar on active tab (matches modal/stat-card design)
+- Responsive wrapping for mobile
+- Smooth transitions
+- Support for count badges
+- Dark mode support
+
+**Usage Example:**
+```blade
+<!-- With Alpine.js for client-side filtering -->
+<div class="tab-header animate animate-hidden-fade-up"
+     x-data="{}"
+     x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 600)">
+    <nav class="tab-nav">
+        <button @click="activeFilter = 'all'" 
+                :class="activeFilter === 'all' ? 'tab-button active' : 'tab-button'">
+            All
+            <span class="tab-count-badge" :class="activeFilter === 'all' ? 'active' : 'inactive'">
+                {{ $allCount }}
+            </span>
+        </button>
+        <button @click="activeFilter = 'active'" 
+                :class="activeFilter === 'active' ? 'tab-button active' : 'tab-button'">
+            Active
+            <span class="tab-count-badge" :class="activeFilter === 'active' ? 'active' : 'inactive'">
+                {{ $activeCount }}
+            </span>
+        </button>
+    </nav>
+</div>
+
+<!-- With links for server-side filtering -->
+<div class="tab-header">
+    <nav class="tab-nav">
+        <a href="{{ route('habits.index', ['filter' => 'active']) }}" 
+           class="@if($filter === 'active') tab-button active @else tab-button @endif">
+            Active
+            <span class="tab-count-badge {{ $filter === 'active' ? 'active' : 'inactive' }}">
+                {{ $activeCount }}
+            </span>
+        </a>
+        <a href="{{ route('habits.index', ['filter' => 'all']) }}" 
+           class="@if($filter === 'all') tab-button active @else tab-button @endif">
+            All
+            <span class="tab-count-badge {{ $filter === 'all' ? 'active' : 'inactive' }}">
+                {{ $allCount }}
+            </span>
+        </a>
+    </nav>
+</div>
+```
+
+**Design Notes:**
+- Active tab has 3px gradient accent bar at bottom
+- Gradient matches modal accent (purple: #667eea → #764ba2)
+- No color variants needed - single gradient design for consistency
+- Count badges change style based on active state
+- Works with both `<button>` (Alpine.js) and `<a>` (links) elements
+
+---
+
 ### Lists (`components/_lists.scss`)
 
 ```scss

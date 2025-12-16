@@ -24,20 +24,13 @@ class HabitController extends Controller
      */
     public function index(Request $request): View
     {
-        $filter = $request->get('filter', 'active');
-        
-        $query = auth()->user()->habits()
+        // Get all habits with relationships
+        $habits = auth()->user()->habits()
             ->with(['goal', 'statistics', 'completions' => function ($q) {
                 $q->where('date', now()->toDateString());
-            }]);
-
-        if ($filter === 'active') {
-            $query->active();
-        } elseif ($filter === 'archived') {
-            $query->archived();
-        }
-
-        $habits = $query->orderBy('created_at', 'desc')->get();
+            }])
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         // Group habits by frequency
         $groupedHabits = $habits->groupBy(function ($habit) {
@@ -45,15 +38,14 @@ class HabitController extends Controller
         });
 
         // Calculate statistics
-        $totalHabits = auth()->user()->habits()->active()->count();
+        $totalHabits = $habits->filter(fn($h) => !$h->archived_at)->count();
         $completedToday = $habits->filter(fn($h) => $h->isCompletedToday())->count();
         $currentStreaks = $habits->sum(fn($h) => $h->statistics?->current_streak ?? 0);
 
         // Calculate filter counts
-        $allHabits = auth()->user()->habits()->get();
-        $activeCount = $allHabits->filter(fn($h) => !$h->archived_at)->count();
-        $archivedCount = $allHabits->filter(fn($h) => $h->archived_at)->count();
-        $allCount = $allHabits->count();
+        $activeCount = $habits->filter(fn($h) => !$h->archived_at)->count();
+        $archivedCount = $habits->filter(fn($h) => $h->archived_at)->count();
+        $allCount = $habits->count();
 
         return view('dashboard.habits.index', compact(
             'habits',
@@ -61,7 +53,6 @@ class HabitController extends Controller
             'totalHabits',
             'completedToday',
             'currentStreaks',
-            'filter',
             'activeCount',
             'archivedCount',
             'allCount'

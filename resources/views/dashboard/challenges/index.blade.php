@@ -63,7 +63,7 @@
             </div>
 
             <!-- Filter Tabs -->
-            <div class="tab-header tab-header-purple animate animate-hidden-fade-up"
+            <div class="tab-header animate animate-hidden-fade-up"
                  x-data="{}"
                  x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 600)">
                 <nav class="tab-nav">

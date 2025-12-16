@@ -742,11 +742,11 @@ resources/scss/
 **Applied Patterns:**
 - Statistics cards: `.animate .animate-hidden-fade-up-sm` with staggered timing (100ms increments)
 - Create button: `.animate .animate-hidden-fade-up` with 500ms delay
-- Tabs section: `.animate .animate-hidden-fade-up` with 600ms delay
+- Tabs section: `.animate .animate-hidden-fade-up` with 600ms delay, Alpine.js filtering
 - Challenge cards: Staggered `.animate-hidden-fade-up-sm` (index * 100ms)
 - Empty state: `.animate .animate-hidden-scale-up`
 - All animations triggered via `x-intersect` for scroll-based activation
-- Kept Alpine `x-show` for tab filtering logic (independent of scroll animations)
+- Alpine `x-show` for client-side tab filtering (no page reloads)
 
 **Animation Sequence:**
 1. Statistics cards fade up: 100ms, 200ms, 300ms, 400ms
@@ -754,7 +754,40 @@ resources/scss/
 3. Tabs fade up: 600ms
 4. Challenge cards stagger in as user scrolls
 
+**Tab Implementation:**
+- Uses new `.tab-header` component with gradient accent bars
+- Alpine.js `@click` events for instant filtering (client-side)
+- Count badges dynamically show active/inactive states
+- Smooth transitions with `x-transition` directives
+
+---
+
+### habits/index.blade.php ✅ UPDATED
+**Status:** Refactored to match challenges pattern (December 16, 2025)
+
+**Applied Patterns:**
+- Statistics cards: Blueprint animation with staggered timing (100-300ms)
+- Create button: Scroll-triggered fade-up animation
+- Tabs section: `.animate .animate-hidden-fade-up` with 400ms delay, Alpine.js filtering
+- Habit cards: Staggered `.animate-hidden-fade-up-sm` (index * 100ms)
+- Empty state: Scroll-triggered with `x-intersect`
+
+**Controller Changes:**
+- Changed from server-side filtering (route parameters) to client-side filtering
+- Now passes all habits to view, filtering handled by Alpine.js `x-show`
+- Improves UX with instant tab switching (no page reloads)
+- Maintains same filter logic: active, all, archived
+
+**Tab Implementation:**
+- Converted from `<a href>` links to `<button @click>` for instant filtering
+- Uses same gradient accent design as challenges
+- Consistent with other dashboard pages
+
+---
+
 **Key Learnings:**
 - Scroll animations (`.animate` classes) and show/hide logic (`x-show`) can coexist
 - Staggered timing creates smooth, professional entry animations
 - `x-intersect` provides better UX than `x-init` timeouts for below-fold content
+- Client-side filtering (Alpine.js) preferred over server-side for better UX
+- All tab components now use consistent gradient accent design

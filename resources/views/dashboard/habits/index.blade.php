@@ -7,7 +7,7 @@
         description="Build lasting habits with flexible frequency tracking" />
 
     <!-- Content -->
-    <div class="pb-12 md:pb-20">
+    <div class="pb-12 md:pb-20" x-data="{ activeFilter: 'active' }">
         <div class="container space-y-6">
             
             <!-- Statistics -->
@@ -55,31 +55,28 @@
             </div>
 
             <!-- Filter Tabs -->
-            <div class="tab-header tab-header-teal opacity-0 translate-y-8 transition-all duration-700 ease-out"
+            <div class="tab-header animate animate-hidden-fade-up"
                  x-data="{}"
-                 x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')">
+                 x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 400)">
                 <nav class="tab-nav">
-                    <a href="{{ route('habits.index', ['filter' => 'active']) }}" 
-                       class="@if($filter === 'active') tab-button active @else tab-button @endif">
+                    <button @click="activeFilter = 'active'" :class="activeFilter === 'active' ? 'tab-button active' : 'tab-button'">
                         Active
-                        <span class="tab-count-badge {{ $filter === 'active' ? 'active' : 'inactive' }}">
+                        <span class="tab-count-badge" :class="activeFilter === 'active' ? 'active' : 'inactive'">
                             {{ $activeCount }}
                         </span>
-                    </a>
-                    <a href="{{ route('habits.index', ['filter' => 'all']) }}" 
-                       class="@if($filter === 'all') tab-button active @else tab-button @endif">
+                    </button>
+                    <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'tab-button active' : 'tab-button'">
                         All
-                        <span class="tab-count-badge {{ $filter === 'all' ? 'active' : 'inactive' }}">
+                        <span class="tab-count-badge" :class="activeFilter === 'all' ? 'active' : 'inactive'">
                             {{ $allCount }}
                         </span>
-                    </a>
-                    <a href="{{ route('habits.index', ['filter' => 'archived']) }}" 
-                       class="@if($filter === 'archived') tab-button active @else tab-button @endif">
+                    </button>
+                    <button @click="activeFilter = 'archived'" :class="activeFilter === 'archived' ? 'tab-button active' : 'tab-button'">
                         Archived
-                        <span class="tab-count-badge {{ $filter === 'archived' ? 'active' : 'inactive' }}">
+                        <span class="tab-count-badge" :class="activeFilter === 'archived' ? 'active' : 'inactive'">
                             {{ $archivedCount }}
                         </span>
-                    </a>
+                    </button>
                 </nav>
             </div>
 
@@ -107,11 +104,23 @@
                     </div>
                 </div>
             @else
-                <div class="habit-card-list">
+                <div class="space-y-4" x-data="{}">
                     @foreach($habits as $index => $habit)
-                        <div class="opacity-0 translate-y-8 transition-all duration-700 ease-out"
-                             x-data="{}"
-                             x-intersect="setTimeout(() => $el.classList.remove('opacity-0', 'translate-y-8'), {{ $index % 5 * 100 }})">
+                        @php
+                            $isArchived = $habit->archived_at !== null;
+                            $isActive = !$isArchived;
+                        @endphp
+                        <div class="animate animate-hidden-fade-up-sm"
+                             x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), {{ $index * 100 }})"
+                             x-show="activeFilter === 'all' || 
+                                    (activeFilter === 'archived' && {{ $isArchived ? 'true' : 'false' }}) || 
+                                    (activeFilter === 'active' && {{ $isActive ? 'true' : 'false' }})"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 transform scale-95"
+                             x-transition:enter-end="opacity-100 transform scale-100"
+                             x-transition:leave="transition ease-in duration-150"
+                             x-transition:leave-start="opacity-100 transform scale-100"
+                             x-transition:leave-end="opacity-0 transform scale-95">
                             <x-habits.habit-list-item :habit="$habit" />
                         </div>
                     @endforeach
