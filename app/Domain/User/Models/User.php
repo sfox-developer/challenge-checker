@@ -13,11 +13,12 @@ use App\Domain\Activity\Models\Activity;
 use App\Domain\Social\Models\UserFollow;
 use App\Domain\Habit\Models\Habit;
 use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\User\Traits\HasRandomAvatar;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRandomAvatar;
 
     /**
      * The attributes that are mass assignable.
@@ -67,29 +68,27 @@ class User extends Authenticatable
     }
 
     /**
+     * Boot the model and assign random avatar on creation
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            // Only assign random avatar if no avatar is set
+            // and no avatar_url (from social auth)
+            if (empty($user->avatar) && empty($user->avatar_url)) {
+                $user->avatar = self::getRandomAvatar();
+            }
+        });
+    }
+
+    /**
      * Check if user authenticated via social provider
      */
     public function isSocialUser(): bool
     {
         return !is_null($this->provider);
-    }
-
-    /**
-     * Get the full avatar URL
-     */
-    public function getAvatarAttribute($value): ?string
-    {
-        // If we have a social avatar URL, use it
-        if ($this->avatar_url) {
-            return $this->avatar_url;
-        }
-
-        // If we have a local avatar file, return the path
-        if ($value) {
-            return asset('avatars/' . $value);
-        }
-
-        return null;
     }
 
     /**
@@ -198,25 +197,6 @@ class User extends Authenticatable
     public function followersCount(): int
     {
         return $this->followers()->count();
-    }
-
-    /**
-     * Get available avatar options.
-     */
-    public static function getAvailableAvatars(): array
-    {
-        return [
-            'pet-6' => 'Pet 6',
-            'pet-7' => 'Pet 7',
-            'pet-8' => 'Pet 8',
-            'pet-9' => 'Pet 9',
-            'pet-10' => 'Pet 10',
-            'user-11' => 'User 11',
-            'user-12' => 'User 12',
-            'user-13' => 'User 13',
-            'user-14' => 'User 14',
-            'user-15' => 'User 15',
-        ];
     }
 
     /**

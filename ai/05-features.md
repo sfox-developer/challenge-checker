@@ -50,6 +50,37 @@ follow(User $user): void
 unfollow(User $user): void
 ```
 
+**Avatar System:**
+```php
+// Get random avatar (automatic on user creation)
+User::getRandomAvatar(): string
+
+// Get available avatars
+User::getAvailableAvatars(): array
+
+// Get avatar URL
+$user->getAvatarUrl(): string
+```
+
+**Available Avatars:**
+- `pet-6` through `pet-10` - Pet/animal avatars
+- `user-11` through `user-15` - User avatars
+
+**Avatar Behavior:**
+- New users automatically get a random avatar on creation
+- Social auth users use their provider avatar (avatar_url)
+- Local avatars stored as filename without extension
+- Falls back to `default.svg` if avatar file doesn't exist
+
+**Artisan Command:**
+```bash
+# Assign random avatars to users with no avatar
+php artisan users:assign-random-avatars
+
+# Force update all users (including those with avatars)
+php artisan users:assign-random-avatars --force
+```
+
 **Authentication Methods:**
 ```php
 isSocialUser(): bool  // Check if user registered via social auth
