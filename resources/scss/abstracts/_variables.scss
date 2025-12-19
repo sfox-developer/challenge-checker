@@ -11,6 +11,10 @@
     --color-bg-main: #F5F4F2;
     --color-bg-main-dark: #111827; // gray-900
     
+    // Card background colors (semi-transparent with blur)
+    --color-bg-card: rgba(255, 255, 255, 0.5);
+    --color-bg-card-dark: rgba(31, 41, 55, 0.5);
+    
     // Heading colors
     --color-heading: #333333;
     --color-heading-dark: #E5E4E2; // Softer warm light instead of pure white
