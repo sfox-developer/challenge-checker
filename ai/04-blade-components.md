@@ -1313,7 +1313,7 @@ User discovery components follow the same pattern as challenges, habits, and goa
 - Avatar with hover effect (ring transition)
 - User name linking to profile
 - Follower/following stats
-- Activity badges (challenges, habits, goals counts)
+- **Activity badges** (challenges, habits, goals counts) - Badge style with consistent slate accent
 - Recent activity indicator (green pulse dot)
 - Follow/unfollow button with AJAX functionality
 - Responsive layout (stacks on mobile)
@@ -1329,6 +1329,28 @@ $user->habits_count      // Active habits only
 $user->goals_count       // Goals library count
 $user->recent_activity   // Boolean (activity in last 7 days)
 ```
+
+**Activity Badge Styling:**
+- **Component Class:** `.user-activity-badge` (defined in `_users.scss`)
+- **Design:** Subtle frosted glass effect with slate accent border
+- **Colors:** Single accent color (slate) matching project's minimalist philosophy
+- **Layout:** Horizontal badge with emoji icon + count
+- **Dark Mode:** Fully supported with adjusted transparency
+
+**SCSS Classes:**
+```scss
+.user-list-activity          // Container (flexbox with gap-2, mt-3)
+.user-activity-badge         // Individual badge with border and background
+  .emoji                     // Emoji icon (text-sm, leading-none)
+  .count                     // Count number (text-xs, font-semibold, slate color)
+```
+
+**Badge Variants:**
+- 🏆 Challenges badge - Shows public challenge count
+- ✓ Habits badge - Shows active habit count
+- 🎯 Goals badge - Shows goals library count
+
+All badges use same styling (no color differentiation) for clean, minimal design.
 
 **Follow Functionality:**
 - **Modular Component** - Uses `followManager` component from `resources/js/components/follow.js`

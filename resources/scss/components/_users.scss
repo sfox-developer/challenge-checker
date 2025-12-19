@@ -48,13 +48,9 @@
     
     img {
         @apply h-16 w-16 rounded-full;
-        @apply ring-2 ring-white dark:ring-gray-800;
+        @apply ring-2 ring-gray-200 dark:ring-gray-800;
         @apply shadow-sm;
         @apply transition-all duration-300;
-    }
-    
-    .user-list-item:hover & img {
-        @apply ring-slate-300 dark:ring-slate-600;
     }
 }
 
@@ -87,8 +83,31 @@
 }
 
 .user-list-activity {
-    @apply flex flex-wrap items-center gap-3 mt-2;
-    @apply text-xs text-gray-600 dark:text-gray-400;
+    @apply flex flex-wrap items-center gap-2 mt-3;
+}
+
+.user-activity-badge {
+    @apply flex items-center gap-1.5;
+    @apply px-2.5 py-1;
+    @apply rounded-full;
+    @apply border;
+    @apply transition-all duration-200;
+    border-color: rgba(51, 65, 85, 0.15);
+    
+    .dark & {
+        background-color: rgba(148, 163, 184, 0.1);
+        border-color: rgba(148, 163, 184, 0.2);
+    }
+    
+    .emoji {
+        @apply text-sm;
+        @apply leading-none;
+    }
+    
+    .count {
+        @apply text-xs font-semibold;
+        @apply text-slate-700 dark:text-slate-300;
+    }
 }
 
 .user-list-recent {

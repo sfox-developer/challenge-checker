@@ -24,12 +24,18 @@ class UserController extends Controller
         
         // Get users the current user is following (for "Following" section and tab)
         $followingUsers = $currentUser->following()
-            ->withCount(['challenges' => function ($q) {
-                $q->where('is_public', true)
-                  ->whereNull('archived_at');
-            }, 'habits' => function ($q) {
-                $q->whereNull('archived_at');
-            }])
+            ->withCount([
+                'followers',
+                'following',
+                'challenges' => function ($q) {
+                    $q->where('is_public', true)
+                      ->whereNull('archived_at');
+                }, 
+                'habits' => function ($q) {
+                    $q->whereNull('archived_at');
+                },
+                'goalsLibrary as goals_count'
+            ])
             ->limit(6)
             ->get();
         

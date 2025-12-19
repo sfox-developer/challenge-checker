@@ -34,26 +34,26 @@
                             <span>{{ $user->following_count }} following</span>
                         </div>
 
-                        <!-- Activity Stats -->
+                        <!-- Activity Stats - Badge Style -->
                         @if($user->challenges_count > 0 || $user->habits_count > 0 || $user->goals_count > 0)
                             <div class="user-list-activity">
                                 @if($user->challenges_count > 0)
-                                    <span class="flex items-center gap-1">
-                                        <span>🏆</span>
-                                        <span>{{ $user->challenges_count }}</span>
-                                    </span>
+                                    <div class="user-activity-badge">
+                                        <span class="emoji">🏆</span>
+                                        <span class="count">{{ $user->challenges_count }}</span>
+                                    </div>
                                 @endif
                                 @if($user->habits_count > 0)
-                                    <span class="flex items-center gap-1">
-                                        <span>✓</span>
-                                        <span>{{ $user->habits_count }}</span>
-                                    </span>
+                                    <div class="user-activity-badge">
+                                        <span class="emoji">✓</span>
+                                        <span class="count">{{ $user->habits_count }}</span>
+                                    </div>
                                 @endif
                                 @if($user->goals_count > 0)
-                                    <span class="flex items-center gap-1">
-                                        <span>🎯</span>
-                                        <span>{{ $user->goals_count }}</span>
-                                    </span>
+                                    <div class="user-activity-badge">
+                                        <span class="emoji">🎯</span>
+                                        <span class="count">{{ $user->goals_count }}</span>
+                                    </div>
                                 @endif
                             </div>
                         @endif

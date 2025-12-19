@@ -474,6 +474,7 @@ transition: box-shadow 300ms, border-color 300ms, color 300ms;
 ```scss
 .challenge-list-item    // Challenge list item (components/_challenges.scss)
 .habit-list-item        // Habit list item (components/_habits.scss)
+.user-list-item         // User discovery card (components/_users.scss)
 .challenge-stat-item    // Inline stat item (icon + text)
 ```
 
@@ -746,6 +747,116 @@ Decorative elements that add visual interest and polish to landing pages.
     </div>
 </div>
 ```
+
+---
+
+### User Discovery Components (`components/_users.scss`)
+
+**Added:** December 19, 2025
+
+User discovery components follow the same card pattern as challenges and habits, maintaining visual consistency across the application.
+
+**Component Classes:**
+```scss
+.user-list-item          // Main card container with glassmorphism
+.user-list-content       // Flex container (avatar + content)
+.user-list-avatar        // Avatar image wrapper
+.user-list-info          // User information container
+.user-list-header        // Header with name and action button
+.user-list-details       // Details container (left column)
+.user-list-name          // User name heading
+.user-list-stats         // Follower/following stats row
+.user-list-activity      // Activity badges container
+.user-activity-badge     // Individual activity badge
+  .emoji                 // Emoji icon in badge
+  .count                 // Count number in badge
+.user-list-recent        // Recent activity indicator
+  .pulse-dot             // Animated pulse dot
+.user-list-action        // Follow button container
+```
+
+**Badge Style Design:**
+- **Philosophy:** Single accent color (slate) for all badges, following project's minimalist design
+- **Structure:** Rounded pill badges with emoji + count
+- **Background:** Subtle frosted glass effect `rgba(51, 65, 85, 0.05)` in light mode
+- **Border:** Soft slate border `rgba(51, 65, 85, 0.15)`
+- **Dark Mode:** Adjusted transparency `rgba(148, 163, 184, 0.1)` background
+
+**Visual Design:**
+```scss
+.user-activity-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;           // gap-1.5
+    padding: 0.25rem 0.625rem; // px-2.5 py-1
+    border-radius: 9999px;   // rounded-full
+    border: 1px solid;
+    background-color: rgba(51, 65, 85, 0.05);
+    border-color: rgba(51, 65, 85, 0.15);
+    
+    .emoji {
+        font-size: 0.875rem;  // text-sm
+        line-height: 1;       // leading-none
+    }
+    
+    .count {
+        font-size: 0.75rem;   // text-xs
+        font-weight: 600;     // font-semibold
+        color: rgb(51, 65, 85); // text-slate-700
+    }
+}
+```
+
+**Badge Variants:**
+- 🏆 Challenge badge - Public challenges count
+- ✓ Habit badge - Active habits count  
+- 🎯 Goal badge - Goals library count
+
+**Usage Example:**
+```blade
+<div class="user-list-item">
+    <div class="user-list-content">
+        <div class="user-list-avatar">
+            <img src="{{ $user->getAvatarUrl() }}" alt="{{ $user->name }}">
+        </div>
+        
+        <div class="user-list-info">
+            <div class="user-list-header">
+                <div class="user-list-details">
+                    <h3 class="user-list-name">{{ $user->name }}</h3>
+                    
+                    <div class="user-list-stats">
+                        <span>{{ $user->followers_count }} followers</span>
+                    </div>
+                    
+                    <div class="user-list-activity">
+                        <div class="user-activity-badge">
+                            <span class="emoji">🏆</span>
+                            <span class="count">5</span>
+                        </div>
+                        <div class="user-activity-badge">
+                            <span class="emoji">✓</span>
+                            <span class="count">12</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-list-action">
+                    <button class="btn btn-primary">Follow</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+**Design Notes:**
+- Consistent shadow system (same as challenge/habit cards)
+- Hover effect lightens border and increases shadow
+- Click-through to user profile (entire card is clickable)
+- Follow button uses event.stopPropagation() to prevent navigation
+- Activity badges only shown when counts > 0
+- Recent activity indicator with animated pulse dot when active in last 7 days
 
 ---
 
