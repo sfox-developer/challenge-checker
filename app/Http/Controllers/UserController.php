@@ -17,6 +17,22 @@ class UserController extends Controller
         $query = $request->input('query');
         $currentUser = $request->user();
         
+        // Get stats for current user
+        $currentUser->loadCount(['following', 'followers']);
+        $followingCount = $currentUser->following_count;
+        $followersCount = $currentUser->followers_count;
+        
+        // Get users the current user is following (for "Following" section and tab)
+        $followingUsers = $currentUser->following()
+            ->withCount(['challenges' => function ($q) {
+                $q->where('is_public', true)
+                  ->whereNull('archived_at');
+            }, 'habits' => function ($q) {
+                $q->whereNull('archived_at');
+            }])
+            ->limit(6)
+            ->get();
+        
         $users = collect();
         
         if ($query && strlen($query) >= 2) {
@@ -26,7 +42,18 @@ class UserController extends Controller
                     $q->where('name', 'LIKE', "%{$query}%")
                       ->orWhere('email', 'LIKE', "%{$query}%");
                 })
-                ->withCount(['followers', 'following'])
+                ->withCount([
+                    'followers', 
+                    'following',
+                    'challenges' => function ($q) {
+                        $q->where('is_public', true)
+                          ->whereNull('archived_at');
+                    },
+                    'habits' => function ($q) {
+                        $q->whereNull('archived_at');
+                    },
+                    'goalsLibrary as goals_count'
+                ])
                 ->limit(20)
                 ->get();
         } else {
@@ -36,16 +63,45 @@ class UserController extends Controller
                 ->whereHas('activities', function ($q) {
                     $q->where('created_at', '>=', now()->subDays(30));
                 })
-                ->withCount(['followers', 'following', 'challenges'])
+                ->withCount([
+                    'followers', 
+                    'following',
+                    'challenges' => function ($q) {
+                        $q->where('is_public', true)
+                          ->whereNull('archived_at');
+                    },
+                    'habits' => function ($q) {
+                        $q->whereNull('archived_at');
+                    },
+                    'goalsLibrary as goals_count'
+                ])
                 ->inRandomOrder()
                 ->limit(12)
                 ->get();
+                
+            // Mark users with recent activity
+            $users->each(function ($user) {
+                $user->recent_activity = $user->activities()
+                    ->where('created_at', '>=', now()->subDays(7))
+                    ->exists();
+            });
                 
             // If not enough active users, fill with any users
             if ($users->count() < 12) {
                 $additionalUsers = User::where('id', '!=', $currentUser->id)
                     ->whereNotIn('id', $users->pluck('id'))
-                    ->withCount(['followers', 'following', 'challenges'])
+                    ->withCount([
+                        'followers', 
+                        'following',
+                        'challenges' => function ($q) {
+                            $q->where('is_public', true)
+                              ->whereNull('archived_at');
+                        },
+                        'habits' => function ($q) {
+                            $q->whereNull('archived_at');
+                        },
+                        'goalsLibrary as goals_count'
+                    ])
                     ->inRandomOrder()
                     ->limit(12 - $users->count())
                     ->get();
@@ -53,8 +109,22 @@ class UserController extends Controller
                 $users = $users->merge($additionalUsers);
             }
         }
+        
+        // Count total active users for stats
+        $totalUsers = User::where('id', '!=', $currentUser->id)
+            ->whereHas('activities', function ($q) {
+                $q->where('created_at', '>=', now()->subDays(30));
+            })
+            ->count();
 
-        return view('dashboard.users.search', compact('users', 'query'));
+        return view('dashboard.users.search', compact(
+            'users', 
+            'query', 
+            'followingUsers',
+            'followingCount',
+            'followersCount',
+            'totalUsers'
+        ));
     }
 
     /**

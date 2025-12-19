@@ -365,6 +365,37 @@ scopeForFeed()  // Feed-relevant activities
    - Creates `ActivityLike` record
    - Unique constraint: user + activity
 
+4. **User Discovery** ✅ COMPLETE (Dec 19, 2025)
+   - Search users by name or email
+   - Discover active community members
+   - View followed users section
+   - Filter between "All Users" and "Following"
+   - See user stats (challenges, habits, goals)
+   - Recent activity indicators
+
+**Discovery Page Features:**
+- Stats section (active users, following, followers)
+- Hero section with Lottie animation
+- Following section (quick access to 6 followed users)
+- Search functionality (minimum 2 characters)
+- Enhanced user cards with:
+  * Public challenges count
+  * Active habits count
+  * Goals library count
+  * Recent activity indicator (last 7 days)
+- Filter tabs (All Users / Following)
+- Benefits section explaining value of connections
+- FAQ section covering common questions
+- Scroll-triggered animations following blueprint
+
+**Controller:** `app/Http/Controllers/UserController.php`
+
+**Routes:**
+```php
+GET /users/search  // Discovery/search page (users.search)
+GET /users/{user}  // User profile (users.show)
+```
+
 ---
 
 ## 🛣 Routes & Controllers

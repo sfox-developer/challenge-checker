@@ -34,7 +34,8 @@ resources/views/components/
 │   ├── dropdown-link.blade.php # Dropdown menu item
 │   ├── page-header.blade.php  # Page header with icon
 │   ├── stat-card.blade.php    # Statistics card
-│   └── app-button.blade.php   # Styled button/link
+│   ├── app-button.blade.php   # Styled button/link
+│   └── faq-item.blade.php     # Reusable FAQ item with toggle
 │
 ├── forms/                      # Form components
 │   ├── form-field.blade.php   # Field wrapper (label + input + error)
@@ -45,17 +46,47 @@ resources/views/components/
 │   └── form-radio.blade.php   # Radio button
 │
 ├── challenges/                 # Challenge-specific components
+│   ├── stats-section.blade.php # Stats overview
+│   ├── hero-section.blade.php # Hero with Lottie animation
+│   ├── benefits-section.blade.php # Benefits grid
+│   ├── faq-section.blade.php  # FAQ accordion
+│   ├── filter-tabs.blade.php  # Status filter tabs
+│   ├── empty-state.blade.php  # Empty state display
+│   ├── challenge-list-item.blade.php # Challenge card
 │   ├── goal-card.blade.php    # Goal display card
 │   ├── progress-bar.blade.php # Progress indicator
 │   └── daily-checklist.blade.php # Daily goal checklist
 │
 ├── habits/                     # Habit-specific components
+│   ├── stats-section.blade.php # Stats overview
+│   ├── hero-section.blade.php # Hero with Lottie animation
+│   ├── benefits-section.blade.php # Benefits grid
+│   ├── faq-section.blade.php  # FAQ accordion
+│   ├── filter-tabs.blade.php  # Status filter tabs
+│   ├── empty-state.blade.php  # Empty state display
+│   ├── habit-list-item.blade.php # Habit card
 │   ├── completion-calendar.blade.php # Calendar view
 │   └── streak-display.blade.php # Streak indicator
 │
 ├── goals/                      # Goal library components
+│   ├── stats-section.blade.php # Stats overview
+│   ├── hero-section.blade.php # Hero with Lottie animation
+│   ├── benefits-section.blade.php # Benefits grid
+│   ├── faq-section.blade.php  # FAQ accordion
+│   ├── empty-state.blade.php  # Empty state display
+│   ├── goal-card.blade.php    # Goal library card
 │   ├── goal-icon.blade.php    # Goal icon display
 │   └── goal-search.blade.php  # Search/filter component
+│
+├── users/                      # User discovery components ✅ NEW
+│   ├── stats-section.blade.php # Stats overview (followers/following)
+│   ├── hero-section.blade.php # Hero with Lottie animation
+│   ├── benefits-section.blade.php # Benefits grid
+│   ├── faq-section.blade.php  # FAQ accordion
+│   ├── filter-tabs.blade.php  # Filter tabs (All/Following)
+│   ├── empty-state.blade.php  # Empty state display
+│   ├── following-section.blade.php # Quick access to followed users
+│   └── user-card.blade.php    # Enhanced user card with stats
 │
 └── social/                     # Social feature components
     ├── activity-card.blade.php # Activity feed item
@@ -269,6 +300,54 @@ resources/views/components/
 - Styling consolidated in `resources/scss/components/_modals.scss`
 - Follows Single Responsibility Principle
 - Clean separation: JavaScript for behavior, SCSS for styling, Blade for structure
+
+---
+
+### x-ui.faq-item
+
+**Component:** `resources/views/components/ui/faq-item.blade.php`
+
+**Props:**
+- `question` (string, required) - The FAQ question text
+- `answer` (string, required) - The FAQ answer text  
+- `index` (int, required) - Question number for animation stagger
+
+**Usage:**
+```blade
+<div class="space-y-4 mt-12" x-data="{ activeQuestion: null }">
+    <x-ui.faq-item 
+        :index="1"
+        question="How do I get started?"
+        answer="Simply create an account and start adding your first challenge or habit." />
+
+    <x-ui.faq-item 
+        :index="2"
+        question="Can I track weekly habits?"
+        answer="Yes! Set custom frequencies like 3 times per week or 4 times per month." />
+</div>
+```
+
+**Features:**
+- Entire card is clickable to toggle
+- Chevron icon rotates when expanded
+- Alpine.js Collapse plugin for smooth animation
+- Shared activeQuestion state (only one open at a time)
+- Scroll-triggered fade-up animation with stagger delay
+- Same shadow and hover effects as list items
+- Full dark mode support
+
+**Animation:**
+- Uses `animate animate-hidden-fade-up` pattern
+- Stagger delay: `index * 100ms` (100ms, 200ms, 300ms, etc.)
+- 700ms duration, ease-out timing
+- Triggered via x-intersect when scrolled into view
+
+**SCSS Component:** `resources/scss/components/_faq.scss`
+- `.faq-item` - Base card with shadow and hover effects
+- `.faq-header` - Clickable header with flex layout
+- `.faq-question` - Question text with hover color transition
+- `.faq-icon` - Chevron icon with rotation on active
+- `.faq-answer` - Answer content area
 
 ---
 
@@ -1124,6 +1203,264 @@ x-intersect="$el.classList.remove('opacity-0', 'translate-y-8')"
 - Store JSON files in `public/animations/`
 - Use kebab-case naming: `loader-cat.json`, `success-checkmark.json`
 - Reference with absolute path: `/animations/filename.json`
+
+---
+
+## 🌐 User Discovery Components
+
+**Updated:** December 19, 2025
+
+User discovery components follow the same pattern as challenges, habits, and goals index pages, providing a consistent experience across the application.
+
+### x-users.stats-section
+
+**Component:** `resources/views/components/users/stats-section.blade.php`
+
+**Props:**
+- `totalUsers` - Number of active users in community
+- `followingCount` - Number of users current user is following
+- `followersCount` - Number of users following current user
+
+**Features:**
+- 3-column grid showing community stats
+- Animated counter on scroll (1.5s duration)
+- Staggered animation (100ms, 200ms, 300ms delays)
+
+**Usage:**
+```blade
+<x-users.stats-section 
+    :totalUsers="$totalUsers" 
+    :followingCount="$followingCount"
+    :followersCount="$followersCount" />
+```
+
+---
+
+### x-users.hero-section
+
+**Component:** `resources/views/components/users/hero-section.blade.php`
+
+**Props:**
+- `isEmpty` - Boolean, whether user has connections yet
+
+**Features:**
+- Lottie underline animation on "community"
+- Dynamic text based on empty state
+- Centered layout with max-width constraint
+
+**Usage:**
+```blade
+<x-users.hero-section :isEmpty="$users->isEmpty() && !$query" />
+```
+
+---
+
+### x-users.following-section
+
+**Component:** `resources/views/components/users/following-section.blade.php`
+
+**Props:**
+- `followingUsers` - Collection of users current user follows (limited to 6)
+
+**Features:**
+- Shows quick access to followed users
+- 2-column grid on desktop, 1-column on mobile
+- Displays challenge/habit counts for each user
+- "View all →" link to filtered view
+- Only renders if user is following someone
+
+**Usage:**
+```blade
+@if(!$query && $followingUsers->isNotEmpty())
+    <x-users.following-section :followingUsers="$followingUsers" />
+@endif
+```
+
+---
+
+### x-users.user-card
+
+**Component:** `resources/views/components/users/user-card.blade.php`
+
+**Props:**
+- `user` - User model instance
+- `index` - Card index for staggered animations (default: 0)
+
+**Features:**
+- Avatar with hover effect (ring transition)
+- User name linking to profile
+- Follower/following stats
+- Activity badges (challenges, habits, goals counts)
+- Recent activity indicator (green pulse dot)
+- Follow/unfollow button with form submission
+- Responsive layout (stacks on mobile)
+- Scroll-triggered fade-up animation with stagger
+
+**Required User Properties:**
+```php
+$user->name
+$user->followers_count
+$user->following_count
+$user->challenges_count  // Public challenges only
+$user->habits_count      // Active habits only
+$user->goals_count       // Goals library count
+$user->recent_activity   // Boolean (activity in last 7 days)
+```
+
+**Usage:**
+```blade
+@foreach($users as $index => $user)
+    <x-users.user-card :user="$user" :index="$index" />
+@endforeach
+```
+
+---
+
+### x-users.filter-tabs
+
+**Component:** `resources/views/components/users/filter-tabs.blade.php`
+
+**Props:**
+- `allCount` - Total number of discovered users
+- `followingCount` - Number of users being followed
+
+**Features:**
+- Toggle between "All Users" and "Following" views
+- Uses Alpine.js `activeFilter` state
+- Tab count badges with active/inactive states
+- Consistent with challenges/habits/goals filter patterns
+
+**Usage:**
+```blade
+@if(!$query && ($users->isNotEmpty() || $followingUsers->isNotEmpty()))
+    <x-users.filter-tabs 
+        :allCount="$users->count()"
+        :followingCount="$followingUsers->count()" />
+@endif
+```
+
+**Required Alpine.js Context:**
+```blade
+<div x-data="{ activeFilter: 'all' }">
+    <!-- Filter tabs and filtered content here -->
+</div>
+```
+
+---
+
+### x-users.empty-state
+
+**Component:** `resources/views/components/users/empty-state.blade.php`
+
+**Props:**
+- `hasQuery` - Boolean, whether showing search results
+- `hasFollowing` - Boolean, whether user has following list
+
+**Features:**
+- Dynamic messaging based on context
+- Search icon when showing search results
+- Community icon for discovery mode
+- Fade-up animation on appearance
+
+**Usage:**
+```blade
+<x-users.empty-state 
+    :hasQuery="!!$query"
+    :hasFollowing="$followingUsers->isNotEmpty()" />
+```
+
+---
+
+### x-users.benefits-section
+
+**Component:** `resources/views/components/users/benefits-section.blade.php`
+
+**Features:**
+- 3-column grid on desktop
+- "Find Inspiration", "Stay Motivated", "Learn Together" cards
+- Custom icons for each benefit
+- Staggered scroll animations (100ms, 200ms, 300ms)
+- Light background section (`.section-bg-light`)
+
+**Usage:**
+```blade
+<x-users.benefits-section />
+```
+
+---
+
+### x-users.faq-section
+
+**Component:** `resources/views/components/users/faq-section.blade.php`
+
+**Features:**
+- Accordion-style FAQ items
+- Alpine.js collapse plugin integration
+- 4 common questions about user discovery and following
+- Staggered animations (100ms, 200ms, 300ms, 400ms)
+- Rotating chevron icon on expand/collapse
+
+**FAQ Topics:**
+1. How to find users to follow
+2. What happens when following someone
+3. Privacy controls for challenges/habits
+4. How to unfollow someone
+
+**Usage:**
+```blade
+<x-users.faq-section />
+```
+
+**Required Alpine.js Context:**
+```blade
+<div x-data="{ activeQuestion: null }">
+    <!-- FAQ items toggle activeQuestion -->
+</div>
+```
+
+---
+
+### UserController Data Structure
+
+**Location:** `app/Http/Controllers/UserController.php`
+
+The `search` method provides all data needed for discovery page:
+
+**Returned Variables:**
+```php
+return view('dashboard.users.search', compact(
+    'users',              // Collection of discovered/search users
+    'query',              // Search query string (nullable)
+    'followingUsers',     // Collection of users being followed (max 6)
+    'followingCount',     // Count of all users being followed
+    'followersCount',     // Count of followers
+    'totalUsers'          // Count of active community users
+));
+```
+
+**User Data Loading:**
+```php
+// Each user includes these withCount relationships:
+->withCount([
+    'followers',
+    'following',
+    'challenges' => function ($q) {
+        $q->where('is_public', true)->whereNull('archived_at');
+    },
+    'habits' => function ($q) {
+        $q->whereNull('archived_at');
+    },
+    'goalsLibrary as goals_count'
+])
+```
+
+**Recent Activity Flag:**
+```php
+// Added to discovery users only (not search results)
+$user->recent_activity = $user->activities()
+    ->where('created_at', '>=', now()->subDays(7))
+    ->exists();
+```
 
 ---
 

@@ -64,20 +64,20 @@ resources/views/
 │   └── verify-email.blade.php
 │
 ├── dashboard/                       # Authenticated user area 🚧 IN PROGRESS
-│   ├── welcome.blade.php            # Post-registration onboarding ✅ NEW
+│   ├── welcome.blade.php            # Post-registration onboarding ✅ COMPLETE
 │   ├── challenges/
-│   │   ├── index.blade.php
+│   │   ├── index.blade.php          # Challenges list ✅ COMPLETE (Dec 2025)
 │   │   ├── create.blade.php
 │   │   ├── edit.blade.php
 │   │   └── show.blade.php
 │   ├── habits/
-│   │   ├── index.blade.php
+│   │   ├── index.blade.php          # Habits list ✅ COMPLETE (Dec 2025)
 │   │   ├── create.blade.php
 │   │   ├── edit.blade.php
 │   │   ├── show.blade.php
 │   │   └── today.blade.php
 │   ├── goals/
-│   │   ├── index.blade.php
+│   │   ├── index.blade.php          # Goal library ✅ COMPLETE (Dec 2025)
 │   │   └── show.blade.php
 │   ├── feed/
 │   │   └── index.blade.php
@@ -86,7 +86,7 @@ resources/views/
 │   │   ├── menu.blade.php
 │   │   └── partials/
 │   ├── users/
-│   │   ├── search.blade.php
+│   │   ├── search.blade.php         # User discovery ✅ COMPLETE (Dec 19, 2025)
 │   │   └── show.blade.php
 │   └── partials/
 │
