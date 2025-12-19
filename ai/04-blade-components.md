@@ -780,6 +780,8 @@ Alpine.start();
 
 ### Common Alpine.js Patterns
 
+**For Global State Management, see:** `ai/08-alpine-state-management.md`
+
 **1. Dropdown Toggle:**
 ```blade
 <div x-data="{ open: false }" class="relative">
@@ -830,7 +832,28 @@ Alpine.start();
 </div>
 ```
 
-**4. Form Submission:**
+**4. Global Store Access:**
+```blade
+<!-- Access global store for shared state -->
+<div x-data="{}">
+    <!-- Read from store -->
+    <span x-text="$store.userDiscovery.followingCount"></span>
+    
+    <!-- Update store -->
+    <button @click="$store.userDiscovery.incrementFollowing()">
+        Follow
+    </button>
+    
+    <!-- Reactive disabled state -->
+    <button :disabled="$store.userDiscovery.followingCount === 0">
+        Following
+    </button>
+</div>
+
+<!-- See ai/08-alpine-state-management.md for complete guide -->
+```
+
+**5. Form Submission:**
 ```blade
 <form x-data="{ submitting: false }" 
       @submit="submitting = true">
@@ -845,7 +868,7 @@ Alpine.start();
 </form>
 ```
 
-**5. Scroll Animations (Intersect Plugin):**
+**6. Scroll Animations (Intersect Plugin):**
 ```blade
 <!-- Fade in on scroll -->
 <div class="opacity-0 translate-y-8 transition-all duration-700 ease-out"
@@ -1292,7 +1315,7 @@ User discovery components follow the same pattern as challenges, habits, and goa
 - Follower/following stats
 - Activity badges (challenges, habits, goals counts)
 - Recent activity indicator (green pulse dot)
-- Follow/unfollow button with form submission
+- Follow/unfollow button with AJAX functionality
 - Responsive layout (stacks on mobile)
 - Scroll-triggered fade-up animation with stagger
 
@@ -1306,6 +1329,43 @@ $user->habits_count      // Active habits only
 $user->goals_count       // Goals library count
 $user->recent_activity   // Boolean (activity in last 7 days)
 ```
+
+**Follow Functionality:**
+- **Modular Component** - Uses `followManager` component from `resources/js/components/follow.js`
+- **AJAX Follow/Unfollow** - No page refresh required
+- **Optimistic Updates** - Instant UI feedback before server response
+- **Loading States** - Spinner animation during requests
+- **Error Handling** - Automatic state revert on failure
+- **Dynamic Counts** - Real-time follower count updates
+- **Toast Notifications** - Success/error messages via `showToast()` utility
+
+**Component Usage:**
+```blade
+<div x-data="followManager(
+    {{ auth()->user()->isFollowing($user) ? 'true' : 'false' }},
+    {{ $user->followers_count }},
+    {{ $user->id }}
+)">
+    <!-- Follow button uses: -->
+    <button @click="toggleFollow()" :disabled="isLoading">
+        <template x-if="isLoading">
+            <x-ui.spinner class="size-4" />
+        </template>
+        <span x-text="isFollowing ? 'Following' : 'Follow'"></span>
+    </button>
+    
+    <!-- Follower count uses: -->
+    <span x-text="followersCount"></span>
+</div>
+```
+
+**Follow Component API:**
+- `isFollowing` - Boolean state tracking follow status
+- `followersCount` - Integer count of followers
+- `isLoading` - Boolean loading state
+- `toggleFollow()` - Async method to follow/unfollow
+- Prevents double-clicks with disabled state during request
+- Updates follower count reactively via Alpine.js
 
 **Usage:**
 ```blade

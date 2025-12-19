@@ -24,7 +24,8 @@ Challenge Checker is a personal goal-tracking and habit-building web application
 
 ### Frontend
 - **Blade Templates** - Laravel's templating engine
-- **Alpine.js** - Lightweight reactive JavaScript (with Intersect plugin)
+- **Alpine.js** - Lightweight reactive JavaScript (with Intersect & Collapse plugins)
+- **Alpine.js Components** - Modular component system in `resources/js/components/`
 - **Lottie-web** - Animation library integrated via Alpine.js directive
 - **Tailwind CSS v3** - Utility-first CSS framework with JIT compiler
 - **SCSS** - CSS preprocessing for component classes
@@ -120,6 +121,87 @@ resources/views/
 - Use dot notation: `<x-ui.modal>`, `<x-challenges.goal-card>`
 - Organized by domain/context
 - Reusable across multiple pages
+
+---
+
+### JavaScript Components (`resources/js/components/`)
+
+```
+resources/js/components/
+├── index.js                        # Component registry (facade pattern)
+├── activity.js                     # Activity card interactions (likes, modal)
+├── challenge.js                    # Challenge form management
+├── emojiPicker.js                  # Emoji picker component
+├── follow.js                       # Follow/unfollow functionality ✅ NEW
+├── goals.js                        # Goal toggle manager
+├── habit.js                        # Habit forms (create/edit/with-goals)
+├── habitToggle.js                  # Habit completion toggle
+├── modal.js                        # Modal data management
+├── registration-form.js            # Multi-step registration
+└── theme.js                        # Theme manager (dark/light mode)
+```
+
+**Component Architecture:**
+- **Factory Pattern** - Each file exports a creator function
+- **Global Registry** - `index.js` registers all components on `window`
+- **Single Responsibility** - One component per business concern
+- **Reusability** - Components invoked via `x-data="componentName(params)"`
+- **Dependency Injection** - Components accept initialization parameters
+
+**Usage Pattern:**
+```blade
+<!-- Blade template invokes JavaScript component -->
+<div x-data="followManager({{ $isFollowing }}, {{ $followersCount }}, {{ $userId }})">
+    <button @click="toggleFollow()">Follow</button>
+</div>
+```
+
+**Component Principles:**
+- Follows Single Responsibility Principle (SRP)
+- Testable in isolation
+- Uses shared utilities from `resources/js/utils/ui.js`
+- Maintains separation of concerns (no Blade logic in JS, no JS logic in Blade)
+
+---
+
+### Alpine.js Stores (`resources/js/stores/`)
+
+```
+resources/js/stores/
+├── index.js                        # Store registry
+└── userDiscovery.js                # User discovery state (following counts) ✅ NEW
+```
+
+**Store Architecture:**
+- **Centralized State Management** - Single source of truth for shared state
+- **Reactive Updates** - Components automatically re-render when store changes
+- **Global Access** - Available via `$store.storeName` in any Alpine component
+- **Initialization Pattern** - Stores register before `Alpine.start()`
+
+**When to Use Stores:**
+- State shared across multiple components
+- Need reactive updates without event systems
+- Avoiding prop drilling through component hierarchy
+- Single source of truth for critical UI state
+
+**Usage Pattern:**
+```javascript
+// Store registration (stores/index.js)
+export function registerStores(Alpine) {
+    Alpine.store('storeName', {
+        count: 0,
+        increment() { this.count++; }
+    });
+}
+
+// Component usage (Blade)
+<div x-data="{}">
+    <span x-text="$store.storeName.count"></span>
+    <button @click="$store.storeName.increment()">+</button>
+</div>
+```
+
+**For comprehensive guide, see:** `ai/08-alpine-state-management.md`
 
 ---
 

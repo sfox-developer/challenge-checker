@@ -10,27 +10,26 @@
 /**
  * Shows a toast notification
  * 
+ * Uses the project's frosted glass toast system with bottom-right positioning.
+ * Automatically animates in with slide transition and auto-dismisses after duration.
+ * 
  * @param {string} message - The message to display
  * @param {string} type - The type of toast ('success', 'error', 'info', 'warning')
  * @param {number} duration - Duration in milliseconds (default: 3000)
  */
 export function showToast(message, type = 'success', duration = 3000) {
-    const colors = {
-        success: 'bg-green-500',
-        error: 'bg-red-500',
-        info: 'bg-blue-500',
-        warning: 'bg-yellow-500'
-    };
-
     const toast = document.createElement('div');
-    toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white ${
-        colors[type] || colors.success
-    } z-50 transition-opacity duration-300`;
+    toast.className = `toast toast--${type}`;
     toast.textContent = message;
+    
     document.body.appendChild(toast);
     
+    // Trigger slide-in animation
+    setTimeout(() => toast.classList.add('toast--show'), 10);
+    
+    // Auto dismiss with slide-out
     setTimeout(() => {
-        toast.style.opacity = '0';
+        toast.classList.remove('toast--show');
         setTimeout(() => toast.remove(), 300);
     }, duration);
 }

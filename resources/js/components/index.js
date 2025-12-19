@@ -28,6 +28,7 @@ import { toggleHabit, completeWithNotes } from './habitToggle.js';
 import { showToast, showError, showSuccess, showInfo, showWarning, getCsrfToken, createHeaders, post } from '../utils/ui.js';
 import { createEmojiPicker } from './emojiPicker.js';
 import registrationForm from './registration-form.js';
+import { createFollowManager } from './follow.js';
 
 /**
  * Registration Form Component
@@ -47,6 +48,7 @@ window.habitEditForm = createHabitEditForm;
 window.challengeForm = createChallengeForm;
 window.emojiPicker = createEmojiPicker;
 window.registrationForm = registrationForm;
+window.followManager = createFollowManager;
 
 // Register habit toggle functions globally
 window.toggleHabit = toggleHabit;

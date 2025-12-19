@@ -6,7 +6,12 @@
         :title="$user->name"
         description="Profile and activity" />
 
-    <div class="pb-12 md:pb-20">
+    <div class="pb-12 md:pb-20" 
+         x-data="followManager(
+             {{ $isFollowing ? 'true' : 'false' }},
+             {{ $user->followers_count }},
+             {{ $user->id }}
+         )">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
             <!-- Profile Info -->
@@ -32,23 +37,27 @@
                             Edit Profile
                         </x-ui.app-button>
                     @else
-                        <div class="w-full sm:w-auto">
-                            @if($isFollowing)
-                                <form action="{{ route('social.unfollow', $user) }}" method="POST">
-                                    @csrf
-                                    <x-ui.app-button variant="secondary" type="submit" class="w-full sm:w-auto">
-                                        Following
-                                    </x-ui.app-button>
-                                </form>
-                            @else
-                                <form action="{{ route('social.follow', $user) }}" method="POST">
-                                    @csrf
-                                    <x-ui.app-button variant="primary" type="submit" class="w-full sm:w-auto">
-                                        Follow
-                                    </x-ui.app-button>
-                                </form>
-                            @endif
-                        </div>
+                        <button @click="toggleFollow()"
+                                :disabled="isLoading"
+                                :class="isFollowing ? 'btn btn-secondary' : 'btn btn-primary'"
+                                class="w-full sm:w-auto sm:min-w-[120px] transition-all duration-200 relative"
+                                :style="isLoading ? 'cursor: wait;' : ''">
+                            <span class="flex items-center justify-center gap-2"
+                                  :class="isLoading ? 'opacity-70' : ''">
+                                <svg x-show="isLoading" 
+                                     x-transition:enter="transition ease-out duration-150"
+                                     x-transition:enter-start="opacity-0 scale-50"
+                                     x-transition:enter-end="opacity-100 scale-100"
+                                     class="animate-spin h-4 w-4" 
+                                     xmlns="http://www.w3.org/2000/svg" 
+                                     fill="none" 
+                                     viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                <span x-text="isFollowing ? 'Following' : 'Follow'"></span>
+                            </span>
+                        </button>
                     @endif
                 </div>
 
@@ -63,8 +72,8 @@
                         <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ Str::plural('Habit', $user->habits_count) }}</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-3xl font-bold text-slate-700 dark:text-slate-400">{{ $user->followers_count }}</div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ Str::plural('Follower', $user->followers_count) }}</div>
+                        <div class="text-3xl font-bold text-slate-700 dark:text-slate-400" x-text="followersCount"></div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1" x-text="followersCount === 1 ? 'Follower' : 'Followers'"></div>
                     </div>
                 </div>
             </div>

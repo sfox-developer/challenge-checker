@@ -1098,6 +1098,101 @@ text-center text-left text-right
 
 ---
 
+## � Toast Notifications
+
+**System:** Custom toast notification system matching project's frosted glass aesthetic  
+**Location:** `resources/js/toast.js` + `resources/scss/vendors/_toast.scss`
+
+### Toast Design
+
+Toasts follow the project's card styling with:
+- **Frosted glass effect** - Semi-transparent background with backdrop blur
+- **Bottom-right positioning** - Above FAB on desktop (6px from edges), above bottom nav on mobile (20px from bottom)
+- **Subtle shadows** - Tier 1 shadow system for consistency
+- **Smooth animations** - 300ms slide-in from right with ease-out timing
+- **Icon indicators** - Colored circular icons with symbols for each variant
+
+### Toast Variants
+
+```javascript
+// Success toast - green accent with checkmark
+showToast('Profile updated successfully!', 'success');
+
+// Error toast - red accent with X mark
+showToast('Failed to save changes', 'error');
+
+// Info toast - blue accent with info icon
+showToast('New features available', 'info');
+
+// Warning toast - yellow accent with warning symbol
+showToast('Please verify your email', 'warning');
+```
+
+### Styling Details
+
+```scss
+.toast {
+    // Position: Bottom-right, above FAB/bottom nav
+    @apply bottom-20 right-6 md:bottom-6 md:right-6;
+    
+    // Frosted glass matching card styling
+    background-color: var(--color-bg-card);
+    backdrop-filter: blur(10px);
+    @apply border border-gray-200 dark:border-gray-700;
+    
+    // Subtle shadow (Tier 1)
+    @apply shadow-lg;
+    
+    // Smooth transitions
+    @apply transition-all duration-300 ease-out;
+}
+
+// Variants with colored borders and icon badges
+.toast--success {
+    @apply border-green-300 dark:border-green-700;
+    &::before { /* Green checkmark badge */ }
+}
+
+.toast--error {
+    @apply border-red-300 dark:border-red-700;
+    &::before { /* Red X badge */ }
+}
+```
+
+### Usage Patterns
+
+**Manual Toast:**
+```javascript
+// In any JavaScript code
+window.showToast('Action completed!', 'success');
+```
+
+**With AJAX (automatic):**
+```javascript
+// Component automatically shows toast from server response
+const data = await response.json();
+showToast(data.message, 'success'); // or 'error'
+```
+
+**Laravel Flash Messages (automatic):**
+```php
+// Controller - automatically displayed as toast
+return redirect()->back()->with('success', 'Challenge created!');
+return redirect()->back()->with('error', 'Invalid data');
+return redirect()->back()->with('info', 'Remember to save');
+return redirect()->back()->with('warning', 'Action requires confirmation');
+```
+
+### Design Rationale
+
+1. **Bottom-right placement** - Non-intrusive, doesn't cover content, consistent with FAB positioning
+2. **Frosted glass effect** - Maintains visual hierarchy, doesn't feel like a jarring overlay
+3. **Icon + border color** - Quick visual scanning without reading, accessible
+4. **Auto-dismiss (3s)** - User doesn't need to manually close, reduces interaction overhead
+5. **Slide animation** - Smooth entry/exit, feels polished and intentional
+
+---
+
 ## 🔍 Finding the Right Class
 
 **Question:** "How do I style a challenge status badge?"  
@@ -1114,6 +1209,9 @@ text-center text-left text-right
 
 **Question:** "How do I style a primary button?"  
 **Answer:** Use `.btn .btn-primary`
+
+**Question:** "How do I show a toast notification?"  
+**Answer:** Use `showToast(message, type)` where type is 'success', 'error', 'info', or 'warning'
 
 **Question:** "How do I add a Lottie animation?"  
 **Answer:** Use `.lottie-container` and `.lottie-animation` with Alpine.js `x-lottie` directive

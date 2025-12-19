@@ -26,6 +26,7 @@ This guide ensures AI agents:
 4. **`04-blade-components.md`** - Component system and Alpine.js
 5. **`05-features.md`** - Business logic, models, routes
 6. **`06-public-pages-blueprint.md`** - Reference implementation (Gold Standard)
+7. **`08-alpine-state-management.md`** - Global stores for reactive state ✅ NEW
 
 **⚠️ Do not skip this phase.** Misunderstanding the architecture leads to:
 - Breaking existing features

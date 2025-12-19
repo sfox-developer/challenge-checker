@@ -511,16 +511,33 @@ Route::delete('goals/{goal}/complete/{date}', [GoalCompletionController::class, 
 ```php
 Route::get('feed', [FeedController::class, 'index'])->name('feed.index');
 
-Route::post('users/{user}/follow', [FollowController::class, 'store'])
-    ->name('users.follow');
-Route::delete('users/{user}/follow', [FollowController::class, 'destroy'])
-    ->name('users.unfollow');
+Route::post('/users/{user}/follow', [SocialController::class, 'follow'])->name('social.follow');
+Route::post('/users/{user}/unfollow', [SocialController::class, 'unfollow'])->name('social.unfollow');
 
 Route::post('activities/{activity}/like', [ActivityLikeController::class, 'store'])
     ->name('activities.like');
 Route::delete('activities/{activity}/like', [ActivityLikeController::class, 'destroy'])
     ->name('activities.unlike');
 ```
+
+**Controller:** `app/Http/Controllers/SocialController.php`
+
+**Follow/Unfollow Implementation:**
+- Supports both traditional form submission (redirect) and AJAX requests (JSON)
+- Returns JSON response with updated follower count when `Accept: application/json` header present
+- Optimistic UI updates with Alpine.js for instant feedback
+- Shows loading state with spinner during request
+- Toast notifications for success/error messages
+- Automatically updates follower counts on page without refresh
+
+**AJAX Follow Button Features:**
+- Implemented in user-card.blade.php and users/show.blade.php
+- Uses Alpine.js for state management (`isFollowing`, `isLoading`, `followersCount`)
+- Optimistic updates for immediate UI response
+- Graceful error handling with automatic state revert on failure
+- Loading spinner animation during request
+- Dynamic button text and styling based on state
+- Prevents double-clicks with `isLoading` flag
 
 ---
 
