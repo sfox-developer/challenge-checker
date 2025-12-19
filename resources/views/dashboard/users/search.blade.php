@@ -11,13 +11,15 @@
         {{-- Search Form - Full Width Sticky --}}
         <div class="search-sticky" 
              x-data="{ 
-                 isStuck: false,
-                 checkSticky() {
-                     const rect = this.$el.getBoundingClientRect();
-                     this.isStuck = rect.top <= 80;
-                 }
+                 isStuck: false
              }"
-             x-init="window.addEventListener('scroll', () => checkSticky())"
+             x-init="
+                 const checkSticky = () => {
+                     const rect = $el.getBoundingClientRect();
+                     isStuck = rect.top <= 80;
+                 };
+                 window.addEventListener('scroll', checkSticky);
+             "
              :class="{ 'is-stuck': isStuck }">
             <form method="GET" action="{{ route('users.search') }}" class="search-container">
                 <div class="search-input-wrapper">

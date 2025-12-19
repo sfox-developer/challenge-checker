@@ -64,16 +64,16 @@
                     </div>
 
                     <!-- Follow Button -->
-                    <div class="user-list-action" onclick="event.preventDefault(); event.stopPropagation();">
+                    <div class="user-list-action">
                         @if(auth()->user()->isFollowing($user))
-                            <form action="{{ route('social.unfollow', $user) }}" method="POST">
+                            <form action="{{ route('social.unfollow', $user) }}" method="POST" onclick="event.stopPropagation();">
                                 @csrf
                                 <x-ui.app-button variant="secondary" type="submit" size="sm">
                                     Following
                                 </x-ui.app-button>
                             </form>
                         @else
-                            <form action="{{ route('social.follow', $user) }}" method="POST">
+                            <form action="{{ route('social.follow', $user) }}" method="POST" onclick="event.stopPropagation();">
                                 @csrf
                                 <x-ui.app-button variant="primary" type="submit" size="sm">
                                     Follow
