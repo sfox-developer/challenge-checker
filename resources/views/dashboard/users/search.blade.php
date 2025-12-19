@@ -8,43 +8,46 @@
 
     <div x-data="{ activeFilter: 'all' }">
         
+        {{-- Search Form - Full Width Sticky --}}
+        <div class="search-sticky" 
+             x-data="{ 
+                 isStuck: false,
+                 checkSticky() {
+                     const rect = this.$el.getBoundingClientRect();
+                     this.isStuck = rect.top <= 80;
+                 }
+             }"
+             x-init="window.addEventListener('scroll', () => checkSticky())"
+             :class="{ 'is-stuck': isStuck }">
+            <form method="GET" action="{{ route('users.search') }}" class="search-container">
+                <div class="search-input-wrapper">
+                    <input 
+                        type="text" 
+                        name="query" 
+                        id="query" 
+                        value="{{ old('query', $query) }}" 
+                        placeholder="Search by name or email..."
+                        class="search-input"
+                        autofocus>
+                    <button type="submit" class="search-button">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                </div>
+                @if($query)
+                    <div class="mt-3 text-center">
+                        <a href="{{ route('users.search') }}" class="search-clear">
+                            ← Clear search
+                        </a>
+                    </div>
+                @endif
+            </form>
+        </div>
+
         {{-- Discovery / Search Section --}}
         <div class="section pt-0">
             <div class="container max-w-4xl">
-                {{-- Search Form --}}
-                <div class="card animate animate-hidden-fade-up mb-8"
-                     x-data="{}"
-                     x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 600)">
-                    <form method="GET" action="{{ route('users.search') }}" class="space-y-4">
-                        <div>
-                            <label for="query" class="block text-sm font-medium text-gray-800 dark:text-gray-100 mb-2">
-                                Find users by name or email
-                            </label>
-                            <div class="flex gap-2">
-                                <input 
-                                    type="text" 
-                                    name="query" 
-                                    id="query" 
-                                    value="{{ old('query', $query) }}" 
-                                    placeholder="Enter at least 2 characters..."
-                                    class="flex-1 form-input"
-                                    autofocus>
-                                <x-ui.app-button variant="primary" type="submit">
-                                    Search
-                                </x-ui.app-button>
-                            </div>
-                            @if($query)
-                                <div class="mt-2">
-                                    <a href="{{ route('users.search') }}" 
-                                       class="text-sm text-slate-700 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
-                                        ← Back to discovery
-                                    </a>
-                                </div>
-                            @endif
-                        </div>
-                    </form>
-                </div>
-
                 {{-- Filter Tabs (only show when not searching) --}}
                 @if(!$query && ($users->isNotEmpty() || $followingUsers->isNotEmpty()))
                     <x-users.filter-tabs 

@@ -1,0 +1,74 @@
+// ============================================================================
+// SEARCH - Search Bar Component
+// ============================================================================
+
+.search-sticky {
+    @apply sticky z-20;
+    top: 80px; // Positioned below the 80px (h-20) nav
+    @apply py-4 mb-8;
+    
+    // No background by default
+    @apply transition-all duration-200;
+    
+    // When stuck, add background with blur
+    &.is-stuck {
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+}
+
+html.dark .search-sticky.is-stuck {
+    background-color: rgba(15, 23, 42, 0.8); // slate-900 with 80% opacity
+}
+
+.search-container {
+    @apply max-w-2xl mx-auto px-6;
+}
+
+.search-input-wrapper {
+    @apply relative;
+}
+
+.search-input {
+    @apply w-full pl-4 pr-12 py-3;
+    @apply rounded-full;
+    @apply border border-gray-200;
+    @apply bg-white;
+    @apply text-gray-900;
+    @apply placeholder-gray-500;
+    @apply focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent;
+    @apply transition-all;
+}
+
+html.dark .search-input {
+    @apply border-gray-700;
+    @apply bg-slate-800;
+    @apply text-white;
+    @apply placeholder-gray-400;
+    @apply focus:ring-slate-400;
+}
+
+.search-button {
+    @apply absolute right-2 top-1/2 -translate-y-1/2;
+    @apply p-2;
+    @apply text-gray-400;
+    @apply hover:text-gray-600;
+    @apply transition-colors;
+}
+
+html.dark .search-button {
+    @apply hover:text-gray-200;
+}
+
+.search-clear {
+    @apply text-sm;
+    @apply text-slate-600;
+    @apply hover:text-slate-800;
+    @apply transition-colors;
+}
+
+html.dark .search-clear {
+    @apply text-slate-400;
+    @apply hover:text-slate-200;
+}
