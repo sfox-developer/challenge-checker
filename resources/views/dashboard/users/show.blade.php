@@ -6,13 +6,14 @@
         :title="$user->name"
         description="Profile and activity" />
 
-    <div class="pb-12 md:pb-20" 
+    <div class="section"
          x-data="followManager(
              {{ $isFollowing ? 'true' : 'false' }},
              {{ $user->followers_count }},
              {{ $user->id }}
          )">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        <div class="container max-w-4xl">
+            <div class="space-y-6">
             
             <!-- Profile Info -->
             <div class="card">
@@ -85,6 +86,7 @@
                 :habits="$publicHabits"
                 :activities="$activities"
                 defaultTab="activity" />
+            </div>
         </div>
     </div>
 </x-dashboard-layout>

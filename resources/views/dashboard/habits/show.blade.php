@@ -65,8 +65,9 @@
         </div>
     </div>
 
-    <div class="pb-12 md:pb-20">
-        <div class="max-w-7xl mx-auto px-6 space-y-6">
+    <div class="section">
+        <div class="container max-w-4xl">
+            <div class="space-y-6">
             
             <!-- Statistics Cards -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -239,7 +240,7 @@
                     </div>
                 </div>
             </div>
-
+            </div>
         </div>
     </div>
 

@@ -6,8 +6,8 @@
         title="Create Habit"
         description="Build a new recurring habit" />
 
-    <div class="pb-12 md:pb-20">
-        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
+    <div class="section">
+        <div class="container max-w-4xl">
             <div class="card">
                 <form action="{{ route('habits.store') }}" method="POST" id="habit-form" x-data="habitFormWithGoalToggle({{ count($goalsLibrary) > 0 ? 'true' : 'false' }})">
                     @csrf

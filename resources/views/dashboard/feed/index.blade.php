@@ -7,8 +7,8 @@
         description="See what others are achieving in their challenges" />
 
     <!-- Content -->
-    <div class="pb-12 md:pb-20 flex-1">
-        <div class="max-w-4xl mx-auto px-6">
+    <div class="section">
+        <div class="container max-w-4xl">
             <div class="space-y-4">
                 @forelse($activities as $index => $activity)
                     <div class="animate animate-hidden-fade-up"

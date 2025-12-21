@@ -6,8 +6,8 @@
         title="{{ $challenge->name }}"
         description="Update your challenge settings" />
 
-    <div class="pb-12 md:pb-20">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+    <div class="section">
+        <div class="container max-w-4xl">
             <!-- Back Button -->
             <div class="mb-6">
                 <a href="{{ request('back', route('challenges.show', $challenge)) }}" class="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-800 dark:text-gray-100 transition-colors duration-200">

@@ -6,8 +6,9 @@
         title="Today's Habits"
         description="Complete your habits for {{ now()->format('l, F j') }}" />
 
-    <div class="pb-12 md:pb-20">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="section">
+        <div class="container max-w-4xl">
+            <div class="space-y-6">
             
             <!-- Today's Date and Stats -->
             <div class="text-center mb-6">
@@ -210,6 +211,7 @@
                 </div>
             @endif
 
+            </div>
         </div>
     </div>
 

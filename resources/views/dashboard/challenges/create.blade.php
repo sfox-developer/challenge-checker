@@ -6,8 +6,8 @@
         title="Create Challenge"
         description="Set up your new time-bound challenge" />
 
-    <div class="pb-12 md:pb-20">
-        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
+    <div class="section">
+        <div class="container max-w-4xl">
             <div class="card">
                 <form action="{{ route('challenges.store') }}" method="POST" id="challenge-form" x-data="{ ...challengeForm(), ...habitForm() }">
                         @csrf
