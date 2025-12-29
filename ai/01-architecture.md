@@ -68,12 +68,12 @@ resources/views/
 │   ├── welcome.blade.php            # Post-registration onboarding ✅ COMPLETE
 │   ├── challenges/
 │   │   ├── index.blade.php          # Challenges list ✅ COMPLETE (Dec 2025)
-│   │   ├── create.blade.php
+│   │   ├── create.blade.php         # Create challenge ✅ COMPLETE (Dec 21, 2025)
 │   │   ├── edit.blade.php
 │   │   └── show.blade.php
 │   ├── habits/
 │   │   ├── index.blade.php          # Habits list ✅ COMPLETE (Dec 2025)
-│   │   ├── create.blade.php
+│   │   ├── create.blade.php         # Create habit ✅ COMPLETE (Dec 21, 2025)
 │   │   ├── edit.blade.php
 │   │   ├── show.blade.php
 │   │   └── today.blade.php

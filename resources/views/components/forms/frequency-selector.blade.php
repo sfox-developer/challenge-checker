@@ -1,16 +1,12 @@
 @props([
     'frequencyType' => 'daily',
     'frequencyCount' => 1,
-    'selectedDays' => []
 ])
 
 <!-- Frequency Type -->
 <div class="mb-6">
-    <label for="frequency_type" class="form-label form-label-icon">
-        <svg class="w-4 h-4 text-slate-600" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
-        </svg>
-        <span>How often?</span>
+    <label for="frequency_type" class="form-label">
+        How often?
     </label>
     
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -58,11 +54,8 @@
 
 <!-- Frequency Count (hidden for daily) -->
 <div class="mb-6" x-show="frequencyType !== 'daily'">
-    <label for="frequency_count" class="form-label form-label-icon">
-        <svg class="w-4 h-4 text-slate-600" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-        </svg>
-        <span>How many times per <span x-text="frequencyPeriod"></span>?</span>
+    <label for="frequency_count" class="form-label">
+        How many times per <span x-text="frequencyPeriod"></span>?
     </label>
     
     <div class="grid grid-cols-7 gap-2">
@@ -90,23 +83,4 @@
             <span>{{ $message }}</span>
         </p>
     @enderror
-</div>
-
-<!-- Weekly frequency config -->
-<div x-show="frequencyType === 'weekly'" x-transition class="mb-6">
-    <label class="form-label form-label-icon">
-        <svg class="w-4 h-4 text-slate-600" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
-        </svg>
-        <span>On which days? <span class="text-optional">(Optional - leave blank for any days)</span></span>
-    </label>
-    
-    <div class="grid grid-cols-7 gap-2">
-        <template x-for="(day, index) in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="index">
-            <label class="cursor-pointer">
-                <input type="checkbox" name="weekly_days[]" :value="index + 1" class="sr-only peer" :checked="[{{ implode(',', $selectedDays) }}].includes(index + 1)">
-                <div class="aspect-square flex items-center justify-center rounded-lg border-2 border-gray-300 dark:border-gray-600 peer-checked:border-slate-600 peer-checked:bg-slate-600 peer-checked:text-white font-semibold text-xs text-gray-900 dark:text-gray-100 transition-all duration-200" x-text="day"></div>
-            </label>
-        </template>
-    </div>
 </div>

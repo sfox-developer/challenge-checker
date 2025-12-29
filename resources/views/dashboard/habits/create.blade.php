@@ -6,6 +6,7 @@
         title="Create Habit"
         description="Build a new recurring habit" />
 
+    {{-- Main Create Form Section --}}
     <div class="section">
         <div class="container max-w-4xl">
             <div class="card">
@@ -93,8 +94,9 @@
                                             x-bind:disabled="useExisting" />
                                     </div>
                                     <div>
+                                        <label for="new_goal_category_id" class="form-label">Category <span class="text-optional">(Optional)</span></label>
                                         <select name="new_goal_category_id" id="new_goal_category_id" class="form-input" :disabled="useExisting">
-                                            <option value="">Category (optional)</option>
+                                            <option value="">None</option>
                                             @foreach($categories as $cat)
                                                 <option value="{{ $cat->id }}">
                                                     {{ $cat->icon }} {{ $cat->name }}
@@ -105,11 +107,12 @@
                                 </div>
 
                                 <div>
+                                    <label for="new_goal_description" class="form-label">Description <span class="text-optional">(Optional)</span></label>
                                     <textarea name="new_goal_description" 
                                               id="new_goal_description" 
                                               rows="2" 
                                               class="form-input" 
-                                              placeholder="Description (optional)"
+                                              placeholder="Describe what this goal involves..."
                                               :disabled="useExisting">{{ old('new_goal_description') }}</textarea>
                                 </div>
                             </div>
@@ -143,5 +146,8 @@
             </div>
         </div>
     </div>
+
+    {{-- Tips & Best Practices Section (Bottom) --}}
+    <x-habits.tips-section />
 
 </x-dashboard-layout>

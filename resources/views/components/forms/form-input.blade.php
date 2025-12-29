@@ -18,6 +18,7 @@
     :name="$name" 
     :icon="$icon" 
     :iconColor="$iconColor" 
+    :required="$required"
     :optional="$optional"
     :hint="$hint">
     

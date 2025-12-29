@@ -16,6 +16,19 @@ html.dark .form-label {
     color: var(--color-heading-dark);
 }
 
+.form-label-required {
+    @apply text-red-500 dark:text-red-400;
+    @apply ml-0.5;
+    @apply font-semibold;
+}
+
+.text-optional {
+    @apply text-gray-500 dark:text-gray-400;
+    @apply text-sm;
+    @apply font-normal;
+    @apply ml-1;
+}
+
 // Custom form input styles (Tailwind Forms plugin now uses class strategy)
 input.form-input,
 textarea.form-input,

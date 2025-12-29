@@ -144,7 +144,7 @@
                                             
                                             <div>
                                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                                                    Notes (Optional)
+                                                    Notes <span class="text-optional">(Optional)</span>
                                                 </label>
                                                 <textarea x-model="notes" 
                                                           rows="2" 

@@ -1,8 +1,8 @@
 # Public Pages - Reference Blueprint
 
-**Last Updated:** December 16, 2025  
+**Last Updated:** December 21, 2025  
 **Status:** ✅ COMPLETE - Use as Gold Standard  
-**Purpose:** Completed public pages serve as the reference implementation for all future development
+**Purpose:** Completed pages (public & dashboard) serve as the reference implementation for all future development
 
 ---
 
@@ -823,3 +823,131 @@ resources/scss/
 - Client-side filtering (Alpine.js) preferred over server-side for better UX
 - All components now use consistent gradient accent design (modals, stats, tabs, lists)
 - Semantic SCSS classes improve maintainability and readability
+---
+
+## 📝 Create Page Pattern (Dashboard)
+
+**Last Updated:** December 21, 2025  
+**Status:** ✅ COMPLETE - Applied to challenges/create and habits/create
+
+### Standard Create Page Structure
+
+Create pages follow the same pattern as index pages for consistency:
+
+```blade
+<x-dashboard-layout>
+    <x-slot name="title">Create New [Resource]</x-slot>
+
+    {{-- Page Header --}}
+    <x-dashboard.page-header 
+        eyebrow="New [Resource]"
+        title="Create [Resource]"
+        description="Short description" />
+
+    {{-- Stats Section (reuses index component) --}}
+    <x-[domain].stats-section 
+        :totalCount="$totalCount" 
+        :activeCount="$activeCount" />
+
+    {{-- Hero Section with Lottie --}}
+    <div class="section pt-0">
+        <div class="container max-w-4xl">
+            <div class="text-center animate animate-hidden-fade-up-sm"
+                 x-data="{}"
+                 x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up-sm'), 500)">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    Action-focused <span class="lottie-underline">headline<span class="lottie-underline-animation" x-lottie="{ path: '/animations/line.json', loop: false, autoplay: false, stretch: true, scrollProgress: true }"></span></span>
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">
+                    Encouraging description about creating this resource.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {{-- Tips Section (unique content per domain) --}}
+    <x-[domain].tips-section />
+
+    {{-- Create Form with Animation --}}
+    <div class="section">
+        <div class="container max-w-4xl">
+            <div class="card animate animate-hidden-fade-up"
+                 x-data="{}"
+                 x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 600)">
+                <form>
+                    <!-- Form fields -->
+                </form>
+            </div>
+        </div>
+    </div>
+</x-dashboard-layout>
+```
+
+### Tips Section Component
+
+Each domain has a tips-section component with 3 actionable tips:
+
+**Example:** `components/challenges/tips-section.blade.php`
+```blade
+<div class="section pt-0">
+    <div class="container max-w-4xl">
+        <div class="animate animate-hidden-fade-up"
+             x-data="{}"
+             x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 700)">
+            
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6 text-center">
+                💡 Tips for [Creating Resource]
+            </h3>
+            
+            <div class="grid md:grid-cols-3 gap-4">
+                <!-- Tip Card 1 -->
+                <div class="card border border-slate-200 dark:border-slate-700">
+                    <div class="text-3xl mb-3">🎯</div>
+                    <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Tip Title</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Actionable advice here.
+                    </p>
+                </div>
+                <!-- 2 more tip cards -->
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Animation Timing
+
+- **Stats**: Staggered 100ms, 200ms (inherited from component)
+- **Hero**: 500ms delay, fade-up-sm
+- **Tips**: 700ms delay, fade-up
+- **Form**: 600ms delay, fade-up
+
+### Controller Pattern
+
+Controllers pass stats data for the stats section:
+
+```php
+public function create(): View
+{
+    // ... existing data
+    
+    // Add stats for stats section
+    $totalCount = auth()->user()->[resource]()->count();
+    $activeCount = auth()->user()->[resource]()->active()->count();
+    
+    return view('dashboard.[domain].create', compact(/* ... , 'totalCount', 'activeCount' */));
+}
+```
+
+### Benefits of This Pattern
+
+1. **Consistency** - Users see familiar structure across create pages
+2. **Context** - Stats show user's current status before creating
+3. **Motivation** - Hero and tips sections encourage action
+4. **Smooth UX** - Scroll animations guide attention naturally
+5. **Reusability** - Stats and hero components shared with index pages
+
+### Completed Examples
+
+- ✅ `dashboard/challenges/create.blade.php` (Dec 21, 2025)
+- ✅ `dashboard/habits/create.blade.php` (Dec 21, 2025)

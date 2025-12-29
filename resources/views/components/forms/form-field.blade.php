@@ -4,6 +4,7 @@
     'icon' => null,
     'iconColor' => 'blue',
     'optional' => false,
+    'required' => false,
     'hint' => null,
     'error' => null,
 ])
@@ -17,6 +18,9 @@
                 </svg>
             @endif
             <span>{{ $label }}</span>
+            @if($required)
+                <span class="form-label-required">*</span>
+            @endif
             @if($optional)
                 <span class="text-optional">(Optional)</span>
             @endif

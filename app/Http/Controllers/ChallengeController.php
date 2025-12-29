@@ -90,9 +90,6 @@ class ChallengeController extends Controller
     {
         // Build frequency config
         $frequencyConfig = [];
-        if ($request->frequency_type === 'weekly' && $request->has('weekly_days')) {
-            $frequencyConfig['days'] = $request->weekly_days;
-        }
 
         $challenge = auth()->user()->challenges()->create([
             'name' => $request->name,
@@ -189,9 +186,6 @@ class ChallengeController extends Controller
 
         // Build frequency config
         $frequencyConfig = [];
-        if ($request->frequency_type === 'weekly' && $request->has('weekly_days')) {
-            $frequencyConfig['days'] = $request->weekly_days;
-        }
 
         $challenge->update([
             'name' => $request->name,

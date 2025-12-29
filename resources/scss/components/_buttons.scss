@@ -23,6 +23,13 @@
     &:hover {
         filter: brightness(0.9);
     }
+    
+    &:disabled {
+        @apply opacity-50;
+        @apply cursor-not-allowed;
+        @apply pointer-events-none;
+        filter: none;
+    }
 }
 
 html.dark .btn-primary {
@@ -41,6 +48,12 @@ html.dark .btn-primary {
     @apply text-gray-700 dark:text-gray-300;
     @apply hover:bg-gray-50 dark:hover:bg-gray-700;
     @apply shadow-sm hover:shadow;
+    
+    &:disabled {
+        @apply opacity-50;
+        @apply cursor-not-allowed;
+        @apply pointer-events-none;
+    }
 }
 
 // Size variant - larger for hero CTAs

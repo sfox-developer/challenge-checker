@@ -204,7 +204,7 @@ class Challenge extends Model
             return false;
         }
 
-        $duration = $this->days_duration ?? $this->getDuration();
+        $duration = $this->days_duration;
         $endDate = $this->started_at->copy()->addDays($duration);
         return now()->greaterThan($endDate);
     }
@@ -218,9 +218,7 @@ class Challenge extends Model
             return null;
         }
 
-        // Use days_duration for backward compatibility or getDuration() for new challenges
-        $duration = $this->days_duration ?? $this->getDuration();
-        return $this->started_at->copy()->addDays($duration);
+        return $this->started_at->copy()->addDays($this->days_duration);
     }
 
     /**
@@ -274,18 +272,11 @@ class Challenge extends Model
     }
 
     /**
-     * Get the duration in the appropriate unit based on frequency type.
+     * Get the duration in days.
      */
     public function getDuration(): int
     {
-        // For backward compatibility, use days_duration if set
-        if ($this->days_duration) {
-            return $this->days_duration;
-        }
-        
-        // Otherwise, calculate based on frequency
-        // Default to 30 days for new challenges
-        return 30;
+        return $this->days_duration;
     }
 
     /**
@@ -297,7 +288,7 @@ class Challenge extends Model
             return 0;
         }
 
-        $duration = $this->days_duration ?? $this->getDuration();
+        $duration = $this->days_duration;
         $totalGoalDays = $this->goals->count() * $duration;
         $completedGoalDays = $this->dailyProgress()->whereNotNull('completed_at')->count();
 
@@ -314,12 +305,11 @@ class Challenge extends Model
         }
 
         if ($this->completed_at) {
-            $duration = $this->days_duration ?? $this->getDuration();
-            return $duration;
+            return $this->days_duration;
         }
 
         $currentDay = now()->diffInDays($this->started_at) + 1;
-        $duration = $this->days_duration ?? $this->getDuration();
+        $duration = $this->days_duration;
         
         return min($currentDay, $duration);
     }

@@ -4,37 +4,37 @@
      x-data="{}"
      x-intersect="setTimeout(() => $el.classList.remove('animate-hidden-fade-up'), 600)">
     <nav class="tab-nav">
-        <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'tab-button active' : 'tab-button'" :disabled="{{ $allCount === 0 }}">
+        <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'tab-button active' : 'tab-button'" :disabled="{{ $allCount === 0 ? 'true' : 'false' }}">
             All
             <span class="tab-count-badge" :class="activeFilter === 'all' ? 'active' : 'inactive'">
                 {{ $allCount }}
             </span>
         </button>
-        <button @click="activeFilter = 'active'" :class="activeFilter === 'active' ? 'tab-button active' : 'tab-button'" :disabled="{{ $activeCount === 0 }}">
+        <button @click="activeFilter = 'active'" :class="activeFilter === 'active' ? 'tab-button active' : 'tab-button'" :disabled="{{ $activeCount === 0 ? 'true' : 'false' }}">
             Active
             <span class="tab-count-badge" :class="activeFilter === 'active' ? 'active' : 'inactive'">
                 {{ $activeCount }}
             </span>
         </button>
-        <button @click="activeFilter = 'paused'" :class="activeFilter === 'paused' ? 'tab-button active' : 'tab-button'" :disabled="{{ $pausedCount === 0 }}">
+        <button @click="activeFilter = 'paused'" :class="activeFilter === 'paused' ? 'tab-button active' : 'tab-button'" :disabled="{{ $pausedCount === 0 ? 'true' : 'false' }}">
             Paused
             <span class="tab-count-badge" :class="activeFilter === 'paused' ? 'active' : 'inactive'">
                 {{ $pausedCount }}
             </span>
         </button>
-        <button @click="activeFilter = 'completed'" :class="activeFilter === 'completed' ? 'tab-button active' : 'tab-button'" :disabled="{{ $completedCount === 0 }}">
+        <button @click="activeFilter = 'completed'" :class="activeFilter === 'completed' ? 'tab-button active' : 'tab-button'" :disabled="{{ $completedCount === 0 ? 'true' : 'false' }}">
             Completed
             <span class="tab-count-badge" :class="activeFilter === 'completed' ? 'active' : 'inactive'">
                 {{ $completedCount }}
             </span>
         </button>
-        <button @click="activeFilter = 'draft'" :class="activeFilter === 'draft' ? 'tab-button active' : 'tab-button'" :disabled="{{ $draftCount === 0 }}">
+        <button @click="activeFilter = 'draft'" :class="activeFilter === 'draft' ? 'tab-button active' : 'tab-button'" :disabled="{{ $draftCount === 0 ? 'true' : 'false' }}">
             Draft
             <span class="tab-count-badge" :class="activeFilter === 'draft' ? 'active' : 'inactive'">
                 {{ $draftCount }}
             </span>
         </button>
-        <button @click="activeFilter = 'archived'" :class="activeFilter === 'archived' ? 'tab-button active' : 'tab-button'" :disabled="{{ $archivedCount === 0 }}">
+        <button @click="activeFilter = 'archived'" :class="activeFilter === 'archived' ? 'tab-button active' : 'tab-button'" :disabled="{{ $archivedCount === 0 ? 'true' : 'false' }}">
             Archived
             <span class="tab-count-badge" :class="activeFilter === 'archived' ? 'active' : 'inactive'">
                 {{ $archivedCount }}

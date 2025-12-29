@@ -49,6 +49,7 @@ resources/views/components/
 │   ├── stats-section.blade.php # Stats overview
 │   ├── hero-section.blade.php # Hero with Lottie animation
 │   ├── benefits-section.blade.php # Benefits grid
+│   ├── tips-section.blade.php # Tips/best practices (create pages)
 │   ├── faq-section.blade.php  # FAQ accordion
 │   ├── filter-tabs.blade.php  # Status filter tabs
 │   ├── empty-state.blade.php  # Empty state display
@@ -61,6 +62,7 @@ resources/views/components/
 │   ├── stats-section.blade.php # Stats overview
 │   ├── hero-section.blade.php # Hero with Lottie animation
 │   ├── benefits-section.blade.php # Benefits grid
+│   ├── tips-section.blade.php # Tips/best practices (create pages)
 │   ├── faq-section.blade.php  # FAQ accordion
 │   ├── filter-tabs.blade.php  # Status filter tabs
 │   ├── empty-state.blade.php  # Empty state display

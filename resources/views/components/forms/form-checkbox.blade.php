@@ -17,6 +17,7 @@
                 id="{{ $name }}" 
                 value="{{ $value }}" 
                 {{ old($name, $checked) ? 'checked' : '' }}
+                {{ $attributes->whereStartsWith('x-') }}
                 class="form-checkbox">
         </div>
         <div class="ml-3">

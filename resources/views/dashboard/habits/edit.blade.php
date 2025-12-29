@@ -38,7 +38,6 @@
                     <x-forms.habit-frequency-form 
                         :frequency-type="$habit->frequency_type->value"
                         :frequency-count="$habit->frequency_count"
-                        :selected-days="$habit->frequency_config['days'] ?? []"
                     />
 
                     <!-- Submit Buttons -->

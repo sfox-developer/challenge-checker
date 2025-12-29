@@ -27,8 +27,7 @@ class UpdateChallengeRequest extends FormRequest
             'days_duration' => 'nullable|integer|min:1|max:365',
             'frequency_type' => 'required|string|in:daily,weekly,monthly,yearly',
             'frequency_count' => 'required|integer|min:1|max:7',
-            'weekly_days' => 'nullable|array',
-            'weekly_days.*' => 'integer|min:1|max:7',
+
         ];
     }
 

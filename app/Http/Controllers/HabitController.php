@@ -90,8 +90,6 @@ class HabitController extends Controller
             'frequency_count' => $request->input('frequency_type') === 'daily' 
                 ? 'required|integer|in:1' 
                 : 'required|integer|min:1|max:100',
-            'weekly_days' => 'nullable|array',
-            'weekly_days.*' => 'integer|min:1|max:7',
         ]);
 
         // Create new goal if needed
@@ -108,9 +106,6 @@ class HabitController extends Controller
 
         // Prepare frequency config
         $frequencyConfig = null;
-        if ($validated['frequency_type'] === 'weekly' && !empty($validated['weekly_days'])) {
-            $frequencyConfig = ['days' => $validated['weekly_days']];
-        }
 
         // Create habit
         $habit = Habit::create([
