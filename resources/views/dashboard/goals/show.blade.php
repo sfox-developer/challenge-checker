@@ -3,8 +3,8 @@
 
     <x-dashboard.page-header 
         eyebrow="Goal Library"
-        :title="$goal->name"
-        :description="$goal->category ? $goal->category->name : 'Goal details and usage'" />
+        :title="($goal->icon ?? '🎯') . ' ' . $goal->name"
+        :description="$goal->description ?: 'Goal details and usage'" />
 
     <!-- Action Buttons -->
     <div class="pb-6">
@@ -49,37 +49,6 @@
     <div class="section">
         <div class="container max-w-4xl">
             <div class="space-y-6">
-            
-            <!-- Goal Info Card -->
-            <div class="card">
-                <div class="flex items-start gap-4 mb-4">
-                    <div class="text-5xl">{{ $goal->icon ?? '🎯' }}</div>
-                    <div class="flex-1">
-                        <h2 class="h1 mb-2">{{ $goal->name }}</h2>
-                        
-                        @if($goal->description)
-                            <p class="text-gray-600 dark:text-gray-400 mb-3">{{ $goal->description }}</p>
-                        @endif
-
-                        <div class="flex flex-wrap items-center gap-2">
-                            @if($goal->category)
-                                <span class="badge-primary">
-                                    {{ $goal->category->icon }} {{ $goal->category->name }}
-                                </span>
-                            @endif
-
-                            <span class="count-badge">
-                                {{ $challenges->count() }} Challenge{{ $challenges->count() !== 1 ? 's' : '' }}
-                            </span>
-
-                            <span class="count-badge-primary">
-                                {{ $habits->count() }} Habit{{ $habits->count() !== 1 ? 's' : '' }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Statistics Cards -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <x-ui.stat-card label="Total Completions" :value="$stats['total_completions']" variant="top" />
@@ -251,18 +220,19 @@
             <div class="space-y-4">
                 <x-forms.form-input
                     name="name"
-                    label="Goal Name *"
+                    label="Goal Name"
+                    placeholder="e.g., Exercise, Read, Meditate"
                     :value="$goal->name"
                     required />
 
-                <x-forms.form-textarea
-                    name="description"
-                    label="Description"
-                    :value="$goal->description"
-                    rows="3"
-                    optional />
-
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <x-forms.emoji-picker 
+                        :id="'edit-icon-' . $goal->id"
+                        name="icon" 
+                        :value="$goal->icon"
+                        label="Icon (emoji)"
+                        placeholder="🎯" />
+                    
                     <x-forms.form-select
                         name="category_id"
                         label="Category"
@@ -274,14 +244,15 @@
                             </option>
                         @endforeach
                     </x-forms.form-select>
-
-                    <x-forms.emoji-picker 
-                        :id="'edit-icon-' . $goal->id"
-                        name="icon" 
-                        :value="$goal->icon"
-                        label="Icon (emoji)"
-                        placeholder="🎯" />
                 </div>
+
+                <x-forms.form-textarea
+                    name="description"
+                    label="Description"
+                    placeholder="What is this goal about?"
+                    :value="$goal->description"
+                    rows="3"
+                    optional />
             </div>
 
             <div class="modal-footer">
