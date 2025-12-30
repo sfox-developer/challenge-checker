@@ -1,4 +1,4 @@
-<div class="section pt-0">
+<div class="section">
     <div class="container max-w-4xl">
         <div class="animate animate-hidden-fade-up"
              x-data="{}"

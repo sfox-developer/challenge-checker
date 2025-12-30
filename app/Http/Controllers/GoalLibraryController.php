@@ -169,7 +169,7 @@ class GoalLibraryController extends Controller
     /**
      * Store a newly created goal in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse|JsonResponse
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -182,6 +182,18 @@ class GoalLibraryController extends Controller
             'user_id' => auth()->id(),
             ...$validated
         ]);
+
+        // Return JSON for AJAX requests
+        if ($request->expectsJson()) {
+            return response()->json([
+                'id' => $goal->id,
+                'name' => $goal->name,
+                'icon' => $goal->icon,
+                'description' => $goal->description,
+                'category_id' => $goal->category_id,
+                'created_at' => $goal->created_at,
+            ]);
+        }
 
         return redirect()->route('goals.show', $goal)
             ->with('success', 'Goal added to your library!');
