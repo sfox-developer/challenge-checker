@@ -198,6 +198,10 @@ html.dark input[type="checkbox"].form-checkbox {
     color: var(--color-text);
 }
 
+.form-checkbox-wrapper {
+    @apply flex items-center justify-center;
+    cursor: pointer;
+}
 html.dark .checkbox-label {
     color: var(--color-text-dark);
 }

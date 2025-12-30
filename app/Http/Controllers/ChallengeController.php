@@ -316,6 +316,60 @@ class ChallengeController extends Controller
         return redirect()->route('challenges.show', $challenge)
             ->with('success', 'Challenge restored successfully!');
     }
+
+    /**
+     * Update daily progress for a specific date.
+     */
+    public function updateDailyProgress(Request $request, Challenge $challenge): RedirectResponse
+    {
+        $this->authorize('update', $challenge);
+
+        $request->validate([
+            'date' => 'required|date',
+            'goals' => 'required|array',
+            'goals.*' => 'boolean',
+        ]);
+
+        $date = $request->input('date');
+        $goals = $request->input('goals');
+
+        foreach ($goals as $goalId => $isCompleted) {
+            $goal = $challenge->goals()->find($goalId);
+            
+            if (!$goal) {
+                continue;
+            }
+
+            $progress = $challenge->dailyProgress()
+                ->where('user_id', $challenge->user_id)
+                ->where('goal_id', $goalId)
+                ->where('date', $date)
+                ->first();
+
+            if ($isCompleted) {
+                if (!$progress) {
+                    // Create new progress entry
+                    $challenge->dailyProgress()->create([
+                        'user_id' => $challenge->user_id,
+                        'goal_id' => $goalId,
+                        'date' => $date,
+                        'completed_at' => now(),
+                    ]);
+                } elseif (!$progress->completed_at) {
+                    // Mark existing as completed
+                    $progress->markCompleted();
+                }
+            } else {
+                if ($progress && $progress->completed_at) {
+                    // Mark as incomplete
+                    $progress->markUncompleted();
+                }
+            }
+        }
+
+        return redirect()->route('challenges.show', $challenge)
+            ->with('success', 'Progress updated successfully!');
+    }
     /**
      * Get monthly calendar for challenge completion tracking.
      */

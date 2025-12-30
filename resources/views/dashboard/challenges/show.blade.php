@@ -692,7 +692,7 @@
     </x-ui.modal>
 
     <!-- Day Details Modal -->
-    <div x-data="{ dayData: null, monthName: '{{ \Carbon\Carbon::create($year, $month, 1)->format('F') }}', year: '{{ $year }}' }" 
+    <div x-data="dailyGoalsModal('{{ \Carbon\Carbon::create($year, $month, 1)->format('F') }}', '{{ $year }}', {{ $challenge->id }}, '{{ route('challenges.updateDailyProgress', $challenge) }}')" 
          @set-day-data.window="dayData = $event.detail">
         <x-ui.modal 
             name="day-details-modal"
@@ -702,40 +702,67 @@
             <template x-if="dayData && dayData.goals">
                 <div class="daily-goals-list">
                     <template x-for="(goalCompletion, index) in dayData.goals" :key="index">
-                        <x-goal-card>
-                            <x-slot:icon>
-                                <div class="goal-display-card-icon">
-                                    <span x-text="goalCompletion.goal?.icon || '🎯'"></span>
-                                </div>
-                            </x-slot:icon>
-                            <x-slot:title>
-                                <div class="daily-goals-title" x-text="goalCompletion.goal?.name"></div>
-                            </x-slot:title>
-                            <x-slot:subtitle>
-                                <template x-if="goalCompletion.is_completed && goalCompletion.completed_at">
-                                    <div class="daily-goals-timestamp">
-                                        Completed at <span x-text="new Date(goalCompletion.completed_at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })"></span>
-                                    </div>
-                                </template>
-                            </x-slot:subtitle>
-                            <x-slot:rightAction>
-                                <div class="daily-goals-status-icon" :class="goalCompletion.is_completed ? 'daily-goals-status-icon--completed' : 'daily-goals-status-icon--incomplete'">
-                                    <template x-if="goalCompletion.is_completed">
-                                        <svg fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                        </svg>
-                                    </template>
-                                    <template x-if="!goalCompletion.is_completed">
-                                        <svg fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-                                        </svg>
-                                    </template>
-                                </div>
-                            </x-slot:rightAction>
-                        </x-goal-card>
+                        <div>
+                            <!-- Edit Mode: Clickable card -->
+                            <template x-if="editMode">
+                                <label class="goal-select-clickable">
+                                    <x-goal-card>
+                                        <x-slot:icon>
+                                            <div class="goal-display-card-icon">
+                                                <span x-text="goalCompletion.goal?.icon || '🎯'"></span>
+                                            </div>
+                                        </x-slot:icon>
+                                        <x-slot:title>
+                                            <div class="daily-goals-title" x-text="goalCompletion.goal?.name"></div>
+                                        </x-slot:title>
+                                        <x-slot:rightAction>
+                                            <input 
+                                                type="checkbox" 
+                                                class="form-checkbox"
+                                                :checked="editedGoals[goalCompletion.goal.id]"
+                                                @change="toggleGoal(goalCompletion.goal.id)">
+                                        </x-slot:rightAction>
+                                    </x-goal-card>
+                                </label>
+                            </template>
+                            <!-- View Mode: Non-clickable card -->
+                            <template x-if="!editMode">
+                                <x-goal-card>
+                                    <x-slot:icon>
+                                        <div class="goal-display-card-icon">
+                                            <span x-text="goalCompletion.goal?.icon || '🎯'"></span>
+                                        </div>
+                                    </x-slot:icon>
+                                    <x-slot:title>
+                                        <div class="daily-goals-title" x-text="goalCompletion.goal?.name"></div>
+                                    </x-slot:title>
+                                    <x-slot:subtitle>
+                                        <template x-if="goalCompletion.is_completed && goalCompletion.completed_at">
+                                            <div class="daily-goals-timestamp">
+                                                Completed at <span x-text="new Date(goalCompletion.completed_at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })"></span>
+                                            </div>
+                                        </template>
+                                    </x-slot:subtitle>
+                                    <x-slot:rightAction>
+                                        <div class="daily-goals-status-icon" :class="goalCompletion.is_completed ? 'daily-goals-status-icon--completed' : 'daily-goals-status-icon--incomplete'">
+                                            <template x-if="goalCompletion.is_completed">
+                                                <svg fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                                </svg>
+                                            </template>
+                                            <template x-if="!goalCompletion.is_completed">
+                                                <svg fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                                </svg>
+                                            </template>
+                                        </div>
+                                    </x-slot:rightAction>
+                                </x-goal-card>
+                            </template>
+                        </div>
                     </template>
                     
-                    <div class="daily-goals-summary">
+                    <div class="daily-goals-summary" x-show="!editMode">
                         <div class="daily-goals-summary-text">
                             <span class="daily-goals-summary-number" x-text="dayData?.completed_count"></span> of <span class="daily-goals-summary-number" x-text="dayData?.total_count"></span> goals completed
                         </div>
@@ -744,11 +771,44 @@
             </template>
 
             <div class="modal-footer">
-                <button type="button" 
-                        @click="$dispatch('close-modal', 'day-details-modal')"
-                        class="btn-secondary">
-                    Close
-                </button>
+                @can('update', $challenge)
+                    <!-- Edit Mode Buttons -->
+                    <template x-if="editMode">
+                        <div class="flex gap-2 w-full">
+                            <button type="button" 
+                                    @click="editMode = false"
+                                    class="btn-secondary flex-1">
+                                Cancel
+                            </button>
+                            <button type="button" 
+                                    @click="saveChanges()"
+                                    class="btn-primary flex-1">
+                                Save Changes
+                            </button>
+                        </div>
+                    </template>
+                    <!-- View Mode Buttons -->
+                    <template x-if="!editMode">
+                        <div class="flex gap-2 w-full">
+                            <button type="button" 
+                                    @click="$dispatch('close-modal', 'day-details-modal')"
+                                    class="btn-secondary flex-1">
+                                Close
+                            </button>
+                            <button type="button" 
+                                    @click="initEditMode(); editMode = true"
+                                    class="btn-primary flex-1">
+                                Edit
+                            </button>
+                        </div>
+                    </template>
+                @else
+                    <button type="button" 
+                            @click="$dispatch('close-modal', 'day-details-modal')"
+                            class="btn-secondary">
+                        Close
+                    </button>
+                @endcan
             </div>
         </x-ui.modal>
     </div>

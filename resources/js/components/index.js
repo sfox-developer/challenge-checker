@@ -30,7 +30,7 @@ import { showToast, showError, showSuccess, showInfo, showWarning, getCsrfToken,
 import { createEmojiPicker } from './emojiPicker.js';
 import registrationForm from './registration-form.js';
 import { createFollowManager } from './follow.js';
-import { challengeCalendar } from './challenge-calendar.js';
+import { challengeCalendar, dailyGoalsModal } from './challenge-calendar.js';
 
 /**
  * Registration Form Component
@@ -50,6 +50,7 @@ window.habitEditForm = createHabitEditForm;
 window.challengeForm = createChallengeForm;
 window.challengeCreateForm = challengeCreateForm;
 window.challengeCalendar = challengeCalendar;
+window.dailyGoalsModal = dailyGoalsModal;
 window.emojiPicker = createEmojiPicker;
 window.registrationForm = registrationForm;
 window.followManager = createFollowManager;

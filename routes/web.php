@@ -68,6 +68,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/challenges/{challenge}/complete', [ChallengeController::class, 'complete'])->name('challenges.complete');
     Route::post('/challenges/{challenge}/archive', [ChallengeController::class, 'archive'])->name('challenges.archive');
     Route::post('/challenges/{challenge}/restore', [ChallengeController::class, 'restoreArchived'])->name('challenges.restore');
+    Route::patch('/challenges/{challenge}/daily-progress', [ChallengeController::class, 'updateDailyProgress'])->name('challenges.updateDailyProgress');
     
     // Goal tracking routes
     Route::post('/goals/{goal}/toggle', [GoalController::class, 'toggle'])->name('goals.toggle');
