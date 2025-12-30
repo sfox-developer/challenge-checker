@@ -6,6 +6,11 @@
         title="Create Challenge"
         description="Set up your new time-bound challenge" />
 
+    {{-- Pass goals library data to JavaScript --}}
+    <script>
+        window.goalsLibraryData = @json($goalsLibrary);
+    </script>
+
     {{-- Main Create Form Section --}}
     <div class="section pt-0" x-data="challengeCreateForm()" x-id="['challenge-form']">
         <div class="container max-w-4xl">
@@ -241,22 +246,37 @@
                                 </div>
 
                                 <!-- Selected Goals Display -->
-                                <div x-show="selectedGoalIds.length > 0 || newGoals.length > 0" class="space-y-3">
+                                <div x-show="selectedGoalIds.length > 0 || newGoals.length > 0" class="space-y-4">
                                     <!-- Library Goals -->
                                     <div x-show="selectedGoalIds.length > 0">
-                                        <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">From Library:</h4>
-                                        <div class="flex flex-wrap gap-2">
+                                        <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+                                            </svg>
+                                            From Library
+                                        </h4>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             <template x-for="goalId in selectedGoalIds" :key="goalId">
-                                                <div class="inline-flex items-center space-x-2 px-3 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-600">
-                                                    <span class="text-sm font-medium text-gray-900 dark:text-white" 
-                                                          x-text="getGoalNameById(goalId)"></span>
-                                                    <button type="button" 
-                                                            @click="toggleGoal(goalId)"
-                                                            class="text-gray-500 hover:text-red-600 dark:hover:text-red-400">
-                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                                        </svg>
-                                                    </button>
+                                                <div class="goal-display-card">
+                                                    <div class="goal-display-accent-bar"></div>
+                                                    <div class="p-4">
+                                                        <div class="flex items-start justify-between gap-3">
+                                                            <div class="flex items-start gap-3 flex-1 min-w-0">
+                                                                <div class="text-3xl flex-shrink-0" x-text="getGoalIconById(goalId)"></div>
+                                                                <div class="flex-1 min-w-0">
+                                                                    <h5 class="font-semibold text-gray-900 dark:text-white truncate" x-text="getGoalNameById(goalId)"></h5>
+                                                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5" x-text="getGoalCategoryById(goalId)"></p>
+                                                                </div>
+                                                            </div>
+                                                            <button type="button" 
+                                                                    @click="toggleGoal(goalId)"
+                                                                    class="flex-shrink-0 p-1 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </template>
                                         </div>
@@ -264,19 +284,34 @@
 
                                     <!-- New Goals -->
                                     <div x-show="newGoals.length > 0">
-                                        <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">New Goals:</h4>
-                                        <div class="flex flex-wrap gap-2">
+                                        <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                                            </svg>
+                                            New Goals
+                                        </h4>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             <template x-for="(goal, index) in newGoals" :key="index">
-                                                <div class="inline-flex items-center space-x-2 px-3 py-2 bg-green-100 dark:bg-green-900/30 rounded-lg border border-green-300 dark:border-green-600">
-                                                    <span x-show="goal.icon" class="text-lg" x-text="goal.icon"></span>
-                                                    <span class="text-sm font-medium text-gray-900 dark:text-white" x-text="goal.name"></span>
-                                                    <button type="button" 
-                                                            @click="removeNewGoal(index)"
-                                                            class="text-gray-500 hover:text-red-600 dark:hover:text-red-400">
-                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                                        </svg>
-                                                    </button>
+                                                <div class="goal-display-card">
+                                                    <div class="goal-display-accent-bar"></div>
+                                                    <div class="p-4">
+                                                        <div class="flex items-start justify-between gap-3">
+                                                            <div class="flex items-start gap-3 flex-1 min-w-0">
+                                                                <div class="text-3xl flex-shrink-0" x-text="goal.icon || '🎯'"></div>
+                                                                <div class="flex-1 min-w-0">
+                                                                    <h5 class="font-semibold text-gray-900 dark:text-white truncate" x-text="goal.name"></h5>
+                                                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5" x-show="goal.description" x-text="goal.description"></p>
+                                                                </div>
+                                                            </div>
+                                                            <button type="button" 
+                                                                    @click="removeNewGoal(index)"
+                                                                    class="flex-shrink-0 p-1 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </template>
                                         </div>

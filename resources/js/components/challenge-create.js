@@ -14,6 +14,7 @@ export default () => ({
         category_id: '',
         description: ''
     },
+    goals: [], // Will be initialized from window.goalsLibraryData
     
     // Form data
     name: '',
@@ -211,15 +212,35 @@ export default () => ({
      * Get goal name by ID (for display in selected goals)
      */
     getGoalNameById(goalId) {
-        // Find goal in the library (passed via window or from backend)
-        // For now, return the ID - can be enhanced with actual goal data
-        return `Goal #${goalId}`;
+        const goal = this.goals.find(g => g.id === goalId);
+        return goal ? goal.name : `Goal #${goalId}`;
+    },
+    
+    /**
+     * Get goal icon by ID
+     */
+    getGoalIconById(goalId) {
+        const goal = this.goals.find(g => g.id === goalId);
+        return goal && goal.icon ? goal.icon : '🎯';
+    },
+    
+    /**
+     * Get goal category by ID
+     */
+    getGoalCategoryById(goalId) {
+        const goal = this.goals.find(g => g.id === goalId);
+        return goal && goal.category ? goal.category.name : '';
     },
     
     /**
      * Initialize component
      */
     init() {
+        // Load goals from window if available
+        if (window.goalsLibraryData) {
+            this.goals = window.goalsLibraryData;
+        }
+        
         // Watch frequency type and auto-set count to 1 for daily
         this.$watch('frequencyType', value => {
             if (value === 'daily') {

@@ -33,6 +33,9 @@ Route::view('/privacy-policy', 'public.privacy-policy')->name('privacy.policy');
 Route::view('/terms-of-service', 'public.terms-of-service')->name('terms.service');
 Route::view('/imprint', 'public.imprint')->name('imprint');
 
+// Demo pages (temporary - for design review)
+Route::view('/demo/goal-display', 'demo.goal-display-variants')->name('demo.goal-display')->middleware('auth');
+
 Route::middleware('auth')->group(function () {
     // Dashboard welcome (post-registration onboarding)
     Route::get('/welcome', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'welcome'])

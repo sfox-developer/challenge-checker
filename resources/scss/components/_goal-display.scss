@@ -1,0 +1,24 @@
+// ============================================================================
+// GOAL DISPLAY - Card-Style Display for Selected Goals
+// ============================================================================
+
+// Goal display card - unified style for both library and new goals
+.goal-display-card {
+    @apply relative overflow-hidden rounded-xl;
+    @apply border border-gray-200 dark:border-gray-700;
+    @apply bg-white dark:bg-gray-800;
+    @apply shadow-sm transition-all duration-200;
+    
+    &:hover {
+        @apply shadow;
+    }
+    
+    .goal-display-accent-bar {
+        @apply h-1 w-full;
+        background: var(--gradient-accent);
+        
+        html.dark & {
+            background: var(--gradient-accent-dark);
+        }
+    }
+}

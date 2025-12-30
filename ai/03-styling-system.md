@@ -533,6 +533,116 @@ transition: box-shadow 300ms, border-color 300ms, color 300ms;
 
 ---
 
+### Goal Display (`components/_goal-display.scss`)
+
+**Added:** December 30, 2025
+
+Card-style display for selected goals in challenge creation flow. Uses unified design for both library goals and newly created goals.
+
+**Component Classes:**
+```scss
+.goal-display-card        // Card container with glassmorphism effect
+.goal-display-accent-bar  // Top gradient accent bar
+```
+
+**Design Philosophy:**
+- **Unified Style:** Both library goals and new goals use the same appearance
+- **No Color Variants:** Removed green variant for new goals to maintain minimalist design
+- **Matches Modal System:** Uses same accent gradient as modal headers (purple: #667eea → #764ba2)
+- **Grid Layout:** 2-column responsive grid on desktop, single column on mobile
+
+**Visual Structure:**
+```scss
+.goal-display-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.75rem;              // rounded-xl
+    border: 1px solid;
+    border-color: #e5e7eb;               // gray-200 (light)
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 200ms;
+    
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    
+    // Dark mode
+    html.dark & {
+        border-color: #374151;            // gray-700
+        background: #1f2937;              // gray-800
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        
+        &:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+    }
+}
+
+.goal-display-accent-bar {
+    height: 0.25rem;                      // h-1
+    width: 100%;
+    background: var(--gradient-accent);   // Purple gradient
+    
+    html.dark & {
+        background: var(--gradient-accent-dark);
+    }
+}
+```
+
+**Usage Example:**
+```blade
+<!-- In challenge create form (Step 3) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <template x-for="goalId in selectedGoalIds" :key="goalId">
+        <div class="goal-display-card">
+            <div class="goal-display-accent-bar"></div>
+            <div class="p-4">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-start gap-3 flex-1 min-w-0">
+                        <div class="text-3xl flex-shrink-0" 
+                             x-text="getGoalIconById(goalId)"></div>
+                        <div class="flex-1 min-w-0">
+                            <h5 class="font-semibold text-gray-900 dark:text-white truncate" 
+                                x-text="getGoalNameById(goalId)"></h5>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5" 
+                               x-text="getGoalCategoryById(goalId)"></p>
+                        </div>
+                    </div>
+                    <button type="button" 
+                            @click="toggleGoal(goalId)"
+                            class="flex-shrink-0 p-1 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+</div>
+```
+
+**Features:**
+- Large emoji icon (3xl)
+- Goal name with truncation
+- Category/description as secondary text
+- Remove button with hover states
+- Consistent with modal and card design system
+- Full dark mode support
+
+**Where Used:**
+- Challenge creation form (Step 3: Goals)
+- For both library goals and newly created goals
+
+**Design Rationale:**
+- Removed color differentiation (green for new goals) to maintain minimalist aesthetic
+- Uses same purple accent as modals for consistency
+- Provides better visual hierarchy than simple pill/badge design
+- Shows more information (icon, name, category) in organized layout
+
+---
+
 ### Forms (`components/_forms.scss`)
 
 **Form Elements:**
