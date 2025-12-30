@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use App\Domain\Challenge\Models\Challenge;
+use App\Domain\Habit\Models\Habit;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +23,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Register morph map for polymorphic relationships
+        Relation::morphMap([
+            'challenge' => Challenge::class,
+            'habit' => Habit::class,
+        ]);
+
         // Force HTTPS in production
         if (app()->environment('production')) {
             URL::forceScheme('https');

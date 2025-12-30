@@ -93,6 +93,15 @@
                 </div>
             @endif
 
+            <!-- Completion Calendar -->
+            @if($stats['total_completions'] > 0)
+                <x-completion-calendar 
+                    :calendar="$calendar"
+                    :year="$year"
+                    :month="$month"
+                    alpineComponent="goalCalendar" />
+            @endif
+
             <!-- Tabs -->
             <div x-data="{ activeTab: 'challenges' }">
                 <!-- Tab Navigation -->
@@ -339,4 +348,95 @@
             </form>
         </div>
     </x-ui.modal>
+
+    <!-- Day Details Modal -->
+    <div x-data="goalDayModal('{{ \Carbon\Carbon::create($year, $month, 1)->format('F') }}', '{{ $year }}', {{ $goal->id }})" 
+         @set-day-data.window="dayData = $event.detail">
+        <x-ui.modal 
+            name="day-details-modal"
+            eyebrow="Completion Details" 
+            x-bind:title="dayData && dayData.day ? monthName + ' ' + dayData.day + ', ' + year : 'Completion Details'"
+            maxWidth="md">
+            <template x-if="dayData">
+                <div>
+                    <template x-if="hasCompletions">
+                        <div class="space-y-3">
+                            <!-- Completions List -->
+                            <div class="daily-goals-list">
+                                <template x-for="(source, index) in completionSources" :key="index">
+                                    <x-goal-card>
+                                        <x-slot:icon>
+                                            <div class="goal-display-card-icon">
+                                                <span x-text="getSourceIcon(source.type)"></span>
+                                            </div>
+                                        </x-slot:icon>
+                                        <x-slot:title>
+                                            <div class="daily-goals-title">
+                                                <span x-text="source.type === 'challenge' ? 'Challenge' : 'Habit'"></span>
+                                                <template x-if="source.name">
+                                                    <span>: <span x-text="source.name"></span></span>
+                                                </template>
+                                            </div>
+                                        </x-slot:title>
+                                        <x-slot:subtitle>
+                                            <template x-if="source.completed_at">
+                                                <div class="daily-goals-timestamp">
+                                                    Completed at <span x-text="new Date(source.completed_at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })"></span>
+                                                </div>
+                                            </template>
+                                        </x-slot:subtitle>
+                                        <x-slot:rightAction>
+                                            <div class="daily-goals-status-icon daily-goals-status-icon--completed">
+                                                <svg fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                                </svg>
+                                            </div>
+                                        </x-slot:rightAction>
+                                    </x-goal-card>
+                                </template>
+                            </div>
+                            
+                            <!-- Summary -->
+                            <div class="daily-goals-summary">
+                                <div class="daily-goals-summary-text">
+                                    <span class="daily-goals-summary-number" x-text="dayData.completed_count"></span>
+                                    <span x-text="dayData.completed_count === 1 ? 'completion' : 'completions'"></span>
+                                    from 
+                                    <span x-text="completionSources.filter(s => s.type === 'challenge').length"></span> 
+                                    <span x-text="completionSources.filter(s => s.type === 'challenge').length === 1 ? 'challenge' : 'challenges'"></span>
+                                    and
+                                    <span x-text="completionSources.filter(s => s.type === 'habit').length"></span>
+                                    <span x-text="completionSources.filter(s => s.type === 'habit').length === 1 ? 'habit' : 'habits'"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    
+                    <template x-if="!hasCompletions">
+                        <div class="empty-state-card">
+                            <div class="empty-state-icon">
+                                <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <h3 class="empty-state-title">
+                                No completions
+                            </h3>
+                            <p class="empty-state-message">
+                                This goal was not completed on this day
+                            </p>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <div class="modal-footer">
+                <button type="button" 
+                        @click="$dispatch('close-modal', 'day-details-modal')"
+                        class="btn-secondary">
+                    Close
+                </button>
+            </div>
+        </x-ui.modal>
+    </div>
 </x-dashboard-layout>

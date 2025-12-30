@@ -35,6 +35,7 @@ import registrationForm from './registration-form.js';
 import { createFollowManager } from './follow.js';
 import { challengeCalendar, dailyGoalsModal } from './challenge-calendar.js';
 import { habitCalendar, habitDayModal } from './habit-calendar.js';
+import { goalCalendar, goalDayModal } from './goal-calendar.js';
 
 /**
  * Registration Form Component
@@ -59,6 +60,8 @@ window.challengeCalendar = challengeCalendar;
 window.dailyGoalsModal = dailyGoalsModal;
 window.habitCalendar = habitCalendar;
 window.habitDayModal = habitDayModal;
+window.goalCalendar = goalCalendar;
+window.goalDayModal = goalDayModal;
 window.emojiPicker = createEmojiPicker;
 window.registrationForm = registrationForm;
 window.followManager = createFollowManager;

@@ -93,7 +93,12 @@ class GoalLibraryController extends Controller
         // Get active categories from database for edit modal
         $categories = Category::active()->ordered()->get();
 
-        return view('dashboard.goals.show', compact('goal', 'challenges', 'habits', 'stats', 'categories'));
+        // Get calendar data
+        $year = request('year', now()->year);
+        $month = request('month', now()->month);
+        $calendar = $this->getMonthlyCalendar($goal, $year, $month);
+
+        return view('dashboard.goals.show', compact('goal', 'challenges', 'habits', 'stats', 'categories', 'calendar', 'year', 'month'));
     }
 
     /**
@@ -236,5 +241,71 @@ class GoalLibraryController extends Controller
             ->get(['id', 'name', 'description', 'category', 'icon']);
 
         return response()->json($goals);
+    }
+
+    /**
+     * Get monthly calendar for goal completion tracking.
+     */
+    private function getMonthlyCalendar(GoalLibrary $goal, int $year, int $month): array
+    {
+        $firstDay = \Carbon\Carbon::create($year, $month, 1);
+        $daysInMonth = $firstDay->daysInMonth;
+        $startDayOfWeek = $firstDay->dayOfWeekIso; // 1 = Monday, 7 = Sunday
+
+        $calendar = [];
+        
+        // Add empty cells for days before the first day of month
+        for ($i = 1; $i < $startDayOfWeek; $i++) {
+            $calendar[] = [
+                'day' => null, 
+                'is_completed' => false, 
+                'is_today' => false,
+                'completed_count' => 0,
+                'date' => null,
+                'sources' => []
+            ];
+        }
+
+        // Add days of the month
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $date = \Carbon\Carbon::create($year, $month, $day);
+            $isToday = $date->isToday();
+            
+            // Get all completions for this goal on this day
+            $completions = $goal->completions()
+                ->where('date', $date->toDateString())
+                ->whereNotNull('completed_at')
+                ->with('source') // Eager load the source relationship
+                ->get();
+            
+            $completedCount = $completions->count();
+            
+            // Group by source (challenge/habit) with names
+            $sources = [];
+            foreach ($completions as $completion) {
+                $sourceName = '';
+                if ($completion->source) {
+                    $sourceName = $completion->source->name ?? '';
+                }
+                
+                $sources[] = [
+                    'type' => $completion->source_type,
+                    'id' => $completion->source_id,
+                    'name' => $sourceName,
+                    'completed_at' => $completion->completed_at,
+                ];
+            }
+
+            $calendar[] = [
+                'day' => $day,
+                'is_completed' => $completedCount > 0,
+                'is_today' => $isToday,
+                'completed_count' => $completedCount,
+                'date' => $date->toDateString(),
+                'sources' => $sources,
+            ];
+        }
+
+        return $calendar;
     }
 }

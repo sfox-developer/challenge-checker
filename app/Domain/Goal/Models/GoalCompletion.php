@@ -4,6 +4,7 @@ namespace App\Domain\Goal\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use App\Domain\User\Models\User;
 use App\Domain\Challenge\Models\Challenge;
 use App\Domain\Habit\Models\Habit;
@@ -48,17 +49,9 @@ class GoalCompletion extends Model
     /**
      * Get the source (challenge or habit) that triggered this completion
      */
-    public function source()
+    public function source(): MorphTo
     {
-        if ($this->source_type === 'challenge') {
-            return $this->belongsTo(Challenge::class, 'source_id');
-        }
-        
-        if ($this->source_type === 'habit') {
-            return $this->belongsTo(Habit::class, 'source_id');
-        }
-        
-        return null;
+        return $this->morphTo();
     }
 
     /**
