@@ -29,6 +29,17 @@ html.dark .form-label {
     @apply ml-1;
 }
 
+.form-section-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-wider;
+    @apply mb-2;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    
+    .dark & {
+        color: var(--color-accent-dark);
+    }
+}
+
 .form-section-label {
     @apply block text-sm font-bold mb-4;
     @apply flex items-center space-x-2;
