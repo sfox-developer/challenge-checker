@@ -4,9 +4,27 @@
     <x-dashboard.page-header 
         eyebrow="Edit Habit"
         title="{{ $habit->goal->name }}"
-        description="Update your habit settings" />
+        :description="$habit->goal->description" />
 
-    <div class="section">
+    <!-- Action Buttons -->
+    <div class="pb-6">
+        <div class="container">
+            <div class="flex justify-center">
+                <div class="flex space-x-2">
+                    <x-ui.app-button variant="secondary" href="{{ route('habits.show', $habit) }}">
+                        <x-slot name="icon">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </x-slot>
+                        Back
+                    </x-ui.app-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section pt-0">
         <div class="container max-w-4xl">
             <div class="card">
                 <form action="{{ route('habits.update', $habit) }}" method="POST" x-data="habitEditForm('{{ $habit->frequency_type->value }}', {{ $habit->frequency_count }})">
@@ -14,16 +32,24 @@
                     @method('PUT')
                     
                     <!-- Current Goal Display -->
-                    <div class="info-box info-box-primary">
-                        <div class="flex items-center space-x-3">
-                            <div class="text-3xl">{{ $habit->goal->icon }}</div>
-                            <div class="flex-1">
-                                <div class="font-bold text-gray-900 dark:text-white">{{ $habit->goal_name }}</div>
-                                @if($habit->goal->description)
-                                    <div class="text-sm text-gray-600 dark:text-gray-400">{{ $habit->goal->description }}</div>
-                                @endif
-                            </div>
-                        </div>
+                    <div class="mb-6">
+                        <label class="form-section-label">
+                            <span>Current Goal</span>
+                            <span class="text-optional">(Read-only)</span>
+                        </label>
+                        <x-goal-card>
+                            <x-slot:icon>
+                                <div class="goal-display-card-icon">{{ $habit->goal->icon ?? '🎯' }}</div>
+                            </x-slot:icon>
+                            <x-slot:title>
+                                <h5 class="goal-display-card-title">{{ $habit->goal->name }}</h5>
+                            </x-slot:title>
+                            @if($habit->goal->description)
+                                <x-slot:subtitle>
+                                    <p class="goal-display-card-description">{{ $habit->goal->description }}</p>
+                                </x-slot:subtitle>
+                            @endif
+                        </x-goal-card>
                     </div>
 
                     <!-- Public Checkbox -->
@@ -31,7 +57,6 @@
                         name="is_public"
                         label="Make this habit public"
                         description="Other users will be able to see this habit in their feed"
-                        icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'
                         :checked="$habit->is_public"
                         class="mb-8" />
 
@@ -41,28 +66,18 @@
                     />
 
                     <!-- Submit Buttons -->
-                    <div class="flex justify-between items-center divider-top-md">
-                        <x-ui.app-button variant="secondary" type="button" x-data="" @click="$dispatch('open-modal', 'delete-habit')">
+                    <div class="flex justify-end space-x-3 divider-top-md">
+                        <x-ui.app-button variant="secondary" href="{{ route('habits.show', $habit) }}">
+                            Cancel
+                        </x-ui.app-button>
+                        <x-ui.app-button variant="primary" type="submit">
                             <x-slot name="icon">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                 </svg>
                             </x-slot>
-                            Delete
+                            Save Changes
                         </x-ui.app-button>
-                        <div class="flex space-x-3">
-                            <x-ui.app-button variant="secondary" href="{{ route('habits.show', $habit) }}">
-                                Cancel
-                            </x-ui.app-button>
-                            <x-ui.app-button variant="primary" type="submit">
-                                <x-slot name="icon">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                    </svg>
-                                </x-slot>
-                                Save Changes
-                            </x-ui.app-button>
-                        </div>
                     </div>
                 </form>
             </div>

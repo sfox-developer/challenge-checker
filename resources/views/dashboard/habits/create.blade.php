@@ -7,7 +7,7 @@
         description="Build a new recurring habit" />
 
     {{-- Main Create Form Section --}}
-    <div class="section">
+    <div class="section pt-0">
         <div class="container max-w-4xl">
             <div class="card">
                 <form action="{{ route('habits.store') }}" method="POST" id="habit-form" x-data="habitFormWithGoalToggle({{ count($goalsLibrary) > 0 ? 'true' : 'false' }})">
@@ -16,10 +16,6 @@
                     <!-- Goal Selection or Creation -->
                     <div class="mb-6">
                         <label class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-3 flex items-center space-x-2">
-                            <svg class="w-4 h-4 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-                                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
-                            </svg>
                             <span>What do you want to track?</span>
                         </label>
 
@@ -124,7 +120,6 @@
                         name="is_public"
                         label="Make this habit public"
                         description="Other users will be able to see this habit in their feed"
-                        icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'
                         :checked="old('is_public', false)"
                         class="mb-8" />
 
