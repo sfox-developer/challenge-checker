@@ -101,22 +101,14 @@ class ChallengeController extends Controller
             'is_public' => $request->boolean('is_public'),
         ]);
 
-        // Create goals from library or new goals
+        // Attach goals from library
         if ($request->has('goal_library_ids')) {
             foreach ($request->goal_library_ids as $index => $goalLibraryId) {
-                $goalLibrary = GoalLibrary::find($goalLibraryId);
-                if ($goalLibrary) {
-                    $challenge->goals()->create([
-                        'goal_library_id' => $goalLibrary->id,
-                        'name' => $goalLibrary->name,
-                        'description' => $goalLibrary->description,
-                        'order' => $index + 1,
-                    ]);
-                }
+                $challenge->goals()->attach($goalLibraryId, ['order' => $index + 1]);
             }
         }
         
-        // Create new goals that will be added to library
+        // Create new goals and attach to challenge
         if ($request->has('new_goals')) {
             foreach ($request->new_goals as $index => $newGoalData) {
                 // Create in goal library first
@@ -129,10 +121,7 @@ class ChallengeController extends Controller
                 ]);
                 
                 // Then link to challenge
-                $challenge->goals()->create([
-                    'goal_library_id' => $goalLibrary->id,
-                    'name' => $goalLibrary->name,
-                    'description' => $goalLibrary->description,
+                $challenge->goals()->attach($goalLibrary->id, [
                     'order' => count($request->goal_library_ids ?? []) + $index + 1,
                 ]);
             }
@@ -157,7 +146,7 @@ class ChallengeController extends Controller
         // Store current URL as potential back URL for edit
         session(['challenge_back_url' => url()->previous()]);
 
-        $challenge->load(['goals.library', 'dailyProgress']);
+        $challenge->load(['goals', 'completions']);
         
         // Calculate progress statistics
         $totalDays = $challenge->days_duration;
@@ -340,29 +329,31 @@ class ChallengeController extends Controller
                 continue;
             }
 
-            $progress = $challenge->dailyProgress()
+            $completion = $challenge->completions()
                 ->where('user_id', $challenge->user_id)
                 ->where('goal_id', $goalId)
                 ->where('date', $date)
                 ->first();
 
             if ($isCompleted) {
-                if (!$progress) {
-                    // Create new progress entry
-                    $challenge->dailyProgress()->create([
+                if (!$completion) {
+                    // Create new completion entry
+                    $challenge->completions()->create([
                         'user_id' => $challenge->user_id,
                         'goal_id' => $goalId,
+                        'source_type' => 'challenge',
+                        'source_id' => $challenge->id,
                         'date' => $date,
                         'completed_at' => now(),
                     ]);
-                } elseif (!$progress->completed_at) {
+                } elseif (!$completion->completed_at) {
                     // Mark existing as completed
-                    $progress->markCompleted();
+                    $completion->update(['completed_at' => now()]);
                 }
             } else {
-                if ($progress && $progress->completed_at) {
+                if ($completion && $completion->completed_at) {
                     // Mark as incomplete
-                    $progress->markUncompleted();
+                    $completion->update(['completed_at' => null]);
                 }
             }
         }
@@ -404,7 +395,7 @@ class ChallengeController extends Controller
             $goalCompletions = [];
             
             foreach ($challenge->goals as $goal) {
-                $completion = $challenge->dailyProgress()
+                $completion = $challenge->completions()
                     ->where('user_id', $challenge->user_id)
                     ->where('goal_id', $goal->id)
                     ->where('date', $date->toDateString())

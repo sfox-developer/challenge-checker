@@ -35,7 +35,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
         ]);
 
         $this->assertTrue($habit->is_active);
@@ -48,7 +48,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'is_active' => true,
         ]);
 
@@ -64,7 +64,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'archived_at' => now(),
             'is_active' => false,
         ]);
@@ -81,14 +81,14 @@ class HabitTest extends TestCase
     {
         $activeHabit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'is_active' => true,
             'archived_at' => null,
         ]);
 
         $archivedHabit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'is_active' => false,
             'archived_at' => now(),
         ]);
@@ -104,13 +104,13 @@ class HabitTest extends TestCase
     {
         $activeHabit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'archived_at' => null,
         ]);
 
         $archivedHabit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'archived_at' => now(),
         ]);
 
@@ -125,7 +125,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
         ]);
 
         HabitCompletionFactory::new()->create([
@@ -143,7 +143,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
         ]);
 
         HabitCompletionFactory::new()->create([
@@ -161,7 +161,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'frequency_type' => FrequencyType::DAILY,
             'frequency_count' => 1,
         ]);
@@ -174,7 +174,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'frequency_type' => FrequencyType::DAILY,
             'frequency_count' => 1,
         ]);
@@ -194,7 +194,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'frequency_type' => FrequencyType::WEEKLY,
             'frequency_count' => 3,
         ]);
@@ -231,7 +231,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'frequency_type' => FrequencyType::WEEKLY,
             'frequency_count' => 5,
         ]);
@@ -261,7 +261,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'frequency_type' => FrequencyType::WEEKLY,
             'frequency_count' => 4,
         ]);
@@ -284,7 +284,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'frequency_type' => FrequencyType::WEEKLY,
             'frequency_count' => 3,
         ]);
@@ -307,7 +307,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'frequency_type' => FrequencyType::DAILY,
             'frequency_count' => 1,
         ]);
@@ -320,7 +320,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'frequency_type' => FrequencyType::WEEKLY,
             'frequency_count' => 3,
         ]);
@@ -335,7 +335,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
         ]);
 
         $this->assertInstanceOf(User::class, $habit->user);
@@ -349,7 +349,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
         ]);
 
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class, $habit->completions());
@@ -360,7 +360,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
         ]);
 
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasOne::class, $habit->statistics());
@@ -371,7 +371,7 @@ class HabitTest extends TestCase
     {
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'frequency_type' => FrequencyType::WEEKLY,
         ]);
 
@@ -385,7 +385,7 @@ class HabitTest extends TestCase
         $config = ['days' => [1, 3, 5]];
         $habit = HabitFactory::new()->create([
             'user_id' => $this->user->id,
-            'goal_library_id' => $this->goal->id,
+            'goal_id' => $this->goal->id,
             'frequency_config' => $config,
         ]);
 

@@ -27,6 +27,15 @@ export function createGoalToggleManager() {
             
             if (!goalItem || !checkbox) return;
 
+            // Get challenge ID from parent container
+            const challengeContainer = goalItem.closest('[data-challenge-id]');
+            const challengeId = challengeContainer?.dataset.challengeId;
+            
+            if (!challengeId) {
+                console.error('Challenge ID not found');
+                return;
+            }
+
             this.pendingRequests.add(goalId);
             
             // Get current state
@@ -37,7 +46,7 @@ export function createGoalToggleManager() {
                 this.updateUIInstantly(goalItem, checkbox, !isCurrentlyCompleted);
                 
                 // Make API call
-                const response = await fetch(`/goals/${goalId}/toggle`, {
+                const response = await fetch(`/challenges/${challengeId}/goals/${goalId}/toggle`, {
                     method: 'POST',
                     headers: createHeaders()
                 });

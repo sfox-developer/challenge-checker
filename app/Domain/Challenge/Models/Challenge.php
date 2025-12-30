@@ -4,10 +4,14 @@ namespace App\Domain\Challenge\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Domain\User\Models\User;
 use App\Domain\Activity\Models\Activity;
+use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\GoalCompletion;
+use App\Domain\Challenge\Models\ChallengeGoal;
 use App\Domain\Habit\Enums\FrequencyType;
 
 class Challenge extends Model
@@ -55,17 +59,21 @@ class Challenge extends Model
     /**
      * Get the goals for the challenge.
      */
-    public function goals(): HasMany
+    public function goals(): BelongsToMany
     {
-        return $this->hasMany(Goal::class);
+        return $this->belongsToMany(GoalLibrary::class, 'challenge_goals', 'challenge_id', 'goal_id')
+            ->using(ChallengeGoal::class)
+            ->withPivot('order')
+            ->orderBy('challenge_goals.order');
     }
 
     /**
-     * Get the daily progress entries for the challenge.
+     * Get all goal completions for this challenge.
      */
-    public function dailyProgress(): HasMany
+    public function completions(): HasMany
     {
-        return $this->hasMany(DailyProgress::class);
+        return $this->hasMany(GoalCompletion::class, 'source_id')
+            ->where('source_type', 'challenge');
     }
 
     /**
@@ -290,7 +298,7 @@ class Challenge extends Model
 
         $duration = $this->days_duration;
         $totalGoalDays = $this->goals->count() * $duration;
-        $completedGoalDays = $this->dailyProgress()->whereNotNull('completed_at')->count();
+        $completedGoalDays = $this->completions()->whereNotNull('completed_at')->count();
 
         return $totalGoalDays > 0 ? ($completedGoalDays / $totalGoalDays) * 100 : 0;
     }
@@ -324,7 +332,7 @@ class Challenge extends Model
         }
 
         // Get all unique dates where progress was recorded
-        $dates = $this->dailyProgress()
+        $dates = $this->completions()
             ->whereNotNull('completed_at')
             ->select('date')
             ->distinct()
@@ -335,7 +343,7 @@ class Challenge extends Model
 
         // For each date, check if all goals were completed
         foreach ($dates as $date) {
-            $completedGoalsOnDate = $this->dailyProgress()
+            $completedGoalsOnDate = $this->completions()
                 ->where('date', $date)
                 ->whereNotNull('completed_at')
                 ->count();

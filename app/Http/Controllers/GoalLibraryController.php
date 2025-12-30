@@ -21,7 +21,7 @@ class GoalLibraryController extends Controller
 
         $query = auth()->user()->goalsLibrary()
             ->with('category')
-            ->withCount(['challengeGoals', 'habits']);
+            ->withCount(['challenges', 'habits']);
 
         if ($search) {
             $query->search($search);
@@ -39,7 +39,7 @@ class GoalLibraryController extends Controller
         // Calculate stats
         $totalGoals = auth()->user()->goalsLibrary()->count();
         $usedInChallenges = auth()->user()->goalsLibrary()
-            ->has('challengeGoals')
+            ->has('challenges')
             ->distinct()
             ->count();
         $usedInHabits = auth()->user()->goalsLibrary()
@@ -68,18 +68,13 @@ class GoalLibraryController extends Controller
         // Load relationships with counts and eager loading
         $goal->load([
             'category',
-            'challengeGoals.challenge' => function ($query) {
-                $query->with('dailyProgress');
-            },
+            'challenges.completions',
             'habits.completions',
             'habits.statistics'
         ]);
 
         // Get challenges using this goal
-        $challenges = $goal->challengeGoals
-            ->map(fn($challengeGoal) => $challengeGoal->challenge)
-            ->filter()
-            ->unique('id')
+        $challenges = $goal->challenges
             ->sortByDesc('created_at');
 
         // Get habits using this goal
@@ -106,15 +101,7 @@ class GoalLibraryController extends Controller
      */
     private function getTotalCompletions(GoalLibrary $goal): int
     {
-        $challengeCompletions = $goal->challengeGoals->sum(function ($challengeGoal) {
-            return $challengeGoal->is_completed ? 1 : 0;
-        });
-
-        $habitCompletions = $goal->habits->sum(function ($habit) {
-            return $habit->completions->count();
-        });
-
-        return $challengeCompletions + $habitCompletions;
+        return $goal->completions()->whereNotNull('completed_at')->count();
     }
 
     /**
@@ -140,7 +127,7 @@ class GoalLibraryController extends Controller
      */
     private function getFirstUsed(GoalLibrary $goal): ?string
     {
-        $firstChallenge = $goal->challengeGoals->min('created_at');
+        $firstChallenge = $goal->challenges->min('created_at');
         $firstHabit = $goal->habits->min('created_at');
 
         $dates = array_filter([$firstChallenge, $firstHabit]);
@@ -153,17 +140,12 @@ class GoalLibraryController extends Controller
      */
     private function getLastActive(GoalLibrary $goal): ?string
     {
-        $lastChallengeActivity = $goal->challengeGoals
-            ->flatMap(fn($cg) => $cg->challenge?->dailyProgress ?? [])
-            ->max('date');
+        $lastCompletion = $goal->completions()
+            ->whereNotNull('completed_at')
+            ->latest('completed_at')
+            ->first();
 
-        $lastHabitActivity = $goal->habits
-            ->flatMap(fn($h) => $h->completions)
-            ->max('completed_at');
-
-        $dates = array_filter([$lastChallengeActivity, $lastHabitActivity]);
-        
-        return $dates ? max($dates) : null;
+        return $lastCompletion?->completed_at?->toDateString();
     }
 
     /**
@@ -227,7 +209,7 @@ class GoalLibraryController extends Controller
         $this->authorize('delete', $goal);
 
         // Check if goal is being used
-        $usageCount = $goal->challengeGoals()->count() + $goal->habits()->count();
+        $usageCount = $goal->challenges()->count() + $goal->habits()->count();
 
         if ($usageCount > 0) {
             return redirect()->route('goals.index')

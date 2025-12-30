@@ -15,6 +15,15 @@ class GoalToggleManager {
         
         if (!goalItem || !checkbox) return;
 
+        // Get challenge ID from parent container
+        const challengeContainer = goalItem.closest('[data-challenge-id]');
+        const challengeId = challengeContainer?.dataset.challengeId;
+        
+        if (!challengeId) {
+            console.error('Challenge ID not found');
+            return;
+        }
+
         this.pendingRequests.add(goalId);
         
         // Get current state
@@ -25,7 +34,7 @@ class GoalToggleManager {
             this.updateUIInstantly(goalItem, checkbox, !isCurrentlyCompleted);
             
             // Make API call
-            const response = await fetch(`/goals/${goalId}/toggle`, {
+            const response = await fetch(`/challenges/${challengeId}/goals/${goalId}/toggle`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -415,8 +424,15 @@ window.toggleGoalInstant = async function(goalId) {
             updateChallengeProgress(challengeContainer, isCompleted ? -1 : 1);
         }
         
+        // Get challenge ID for API call
+        const challengeId = challengeContainer?.dataset.challengeId;
+        if (!challengeId) {
+            console.error('Challenge ID not found');
+            return;
+        }
+        
         // Make API call
-        const response = await fetch(`/goals/${goalId}/toggle`, {
+        const response = await fetch(`/challenges/${challengeId}/goals/${goalId}/toggle`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

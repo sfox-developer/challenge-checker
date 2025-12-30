@@ -3,7 +3,7 @@
 namespace App\Domain\Habit\Services;
 
 use App\Domain\Habit\Models\Habit;
-use App\Domain\Habit\Models\HabitCompletion;
+use App\Domain\Goal\Models\GoalCompletion;
 use App\Domain\Habit\Models\HabitStatistic;
 use App\Domain\User\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +17,7 @@ class HabitService
     /**
      * Quick toggle completion for a habit (no notes).
      */
-    public function quickToggle(Habit $habit, User $user, ?string $date = null): ?HabitCompletion
+    public function quickToggle(Habit $habit, User $user, ?string $date = null): ?GoalCompletion
     {
         $date = $date ?? now()->toDateString();
 
@@ -48,7 +48,7 @@ class HabitService
         ?int $durationMinutes = null,
         ?string $mood = null,
         ?array $metadata = null
-    ): HabitCompletion {
+    ): GoalCompletion {
         $date = $date ?? now()->toDateString();
 
         return DB::transaction(function () use ($habit, $user, $date, $notes, $durationMinutes, $mood, $metadata) {
@@ -56,10 +56,13 @@ class HabitService
             $completion = $habit->completions()->updateOrCreate(
                 [
                     'user_id' => $user->id,
+                    'goal_id' => $habit->goal_id,
                     'date' => $date,
                 ],
                 [
                     'completed_at' => now(),
+                    'source_type' => 'habit',
+                    'source_id' => $habit->id,
                     'notes' => $notes,
                     'duration_minutes' => $durationMinutes,
                     'mood' => $mood,
@@ -78,11 +81,11 @@ class HabitService
      * Add or update notes for an existing completion.
      */
     public function updateCompletionNotes(
-        HabitCompletion $completion,
+        GoalCompletion $completion,
         ?string $notes = null,
         ?int $durationMinutes = null,
         ?string $mood = null
-    ): HabitCompletion {
+    ): GoalCompletion {
         $completion->update([
             'notes' => $notes,
             'duration_minutes' => $durationMinutes,
@@ -95,14 +98,21 @@ class HabitService
     /**
      * Delete a completion and update statistics.
      */
-    public function deleteCompletion(HabitCompletion $completion): void
+    public function deleteCompletion(GoalCompletion $completion): void
     {
         DB::transaction(function () use ($completion) {
-            $habit = $completion->habit;
-            $completion->delete();
-            
-            // Recalculate statistics
-            $this->updateStatistics($habit);
+            // Get habit from source if it's a habit completion
+            if ($completion->source_type === 'habit') {
+                $habit = $completion->source; // Uses dynamic source() relationship
+                $completion->delete();
+                
+                // Recalculate statistics
+                if ($habit) {
+                    $this->updateStatistics($habit);
+                }
+            } else {
+                $completion->delete();
+            }
         });
     }
 

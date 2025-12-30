@@ -5,14 +5,14 @@ namespace App\Domain\Activity\Services;
 use App\Domain\Activity\Models\Activity;
 use App\Domain\User\Models\User;
 use App\Domain\Challenge\Models\Challenge;
-use App\Domain\Challenge\Models\Goal;
+use App\Domain\Goal\Models\GoalLibrary;
 
 class ActivityService
 {
     /**
      * Create an activity when a goal is completed.
      */
-    public function createGoalCompletedActivity(User $user, Challenge $challenge, Goal $goal): ?Activity
+    public function createGoalCompletedActivity(User $user, Challenge $challenge, GoalLibrary $goal): ?Activity
     {
         // Only create activity if challenge is public or it's the user's own challenge
         if (!$challenge->is_public && $challenge->user_id !== $user->id) {

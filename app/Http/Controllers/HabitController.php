@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use App\Domain\Habit\Models\Habit;
-use App\Domain\Habit\Models\HabitCompletion;
+use App\Domain\Goal\Models\GoalCompletion;
 use App\Domain\Habit\Services\HabitService;
 use App\Domain\Habit\Enums\FrequencyType;
 use App\Domain\Goal\Models\GoalLibrary;

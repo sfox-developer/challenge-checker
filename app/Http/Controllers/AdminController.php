@@ -76,7 +76,7 @@ class AdminController extends Controller
      */
     public function showChallenge(Challenge $challenge): View
     {
-        $challenge->load(['user', 'goals.dailyProgress' => function ($query) {
+        $challenge->load(['user', 'goals', 'completions' => function ($query) {
             $query->orderBy('date', 'desc');
         }]);
 

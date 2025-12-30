@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Domain\User\Models\User;
 use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\GoalCompletion;
 use App\Domain\Habit\Enums\FrequencyType;
 use App\Domain\Activity\Models\Activity;
 
@@ -18,7 +19,7 @@ class Habit extends Model
 
     protected $fillable = [
         'user_id',
-        'goal_library_id',
+        'goal_id',
         'frequency_type',
         'frequency_count',
         'frequency_config',
@@ -49,7 +50,7 @@ class Habit extends Model
      */
     public function goal(): BelongsTo
     {
-        return $this->belongsTo(GoalLibrary::class, 'goal_library_id');
+        return $this->belongsTo(GoalLibrary::class, 'goal_id');
     }
 
     /**
@@ -57,7 +58,8 @@ class Habit extends Model
      */
     public function completions(): HasMany
     {
-        return $this->hasMany(HabitCompletion::class);
+        return $this->hasMany(GoalCompletion::class, 'source_id')
+            ->where('source_type', 'habit');
     }
 
     /**
@@ -132,6 +134,7 @@ class Habit extends Model
         $end = $this->frequency_type->periodEnd($date);
 
         return $this->completions()
+            ->where('goal_id', $this->goal_id)
             ->whereBetween('date', [
                 $start->format('Y-m-d'),
                 $end->format('Y-m-d')
@@ -145,6 +148,7 @@ class Habit extends Model
     public function isCompletedToday(): bool
     {
         return $this->completions()
+            ->where('goal_id', $this->goal_id)
             ->where('date', now()->toDateString())
             ->exists();
     }

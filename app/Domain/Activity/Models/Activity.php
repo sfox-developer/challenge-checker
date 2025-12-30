@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Domain\User\Models\User;
 use App\Domain\Challenge\Models\Challenge;
-use App\Domain\Challenge\Models\Goal;
+use App\Domain\Goal\Models\GoalLibrary;
 use App\Domain\Habit\Models\Habit;
 
 class Activity extends Model
@@ -61,7 +61,7 @@ class Activity extends Model
      */
     public function goal(): BelongsTo
     {
-        return $this->belongsTo(Goal::class);
+        return $this->belongsTo(GoalLibrary::class, 'goal_id');
     }
 
     /**

@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/challenges/{challenge}/daily-progress', [ChallengeController::class, 'updateDailyProgress'])->name('challenges.updateDailyProgress');
     
     // Goal tracking routes
-    Route::post('/goals/{goal}/toggle', [GoalController::class, 'toggle'])->name('goals.toggle');
+    Route::post('/challenges/{challenge}/goals/{goalLibrary}/toggle', [GoalController::class, 'toggle'])->name('goals.toggle');
     
     // Habit routes
     Route::get('/habits/today', [HabitController::class, 'today'])->name('habits.today');

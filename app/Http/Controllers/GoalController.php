@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use App\Domain\Challenge\Models\Goal;
-use App\Domain\Challenge\Models\DailyProgress;
+use App\Domain\Challenge\Models\Challenge;
+use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\GoalCompletion;
 use App\Domain\Activity\Services\ActivityService;
 use App\Domain\Challenge\Services\ChallengeService;
 
@@ -19,37 +20,41 @@ class GoalController extends Controller
     /**
      * Toggle the completion status of a goal for today.
      */
-    public function toggle(Goal $goal): JsonResponse
+    public function toggle(Challenge $challenge, GoalLibrary $goalLibrary): JsonResponse
     {
         $user = auth()->user();
         $today = now()->toDateString();
 
-        // Verify that the goal belongs to the user's challenge
-        if ($goal->challenge->user_id !== $user->id) {
+        // Verify that the challenge belongs to the user
+        if ($challenge->user_id !== $user->id) {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
-        $challenge = $goal->challenge;
+        // Verify that the goal is part of this challenge
+        if (!$challenge->goals->contains($goalLibrary)) {
+            return response()->json(['error' => 'Goal not found in this challenge'], 404);
+        }
 
-        // Find existing progress entry for today
-        $progress = DailyProgress::where([
+        // Find existing completion entry for today
+        $completion = GoalCompletion::where([
             'user_id' => $user->id,
-            'challenge_id' => $goal->challenge_id,
-            'goal_id' => $goal->id,
+            'goal_id' => $goalLibrary->id,
+            'source_type' => 'challenge',
+            'source_id' => $challenge->id,
             'date' => $today,
         ])->first();
 
         // Check if already completed
-        $isCompleted = $progress && $progress->isCompleted();
+        $isCompleted = $completion && $completion->completed_at !== null;
         
         if ($isCompleted) {
             // Undo completion
-            $progress->markUncompleted();
+            $completion->update(['completed_at' => null]);
             $message = 'Goal marked as not completed';
             $completed = false;
         } else {
             // Check if we can complete based on frequency limits
-            if (!$this->challengeService->canCompleteGoal($challenge, $goal, new \DateTime($today))) {
+            if (!$this->challengeService->canCompleteGoal($challenge, $goalLibrary, new \DateTime($today))) {
                 $frequencyDesc = $challenge->getFrequencyDescription();
                 return response()->json([
                     'error' => true,
@@ -57,22 +62,25 @@ class GoalController extends Controller
                 ], 422);
             }
 
-            // Create or update progress entry
-            if (!$progress) {
-                $progress = DailyProgress::create([
+            // Create or update completion entry
+            if (!$completion) {
+                $completion = GoalCompletion::create([
                     'user_id' => $user->id,
-                    'challenge_id' => $goal->challenge_id,
-                    'goal_id' => $goal->id,
+                    'goal_id' => $goalLibrary->id,
+                    'source_type' => 'challenge',
+                    'source_id' => $challenge->id,
                     'date' => $today,
+                    'completed_at' => now(),
                 ]);
+            } else {
+                $completion->update(['completed_at' => now()]);
             }
             
-            $progress->markCompleted();
             $message = 'Goal completed! Great job!';
             $completed = true;
             
             // Create activity for goal completion
-            $this->activityService->createGoalCompletedActivity($user, $challenge, $goal);
+            $this->activityService->createGoalCompletedActivity($user, $challenge, $goalLibrary);
         }
 
         // Check if all goals are completed for current period
@@ -85,8 +93,8 @@ class GoalController extends Controller
         }
 
         // Get progress for current period
-        $progressText = $this->challengeService->getProgressText($challenge, $goal);
-        $progressPercentage = $this->challengeService->getProgressPercentage($challenge, $goal);
+        $progressText = $this->challengeService->getProgressText($challenge, $goalLibrary);
+        $progressPercentage = $this->challengeService->getProgressPercentage($challenge, $goalLibrary);
 
         return response()->json([
             'success' => true,
@@ -97,7 +105,7 @@ class GoalController extends Controller
             'progress' => [
                 'text' => $progressText,
                 'percentage' => $progressPercentage,
-                'current' => $this->challengeService->getCompletionCountForPeriod($challenge, $goal, new \DateTime($today)),
+                'current' => $this->challengeService->getCompletionCountForPeriod($challenge, $goalLibrary, new \DateTime($today)),
                 'target' => $challenge->frequency_count ?? 1,
             ],
         ]);

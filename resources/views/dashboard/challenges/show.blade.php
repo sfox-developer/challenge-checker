@@ -140,7 +140,7 @@
                 <x-ui.stat-card 
                     variant="top"
                     label="Completed" 
-                    :value="$challenge->dailyProgress()->whereNotNull('completed_at')->count() . ' / ' . ($challenge->goals->count() * $challenge->getDuration())" />
+                    :value="$challenge->completions()->whereNotNull('completed_at')->count() . ' / ' . ($challenge->goals->count() * $challenge->getDuration())" />
             </div>
         </div>
     </div>
@@ -384,7 +384,7 @@
                             $totalPeriods = $daysPassed;
                             for ($i = 0; $i < $daysPassed; $i++) {
                                 $checkDate = $startDate->copy()->addDays($i);
-                                $completedGoalsForDay = $challenge->dailyProgress()
+                                $completedGoalsForDay = $challenge->completions()
                                     ->where('user_id', $challenge->user_id)
                                     ->where('date', $checkDate->toDateString())
                                     ->whereNotNull('completed_at')
@@ -408,7 +408,7 @@
                                 $periodEnd = $frequencyEnum->periodEnd($currentDate);
                                 
                                 // Count total completions in this period across all goals
-                                $completionsInPeriod = $challenge->dailyProgress()
+                                $completionsInPeriod = $challenge->completions()
                                     ->where('user_id', $challenge->user_id)
                                     ->whereBetween('date', [$periodStart->format('Y-m-d'), $periodEnd->format('Y-m-d')])
                                     ->whereNotNull('completed_at')
@@ -479,7 +479,7 @@
                                 $dayNumber = $currentDate->format('j');
                                 
                                 // Get completed goals for this day for the challenge owner
-                                $completedGoalsForDay = $challenge->dailyProgress()
+                                $completedGoalsForDay = $challenge->completions()
                                     ->where('user_id', $challenge->user_id)
                                     ->where('date', $currentDate->toDateString())
                                     ->whereNotNull('completed_at')
@@ -530,7 +530,7 @@
                                     $isCurrentPeriod = now()->between($periodStart, $periodEnd);
                                     
                                     // Count completions in this period
-                                    $completionsInPeriod = $challenge->dailyProgress()
+                                    $completionsInPeriod = $challenge->completions()
                                         ->where('user_id', $challenge->user_id)
                                         ->whereBetween('date', [$periodStart->format('Y-m-d'), $periodEnd->format('Y-m-d')])
                                         ->whereNotNull('completed_at')

@@ -3,8 +3,8 @@
 namespace App\Domain\Challenge\Services;
 
 use App\Domain\Challenge\Models\Challenge;
-use App\Domain\Challenge\Models\Goal;
-use App\Domain\Challenge\Models\DailyProgress;
+use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\GoalCompletion;
 use App\Domain\User\Models\User;
 use App\Domain\Habit\Enums\FrequencyType;
 
@@ -13,7 +13,7 @@ class ChallengeService
     /**
      * Get completion count for current period based on challenge frequency.
      */
-    public function getCompletionCountForPeriod(Challenge $challenge, Goal $goal, ?\DateTime $date = null): int
+    public function getCompletionCountForPeriod(Challenge $challenge, GoalLibrary $goal, ?\DateTime $date = null): int
     {
         $date = $date ?? new \DateTime();
         $frequencyType = $challenge->frequency_type ?? FrequencyType::DAILY;
@@ -21,7 +21,8 @@ class ChallengeService
         $start = $frequencyType->periodStart($date);
         $end = $frequencyType->periodEnd($date);
 
-        return DailyProgress::where('challenge_id', $challenge->id)
+        return GoalCompletion::where('source_type', 'challenge')
+            ->where('source_id', $challenge->id)
             ->where('goal_id', $goal->id)
             ->where('user_id', $challenge->user_id)
             ->whereBetween('date', [
@@ -35,7 +36,7 @@ class ChallengeService
     /**
      * Check if goal can be completed based on frequency limits.
      */
-    public function canCompleteGoal(Challenge $challenge, Goal $goal, ?\DateTime $date = null): bool
+    public function canCompleteGoal(Challenge $challenge, GoalLibrary $goal, ?\DateTime $date = null): bool
     {
         $date = $date ?? new \DateTime();
         $frequencyType = $challenge->frequency_type ?? FrequencyType::DAILY;
@@ -43,7 +44,8 @@ class ChallengeService
         
         // For daily frequency, only one completion per day
         if ($frequencyType === FrequencyType::DAILY) {
-            return !DailyProgress::where('challenge_id', $challenge->id)
+            return !GoalCompletion::where('source_type', 'challenge')
+                ->where('source_id', $challenge->id)
                 ->where('goal_id', $goal->id)
                 ->where('user_id', $challenge->user_id)
                 ->where('date', $date->format('Y-m-d'))
@@ -59,7 +61,7 @@ class ChallengeService
     /**
      * Get progress text for a goal in current period.
      */
-    public function getProgressText(Challenge $challenge, Goal $goal): string
+    public function getProgressText(Challenge $challenge, GoalLibrary $goal): string
     {
         $completed = $this->getCompletionCountForPeriod($challenge, $goal);
         $required = $challenge->frequency_count ?? 1;
@@ -70,7 +72,7 @@ class ChallengeService
     /**
      * Get progress percentage for a goal in current period.
      */
-    public function getProgressPercentage(Challenge $challenge, Goal $goal): int
+    public function getProgressPercentage(Challenge $challenge, GoalLibrary $goal): int
     {
         $completed = $this->getCompletionCountForPeriod($challenge, $goal);
         $required = $challenge->frequency_count ?? 1;
