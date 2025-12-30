@@ -10,119 +10,118 @@
     @can('update', $challenge)
         <div class="section pt-0">
             <div class="container max-w-4xl">
-                <div class="card">
-                    <div class="flex flex-wrap justify-center gap-2">
-                        @if(!$challenge->completed_at)
-                        <x-ui.app-button variant="secondary" href="{{ route('challenges.index') }}">
-                            <x-slot name="icon">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
-                                </svg>
-                            </x-slot>
-                            Back
-                        </x-ui.app-button>
-                        
-                        <x-ui.app-button variant="secondary" href="{{ route('challenges.edit', $challenge) }}">
-                            <x-slot name="icon">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
-                                </svg>
-                            </x-slot>
-                            Edit
-                        </x-ui.app-button>
-                        
-                        @if($challenge->started_at)
-                            @if($challenge->is_active)
-                                <form method="POST" action="{{ route('challenges.pause', $challenge) }}">
-                                    @csrf
-                                    <x-ui.app-button variant="secondary" type="submit">
-                                        <x-slot name="icon">
-                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                                            </svg>
-                                        </x-slot>
-                                        Pause
-                                    </x-ui.app-button>
-                                </form>
-                            @else
-                                <form method="POST" action="{{ route('challenges.resume', $challenge) }}">
-                                    @csrf
-                                    <x-ui.app-button variant="secondary" type="submit">
-                                        <x-slot name="icon">
-                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
-                                            </svg>
-                                        </x-slot>
-                                        Resume
-                                    </x-ui.app-button>
-                                </form>
-                            @endif
-                            
-                            <x-ui.app-button variant="secondary" type="button" @click="$dispatch('open-modal', 'complete-challenge')">
-                                <x-slot name="icon">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                    </svg>
-                                </x-slot>
-                                Complete
-                            </x-ui.app-button>
-                        @else
-                            <form method="POST" action="{{ route('challenges.start', $challenge) }}">
+                
+                <div class="flex flex-wrap justify-center gap-2">
+                    @if(!$challenge->completed_at)
+                    <x-ui.app-button variant="secondary" href="{{ route('challenges.index') }}">
+                        <x-slot name="icon">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </x-slot>
+                        Back
+                    </x-ui.app-button>
+                    
+                    <x-ui.app-button variant="secondary" href="{{ route('challenges.edit', $challenge) }}">
+                        <x-slot name="icon">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                            </svg>
+                        </x-slot>
+                        Edit
+                    </x-ui.app-button>
+                    
+                    @if($challenge->started_at)
+                        @if($challenge->is_active)
+                            <form method="POST" action="{{ route('challenges.pause', $challenge) }}">
                                 @csrf
-                                <x-ui.app-button variant="primary" type="submit">
+                                <x-ui.app-button variant="secondary" type="submit">
+                                    <x-slot name="icon">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </x-slot>
+                                    Pause
+                                </x-ui.app-button>
+                            </form>
+                        @else
+                            <form method="POST" action="{{ route('challenges.resume', $challenge) }}">
+                                @csrf
+                                <x-ui.app-button variant="secondary" type="submit">
                                     <x-slot name="icon">
                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
                                         </svg>
                                     </x-slot>
-                                    Start Challenge
+                                    Resume
                                 </x-ui.app-button>
                             </form>
                         @endif
-                    @else
-                        <x-ui.app-button variant="secondary" href="{{ route('challenges.index') }}">
+                        
+                        <x-ui.app-button variant="secondary" type="button" @click="$dispatch('open-modal', 'complete-challenge')">
                             <x-slot name="icon">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                 </svg>
                             </x-slot>
-                            Back
+                            Complete
+                        </x-ui.app-button>
+                    @else
+                        <form method="POST" action="{{ route('challenges.start', $challenge) }}">
+                            @csrf
+                            <x-ui.app-button variant="primary" type="submit">
+                                <x-slot name="icon">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                                    </svg>
+                                </x-slot>
+                                Start Challenge
+                            </x-ui.app-button>
+                        </form>
+                    @endif
+                @else
+                    <x-ui.app-button variant="secondary" href="{{ route('challenges.index') }}">
+                        <x-slot name="icon">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </x-slot>
+                        Back
+                    </x-ui.app-button>
+                    
+                    @if(!$challenge->isArchived())
+                        <x-ui.app-button variant="secondary" type="button" @click="$dispatch('open-modal', 'archive-challenge')">
+                            <x-slot name="icon">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"/>
+                                    <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                            </x-slot>
+                            Archive
                         </x-ui.app-button>
                         
-                        @if(!$challenge->isArchived())
-                            <x-ui.app-button variant="secondary" type="button" @click="$dispatch('open-modal', 'archive-challenge')">
+                        <x-ui.app-button variant="secondary" type="button" x-data="" @click="$dispatch('open-modal', 'delete-challenge')">
+                            <x-slot name="icon">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                            </x-slot>
+                            Delete
+                        </x-ui.app-button>
+                    @else
+                        <form method="POST" action="{{ route('challenges.restore', $challenge) }}">
+                            @csrf
+                            <x-ui.app-button variant="primary" type="submit">
                                 <x-slot name="icon">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"/>
-                                        <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
                                     </svg>
                                 </x-slot>
-                                Archive
+                                Restore
                             </x-ui.app-button>
-                            
-                            <x-ui.app-button variant="secondary" type="button" x-data="" @click="$dispatch('open-modal', 'delete-challenge')">
-                                <x-slot name="icon">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                                    </svg>
-                                </x-slot>
-                                Delete
-                            </x-ui.app-button>
-                        @else
-                            <form method="POST" action="{{ route('challenges.restore', $challenge) }}">
-                                @csrf
-                                <x-ui.app-button variant="primary" type="submit">
-                                    <x-slot name="icon">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
-                                        </svg>
-                                    </x-slot>
-                                    Restore
-                                </x-ui.app-button>
-                            </form>
-                        @endif
+                        </form>
                     @endif
-                </div>
+                @endif
             </div>
         </div>
     </div>
