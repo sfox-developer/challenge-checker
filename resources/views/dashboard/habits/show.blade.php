@@ -73,11 +73,11 @@
             <div class="space-y-6">
             
             <!-- Statistics Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <x-ui.stat-card 
                     variant="top"
                     label="Current Streak" 
-                    :value="($habit->statistics?->current_streak ?? 0) . ' ' . $habit->frequency_type->periodLabel()" />
+                    :value="($habit->statistics?->current_streak ?? 0)" />
 
                 <x-ui.stat-card 
                     variant="top"
@@ -89,10 +89,6 @@
                     label="Total Completions" 
                     :value="$habit->statistics?->total_completions ?? 0" />
 
-                <x-ui.stat-card 
-                    variant="top"
-                    label="This Month" 
-                    :value="$monthlyStats['completions'] . ' / ' . $monthlyStats['expected']" />
             </div>
 
             <!-- Habit Details and Calendar Side by Side -->
