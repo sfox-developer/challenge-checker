@@ -7,11 +7,12 @@
         :description="$challenge->description" />
 
     {{-- Action Buttons Section --}}
-    <div class="section pt-0">
-        <div class="container max-w-4xl">
-            <div class="card">
-                <div class="flex flex-wrap justify-center gap-2">
-                    @if(!$challenge->completed_at)
+    @can('update', $challenge)
+        <div class="section pt-0">
+            <div class="container max-w-4xl">
+                <div class="card">
+                    <div class="flex flex-wrap justify-center gap-2">
+                        @if(!$challenge->completed_at)
                         <x-ui.app-button variant="secondary" href="{{ route('challenges.index') }}">
                             <x-slot name="icon">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -125,6 +126,7 @@
             </div>
         </div>
     </div>
+    @endcan
 
     {{-- Statistics Section --}}
     <div class="section pt-0">
