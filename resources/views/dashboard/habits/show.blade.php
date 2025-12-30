@@ -223,6 +223,26 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Habit Goal Section -->
+            @if($habit->goal)
+                <div class="card">
+                    <h3 class="h3 mb-6">Habit Goal</h3>
+                    <x-goal-card>
+                        <x-slot:icon>
+                            <div class="goal-display-card-icon">{{ $habit->goal->icon ?? '🎯' }}</div>
+                        </x-slot:icon>
+                        <x-slot:title>
+                            <h5 class="goal-display-card-title">{{ $habit->goal->name }}</h5>
+                        </x-slot:title>
+                        @if($habit->goal->description)
+                            <x-slot:subtitle>
+                                <p class="goal-display-card-description">{{ $habit->goal->description }}</p>
+                            </x-slot:subtitle>
+                        @endif
+                    </x-goal-card>
+                </div>
+            @endif
             </div>
         </div>
     </div>
