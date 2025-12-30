@@ -1,5 +1,45 @@
 import './bootstrap';
 
+// Import Chart.js
+import {
+    Chart,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    ArcElement,
+    BarController,
+    LineController,
+    DoughnutController,
+    Title,
+    Tooltip,
+    Legend,
+    Filler
+} from 'chart.js';
+
+// Import analytics charts
+import './charts/analytics-charts.js';
+
+Chart.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    ArcElement,
+    BarController,
+    LineController,
+    DoughnutController,
+    Title,
+    Tooltip,
+    Legend,
+    Filler
+);
+
+// Make Chart.js available globally
+window.Chart = Chart;
+
 // Import component registry - follows Facade Pattern
 // Components are organized by domain (theme, activity, modal, goals)
 // following Single Responsibility Principle

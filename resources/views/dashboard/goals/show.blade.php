@@ -50,16 +50,13 @@
         <div class="container max-w-4xl">
             <div class="space-y-6">
             <!-- Statistics Cards -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
                 <x-ui.stat-card label="Total Completions" :value="$stats['total_completions']" variant="top" />
                 
                 <x-ui.stat-card label="Avg Success Rate" :value="$stats['success_rate']" variant="top">
                     <x-slot name="suffix">%</x-slot>
                 </x-ui.stat-card>
                 
-                <x-ui.stat-card label="Active Challenges" :value="$stats['active_challenges']" variant="top" />
-                
-                <x-ui.stat-card label="Active Habits" :value="$stats['active_habits']" variant="top" />
             </div>
 
             <!-- Timeline Info -->
@@ -102,77 +99,256 @@
                     alpineComponent="goalCalendar" />
             @endif
 
-            <!-- Tabs -->
-            <div x-data="{ activeTab: 'challenges' }">
-                <!-- Tab Navigation -->
-                <div class="tab-header">
-                    <nav class="tab-nav">
-                        <button @click="activeTab = 'challenges'" 
-                                :class="activeTab === 'challenges' ? 'tab-button active' : 'tab-button'">
-                            Challenges
-                            <span class="tab-count-badge" :class="activeTab === 'challenges' ? 'active' : 'inactive'">
-                                {{ $challenges->count() }}
-                            </span>
-                        </button>
-                        <button @click="activeTab = 'habits'" 
-                                :class="activeTab === 'habits' ? 'tab-button active' : 'tab-button'">
-                            Habits
-                            <span class="tab-count-badge" :class="activeTab === 'habits' ? 'active' : 'inactive'">
-                                {{ $habits->count() }}
-                            </span>
-                        </button>
-                    </nav>
+            <!-- Analytics Section -->
+            @if($stats['total_completions'] > 0)
+                <!-- Analytics Charts -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Monthly Trend Line Chart -->
+                    <div class="card md:col-span-2">
+                        <h3 class="h3 mb-2">12-Month Trend</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Track your completion patterns over time</p>
+                        <div class="w-full" style="height: 300px;">
+                            <canvas id="monthly-trend-chart" width="600" height="300"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Milestone Progress Doughnut -->
+                    <div class="card">
+                        <h3 class="h3 mb-2">Next Milestone</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Your progress to the next achievement</p>
+                        <div class="flex flex-col items-center">
+                            <div class="w-48 h-48 relative">
+                                <canvas id="milestone-chart" width="192" height="192"></canvas>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                                    <div class="text-3xl font-bold text-slate-700 dark:text-slate-300">
+                                        {{ $analytics['charts']['milestone_progress']['percentage'] }}%
+                                    </div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">
+                                        {{ number_format($analytics['charts']['milestone_progress']['total']) }} / {{ number_format($analytics['charts']['milestone_progress']['target']) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-4 text-center">
+                                {{ $analytics['charts']['milestone_progress']['target'] - $analytics['charts']['milestone_progress']['total'] }} more to reach {{ number_format($analytics['charts']['milestone_progress']['target']) }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-            <!-- Challenges Tab -->
-            <div x-show="activeTab === 'challenges'">
-                @if($challenges->count() > 0)
-                    <div class="space-y-4">
-                        @foreach($challenges as $challenge)
-                            <x-challenges.challenge-list-item :challenge="$challenge" />
-                        @endforeach
-                    </div>
-                @else
-                    <div class="empty-state-card">
-                        <div class="empty-state-icon">
-                            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                            </svg>
+                <!-- Consistency & Streaks -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="card">
+                        <h3 class="h3 mb-2">Consistency Score</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">How regularly you complete this goal</p>
+                        <div class="analytics-consistency">
+                            <div class="analytics-consistency__metric">
+                                <span class="analytics-consistency__metric-label">Current Streak</span>
+                                <span class="analytics-consistency__metric-value analytics-consistency__metric-value--primary">
+                                    {{ $analytics['consistency']['current_streak'] }} 
+                                    <span class="text-sm font-normal">{{ $analytics['consistency']['current_streak'] === 1 ? 'day' : 'days' }}</span>
+                                </span>
+                            </div>
+                            <div class="analytics-consistency__metric">
+                                <span class="analytics-consistency__metric-label">Longest Streak</span>
+                                <span class="analytics-consistency__metric-value analytics-consistency__metric-value--secondary">
+                                    {{ $analytics['consistency']['longest_streak'] }} 
+                                    <span class="text-sm font-normal">{{ $analytics['consistency']['longest_streak'] === 1 ? 'day' : 'days' }}</span>
+                                </span>
+                            </div>
+                            <div class="analytics-consistency__metric">
+                                <span class="analytics-consistency__metric-label">Avg. Per Week</span>
+                                <span class="analytics-consistency__metric-value analytics-consistency__metric-value--secondary">
+                                    {{ $analytics['consistency']['average_per_week'] }}
+                                </span>
+                            </div>
+                            <div class="analytics-consistency__progress-bar">
+                                <div class="analytics-consistency__progress-bar-header">
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Consistency</span>
+                                    <span class="text-sm font-bold text-slate-700 dark:text-slate-300">
+                                        {{ $analytics['consistency']['consistency_percentage'] }}%
+                                    </span>
+                                </div>
+                                <div class="analytics-consistency__progress-bar-track">
+                                    <div 
+                                        class="analytics-consistency__progress-bar-fill"
+                                        style="width: {{ $analytics['consistency']['consistency_percentage'] }}%">
+                                    </div>
+                                </div>
+                                <p class="analytics-consistency__progress-bar-caption">
+                                    {{ $analytics['consistency']['total_active_days'] }} active days since you started
+                                </p>
+                            </div>
                         </div>
-                        <h3 class="empty-state-title">
-                            No challenges yet
-                        </h3>
-                        <p class="empty-state-message">
-                            This goal hasn't been used in any challenges
-                        </p>
                     </div>
-                @endif
-            </div>
 
-            <!-- Habits Tab -->
-            <div x-show="activeTab === 'habits'" style="display: none;">
-                @if($habits->count() > 0)
-                    <div class="space-y-3">
-                        @foreach($habits as $habit)
-                            <x-habits.habit-list-item :habit="$habit" />
-                        @endforeach
-                    </div>
-                @else
-                    <div class="empty-state-card">
-                        <div class="empty-state-icon">
-                            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                    <!-- Time Patterns -->
+                    <div class="card">
+                        <h3 class="h3 mb-2">Activity Patterns</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">When you're most active during the week</p>
+                        <div class="analytics-patterns">
+                            <div class="analytics-patterns__distribution">
+                                <p class="analytics-patterns__distribution-title">Weekly Distribution</p>
+                                <div>
+                                    @foreach($analytics['patterns']['day_of_week_distribution'] as $day => $count)
+                                        @php
+                                            $maxDayCount = max(array_values($analytics['patterns']['day_of_week_distribution']) ?: [1]);
+                                            $percentage = $maxDayCount > 0 ? ($count / $maxDayCount) * 100 : 0;
+                                        @endphp
+                                        <div class="analytics-patterns__distribution-item">
+                                            <span class="analytics-patterns__distribution-item-label">{{ substr($day, 0, 3) }}</span>
+                                            <div class="analytics-patterns__distribution-item-bar-container">
+                                                <div 
+                                                    class="analytics-patterns__distribution-item-bar"
+                                                    style="width: {{ $percentage }}%">
+                                                </div>
+                                            </div>
+                                            <span class="analytics-patterns__distribution-item-count">{{ $count }}</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @if($analytics['patterns']['best_day_of_week'])
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-4">
+                                        Your most productive day is <strong class="text-slate-700 dark:text-slate-300">{{ $analytics['patterns']['best_day_of_week'] }}</strong>
+                                    </p>
+                                @endif
+                            </div>
                         </div>
-                        <h3 class="empty-state-title">
-                            No habits yet
-                        </h3>
-                        <p class="empty-state-message">
-                            This goal hasn't been used in any habits
-                        </p>
                     </div>
-                @endif
-            </div>
+                </div>
+
+                <!-- Milestones -->
+                <div class="card">
+                    <h3 class="h3 mb-2">Milestones & Progress</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">Achievement badges for your dedication</p>
+                    
+                    <div class="analytics-milestones">
+                        <div class="analytics-milestones__grid">
+                            @foreach($analytics['milestones']['milestones'] as $milestone)
+                                <div class="analytics-milestones__badge {{ $milestone['achieved'] ? 'analytics-milestones__badge--achieved' : 'analytics-milestones__badge--in-progress' }}">
+                                    <div class="analytics-milestones__badge-emoji">
+                                        @if($milestone['achieved'])
+                                            ✅
+                                        @elseif($milestone['progress'] > 50)
+                                            ⏳
+                                        @else
+                                            🎯
+                                        @endif
+                                    </div>
+                                    <div class="analytics-milestones__badge-target {{ $milestone['achieved'] ? 'analytics-milestones__badge-target--achieved' : 'analytics-milestones__badge-target--pending' }}">
+                                        {{ number_format($milestone['target']) }}
+                                    </div>
+                                    @if(!$milestone['achieved'])
+                                        <div class="analytics-milestones__badge-progress">
+                                            <div class="analytics-milestones__badge-progress-bar">
+                                                <div 
+                                                    class="analytics-milestones__badge-progress-fill"
+                                                    style="width: {{ $milestone['progress'] }}%">
+                                                </div>
+                                            </div>
+                                            <p class="analytics-milestones__badge-progress-text">
+                                                {{ number_format($milestone['remaining']) }} to go
+                                            </p>
+                                        </div>
+                                    @else
+                                        <p class="analytics-milestones__badge-status">Achieved!</p>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart Data Injection -->
+                <script>
+                    // Inject chart data for external JS file to use
+                    window.analyticsChartData = @json($analytics['charts']);
+                </script>
+            @endif
+
+            <!-- Goal Usage Section -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="eyebrow">Goal Usage</div>
+                    <h2 class="section-title">
+                        Challenges & Habits
+                    </h2>
+                    <p class="section-subtitle">
+                        See where this goal is being used across your challenges and habits
+                    </p>
+                </div>
+
+                <!-- Tabs -->
+                <div x-data="{ activeTab: 'challenges' }">
+                    <!-- Tab Navigation -->
+                    <div class="tab-header">
+                        <nav class="tab-nav">
+                            <button @click="activeTab = 'challenges'" 
+                                    :class="activeTab === 'challenges' ? 'tab-button active' : 'tab-button'">
+                                Challenges
+                                <span class="tab-count-badge" :class="activeTab === 'challenges' ? 'active' : 'inactive'">
+                                    {{ $challenges->count() }}
+                                </span>
+                            </button>
+                            <button @click="activeTab = 'habits'" 
+                                    :class="activeTab === 'habits' ? 'tab-button active' : 'tab-button'">
+                                Habits
+                                <span class="tab-count-badge" :class="activeTab === 'habits' ? 'active' : 'inactive'">
+                                    {{ $habits->count() }}
+                                </span>
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Challenges Tab -->
+                    <div x-show="activeTab === 'challenges'">
+                        @if($challenges->count() > 0)
+                            <div class="space-y-4">
+                                @foreach($challenges as $challenge)
+                                    <x-challenges.challenge-list-item :challenge="$challenge" />
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="empty-state-card">
+                                <div class="empty-state-icon">
+                                    <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                    </svg>
+                                </div>
+                                <h3 class="empty-state-title">
+                                    No challenges yet
+                                </h3>
+                                <p class="empty-state-message">
+                                    This goal hasn't been used in any challenges
+                                </p>
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Habits Tab -->
+                    <div x-show="activeTab === 'habits'" style="display: none;">
+                        @if($habits->count() > 0)
+                            <div class="space-y-3">
+                                @foreach($habits as $habit)
+                                    <x-habits.habit-list-item :habit="$habit" />
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="empty-state-card">
+                                <div class="empty-state-icon">
+                                    <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <h3 class="empty-state-title">
+                                    No habits yet
+                                </h3>
+                                <p class="empty-state-message">
+                                    This goal hasn't been used in any habits
+                                </p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
             </div>
 
             <!-- Empty State - When both are empty -->
