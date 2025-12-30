@@ -140,10 +140,22 @@ class UserController extends Controller
     {
         $currentUser = $request->user();
         
-        $user->loadCount(['followers', 'following', 'challenges', 'habits']);
+        $user->loadCount([
+            'followers',
+            'following',
+            'challenges' => function ($q) {
+                $q->where('is_public', true)
+                  ->whereNotNull('started_at');
+            },
+            'habits' => function ($q) {
+                $q->where('is_public', true)
+                  ->whereNull('archived_at');
+            }
+        ]);
         
         $publicChallenges = $user->challenges()
             ->where('is_public', true)
+            ->whereNotNull('started_at')
             ->latest()
             ->paginate(10, ['*'], 'challenges_page');
 
