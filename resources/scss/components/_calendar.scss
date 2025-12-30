@@ -1,0 +1,123 @@
+// ============================================================================
+// CALENDAR - Challenge/Habit Calendar Components
+// ============================================================================
+
+.calendar-day {
+    @apply w-full h-full rounded flex items-center justify-center text-xs font-medium;
+    @apply transition-all cursor-pointer;
+    
+    &:hover {
+        @apply scale-110;
+    }
+    
+    // Default state - no completion
+    &.calendar-day-default {
+        @apply bg-gray-100 dark:bg-gray-700;
+        @apply text-gray-700 dark:text-gray-300;
+    }
+    
+    // All goals completed
+    &.calendar-day-completed {
+        @apply bg-slate-700 dark:bg-slate-600;
+        @apply text-white;
+    }
+    
+    // Partial completion (some but not all goals)
+    &.calendar-day-partial {
+        @apply bg-yellow-400 dark:bg-yellow-500;
+        @apply text-gray-900;
+    }
+    
+    // Today indicator
+    &.calendar-day-today {
+        @apply ring-2 ring-teal-500;
+    }
+}
+
+.calendar-legend {
+    @apply flex items-center justify-center gap-4;
+    @apply mt-4 pt-3;
+    @apply border-t border-gray-200 dark:border-gray-700;
+    @apply text-xs;
+}
+
+.calendar-legend-item {
+    @apply flex items-center gap-1.5;
+}
+
+.calendar-legend-dot {
+    @apply w-3 h-3 rounded;
+    
+    &.dot-completed {
+        @apply bg-slate-700 dark:bg-slate-600;
+    }
+    
+    &.dot-partial {
+        @apply bg-yellow-400 dark:bg-yellow-500;
+    }
+    
+    &.dot-today {
+        @apply ring-2 ring-teal-500;
+    }
+}
+
+.calendar-legend-label {
+    @apply text-gray-600 dark:text-gray-400;
+}
+
+// Month navigation
+.calendar-nav-button {
+    @apply p-1 rounded;
+    @apply hover:bg-gray-100 dark:hover:bg-gray-700;
+    @apply transition-colors;
+}
+
+// ============================================================================
+// DAILY GOALS MODAL - Goal completion display in calendar modal
+// ============================================================================
+
+.daily-goals {
+    &-list {
+        @apply space-y-3;
+    }
+    
+    &-title {
+        @apply text-sm font-semibold;
+        @apply text-gray-900 dark:text-white;
+    }
+    
+    &-timestamp {
+        @apply text-xs text-gray-500 dark:text-gray-400;
+        @apply mt-0.5;
+    }
+    
+    &-status-icon {
+        @apply flex-shrink-0;
+        
+        svg {
+            @apply w-6 h-6;
+        }
+        
+        &--completed svg {
+            @apply text-green-600 dark:text-green-400;
+        }
+        
+        &--incomplete svg {
+            @apply text-gray-400 dark:text-gray-500;
+        }
+    }
+    
+    &-summary {
+        @apply mt-4 pt-3;
+        @apply border-t border-gray-200 dark:border-gray-700;
+        @apply text-center;
+        
+        &-text {
+            @apply text-sm text-gray-600 dark:text-gray-400;
+        }
+        
+        &-number {
+            @apply font-semibold text-gray-900 dark:text-white;
+        }
+    }
+}

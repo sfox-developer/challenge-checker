@@ -257,27 +257,24 @@
                                         </h4>
                                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             <template x-for="goalId in selectedGoalIds" :key="goalId">
-                                                <div class="goal-display-card">
-                                                    <div class="goal-display-accent-bar"></div>
-                                                    <div class="p-4">
-                                                        <div class="flex items-start justify-between gap-3">
-                                                            <div class="flex items-start gap-3 flex-1 min-w-0">
-                                                                <div class="text-3xl flex-shrink-0" x-text="getGoalIconById(goalId)"></div>
-                                                                <div class="flex-1 min-w-0">
-                                                                    <h5 class="font-semibold text-gray-900 dark:text-white truncate" x-text="getGoalNameById(goalId)"></h5>
-                                                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5" x-text="getGoalCategoryById(goalId)"></p>
-                                                                </div>
-                                                            </div>
-                                                            <button type="button" 
-                                                                    @click="toggleGoal(goalId)"
-                                                                    class="flex-shrink-0 p-1 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-                                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <x-goal-card>
+                                                    <x-slot:icon>
+                                                        <div class="goal-display-card-icon" x-text="getGoalIconById(goalId)"></div>
+                                                    </x-slot:icon>
+                                                    <x-slot:title>
+                                                        <h5 class="goal-display-card-title goal-display-card-title--truncate" x-text="getGoalNameById(goalId)"></h5>
+                                                    </x-slot:title>
+                                                    <x-slot:subtitle>
+                                                        <p class="goal-display-card-description" x-show="getGoalDescriptionById(goalId)" x-text="getGoalDescriptionById(goalId)"></p>
+                                                    </x-slot:subtitle>
+                                                    <x-slot:rightAction>
+                                                        <button type="button" @click="toggleGoal(goalId)" class="goal-display-card-remove-btn">
+                                                            <svg fill="currentColor" viewBox="0 0 20 20">
+                                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                                            </svg>
+                                                        </button>
+                                                    </x-slot:rightAction>
+                                                </x-goal-card>
                                             </template>
                                         </div>
                                     </div>
@@ -292,27 +289,24 @@
                                         </h4>
                                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             <template x-for="(goal, index) in newGoals" :key="index">
-                                                <div class="goal-display-card">
-                                                    <div class="goal-display-accent-bar"></div>
-                                                    <div class="p-4">
-                                                        <div class="flex items-start justify-between gap-3">
-                                                            <div class="flex items-start gap-3 flex-1 min-w-0">
-                                                                <div class="text-3xl flex-shrink-0" x-text="goal.icon || '🎯'"></div>
-                                                                <div class="flex-1 min-w-0">
-                                                                    <h5 class="font-semibold text-gray-900 dark:text-white truncate" x-text="goal.name"></h5>
-                                                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5" x-show="goal.description" x-text="goal.description"></p>
-                                                                </div>
-                                                            </div>
-                                                            <button type="button" 
-                                                                    @click="removeNewGoal(index)"
-                                                                    class="flex-shrink-0 p-1 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-                                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <x-goal-card>
+                                                    <x-slot:icon>
+                                                        <div class="goal-display-card-icon" x-text="goal.icon || '🎯'"></div>
+                                                    </x-slot:icon>
+                                                    <x-slot:title>
+                                                        <h5 class="goal-display-card-title goal-display-card-title--truncate" x-text="goal.name"></h5>
+                                                    </x-slot:title>
+                                                    <x-slot:subtitle>
+                                                        <p class="goal-display-card-description" x-show="goal.description" x-text="goal.description"></p>
+                                                    </x-slot:subtitle>
+                                                    <x-slot:rightAction>
+                                                        <button type="button" @click="removeNewGoal(index)" class="goal-display-card-remove-btn">
+                                                            <svg fill="currentColor" viewBox="0 0 20 20">
+                                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                                            </svg>
+                                                        </button>
+                                                    </x-slot:rightAction>
+                                                </x-goal-card>
                                             </template>
                                         </div>
                                     </div>

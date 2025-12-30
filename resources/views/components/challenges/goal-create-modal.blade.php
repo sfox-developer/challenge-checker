@@ -42,7 +42,7 @@
             <div class="modal-header">
                 <div class="modal-eyebrow">New Goal</div>
                 <h3 class="modal-title">Create Goal</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Add a custom goal for this challenge</p>
+                <p class="modal-description">Add a custom goal for this challenge</p>
             </div>
             
             {{-- Form --}}

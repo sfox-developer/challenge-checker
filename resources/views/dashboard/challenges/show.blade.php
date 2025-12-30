@@ -3,13 +3,14 @@
 
     <x-dashboard.page-header 
         eyebrow="Challenge"
-        :title="$challenge->name" />
+        :title="$challenge->name"
+        :description="$challenge->description" />
 
-    <!-- Action Buttons -->
-    <div class="pb-6">
-        <div class="container">
-            <div class="flex justify-center">
-                <div class="flex space-x-2">
+    {{-- Action Buttons Section --}}
+    <div class="section pt-0">
+        <div class="container max-w-4xl">
+            <div class="card">
+                <div class="flex flex-wrap justify-center gap-2">
                     @if(!$challenge->completed_at)
                         <x-ui.app-button variant="secondary" href="{{ route('challenges.index') }}">
                             <x-slot name="icon">
@@ -125,55 +126,28 @@
         </div>
     </div>
 
-    <div class="section">
+    {{-- Statistics Section --}}
+    <div class="section pt-0">
+        <div class="container max-w-4xl">
+            <div class="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-6">
+
+                <x-ui.stat-card 
+                    variant="top"
+                    label="Progress" 
+                    :value="number_format($challenge->getProgressPercentage(), 1) . '%'" />
+
+                <x-ui.stat-card 
+                    variant="top"
+                    label="Completed" 
+                    :value="$challenge->dailyProgress()->whereNotNull('completed_at')->count() . ' / ' . ($challenge->goals->count() * $challenge->getDuration())" />
+            </div>
+        </div>
+    </div>
+
+    {{-- Main Content Section --}}
+    <div class="section pt-0">
         <div class="container max-w-4xl">
             <div class="space-y-6">
-            
-            <!-- Statistics Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <x-ui.stat-card 
-                    label="Duration" 
-                    :value="$challenge->getDuration()">
-                    <x-slot name="icon">
-                        <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
-                        </svg>
-                    </x-slot>
-                    <x-slot name="suffix">days</x-slot>
-                </x-ui.stat-card>
-
-                <x-ui.stat-card 
-                    label="Goals" 
-                    :value="$challenge->goals->count()">
-                    <x-slot name="icon">
-                        <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm3 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm-3 4a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
-                        </svg>
-                    </x-slot>
-                </x-ui.stat-card>
-
-                <x-ui.stat-card 
-                    label="Progress" 
-                    :value="number_format($challenge->getProgressPercentage(), 1)">
-                    <x-slot name="icon">
-                        <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                    </x-slot>
-                    <x-slot name="suffix">%</x-slot>
-                </x-ui.stat-card>
-
-                <x-ui.stat-card 
-                    label="Completed" 
-                    :value="$challenge->dailyProgress()->whereNotNull('completed_at')->count()">
-                    <x-slot name="icon">
-                        <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-700 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"/>
-                        </svg>
-                    </x-slot>
-                    <x-slot name="suffix">/ {{ $challenge->goals->count() * $challenge->getDuration() }}</x-slot>
-                </x-ui.stat-card>
-            </div>
 
             <!-- Challenge Details and Progress Side by Side -->
             <div class="grid lg:grid-cols-2 gap-6">
@@ -181,165 +155,198 @@
                 <div class="card">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="h3">Details</h3>
-                        @if($challenge->completed_at)
-                            <span class="badge-completed">✓ Completed</span>
-                        @elseif($challenge->started_at && $challenge->is_active)
-                            <span class="badge-challenge-active">🏃 Active</span>
-                        @elseif($challenge->started_at && !$challenge->is_active)
-                            <span class="badge-challenge-paused">⏸️ Paused</span>
+                        @if($challenge->isArchived())
+                            <span class="status-archived">Archived</span>
+                        @elseif($challenge->completed_at)
+                            <span class="status-completed">Completed</span>
+                        @elseif($challenge->is_active)
+                            <span class="status-active">Active</span>
+                        @elseif($challenge->started_at)
+                            <span class="status-paused">Paused</span>
                         @else
-                            <span class="badge-challenge-draft">📝 Draft</span>
+                            <span class="status-draft">Draft</span>
                         @endif
                     </div>
                     
-                    @if($challenge->description)
-                        <p class="text-sm text-gray-700 dark:text-gray-100 mb-4 leading-relaxed">{{ $challenge->description }}</p>
-                    @endif
-                    
-                    <div class="space-y-3">
-                        <div class="stat-item">
-                            <div class="stat-label">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                            <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                                 </svg>
-                                <span>Frequency:</span>
+                                <span>Frequency</span>
                             </div>
-                            <span class="stat-value">{{ $challenge->getFrequencyDescription() }}</span>
+                            <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ $challenge->getFrequencyDescription() }}</span>
                         </div>
                         
                         @if($challenge->days_duration)
-                        <div class="stat-item">
-                            <div class="stat-label">
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                            <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
                                 </svg>
-                                <span>Duration:</span>
+                                <span>Duration</span>
                             </div>
-                            <span class="stat-value">{{ $challenge->days_duration }} days</span>
+                            <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ $challenge->days_duration }} days</span>
                         </div>
                         @endif
                         
-                        <div class="stat-item">
-                            <div class="stat-label">
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                            <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm3 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm-3 4a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
                                 </svg>
-                                <span>Goals:</span>
+                                <span>Goals</span>
                             </div>
-                            <span class="stat-value">{{ $challenge->goals->count() }}</span>
+                            <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ $challenge->goals->count() }}</span>
                         </div>
                         
                         @if($challenge->started_at)
-                        <div class="stat-item">
-                            <div class="stat-label">
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                            <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
                                 </svg>
-                                <span>Started:</span>
+                                <span>Started</span>
                             </div>
-                            <span class="stat-value">{{ $challenge->started_at->format('M d, Y') }}</span>
+                            <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ $challenge->started_at->format('M d, Y') }}</span>
                         </div>
                         @endif
                         
                         @if($challenge->end_date)
-                        <div class="stat-item">
-                            <div class="stat-label">
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                            <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                                 </svg>
-                                <span>End Date:</span>
+                                <span>End Date</span>
                             </div>
-                            <span class="stat-value">{{ $challenge->end_date->format('M d, Y') }}</span>
+                            <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ $challenge->end_date->format('M d, Y') }}</span>
                         </div>
                         @endif
                         
                         @if($challenge->completed_at)
-                        <div class="stat-item">
-                            <div class="stat-label">
+                        <div class="flex items-center justify-between py-2">
+                            <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                 </svg>
-                                <span>Completed:</span>
+                                <span>Completed</span>
                             </div>
-                            <span class="stat-value">{{ $challenge->completed_at->diffForHumans() }}</span>
+                            <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ $challenge->completed_at->diffForHumans() }}</span>
                         </div>
                         @endif
                     </div>
                 </div>
 
-                <!-- Progress Card -->
-                <div class="card">
-                    <div class="section-header-row">
-                        <h3 class="section-title">Progress</h3>
+                <!-- Completion Calendar -->
+                <div class="card" x-data="challengeCalendar({{ json_encode($calendar) }})">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="h3">Completion Calendar</h3>
+                        <div class="flex items-center space-x-1">
+                            <a href="?year={{ $year }}&month={{ $month - 1 < 1 ? 12 : $month - 1 }}{{ $month - 1 < 1 ? '&year=' . ($year - 1) : '' }}" 
+                               class="calendar-nav-button">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </a>
+                            <div class="text-sm font-semibold text-gray-900 dark:text-white min-w-[80px] text-center">
+                                {{ \Carbon\Carbon::create($year, $month, 1)->format('M Y') }}
+                            </div>
+                            <a href="?year={{ $year }}&month={{ $month + 1 > 12 ? 1 : $month + 1 }}{{ $month + 1 > 12 ? '&year=' . ($year + 1) : '' }}" 
+                               class="calendar-nav-button">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                     
-                    @if($challenge->started_at && !$challenge->completed_at)
-                        <!-- Active Progress Bar -->
-                        <div class="mb-6">
-                            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
-                                <span class="font-medium">Overall Progress</span>
-                                <span class="font-semibold">{{ number_format($challenge->getProgressPercentage(), 1) }}%</span>
+                    <!-- Calendar Grid -->
+                    <div class="grid grid-cols-7 gap-1 max-w-xs mx-auto">
+                        <!-- Day headers -->
+                        @foreach(['M', 'T', 'W', 'T', 'F', 'S', 'S'] as $day)
+                            <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400 py-1">
+                                {{ $day }}
                             </div>
-                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
-                                <div class="bg-slate-700 dark:bg-slate-600 h-1.5 rounded-full transition-all duration-300" 
-                                     style="width: {{ $challenge->getProgressPercentage() }}%"></div>
-                            </div>
-                            @if(!$challenge->is_active)
-                                <p class="text-xs text-slate-700 dark:text-slate-400 mt-2 flex items-center">
-                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    Challenge is paused
-                                </p>
-                            @endif
-                        </div>
-                    @endif
+                        @endforeach
 
-                    
-                    @if($challenge->completed_at)
-                        <!-- Completion Summary -->
-                        <div class="info-box info-box-success" style="border: 1px solid rgb(34 197 94 / 0.3);">
-                            <div class="flex items-start space-x-3">
-                                <svg class="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <div class="flex-1">
-                                    <p class="text-sm font-semibold text-blue-900 dark:text-blue-100">Challenge Completed!</p>
-                                    <p class="text-xs text-blue-700 dark:text-blue-300 mt-1">
-                                        Finished {{ $challenge->completed_at->diffForHumans() }} on {{ $challenge->completed_at->format('M d, Y') }}
-                                    </p>
-                                </div>
+                        <!-- Calendar days -->
+                        @foreach($calendar as $index => $day)
+                            <div class="aspect-square">
+                                @if($day['day'])
+                                    @php
+                                        $hasPartialCompletion = $day['completed_count'] > 0 && !$day['is_completed'];
+                                        $classes = 'calendar-day';
+                                        if ($day['is_completed']) {
+                                            $classes .= ' calendar-day-completed';
+                                        } elseif ($hasPartialCompletion) {
+                                            $classes .= ' calendar-day-partial';
+                                        } else {
+                                            $classes .= ' calendar-day-default';
+                                        }
+                                        if ($day['is_today']) {
+                                            $classes .= ' calendar-day-today';
+                                        }
+                                    @endphp
+                                    <button 
+                                        type="button"
+                                        @click="selectDay({{ $index }}); $dispatch('open-modal', 'day-details-modal'); $dispatch('set-day-data', getSelectedDayData())"
+                                        class="{{ $classes }}"
+                                        title="{{ $day['completed_count'] }} / {{ $day['total_count'] }} goals completed">
+                                        {{ $day['day'] }}
+                                    </button>
+                                @else
+                                    <div class="w-full h-full"></div>
+                                @endif
                             </div>
+                        @endforeach
+                    </div>
+
+                    <!-- Legend -->
+                    <div class="calendar-legend">
+                        <div class="calendar-legend-item">
+                            <div class="calendar-legend-dot dot-completed"></div>
+                            <span class="calendar-legend-label">All Complete</span>
                         </div>
-                    @elseif(!$challenge->started_at)
-                        <!-- Not Started Yet -->
-                        <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
-                            <div class="flex items-start space-x-3">
-                                <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                                </svg>
-                                <div class="flex-1">
-                                    <p class="text-sm font-semibold text-gray-900 dark:text-gray-100">Ready to Start</p>
-                                    <p class="text-xs text-gray-700 dark:text-gray-300 mt-1">
-                                        This challenge hasn't been started yet. Start tracking your progress below!
-                                    </p>
-                                </div>
-                            </div>
+                        <div class="calendar-legend-item">
+                            <div class="calendar-legend-dot dot-partial"></div>
+                            <span class="calendar-legend-label">Partial</span>
                         </div>
-                    @endif
+                        <div class="calendar-legend-item">
+                            <div class="calendar-legend-dot dot-today"></div>
+                            <span class="calendar-legend-label">Today</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Daily Goals Section -->
+            <!-- Challenge Goals Section -->
             @if($challenge->goals->isNotEmpty())
                 <div class="card">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="h3">Challenge Goals</h3>
-                        <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+                        <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
                             {{ $challenge->goals->count() }} {{ Str::plural('goal', $challenge->goals->count()) }}
                         </span>
                     </div>
-                    <x-goals.goals-info-list :goals="$challenge->goals" />
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        @foreach($challenge->goals as $goal)
+                            <x-goal-card>
+                                <x-slot:icon>
+                                    <div class="goal-display-card-icon">{{ $goal->library?->icon ?? '🎯' }}</div>
+                                </x-slot:icon>
+                                <x-slot:title>
+                                    <h5 class="goal-display-card-title">{{ $goal->name }}</h5>
+                                </x-slot:title>
+                                @if($goal->description)
+                                    <x-slot:subtitle>
+                                        <p class="goal-display-card-description">{{ $goal->description }}</p>
+                                    </x-slot:subtitle>
+                                @endif
+                            </x-goal-card>
+                        @endforeach
+                    </div>
                 </div>
             @endif
 
@@ -434,20 +441,20 @@
                     @endphp
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                        <div class="text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-400">{{ $totalPeriods }}</div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">{{ $periodLabel }} Active</div>
-                        </div>
-                        <div class="text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-400">{{ $perfectPeriods }}</div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">Perfect {{ $periodLabel }}</div>
-                        </div>
-                        <div class="text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-slate-700 dark:text-slate-400">
-                                {{ number_format(($perfectPeriods / max($totalPeriods, 1)) * 100, 1) }}%
-                            </div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">Success Rate</div>
-                        </div>
+                        <x-ui.stat-card 
+                            variant="top"
+                            label="{{ $periodLabel }} Active" 
+                            :value="$totalPeriods" />
+                        
+                        <x-ui.stat-card 
+                            variant="top"
+                            label="Perfect {{ $periodLabel }}" 
+                            :value="$perfectPeriods" />
+                        
+                        <x-ui.stat-card 
+                            variant="top"
+                            label="Success Rate" 
+                            :value="number_format(($perfectPeriods / max($totalPeriods, 1)) * 100, 1) . '%'" />
                     </div>
 
                     @if($showingPartial && $frequencyType === 'daily')
@@ -556,15 +563,15 @@
                             @endphp
                             
                             @foreach($periodsToShow as $period)
-                                <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 {{ $period['isCurrentPeriod'] ? 'ring-2 ring-blue-500' : '' }}">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <div class="text-sm font-semibold text-gray-900 dark:text-white">
+                                <div class="progress-period-card {{ $period['isCurrentPeriod'] ? 'current-period' : '' }}">
+                                    <div class="progress-period-header">
+                                        <div class="progress-period-date">
                                             {{ $period['start']->format('M j') }} - {{ $period['end']->format('M j, Y') }}
                                             @if($period['isCurrentPeriod'])
-                                                <span class="ml-2 px-2 py-0.5 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded">Current</span>
+                                                <span class="progress-period-badge">Current</span>
                                             @endif
                                         </div>
-                                        <div class="text-sm text-gray-600 dark:text-gray-400">
+                                        <div class="progress-period-count">
                                             {{ $period['completions'] }}/{{ $period['expected'] }}
                                         </div>
                                     </div>
@@ -681,4 +688,66 @@
             </form>
         </div>
     </x-ui.modal>
+
+    <!-- Day Details Modal -->
+    <div x-data="{ dayData: null, monthName: '{{ \Carbon\Carbon::create($year, $month, 1)->format('F') }}', year: '{{ $year }}' }" 
+         @set-day-data.window="dayData = $event.detail">
+        <x-ui.modal 
+            name="day-details-modal"
+            eyebrow="Daily Goals" 
+            x-bind:title="dayData && dayData.day ? monthName + ' ' + dayData.day + ', ' + year : 'Goal Details'"
+            maxWidth="md">
+            <template x-if="dayData && dayData.goals">
+                <div class="daily-goals-list">
+                    <template x-for="(goalCompletion, index) in dayData.goals" :key="index">
+                        <x-goal-card>
+                            <x-slot:icon>
+                                <div class="goal-display-card-icon">
+                                    <span x-text="goalCompletion.goal?.icon || '🎯'"></span>
+                                </div>
+                            </x-slot:icon>
+                            <x-slot:title>
+                                <div class="daily-goals-title" x-text="goalCompletion.goal?.name"></div>
+                            </x-slot:title>
+                            <x-slot:subtitle>
+                                <template x-if="goalCompletion.is_completed && goalCompletion.completed_at">
+                                    <div class="daily-goals-timestamp">
+                                        Completed at <span x-text="new Date(goalCompletion.completed_at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })"></span>
+                                    </div>
+                                </template>
+                            </x-slot:subtitle>
+                            <x-slot:rightAction>
+                                <div class="daily-goals-status-icon" :class="goalCompletion.is_completed ? 'daily-goals-status-icon--completed' : 'daily-goals-status-icon--incomplete'">
+                                    <template x-if="goalCompletion.is_completed">
+                                        <svg fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </template>
+                                    <template x-if="!goalCompletion.is_completed">
+                                        <svg fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </template>
+                                </div>
+                            </x-slot:rightAction>
+                        </x-goal-card>
+                    </template>
+                    
+                    <div class="daily-goals-summary">
+                        <div class="daily-goals-summary-text">
+                            <span class="daily-goals-summary-number" x-text="dayData?.completed_count"></span> of <span class="daily-goals-summary-number" x-text="dayData?.total_count"></span> goals completed
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <div class="modal-footer">
+                <button type="button" 
+                        @click="$dispatch('close-modal', 'day-details-modal')"
+                        class="btn-secondary">
+                    Close
+                </button>
+            </div>
+        </x-ui.modal>
+    </div>
 </x-dashboard-layout>

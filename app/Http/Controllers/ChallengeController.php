@@ -157,14 +157,27 @@ class ChallengeController extends Controller
         // Store current URL as potential back URL for edit
         session(['challenge_back_url' => url()->previous()]);
 
-        $challenge->load(['goals', 'dailyProgress']);
+        $challenge->load(['goals.library', 'dailyProgress']);
         
         // Calculate progress statistics
         $totalDays = $challenge->days_duration;
         $totalGoals = $challenge->goals->count();
         $progressPercentage = $challenge->getProgressPercentage();
 
-        return view('dashboard.challenges.show', compact('challenge', 'totalDays', 'totalGoals', 'progressPercentage'));
+        // Get calendar data
+        $year = request('year', now()->year);
+        $month = request('month', now()->month);
+        $calendar = $this->getMonthlyCalendar($challenge, $year, $month);
+
+        return view('dashboard.challenges.show', compact(
+            'challenge', 
+            'totalDays', 
+            'totalGoals', 
+            'progressPercentage',
+            'calendar',
+            'year',
+            'month'
+        ));
     }
 
     /**
@@ -303,4 +316,66 @@ class ChallengeController extends Controller
         return redirect()->route('challenges.show', $challenge)
             ->with('success', 'Challenge restored successfully!');
     }
-}
+    /**
+     * Get monthly calendar for challenge completion tracking.
+     */
+    private function getMonthlyCalendar(Challenge $challenge, int $year, int $month): array
+    {
+        $firstDay = \Carbon\Carbon::create($year, $month, 1);
+        $daysInMonth = $firstDay->daysInMonth;
+        $startDayOfWeek = $firstDay->dayOfWeekIso; // 1 = Monday, 7 = Sunday
+
+        $calendar = [];
+        
+        // Add empty cells for days before the first day of month
+        for ($i = 1; $i < $startDayOfWeek; $i++) {
+            $calendar[] = [
+                'day' => null, 
+                'is_completed' => false, 
+                'is_today' => false,
+                'completed_count' => 0,
+                'total_count' => 0,
+                'date' => null,
+                'goals' => []
+            ];
+        }
+
+        // Add days of the month
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $date = \Carbon\Carbon::create($year, $month, $day);
+            $isToday = $date->isToday();
+            
+            // Get completion details for each goal on this day
+            $totalGoals = $challenge->goals->count();
+            $goalCompletions = [];
+            
+            foreach ($challenge->goals as $goal) {
+                $completion = $challenge->dailyProgress()
+                    ->where('user_id', $challenge->user_id)
+                    ->where('goal_id', $goal->id)
+                    ->where('date', $date->toDateString())
+                    ->first();
+                
+                $goalCompletions[] = [
+                    'goal' => $goal,
+                    'is_completed' => $completion && $completion->completed_at !== null,
+                    'completed_at' => $completion?->completed_at,
+                ];
+            }
+            
+            $completedCount = collect($goalCompletions)->where('is_completed', true)->count();
+            $isCompleted = $totalGoals > 0 && $completedCount === $totalGoals;
+
+            $calendar[] = [
+                'day' => $day,
+                'is_completed' => $isCompleted,
+                'is_today' => $isToday,
+                'completed_count' => $completedCount,
+                'total_count' => $totalGoals,
+                'date' => $date->toDateString(),
+                'goals' => $goalCompletions,
+            ];
+        }
+
+        return $calendar;
+    }}

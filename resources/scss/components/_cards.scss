@@ -155,3 +155,36 @@ html.dark .dashboard-stat-card-accent-top::after {
 .feature-description {
     @apply text-sm text-gray-600 dark:text-gray-400 leading-relaxed;
 }
+
+// ----------------------------------------------------------------------------
+// PROGRESS PERIOD CARD - For weekly/monthly/yearly progress displays
+// ----------------------------------------------------------------------------
+
+.progress-period-card {
+    @apply bg-gray-50 dark:bg-gray-700/50;
+    @apply rounded-lg p-4;
+    @apply transition-all duration-200;
+    
+    &.current-period {
+        @apply ring-2 ring-blue-500;
+    }
+}
+
+.progress-period-header {
+    @apply flex items-center justify-between mb-2;
+}
+
+.progress-period-date {
+    @apply text-sm font-semibold text-gray-900 dark:text-white;
+}
+
+.progress-period-badge {
+    @apply ml-2 px-2 py-0.5 text-xs;
+    @apply bg-blue-100 dark:bg-blue-900;
+    @apply text-blue-800 dark:text-blue-200;
+    @apply rounded;
+}
+
+.progress-period-count {
+    @apply text-sm text-gray-600 dark:text-gray-400;
+}

@@ -42,37 +42,35 @@
             <div class="modal-header">
                 <div class="modal-eyebrow">Goal Library</div>
                 <h3 class="modal-title">Select Goals</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Choose goals that align with your challenge</p>
+                <p class="modal-description">Choose goals that align with your challenge</p>
             </div>
             
             {{-- Goals List (scrollable) --}}
             <div class="modal-body flex-1 overflow-y-auto">
                 @if($goals->count() > 0)
-                    <div class="space-y-2">
+                    <div class="goal-select-list">
                         @foreach($goals as $goal)
-                        <label class="flex items-start p-3 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border group"
-                               :class="isGoalSelected({{ $goal->id }}) ? 'border-slate-500 bg-slate-50 dark:bg-slate-900/50' : 'border-gray-200 dark:border-gray-700'">
-                            <input type="checkbox" 
-                                   :checked="isGoalSelected({{ $goal->id }})"
-                                   @change="toggleGoal({{ $goal->id }})"
-                                   class="mt-1 rounded border-gray-300 text-slate-700 focus:ring-slate-500 dark:border-gray-600">
-                            <div class="ml-3 flex-1">
-                                <div class="flex items-center space-x-2">
-                                    @if($goal->icon)
-                                        <span class="text-xl">{{ $goal->icon }}</span>
+                            <label class="goal-select-clickable">
+                                <x-goal-card>
+                                    <x-slot:icon>
+                                        <div class="goal-display-card-icon">{{ $goal->icon ?? '🎯' }}</div>
+                                    </x-slot:icon>
+                                    <x-slot:title>
+                                        <h5 class="goal-display-card-title">{{ $goal->name }}</h5>
+                                    </x-slot:title>
+                                    @if($goal->description)
+                                        <x-slot:subtitle>
+                                            <p class="goal-display-card-description">{{ $goal->description }}</p>
+                                        </x-slot:subtitle>
                                     @endif
-                                    <span class="font-semibold text-gray-900 dark:text-white">{{ $goal->name }}</span>
-                                    @if($goal->category)
-                                        <span class="text-xs px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">
-                                            {{ $goal->category->name }}
-                                        </span>
-                                    @endif
-                                </div>
-                                @if($goal->description)
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ $goal->description }}</p>
-                                @endif
-                            </div>
-                        </label>
+                                    <x-slot:rightAction>
+                                        <input type="checkbox" 
+                                               :checked="isGoalSelected({{ $goal->id }})"
+                                               @change="toggleGoal({{ $goal->id }})"
+                                               class="form-checkbox">
+                                    </x-slot:rightAction>
+                                </x-goal-card>
+                            </label>
                         @endforeach
                     </div>
                 @else
@@ -87,7 +85,7 @@
             {{-- Modal Footer --}}
             <div class="modal-footer">
                 <div class="flex justify-between items-center w-full">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">
+                    <span class="goal-select-counter">
                         <span x-text="selectedGoalIds.length"></span>
                         <span x-text="selectedGoalIds.length === 1 ? 'goal' : 'goals'"></span>
                         selected

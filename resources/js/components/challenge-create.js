@@ -225,11 +225,11 @@ export default () => ({
     },
     
     /**
-     * Get goal category by ID
+     * Get goal description by ID
      */
-    getGoalCategoryById(goalId) {
+    getGoalDescriptionById(goalId) {
         const goal = this.goals.find(g => g.id === goalId);
-        return goal && goal.category ? goal.category.name : '';
+        return goal && goal.description ? goal.description : '';
     },
     
     /**

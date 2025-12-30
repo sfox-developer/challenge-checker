@@ -64,7 +64,7 @@
                                         <input type="checkbox" 
                                                :checked="isCompleted"
                                                @change="toggleHabitToday($event, {{ $habit->id }})"
-                                               class="w-6 h-6 rounded border-2 border-gray-300 text-slate-700 focus:ring-2 focus:ring-slate-500 transition-all duration-200">
+                                               class="form-checkbox">
                                     </label>
                                 </div>
 

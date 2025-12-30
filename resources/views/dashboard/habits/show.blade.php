@@ -184,7 +184,7 @@
                         <h3 class="h3">Completion Calendar</h3>
                         <div class="flex items-center space-x-1">
                             <a href="?year={{ $year }}&month={{ $month - 1 < 1 ? 12 : $month - 1 }}{{ $month - 1 < 1 ? '&year=' . ($year - 1) : '' }}" 
-                               class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                               class="calendar-nav-button">
                                 <svg class="w-4 h-4 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                 </svg>
@@ -193,7 +193,7 @@
                                 {{ \Carbon\Carbon::create($year, $month, 1)->format('M Y') }}
                             </div>
                             <a href="?year={{ $year }}&month={{ $month + 1 > 12 ? 1 : $month + 1 }}{{ $month + 1 > 12 ? '&year=' . ($year + 1) : '' }}" 
-                               class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                               class="calendar-nav-button">
                                 <svg class="w-4 h-4 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                                 </svg>
@@ -214,10 +214,18 @@
                         @foreach($calendar as $day)
                             <div class="aspect-square">
                                 @if($day['day'])
-                                    <div class="w-full h-full rounded flex items-center justify-center text-xs font-medium
-                                        {{ $day['is_completed'] ? 'bg-slate-700 dark:bg-slate-600 text-white' : '' }}
-                                        {{ $day['is_today'] ? 'ring-2 ring-teal-500 text-gray-900 dark:text-gray-100' : '' }}
-                                        {{ !$day['is_completed'] && !$day['is_today'] ? 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300' : '' }}">
+                                    @php
+                                        $classes = 'calendar-day';
+                                        if ($day['is_completed']) {
+                                            $classes .= ' calendar-day-completed';
+                                        } else {
+                                            $classes .= ' calendar-day-default';
+                                        }
+                                        if ($day['is_today']) {
+                                            $classes .= ' calendar-day-today';
+                                        }
+                                    @endphp
+                                    <div class="{{ $classes }}">
                                         {{ $day['day'] }}
                                     </div>
                                 @else
@@ -228,14 +236,14 @@
                     </div>
 
                     <!-- Legend -->
-                    <div class="flex items-center justify-center gap-4 mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
-                        <div class="flex items-center gap-1.5">
-                            <div class="w-3 h-3 rounded bg-slate-700 dark:bg-slate-600"></div>
-                            <span class="text-xs text-gray-600 dark:text-gray-400">Completed</span>
+                    <div class="calendar-legend">
+                        <div class="calendar-legend-item">
+                            <div class="calendar-legend-dot dot-completed"></div>
+                            <span class="calendar-legend-label">Completed</span>
                         </div>
-                        <div class="flex items-center gap-1.5">
-                            <div class="w-3 h-3 rounded ring-2 ring-teal-500"></div>
-                            <span class="text-xs text-gray-600 dark:text-gray-400">Today</span>
+                        <div class="calendar-legend-item">
+                            <div class="calendar-legend-dot dot-today"></div>
+                            <span class="calendar-legend-label">Today</span>
                         </div>
                     </div>
                 </div>
