@@ -29,10 +29,11 @@ class UserController extends Controller
                 'following',
                 'challenges' => function ($q) {
                     $q->where('is_public', true)
-                      ->whereNull('archived_at');
+                      ->whereNotNull('started_at');
                 }, 
                 'habits' => function ($q) {
-                    $q->whereNull('archived_at');
+                    $q->where('is_public', true)
+                      ->whereNull('archived_at');
                 },
                 'goalsLibrary as goals_count'
             ])
@@ -53,10 +54,11 @@ class UserController extends Controller
                     'following',
                     'challenges' => function ($q) {
                         $q->where('is_public', true)
-                          ->whereNull('archived_at');
+                          ->whereNotNull('started_at');
                     },
                     'habits' => function ($q) {
-                        $q->whereNull('archived_at');
+                        $q->where('is_public', true)
+                          ->whereNull('archived_at');
                     },
                     'goalsLibrary as goals_count'
                 ])
@@ -74,10 +76,11 @@ class UserController extends Controller
                     'following',
                     'challenges' => function ($q) {
                         $q->where('is_public', true)
-                          ->whereNull('archived_at');
+                          ->whereNotNull('started_at');
                     },
                     'habits' => function ($q) {
-                        $q->whereNull('archived_at');
+                        $q->where('is_public', true)
+                          ->whereNull('archived_at');
                     },
                     'goalsLibrary as goals_count'
                 ])
@@ -101,10 +104,11 @@ class UserController extends Controller
                         'following',
                         'challenges' => function ($q) {
                             $q->where('is_public', true)
-                              ->whereNull('archived_at');
+                              ->whereNotNull('started_at');
                         },
                         'habits' => function ($q) {
-                            $q->whereNull('archived_at');
+                            $q->where('is_public', true)
+                              ->whereNull('archived_at');
                         },
                         'goalsLibrary as goals_count'
                     ])
