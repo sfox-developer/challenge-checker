@@ -36,33 +36,33 @@
     $maxSelections = $maxSelections ?? ($allowMultiple ? 999 : 1);
 @endphp
 
-<div x-data="{{ $componentId }}()" x-init="init()">
+<div x-data="{{ $componentId }}()" x-init="init()" class="goal-selector">
     <!-- Goal Selection Buttons -->
-    <div class="mb-6">
-        <label class="block text-sm font-bold text-gray-800 dark:text-gray-100 mb-3 flex items-center space-x-2">
+    <div>
+        <label class="goal-selector-label">
             <span>What do you want to track? <span class="text-red-500">*</span></span>
         </label>
 
         <!-- Modal Action Buttons -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+        <div class="goal-selector-actions">
             <button type="button" 
                     @click="openGoalSelectModal()"
-                    class="btn-secondary flex items-center justify-center space-x-2 px-4 py-3">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    class="btn-secondary goal-selector-action-btn">
+                <svg class="goal-selector-icon" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
                 </svg>
                 <span class="font-medium">Select from Library</span>
                 @if($allowMultiple)
                 <span x-show="hasGoals() && (selectedGoalIds.length > 0)" 
-                      class="ml-auto w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      class="goal-selector-badge">
+                    <svg class="goal-selector-icon" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>
                 </span>
                 @else
                 <span x-show="hasGoals() && selectedGoalSources === 'library'" 
-                      class="ml-auto w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      class="goal-selector-badge">
+                    <svg class="goal-selector-icon" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>
                 </span>
@@ -72,22 +72,22 @@
             <button type="button" 
                     @click="openGoalCreateModal()"
                     :disabled="!canSelectMore()"
-                    class="btn-secondary flex items-center justify-center space-x-2 px-4 py-3">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    class="btn-secondary goal-selector-action-btn">
+                <svg class="goal-selector-icon" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
                 </svg>
                 <span class="font-medium">Create New Goal</span>
                 @if($allowMultiple)
                 <span x-show="hasGoals() && (newGoals.length > 0)" 
-                      class="ml-auto w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      class="goal-selector-badge">
+                    <svg class="goal-selector-icon" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>
                 </span>
                 @else
                 <span x-show="hasGoals() && (selectedGoalSources === 'new' || newGoal.name)" 
-                      class="ml-auto w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      class="goal-selector-badge">
+                    <svg class="goal-selector-icon" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>
                 </span>
@@ -96,20 +96,20 @@
         </div>
 
         <!-- Selected Goals Display -->
-        <div x-show="getPermanentSelectedCount() > 0" x-transition class="mt-4">
+        <div x-show="getPermanentSelectedCount() > 0" x-transition class="goal-selector-display">
             @if($allowMultiple)
                 <!-- Multiple Selection Display -->
-                <h6 class="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-3">
+                <h6 class="goal-selector-display-header">
                     <span x-text="getPermanentSelectedCount() === 1 ? '{{ $selectedMessage }}' : '{{ rtrim($selectedMessage, ':') }}s:'"></span>
                     @if($maxSelections <= 999)
-                        <span class="text-gray-500 dark:text-gray-400 font-normal">
+                        <span class="goal-selector-display-count">
                             (<span x-text="getPermanentSelectedCount()"></span>/{{ $maxSelections }})
                         </span>
                     @endif
                 </h6>
                 
                 <!-- Selected Goals Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                <div class="goal-selector-grid">
                     <!-- Selected Library Goals -->
                     <template x-for="goalId in selectedGoalIds" :key="'library-' + goalId">
                         <x-goal-card>
@@ -156,13 +156,13 @@
                 </div>
             @else
                 <!-- Single Selection Display -->
-                <h6 class="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-3">
+                <h6 class="goal-selector-display-header">
                     {{ $selectedMessage }}
-                    <span class="text-gray-500 dark:text-gray-400 font-normal">(1/1)</span>
+                    <span class="goal-selector-display-count">(1/1)</span>
                 </h6>
                 
                 <!-- Selected Goal Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                <div class="goal-selector-grid">
                     <!-- Selected Library Goal -->
                     <template x-if="selectedGoalSources === 'library'">
                         <x-goal-card>
@@ -211,12 +211,12 @@
         </div>
 
         <!-- Empty State -->
-        <div x-show="!hasGoals()" class="text-center py-8 text-gray-500 dark:text-gray-400 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
-            <svg class="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+        <div x-show="!hasGoals()" class="goal-selector-empty">
+            <svg class="goal-selector-empty-icon" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
             </svg>
-            <p class="font-medium">{{ $emptyMessage }}</p>
-            <p class="text-sm mt-1">Select from library or create a new goal</p>
+            <p class="goal-selector-empty-title">{{ $emptyMessage }}</p>
+            <p class="goal-selector-empty-subtitle">Select from library or create a new goal</p>
         </div>
 
         <!-- Hidden inputs for form submission -->
