@@ -1,6 +1,6 @@
 # Features & Business Logic
 
-**Last Updated:** December 10, 2025  
+**Last Updated:** December 30, 2025  
 **Purpose:** Domain models, workflows, routes, and business logic
 
 ---
@@ -594,6 +594,11 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
 ### Policies
 
+**Registered Policies** (in `app/Providers/AuthServiceProvider.php`):
+- `Challenge::class => ChallengePolicy::class`
+- `GoalLibrary::class => GoalLibraryPolicy::class`
+- `Habit::class => HabitPolicy::class`
+
 **ChallengePolicy:**
 - `view` - Owner or public challenge
 - `update` - Owner only
@@ -604,6 +609,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 - `view` - Owner only
 - `update` - Owner only
 - `delete` - Owner only
+- **Implementation**: Action buttons in habit show view wrapped with `@can('update', $habit)`
 
 **GoalLibraryPolicy:**
 - `view` - Owner only

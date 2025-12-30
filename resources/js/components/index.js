@@ -31,6 +31,7 @@ import { createEmojiPicker } from './emojiPicker.js';
 import registrationForm from './registration-form.js';
 import { createFollowManager } from './follow.js';
 import { challengeCalendar, dailyGoalsModal } from './challenge-calendar.js';
+import { habitCalendar, habitDayModal } from './habit-calendar.js';
 
 /**
  * Registration Form Component
@@ -51,6 +52,8 @@ window.challengeForm = createChallengeForm;
 window.challengeCreateForm = challengeCreateForm;
 window.challengeCalendar = challengeCalendar;
 window.dailyGoalsModal = dailyGoalsModal;
+window.habitCalendar = habitCalendar;
+window.habitDayModal = habitDayModal;
 window.emojiPicker = createEmojiPicker;
 window.registrationForm = registrationForm;
 window.followManager = createFollowManager;

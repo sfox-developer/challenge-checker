@@ -175,8 +175,12 @@ class HabitService
      */
     public function getMonthlyCalendar(Habit $habit, int $year, int $month): array
     {
-        $startDate = sprintf('%04d-%02d-01', $year, $month);
-        $endDate = date('Y-m-t', strtotime($startDate));
+        $firstDay = \Carbon\Carbon::create($year, $month, 1);
+        $daysInMonth = $firstDay->daysInMonth;
+        $startDayOfWeek = $firstDay->dayOfWeekIso; // 1 = Monday, 7 = Sunday
+
+        $startDate = $firstDay->format('Y-m-d');
+        $endDate = $firstDay->copy()->endOfMonth()->format('Y-m-d');
 
         $completions = $habit->completions()
             ->whereBetween('date', [$startDate, $endDate])
@@ -186,20 +190,38 @@ class HabitService
             });
 
         $calendar = [];
-        $currentDate = new \DateTime($startDate);
-        $lastDate = new \DateTime($endDate);
-        $today = (new \DateTime())->format('Y-m-d');
+        
+        // Add empty cells for days before the first day of month
+        for ($i = 1; $i < $startDayOfWeek; $i++) {
+            $calendar[] = [
+                'day' => null,
+                'date' => null,
+                'is_completed' => false,
+                'is_today' => false,
+                'completion' => null,
+            ];
+        }
 
-        while ($currentDate <= $lastDate) {
-            $dateKey = $currentDate->format('Y-m-d');
-            $calendar[$dateKey] = [
+        // Add days of the month
+        $today = now()->format('Y-m-d');
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $date = \Carbon\Carbon::create($year, $month, $day);
+            $dateKey = $date->format('Y-m-d');
+            
+            $completion = $completions[$dateKey] ?? null;
+            
+            $calendar[] = [
                 'date' => $dateKey,
-                'day' => (int) $currentDate->format('d'),
+                'day' => $day,
                 'is_completed' => isset($completions[$dateKey]),
                 'is_today' => $dateKey === $today,
-                'completion' => $completions[$dateKey] ?? null,
+                'completion' => $completion ? [
+                    'completed_at' => $completion->completed_at?->toISOString(),
+                    'notes' => $completion->notes,
+                    'duration_minutes' => $completion->duration_minutes,
+                    'mood' => $completion->mood,
+                ] : null,
             ];
-            $currentDate->modify('+1 day');
         }
 
         return $calendar;

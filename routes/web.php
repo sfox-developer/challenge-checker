@@ -80,6 +80,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/habits/{habit}/complete', [HabitController::class, 'complete'])->name('habits.complete');
     Route::post('/habits/{habit}/archive', [HabitController::class, 'archive'])->name('habits.archive');
     Route::post('/habits/{habit}/restore', [HabitController::class, 'restore'])->name('habits.restore');
+    Route::patch('/habits/{habit}/completion', [HabitController::class, 'updateCompletion'])->name('habits.updateCompletion');
     
     // Goal Library routes
     Route::get('/goals', [GoalLibraryController::class, 'index'])->name('goals.index');

@@ -328,6 +328,40 @@ class HabitController extends Controller
     }
 
     /**
+     * Update completion for a specific date.
+     */
+    public function updateCompletion(Request $request, Habit $habit): RedirectResponse
+    {
+        $this->authorize('update', $habit);
+
+        $request->validate([
+            'date' => 'required|date',
+            'is_completed' => 'required|boolean',
+        ]);
+
+        $date = $request->input('date');
+        $isCompleted = $request->input('is_completed');
+
+        if ($isCompleted) {
+            // Create or ensure completion exists
+            $this->habitService->completeHabit($habit, auth()->user(), $date);
+        } else {
+            // Remove completion if exists
+            $completion = $habit->completions()
+                ->where('user_id', auth()->id())
+                ->where('date', $date)
+                ->first();
+
+            if ($completion) {
+                $this->habitService->deleteCompletion($completion);
+            }
+        }
+
+        return redirect()->route('habits.show', $habit)
+            ->with('success', 'Completion updated successfully!');
+    }
+
+    /**
      * Get monthly statistics helper.
      */
     private function getMonthlyStats(Habit $habit, int $year, int $month): array
