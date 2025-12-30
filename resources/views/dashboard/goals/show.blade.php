@@ -155,12 +155,16 @@
                         @endforeach
                     </div>
                 @else
-                    <div class="card text-center py-12">
-                        <div class="text-6xl mb-4">📅</div>
-                        <h3 class="h2 mb-2">
+                    <div class="empty-state-card">
+                        <div class="empty-state-icon">
+                            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                        </div>
+                        <h3 class="empty-state-title">
                             No challenges yet
                         </h3>
-                        <p class="text-gray-600 dark:text-gray-400">
+                        <p class="empty-state-message">
                             This goal hasn't been used in any challenges
                         </p>
                     </div>
@@ -176,12 +180,16 @@
                         @endforeach
                     </div>
                 @else
-                    <div class="card text-center py-12">
-                        <div class="text-6xl mb-4">✅</div>
-                        <h3 class="h2 mb-2">
+                    <div class="empty-state-card">
+                        <div class="empty-state-icon">
+                            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="empty-state-title">
                             No habits yet
                         </h3>
-                        <p class="text-gray-600 dark:text-gray-400">
+                        <p class="empty-state-message">
                             This goal hasn't been used in any habits
                         </p>
                     </div>
@@ -191,14 +199,38 @@
 
             <!-- Empty State - When both are empty -->
             @if($challenges->count() === 0 && $habits->count() === 0)
-                <div class="card text-center py-12">
-                    <div class="text-6xl mb-4">{{ $goal->icon ?? '🎯' }}</div>
-                    <h3 class="h2 mb-2">
+                <div class="empty-state-card">
+                    <div class="empty-state-icon">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="empty-state-title">
                         This goal hasn't been used yet
                     </h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    <p class="empty-state-message">
                         Start using "{{ $goal->name }}" by adding it to a challenge or habit
                     </p>
+                    <div class="empty-state-action">
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                            <x-ui.app-button href="{{ route('challenges.create') }}">
+                                <x-slot name="icon">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                                    </svg>
+                                </x-slot>
+                                Create Challenge
+                            </x-ui.app-button>
+                            <x-ui.app-button variant="secondary" href="{{ route('habits.create') }}">
+                                <x-slot name="icon">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                                    </svg>
+                                </x-slot>
+                                Create Habit
+                            </x-ui.app-button>
+                        </div>
+                    </div>
                 </div>
             @endif
             </div>
