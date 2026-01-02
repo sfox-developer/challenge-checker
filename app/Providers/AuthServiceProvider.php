@@ -5,10 +5,10 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Domain\Challenge\Models\Challenge;
-use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Goal;
 use App\Domain\Habit\Models\Habit;
 use App\Policies\ChallengePolicy;
-use App\Policies\GoalLibraryPolicy;
+use App\Policies\GoalPolicy;
 use App\Policies\HabitPolicy;
 
 class AuthServiceProvider extends ServiceProvider
@@ -20,7 +20,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Challenge::class => ChallengePolicy::class,
-        GoalLibrary::class => GoalLibraryPolicy::class,
+        Goal::class => GoalLibraryPolicy::class,
         Habit::class => HabitPolicy::class,
     ];
 

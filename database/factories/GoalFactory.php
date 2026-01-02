@@ -3,18 +3,18 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Goal;
 use App\Domain\User\Models\User;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Goal\Models\GoalLibrary>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Goal\Models\Goal>
  */
-class GoalLibraryFactory extends Factory
+class GoalFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      */
-    protected $model = GoalLibrary::class;
+    protected $model = Goal::class;
 
     /**
      * Define the model's default state.

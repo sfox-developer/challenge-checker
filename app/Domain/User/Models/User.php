@@ -12,7 +12,7 @@ use App\Domain\Challenge\Models\Challenge;
 use App\Domain\Activity\Models\Activity;
 use App\Domain\Social\Models\UserFollow;
 use App\Domain\Habit\Models\Habit;
-use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Goal;
 use App\Domain\User\Traits\HasRandomAvatar;
 
 class User extends Authenticatable
@@ -108,11 +108,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the goal library for the user.
+     * Get the goals for the user.
      */
-    public function goalsLibrary(): HasMany
+    public function goals(): HasMany
     {
-        return $this->hasMany(GoalLibrary::class);
+        return $this->hasMany(Goal::class);
     }
 
     /**

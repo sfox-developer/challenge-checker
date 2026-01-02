@@ -64,10 +64,10 @@
                         label="Active (visible to users)"
                         :checked="$category->is_active" />
 
-                    @if($category->goalsLibrary()->count() > 0)
+                    @if($category->goals()->count() > 0)
                         <div class="info-box info-box-primary">
                             <p class="text-sm text-blue-800 dark:text-blue-200">
-                                <strong>Note:</strong> This category is currently used by {{ $category->goalsLibrary()->count() }} goal(s).
+                                <strong>Note:</strong> This category is currently used by {{ $category->goals()->count() }} goal(s).
                             </p>
                         </div>
                     @endif

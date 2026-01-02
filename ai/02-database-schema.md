@@ -38,7 +38,7 @@ Primary user accounts table.
 - Index: `provider` - Fast lookups by provider type
 
 **Relationships:**
-- Has many: challenges, habits, goals_library, activities
+- Has many: challenges, habits, goals, activities
 - Many-to-many: followers/following (via user_follows)
 
 ---
@@ -89,7 +89,7 @@ Individual goals within a challenge.
 **Columns:**
 - `id` - Primary key
 - `challenge_id` - Foreign key to challenges (cascade delete)
-- `goal_library_id` - Foreign key to goals_library (nullable, set null on delete)
+- `goal_id` - Foreign key to goals (nullable, set null on delete)
 - `name` - Goal name (snapshot from library or custom)
 - `description` - Optional description
 - `order` - Display order within challenge (default 0)
@@ -127,7 +127,7 @@ Recurring habit tracking.
 **Columns:**
 - `id` - Primary key
 - `user_id` - Foreign key to users (cascade delete)
-- `goal_library_id` - Foreign key to goals_library (cascade delete)
+- `goal_id` - Foreign key to goals (cascade delete)
 - `frequency_type` - Enum: daily, weekly, monthly, yearly
 - `frequency_count` - How many times per period (e.g., 3 times weekly)
 - `frequency_config` - JSON, reserved for future use (currently null)
@@ -207,10 +207,10 @@ Central category management table for organizing goals.
 - `ordered()` - Order by `order` ASC
 
 **Usage:**
-- Referenced by `goals_library.category_id`
+- Referenced by `goals.category_id`
 - Admin CRUD interface for management
 
-### goals_library
+### goals
 Reusable goal templates.
 
 **Columns:**
@@ -227,8 +227,8 @@ Reusable goal templates.
 - `category_id` - For filtering by category
 
 **Usage:**
-- Referenced by `goals.goal_library_id`
-- Referenced by `habits.goal_library_id`
+- Referenced by `goals.goal_id`
+- Referenced by `habits.goal_id`
 - Can track usage count via relationships
 
 ---

@@ -1,10 +1,10 @@
 <x-dashboard-layout>
-    <x-slot name="title">{{ $habit->goal->name }}</x-slot>
+    <x-slot name="title">{{ $habit->goal?->name ?? 'Unknown Goal' }}</x-slot>
 
     <x-dashboard.page-header 
         eyebrow="Habit"
-        :title="$habit->goal->name"
-        :description="$habit->goal->description" />
+        :title="$habit->goal?->name ?? 'Unknown Goal'"
+        :description="$habit->goal?->description ?? 'No goal assigned to this habit'" />
 
     <!-- Action Buttons -->
     @can('update', $habit)

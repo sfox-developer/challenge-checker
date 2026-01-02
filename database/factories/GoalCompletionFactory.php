@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Domain\Goal\Models\GoalCompletion;
 use App\Domain\User\Models\User;
-use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Goal;
 use App\Domain\Challenge\Models\Challenge;
 use App\Domain\Habit\Models\Habit;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -17,7 +17,7 @@ class GoalCompletionFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'goal_id' => GoalLibrary::factory(),
+            'goal_id' => Goal::factory(),
             'date' => $this->faker->dateTimeBetween('-30 days', 'now')->format('Y-m-d'),
             'completed_at' => $this->faker->dateTimeBetween('-30 days', 'now'),
             'source_type' => $this->faker->randomElement(['challenge', 'habit', 'manual']),

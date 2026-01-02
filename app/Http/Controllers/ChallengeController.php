@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Domain\Challenge\Models\Challenge;
-use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Goal;
 use App\Domain\Goal\Models\Category;
 use App\Domain\Activity\Services\ActivityService;
 use App\Http\Requests\StoreChallengeRequest;
@@ -73,7 +73,7 @@ class ChallengeController extends Controller
      */
     public function create(): View
     {
-        $goalsLibrary = auth()->user()->goalsLibrary()
+        $goals = auth()->user()->goals()
             ->with('category')
             ->orderBy('name')
             ->get();
@@ -102,8 +102,8 @@ class ChallengeController extends Controller
         ]);
 
         // Attach goals from library
-        if ($request->has('goal_library_ids')) {
-            foreach ($request->goal_library_ids as $index => $goalLibraryId) {
+        if ($request->has('goal_ids')) {
+            foreach ($request->goal_ids as $index => $goalLibraryId) {
                 $challenge->goals()->attach($goalLibraryId, ['order' => $index + 1]);
             }
         }
@@ -112,7 +112,7 @@ class ChallengeController extends Controller
         if ($request->has('new_goals')) {
             foreach ($request->new_goals as $index => $newGoalData) {
                 // Create in goal library first
-                $goalLibrary = GoalLibrary::create([
+                $goalLibrary = Goal::create([
                     'user_id' => auth()->id(),
                     'name' => $newGoalData['name'],
                     'description' => $newGoalData['description'] ?? null,
@@ -122,7 +122,7 @@ class ChallengeController extends Controller
                 
                 // Then link to challenge
                 $challenge->goals()->attach($goalLibrary->id, [
-                    'order' => count($request->goal_library_ids ?? []) + $index + 1,
+                    'order' => count($request->goal_ids ?? []) + $index + 1,
                 ]);
             }
         }

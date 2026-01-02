@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('challenge_goals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('challenge_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('goal_id')->constrained('goals_library')->cascadeOnDelete();
+            $table->foreignId('goal_id')->constrained('goals')->cascadeOnDelete();
             $table->integer('order')->default(0); // Display order within challenge
             $table->timestamps();
             

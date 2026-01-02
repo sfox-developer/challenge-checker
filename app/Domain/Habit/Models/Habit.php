@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Domain\User\Models\User;
-use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Goal;
 use App\Domain\Goal\Models\GoalCompletion;
 use App\Domain\Habit\Enums\FrequencyType;
 use App\Domain\Activity\Models\Activity;
@@ -50,7 +50,7 @@ class Habit extends Model
      */
     public function goal(): BelongsTo
     {
-        return $this->belongsTo(GoalLibrary::class, 'goal_id');
+        return $this->belongsTo(Goal::class, 'goal_id');
     }
 
     /**

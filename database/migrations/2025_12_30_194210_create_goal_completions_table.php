@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('goal_completions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('goal_id')->constrained('goals_library')->cascadeOnDelete();
+            $table->foreignId('goal_id')->constrained('goals')->cascadeOnDelete();
             $table->date('date'); // Completion date
             $table->timestamp('completed_at'); // Exact timestamp
             

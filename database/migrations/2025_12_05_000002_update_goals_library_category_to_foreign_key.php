@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('goals_library', function (Blueprint $table) {
+        Schema::table('goals', function (Blueprint $table) {
             // Drop the old string category column
             $table->dropColumn('category');
         });
         
-        Schema::table('goals_library', function (Blueprint $table) {
+        Schema::table('goals', function (Blueprint $table) {
             // Add new foreign key category_id column
             $table->foreignId('category_id')->nullable()->after('description')->constrained('categories')->onDelete('set null');
             $table->index('category_id');
@@ -28,12 +28,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('goals_library', function (Blueprint $table) {
+        Schema::table('goals', function (Blueprint $table) {
             $table->dropForeign(['category_id']);
             $table->dropColumn('category_id');
         });
         
-        Schema::table('goals_library', function (Blueprint $table) {
+        Schema::table('goals', function (Blueprint $table) {
             $table->string('category')->nullable()->after('description');
         });
     }

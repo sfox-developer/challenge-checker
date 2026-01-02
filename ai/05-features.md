@@ -37,7 +37,7 @@ User management, challenge oversight, and changelog system.
 ```php
 challenges()       // HasMany - User's challenges
 habits()          // HasMany - User's habits
-goalsLibrary()    // HasMany - Goal library
+goals()    // HasMany - Goal library
 activities()      // HasMany - Activity feed
 following()       // BelongsToMany - Users followed
 followers()       // BelongsToMany - Followers
@@ -596,7 +596,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
 **Registered Policies** (in `app/Providers/AuthServiceProvider.php`):
 - `Challenge::class => ChallengePolicy::class`
-- `GoalLibrary::class => GoalLibraryPolicy::class`
+- `Goal::class => GoalLibraryPolicy::class`
 - `Habit::class => HabitPolicy::class`
 
 **ChallengePolicy:**
@@ -665,7 +665,78 @@ $activities = Activity::query()
 
 ---
 
-## 📚 Quick Reference
+## � Enhanced Quick Goals System
+
+**Updated:** January 2, 2026  
+**Description:** Advanced goal completion modal with three-tab interface for unified goal management.
+
+### Overview
+The Enhanced Quick Goals system provides a unified interface to complete goals from multiple sources with a clean three-tab interface: **All**, **Challenges**, and **Habits**.
+
+### Modal Tabs
+
+#### 1. All Tab (Default)
+- **Unified View**: Shows all goals in one list using shared `<x-goal-card>` component
+- **Minimal Design**: Clean, toggle-focused interface without progress bars or stats  
+- **Source Badges**: Color-coded labels (Blue=Challenge, Teal=Habit, Gray=Standalone)
+- **Optimistic Updates**: Instant visual feedback with checkmark/circle toggle
+- **Smart Sorting**: Pending goals first, completed goals second
+
+#### 2. Challenges Tab
+- **Progress Summary**: Today's completion rate with visual progress bar
+- **Pending Section**: Goals not yet completed with context and frequency info
+- **Completed Section**: Collapsible section with completion timestamps
+- **Context Display**: Shows challenge name and frequency requirements
+
+#### 3. Habits Tab
+- **Habit-Specific View**: Goals from active habits due today
+- **Streak Display**: Current streak badges for motivation
+- **Progress Tracking**: Completion count for habits with frequency > 1
+- **Frequency Info**: Shows habit completion requirements
+
+### API Endpoints
+
+```php
+GET /api/quick-all       // All goals (simple list for All tab)
+GET /api/quick-goals     // Prioritized goals (Challenges tab)
+GET /api/quick-habits    // Today's habits (Habits tab)
+
+POST /api/goals/{goal}/complete    // Complete a goal
+DELETE /api/goals/{goal}/complete/{date}  // Undo completion
+```
+
+### Implementation
+
+**Controllers:**
+- `QuickGoalsController@all` - Simple goal list for All tab
+- `QuickGoalsController@index` - Prioritized goals for Challenges tab  
+- `HabitController@quickHabits` - Filtered habits for Habits tab
+- `GoalCompletionController` - Completion/undo operations
+
+**Blade Partials:**
+- `quick-all.blade.php` - All tab using `<x-goal-card>` component
+- `quick-goals.blade.php` - Challenges tab with progress tracking
+- `quick-habits.blade.php` - Habits tab with streak display
+
+**Alpine Components:**
+- `goalCompletion` - Individual goal toggle with API integration
+- `createQuickGoalsModal` - Tab switching and lazy content loading
+- `createEnhancedQuickGoalsModal` - Extended modal with refresh
+
+**Tab Color Scheme:**
+- All: Slate (`border-slate-500`, `text-slate-600`)
+- Challenges: Blue (`border-blue-500`, `text-blue-600`)  
+- Habits: Teal (`border-teal-500`, `text-teal-600`)
+
+**Security:**
+- Source ownership validation
+- Duplicate prevention (one completion per goal per day)
+- CSRF protection on all operations
+- Null safety for missing/invalid relationships
+
+---
+
+## �📚 Quick Reference
 
 ### Model Locations
 ```

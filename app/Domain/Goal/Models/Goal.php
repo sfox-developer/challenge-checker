@@ -12,11 +12,11 @@ use App\Domain\Challenge\Models\Challenge;
 use App\Domain\Challenge\Models\ChallengeGoal;
 use App\Domain\Goal\Models\GoalCompletion;
 
-class GoalLibrary extends Model
+class Goal extends Model
 {
     use HasFactory;
 
-    protected $table = 'goals_library';
+    protected $table = 'goals';
 
     protected $fillable = [
         'user_id',

@@ -111,7 +111,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category): RedirectResponse
     {
-        $goalsCount = $category->goalsLibrary()->count();
+        $goalsCount = $category->goals()->count();
 
         if ($goalsCount > 0) {
             return redirect()->route('admin.categories.index')

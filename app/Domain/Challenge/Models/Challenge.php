@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Domain\User\Models\User;
 use App\Domain\Activity\Models\Activity;
-use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Goal;
 use App\Domain\Goal\Models\GoalCompletion;
 use App\Domain\Challenge\Models\ChallengeGoal;
 use App\Domain\Habit\Enums\FrequencyType;
@@ -61,7 +61,7 @@ class Challenge extends Model
      */
     public function goals(): BelongsToMany
     {
-        return $this->belongsToMany(GoalLibrary::class, 'challenge_goals', 'challenge_id', 'goal_id')
+        return $this->belongsToMany(Goal::class, 'challenge_goals', 'challenge_id', 'goal_id')
             ->using(ChallengeGoal::class)
             ->withPivot('order')
             ->orderBy('challenge_goals.order');

@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Domain\Challenge\Models\Goal;
-use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Challenge\Models\Goal as ChallengeGoal;
+use App\Domain\Goal\Models\Goal as GoalLibrary;
 use App\Domain\User\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -60,7 +60,7 @@ class MigrateGoalsToLibrary extends Command
                 
                 if (!$dryRun) {
                     // Create or find library goal
-                    $libraryGoal = GoalLibrary::firstOrCreate(
+                    $libraryGoal = Goal::firstOrCreate(
                         [
                             'user_id' => $user->id,
                             'name' => $firstGoal->name,
@@ -79,7 +79,7 @@ class MigrateGoalsToLibrary extends Command
                     
                     // Update all goals with this name to reference the library
                     foreach ($goalGroup as $goal) {
-                        $goal->update(['goal_library_id' => $libraryGoal->id]);
+                        $goal->update(['goal_id' => $libraryGoal->id]);
                         $totalMigrated++;
                     }
                 } else {

@@ -43,7 +43,7 @@ class GoalCompletion extends Model
      */
     public function goal(): BelongsTo
     {
-        return $this->belongsTo(GoalLibrary::class, 'goal_id');
+        return $this->belongsTo(Goal::class, 'goal_id');
     }
 
     /**

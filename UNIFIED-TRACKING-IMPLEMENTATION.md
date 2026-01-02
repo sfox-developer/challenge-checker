@@ -69,7 +69,7 @@ This document tracks the implementation of the unified goal tracking system that
    - Add helper methods for stats
 
 8. `app/Domain/Activity/Models/Activity.php`
-   - Update `goal()` relationship to reference goals_library
+   - Update `goal()` relationship to reference goals
    - Remove old goal_id reference
 
 9. `app/Domain/User/Models/User.php`

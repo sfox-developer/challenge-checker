@@ -25,9 +25,9 @@ class Category extends Model
     /**
      * Get goals in this category.
      */
-    public function goalsLibrary(): HasMany
+    public function goals(): HasMany
     {
-        return $this->hasMany(GoalLibrary::class);
+        return $this->hasMany(Goal::class);
     }
 
     /**

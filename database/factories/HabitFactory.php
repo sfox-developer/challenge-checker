@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Domain\Habit\Models\Habit;
 use App\Domain\User\Models\User;
-use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Goal;
 use App\Domain\Habit\Enums\FrequencyType;
 
 /**

@@ -12,7 +12,7 @@
     
     Example usage:
     <x-goal-selector 
-        :goals="$goalsLibrary" 
+        :goals="$goals" 
         :allow-multiple="true" 
         :max-selections="5"
         selected-message="Selected goals:"
@@ -223,7 +223,7 @@
         @if($allowMultiple)
             <!-- Multiple selection hidden inputs -->
             <template x-for="(goalId, index) in selectedGoalIds" :key="'input-library-' + goalId">
-                <input type="hidden" :name="'goal_library_ids[]'" :value="goalId">
+                <input type="hidden" :name="'goal_ids[]'" :value="goalId">
             </template>
             <template x-for="(goal, index) in newGoals" :key="'input-new-' + goal.tempId">
                 <div>
@@ -235,7 +235,7 @@
             </template>
         @else
             <!-- Single selection hidden inputs -->
-            <input type="hidden" name="goal_library_id" :value="selectedGoalSources === 'library' ? selectedGoalIds : ''">
+            <input type="hidden" name="goal_id" :value="selectedGoalSources === 'library' ? selectedGoalIds : ''">
             <template x-if="selectedGoalSources === 'new' || (newGoal.name && newGoal.name.trim())">
                 <div>
                     <input type="hidden" name="new_goal_name" :value="newGoal.name">

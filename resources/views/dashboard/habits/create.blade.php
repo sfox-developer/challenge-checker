@@ -8,7 +8,7 @@
 
     {{-- Pass goals library data to JavaScript --}}
     <script>
-        window.goalsLibraryData = @json($goalsLibrary);
+        window.goalsLibraryData = @json($goals);
         window.goalStoreRoute = '{{ route("goals.store") }}';
     </script>
 
@@ -23,7 +23,7 @@
                     <x-goal-selector 
                         allow-multiple="false" 
                         field-name="goal_id" 
-                        :goals-data="$goalsLibrary" 
+                        :goals-data="$goals" 
                         :categories="$categories" />
 
                     <!-- Public Checkbox -->

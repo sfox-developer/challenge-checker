@@ -10,8 +10,9 @@ use App\Domain\Habit\Models\Habit;
 use App\Domain\Goal\Models\GoalCompletion;
 use App\Domain\Habit\Services\HabitService;
 use App\Domain\Habit\Enums\FrequencyType;
-use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Goal;
 use App\Domain\Goal\Models\Category;
+use Carbon\Carbon;
 
 class HabitController extends Controller
 {
@@ -64,7 +65,7 @@ class HabitController extends Controller
      */
     public function create(): View
     {
-        $goalsLibrary = auth()->user()->goalsLibrary()
+        $goals = auth()->user()->goals()
             ->with('category')
             ->orderBy('name')
             ->get();
@@ -81,8 +82,8 @@ class HabitController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'goal_library_id' => 'required_without:new_goal_name|exists:goals_library,id',
-            'new_goal_name' => 'required_without:goal_library_id|string|max:255',
+            'goal_id' => 'required_without:new_goal_name|exists:goals,id',
+            'new_goal_name' => 'required_without:goal_id|string|max:255',
             'new_goal_description' => 'nullable|string',
             'new_goal_category_id' => 'nullable|exists:categories,id',
             'new_goal_icon' => 'nullable|string|max:10',
@@ -94,14 +95,14 @@ class HabitController extends Controller
 
         // Create new goal if needed
         if ($request->filled('new_goal_name')) {
-            $goalLibrary = GoalLibrary::create([
+            $goalLibrary = Goal::create([
                 'user_id' => auth()->id(),
                 'name' => $validated['new_goal_name'],
                 'description' => $validated['new_goal_description'] ?? null,
                 'category_id' => $validated['new_goal_category_id'] ?? null,
                 'icon' => $validated['new_goal_icon'] ?? null,
             ]);
-            $validated['goal_library_id'] = $goalLibrary->id;
+            $validated['goal_id'] = $goalLibrary->id;
         }
 
         // Prepare frequency config
@@ -110,7 +111,7 @@ class HabitController extends Controller
         // Create habit
         $habit = Habit::create([
             'user_id' => auth()->id(),
-            'goal_library_id' => $validated['goal_library_id'],
+            'goal_id' => $validated['goal_id'],
             'frequency_type' => $validated['frequency_type'],
             'frequency_count' => $validated['frequency_count'],
             'frequency_config' => $frequencyConfig,
@@ -161,7 +162,7 @@ class HabitController extends Controller
     {
         $this->authorize('update', $habit);
 
-        $goalsLibrary = auth()->user()->goalsLibrary()
+        $goals = auth()->user()->goals()
             ->orderBy('name')
             ->get();
 
@@ -231,19 +232,47 @@ class HabitController extends Controller
     }
 
     /**
-     * Get today's habits for quick completion.
+     * Get today's habits for quick completion (for "Habits" tab).
      */
     public function quickHabits(): View
     {
         $user = auth()->user();
+        $today = Carbon::today();
         
-        $todaysHabits = $user->habits()
+        // Get active habits with goals
+        $activeHabits = $user->habits()
             ->active()
-            ->with(['goal', 'statistics'])
+            ->with('goal')
             ->get()
-            ->filter(fn($habit) => $habit->isDueToday());
+            ->filter(fn($habit) => $habit->goal && $habit->goal->name);
+        
+        // Get completion status for today
+        $completedToday = GoalCompletion::query()
+            ->where('user_id', $user->id)
+            ->where('date', $today)
+            ->whereIn('goal_id', $activeHabits->pluck('goal_id'))
+            ->get()
+            ->keyBy('goal_id');
+        
+        // Map to simple format with completion status
+        $habitGoals = $activeHabits->map(function($habit) use ($completedToday) {
+            $goalId = $habit->goal_id;
+            $isCompleted = isset($completedToday[$goalId]);
+            
+            return [
+                'goal_id' => $goalId,
+                'goal_name' => $habit->goal->name,
+                'source_type' => 'habit',
+                'source_id' => $habit->id,
+                'source_name' => 'Habit',
+                'is_completed_today' => $isCompleted,
+            ];
+        })->sortBy(function($goal) {
+            // Sort: pending first, then completed
+            return $goal['is_completed_today'] ? 1 : 0;
+        })->values();
 
-        return view('dashboard.partials.quick-habits', compact('todaysHabits'));
+        return view('dashboard.partials.quick-habits', compact('habitGoals'));
     }
 
     /**

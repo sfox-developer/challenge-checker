@@ -26,7 +26,7 @@ return new class extends Migration
                 INSERT IGNORE INTO goal_completions (user_id, goal_id, date, completed_at, source_type, source_id, created_at, updated_at)
                 SELECT 
                     dp.user_id,
-                    g.goal_library_id,
+                    g.goal_id,
                     dp.date,
                     COALESCE(dp.completed_at, dp.created_at),
                     'challenge',
@@ -35,7 +35,7 @@ return new class extends Migration
                     dp.updated_at
                 FROM daily_progress dp
                 INNER JOIN goals g ON dp.goal_id = g.id
-                WHERE g.goal_library_id IS NOT NULL
+                WHERE g.goal_id IS NOT NULL
             ");
         }
 
@@ -62,17 +62,17 @@ return new class extends Migration
         }
 
         // Step 3: Migrate old goals table to challenge_goals junction
-        if (Schema::hasTable('goals') && Schema::hasColumn('goals', 'goal_library_id')) {
+        if (Schema::hasTable('goals') && Schema::hasColumn('goals', 'goal_id')) {
             DB::statement("
                 INSERT IGNORE INTO challenge_goals (challenge_id, goal_id, `order`, created_at, updated_at)
                 SELECT 
                     g.challenge_id,
-                    g.goal_library_id,
+                    g.goal_id,
                     g.`order`,
                     g.created_at,
                     g.updated_at
                 FROM goals g
-                WHERE g.goal_library_id IS NOT NULL
+                WHERE g.goal_id IS NOT NULL
             ");
         }
 
@@ -111,22 +111,22 @@ return new class extends Migration
             SET current_streak = 0, streak_start_date = NULL
         ");
 
-        // Step 7: Update activities to reference goal_id from goals_library
+        // Step 7: Update activities to reference goal_id from goals
         if (Schema::hasTable('activities') && Schema::hasColumn('activities', 'goal_id')) {
             // Add temporary column
-            if (!Schema::hasColumn('activities', 'goal_library_id')) {
+            if (!Schema::hasColumn('activities', 'goal_id')) {
                 Schema::table('activities', function (Blueprint $table) {
-                    $table->foreignId('goal_library_id')->after('goal_id')->nullable()->constrained('goals_library')->cascadeOnDelete();
+                    $table->foreignId('goal_id')->after('goal_id')->nullable()->constrained('goals')->cascadeOnDelete();
                 });
             }
 
-            // Populate goal_library_id in activities (if goals table still exists)
-            if (Schema::hasTable('goals') && Schema::hasColumn('goals', 'goal_library_id')) {
+            // Populate goal_id in activities (if goals table still exists)
+            if (Schema::hasTable('goals') && Schema::hasColumn('goals', 'goal_id')) {
                 DB::statement("
                     UPDATE activities a
                     INNER JOIN goals g ON a.goal_id = g.id
-                    SET a.goal_library_id = g.goal_library_id
-                    WHERE g.goal_library_id IS NOT NULL
+                    SET a.goal_id = g.goal_id
+                    WHERE g.goal_id IS NOT NULL
                 ");
             }
 
@@ -134,7 +134,7 @@ return new class extends Migration
             Schema::table('activities', function (Blueprint $table) {
                 $table->dropForeign(['goal_id']);
                 $table->dropColumn('goal_id');
-                $table->renameColumn('goal_library_id', 'goal_id');
+                $table->renameColumn('goal_id', 'goal_id');
             });
         }
 

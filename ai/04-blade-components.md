@@ -976,6 +976,161 @@ window.registrationForm = registrationForm;
 </div>
 ```
 
+**7. Enhanced Quick Goals Modal (External Component):**
+
+**Complex modal component with multi-source goal aggregation and real-time updates.**
+
+```javascript
+// resources/js/components/quick-complete.js
+export function createGoalCompletion() {
+    return {
+        isLoading: false,
+        isCompleted: false,
+        
+        init() {
+            this.isCompleted = this.$el.dataset.completed === '1';
+        },
+        
+        async toggleCompletion() {
+            if (this.isLoading) return;
+            
+            try {
+                this.isLoading = true;
+                
+                if (this.isCompleted) {
+                    await this.undoCompletion();
+                } else {
+                    await this.completeGoal();
+                }
+                
+                this.$dispatch('refresh-quick-goals');
+                
+            } catch (error) {
+                this.handleError('Failed to update goal completion.');
+            } finally {
+                this.isLoading = false;
+            }
+        },
+        
+        async makeApiCall(method) {
+            // API integration logic
+        }
+    };
+}
+
+export function createEnhancedQuickGoalsModal() {
+    const baseModal = createQuickGoalsModal();
+    
+    return {
+        ...baseModal,
+        
+        init() {
+            this.$watch('isOpen', (isOpen) => {
+                if (isOpen) {
+                    this.loadChallenges();
+                    if (this.activeTab === 'habits') {
+                        this.loadHabits();
+                    }
+                }
+            });
+            
+            this.$el.addEventListener('refresh-quick-goals', () => {
+                this.refreshContent();
+            });
+        },
+        
+        async refreshContent() {
+            if (this.activeTab === 'challenges') {
+                this.challengesLoaded = false;
+                await this.loadChallenges();
+            } else if (this.activeTab === 'habits') {
+                this.habitsLoaded = false;
+                await this.loadHabits();
+            }
+        }
+    };
+}
+
+// Register in resources/js/components/index.js
+import { createGoalCompletion, createEnhancedQuickGoalsModal } from './quick-complete.js';
+window.goalCompletion = createGoalCompletion;
+window.quickGoalsModal = createEnhancedQuickGoalsModal;
+```
+
+**Usage in Blade:**
+```blade
+<!-- Enhanced Quick Goals Modal -->
+<div x-data="quickGoalsModal" 
+     x-show="isOpen" 
+     class="modal-overlay">
+    
+    <!-- Modal Content with Smart Prioritization -->
+    <div class="quick-goals-content">
+        <!-- Progress Summary -->
+        <div class="progress-summary">
+            <span x-text="pendingCount + ' pending 📈'"></span>
+            <span x-text="completedCount + ' completed ✅'"></span>
+        </div>
+        
+        <!-- Pending Goals (Always Visible) -->
+        <div class="pending-goals">
+            <template x-for="goal in pendingGoals" :key="goal.id">
+                <div x-data="goalCompletion"
+                     :data-goal-id="goal.id"
+                     :data-date="currentDate"
+                     :data-source-type="goal.source_type"
+                     :data-source-id="goal.source_id"
+                     :data-completed="goal.isCompleted ? '1' : '0'">
+                    <button @click="toggleCompletion()" 
+                            :disabled="isLoading"
+                            class="goal-complete-btn">
+                        <span x-show="isLoading">⏳</span>
+                        <span x-show="!isLoading && !isCompleted">⭕</span>
+                    </button>
+                    <span x-text="goal.name"></span>
+                    <span class="source-badge" x-text="goal.source_type"></span>
+                </div>
+            </template>
+        </div>
+        
+        <!-- Completed Goals (Collapsible) -->
+        <div x-data="{ showCompleted: false }" 
+             x-show="completedGoals.length > 0">
+            <button @click="showCompleted = !showCompleted" 
+                    class="collapse-toggle">
+                <span x-show="!showCompleted">Show completed goals</span>
+                <span x-show="showCompleted">Hide completed goals</span>
+            </button>
+            
+            <div x-show="showCompleted" x-collapse>
+                <template x-for="goal in completedGoals" :key="goal.id">
+                    <div x-data="goalCompletion"
+                         :data-goal-id="goal.id"
+                         :data-date="currentDate"
+                         :data-completed="'1'">
+                        <button @click="toggleCompletion()" 
+                                :disabled="isLoading"
+                                class="goal-undo-btn">
+                            <span x-show="isLoading">⏳</span>
+                            <span x-show="!isLoading">✅</span>
+                        </button>
+                        <span x-text="goal.name" class="completed-goal"></span>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+**Key Features:**
+- **Multi-source aggregation** - Combines goals from challenges, habits, and library
+- **Smart prioritization** - Pending goals shown first, completed goals collapsible
+- **Real-time updates** - Immediate feedback with loading states
+- **Event-driven refresh** - Modal content updates after completion changes
+- **API integration** - Handles completion/undo with proper error handling
+- **Source context** - Maintains relationship to originating challenge/habit
+
 ---
 
 ### Alpine.js Directives Reference

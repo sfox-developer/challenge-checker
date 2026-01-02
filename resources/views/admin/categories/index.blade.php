@@ -66,7 +66,7 @@
                                         {{ $category->slug }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                        {{ $category->goals_library_count }}
+                                        {{ $category->goals_count }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if($category->is_active)
@@ -83,7 +83,7 @@
                                         <a href="{{ route('admin.categories.edit', $category) }}" class="text-slate-700 hover:text-blue-900 dark:text-slate-400 dark:hover:text-blue-300 mr-3">
                                             Edit
                                         </a>
-                                        @if($category->goals_library_count === 0)
+                                        @if($category->goals_count === 0)
                                             <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this category?')">
                                                 @csrf
                                                 @method('DELETE')

@@ -3,7 +3,7 @@
 namespace App\Domain\Challenge\Services;
 
 use App\Domain\Challenge\Models\Challenge;
-use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Goal;
 use App\Domain\Goal\Models\GoalCompletion;
 use App\Domain\User\Models\User;
 use App\Domain\Habit\Enums\FrequencyType;
@@ -13,7 +13,7 @@ class ChallengeService
     /**
      * Get completion count for current period based on challenge frequency.
      */
-    public function getCompletionCountForPeriod(Challenge $challenge, GoalLibrary $goal, ?\DateTime $date = null): int
+    public function getCompletionCountForPeriod(Challenge $challenge, Goal $goal, ?\DateTime $date = null): int
     {
         $date = $date ?? new \DateTime();
         $frequencyType = $challenge->frequency_type ?? FrequencyType::DAILY;
@@ -36,7 +36,7 @@ class ChallengeService
     /**
      * Check if goal can be completed based on frequency limits.
      */
-    public function canCompleteGoal(Challenge $challenge, GoalLibrary $goal, ?\DateTime $date = null): bool
+    public function canCompleteGoal(Challenge $challenge, Goal $goal, ?\DateTime $date = null): bool
     {
         $date = $date ?? new \DateTime();
         $frequencyType = $challenge->frequency_type ?? FrequencyType::DAILY;
@@ -61,7 +61,7 @@ class ChallengeService
     /**
      * Get progress text for a goal in current period.
      */
-    public function getProgressText(Challenge $challenge, GoalLibrary $goal): string
+    public function getProgressText(Challenge $challenge, Goal $goal): string
     {
         $completed = $this->getCompletionCountForPeriod($challenge, $goal);
         $required = $challenge->frequency_count ?? 1;
@@ -72,7 +72,7 @@ class ChallengeService
     /**
      * Get progress percentage for a goal in current period.
      */
-    public function getProgressPercentage(Challenge $challenge, GoalLibrary $goal): int
+    public function getProgressPercentage(Challenge $challenge, Goal $goal): int
     {
         $completed = $this->getCompletionCountForPeriod($challenge, $goal);
         $required = $challenge->frequency_count ?? 1;

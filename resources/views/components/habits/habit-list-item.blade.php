@@ -11,7 +11,7 @@
         <div class="flex-1 min-w-0">
             <div class="flex items-start justify-between gap-3 mb-2">
                 <h4 class="h4 h4-card group-hover:text-slate-700 dark:group-hover:text-slate-400 transition-colors">
-                    {{ $habit->goal_name }}
+                    {{ $habit->goal->name }}
                 </h4>
                 
                 <!-- Status Badge -->

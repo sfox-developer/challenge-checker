@@ -10,8 +10,8 @@ use App\Http\Controllers\FeedController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HabitController;
-use App\Http\Controllers\GoalLibraryController;
 use App\Http\Controllers\Api\QuickGoalsController;
+use App\Http\Controllers\Api\GoalCompletionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -92,7 +92,12 @@ Route::middleware('auth')->group(function () {
     
     // API routes for quick goals and habits
     Route::get('/api/quick-goals', [QuickGoalsController::class, 'index']);
+    Route::get('/api/quick-all', [QuickGoalsController::class, 'all']);
     Route::get('/api/quick-habits', [HabitController::class, 'quickHabits']);
+    
+    // Goal completion API routes
+    Route::post('/api/goals/{goal}/complete', [GoalCompletionController::class, 'store']);
+    Route::delete('/api/goals/{goal}/complete/{date}', [GoalCompletionController::class, 'destroy']);
     
     // Admin routes
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');

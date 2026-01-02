@@ -209,9 +209,9 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function test_user_has_goals_library_relationship()
+    public function test_user_has_goals_relationship()
     {
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class, $this->user->goalsLibrary());
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class, $this->user->goals());
     }
 
     /** @test */

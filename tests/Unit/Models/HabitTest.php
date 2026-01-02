@@ -7,12 +7,12 @@ use App\Domain\User\Models\User;
 use App\Domain\Habit\Models\Habit;
 use App\Domain\Habit\Models\HabitCompletion;
 use App\Domain\Habit\Models\HabitStatistic;
-use App\Domain\Goal\Models\GoalLibrary;
+use App\Domain\Goal\Models\Goal;
 use App\Domain\Habit\Enums\FrequencyType;
 use Database\Factories\UserFactory;
 use Database\Factories\HabitFactory;
 use Database\Factories\HabitCompletionFactory;
-use Database\Factories\GoalLibraryFactory;
+use Database\Factories\GoalFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Carbon\Carbon;
 
@@ -21,7 +21,7 @@ class HabitTest extends TestCase
     use RefreshDatabase;
 
     protected User $user;
-    protected GoalLibrary $goal;
+    protected Goal $goal;
 
     protected function setUp(): void
     {
@@ -339,7 +339,7 @@ class HabitTest extends TestCase
         ]);
 
         $this->assertInstanceOf(User::class, $habit->user);
-        $this->assertInstanceOf(GoalLibrary::class, $habit->goal);
+        $this->assertInstanceOf(Goal::class, $habit->goal);
         $this->assertEquals($this->user->id, $habit->user->id);
         $this->assertEquals($this->goal->id, $habit->goal->id);
     }

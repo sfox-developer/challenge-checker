@@ -28,8 +28,8 @@ class StoreChallengeRequest extends FormRequest
             'frequency_type' => 'required|string|in:daily,weekly,monthly,yearly',
             'frequency_count' => 'required|integer|min:1|max:7',
 
-            'goal_library_ids' => 'nullable|array|max:10',
-            'goal_library_ids.*' => 'exists:goals_library,id',
+            'goal_ids' => 'nullable|array|max:10',
+            'goal_ids.*' => 'exists:goals,id',
             'new_goals' => 'nullable|array|max:10',
             'new_goals.*.name' => 'required_with:new_goals|string|max:255',
             'new_goals.*.description' => 'nullable|string|max:500',
@@ -45,7 +45,7 @@ class StoreChallengeRequest extends FormRequest
     {
         // Add custom validation to ensure at least one goal type is provided
         $this->merge([
-            '_has_goals' => !empty($this->goal_library_ids) || !empty($this->new_goals),
+            '_has_goals' => !empty($this->goal_ids) || !empty($this->new_goals),
         ]);
     }
 
@@ -55,7 +55,7 @@ class StoreChallengeRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            if (empty($this->goal_library_ids) && empty($this->new_goals)) {
+            if (empty($this->goal_ids) && empty($this->new_goals)) {
                 $validator->errors()->add('goals', 'Please select at least one goal from your library or add a new goal.');
             }
         });
@@ -67,10 +67,10 @@ class StoreChallengeRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'goal_library_ids.max' => 'You can select a maximum of 10 goals from your library.',
+            'goal_ids.max' => 'You can select a maximum of 10 goals from your library.',
             'new_goals.max' => 'You can add a maximum of 10 new goals.',
             'new_goals.*.name.required_with' => 'Each new goal must have a name.',
-            'goal_library_ids.*.exists' => 'One or more selected goals do not exist in your library.',
+            'goal_ids.*.exists' => 'One or more selected goals do not exist in your library.',
         ];
     }
 }

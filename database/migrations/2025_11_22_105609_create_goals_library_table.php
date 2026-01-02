@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('goals_library', function (Blueprint $table) {
+        Schema::create('goals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
@@ -23,9 +23,9 @@ return new class extends Migration
             $table->index(['user_id', 'name']);
         });
         
-        // Add goal_library_id to existing goals table
+        // Add goal_id to existing goals table
         Schema::table('goals', function (Blueprint $table) {
-            $table->foreignId('goal_library_id')->nullable()->after('challenge_id')->constrained('goals_library')->onDelete('set null');
+            $table->foreignId('goal_id')->nullable()->after('challenge_id')->constrained('goals')->onDelete('set null');
         });
     }
 
@@ -35,10 +35,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('goals', function (Blueprint $table) {
-            $table->dropForeign(['goal_library_id']);
-            $table->dropColumn('goal_library_id');
+            $table->dropForeign(['goal_id']);
+            $table->dropColumn('goal_id');
         });
         
-        Schema::dropIfExists('goals_library');
+        Schema::dropIfExists('goals');
     }
 };
