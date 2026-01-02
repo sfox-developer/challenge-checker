@@ -35,7 +35,7 @@ class UserController extends Controller
                     $q->where('is_public', true)
                       ->whereNull('archived_at');
                 },
-                'goalsLibrary as goals_count'
+                'goals as goals_count'
             ])
             ->limit(6)
             ->get();
@@ -60,7 +60,7 @@ class UserController extends Controller
                         $q->where('is_public', true)
                           ->whereNull('archived_at');
                     },
-                    'goalsLibrary as goals_count'
+                    'goals as goals_count'
                 ])
                 ->limit(20)
                 ->get();
@@ -82,7 +82,7 @@ class UserController extends Controller
                         $q->where('is_public', true)
                           ->whereNull('archived_at');
                     },
-                    'goalsLibrary as goals_count'
+                    'goals as goals_count'
                 ])
                 ->inRandomOrder()
                 ->limit(12)
@@ -110,7 +110,7 @@ class UserController extends Controller
                             $q->where('is_public', true)
                               ->whereNull('archived_at');
                         },
-                        'goalsLibrary as goals_count'
+                        'goals as goals_count'
                     ])
                     ->inRandomOrder()
                     ->limit(12 - $users->count())

@@ -80,7 +80,7 @@ class ChallengeController extends Controller
 
         $categories = Category::active()->ordered()->get();
 
-        return view('dashboard.challenges.create', compact('goalsLibrary', 'categories'));
+        return view('dashboard.challenges.create', compact('goals', 'categories'));
     }
 
     /**
@@ -103,8 +103,8 @@ class ChallengeController extends Controller
 
         // Attach goals from library
         if ($request->has('goal_ids')) {
-            foreach ($request->goal_ids as $index => $goalLibraryId) {
-                $challenge->goals()->attach($goalLibraryId, ['order' => $index + 1]);
+            foreach ($request->goal_ids as $index => $goalId) {
+                $challenge->goals()->attach($goalId, ['order' => $index + 1]);
             }
         }
         
@@ -112,7 +112,7 @@ class ChallengeController extends Controller
         if ($request->has('new_goals')) {
             foreach ($request->new_goals as $index => $newGoalData) {
                 // Create in goal library first
-                $goalLibrary = Goal::create([
+                $goal = Goal::create([
                     'user_id' => auth()->id(),
                     'name' => $newGoalData['name'],
                     'description' => $newGoalData['description'] ?? null,
@@ -121,7 +121,7 @@ class ChallengeController extends Controller
                 ]);
                 
                 // Then link to challenge
-                $challenge->goals()->attach($goalLibrary->id, [
+                $challenge->goals()->attach($goal->id, [
                     'order' => count($request->goal_ids ?? []) + $index + 1,
                 ]);
             }

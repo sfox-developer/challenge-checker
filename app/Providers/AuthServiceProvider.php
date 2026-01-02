@@ -20,7 +20,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Challenge::class => ChallengePolicy::class,
-        Goal::class => GoalLibraryPolicy::class,
+        Goal::class => GoalPolicy::class,
         Habit::class => HabitPolicy::class,
     ];
 

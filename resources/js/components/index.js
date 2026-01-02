@@ -20,7 +20,8 @@
 
 import { createThemeManager } from './theme.js';
 import { createActivityCard } from './activity.js';
-import { createModalData, createQuickGoalsModal } from './modal.js';
+import { createModalData } from './modal.js';
+import { createGoalCompletion } from './quick-complete.js';
 import { createGoalToggleManager } from './goals.js';
 import { createHabitForm, createHabitFormWithGoalToggle, createHabitEditForm } from './habit.js';
 import { createChallengeForm } from './challenge.js';
@@ -47,7 +48,7 @@ import { goalCalendar, goalDayModal } from './goal-calendar.js';
 window.themeManager = createThemeManager;
 window.activityCard = createActivityCard;
 window.modalData = createModalData;
-window.quickGoalsModal = createQuickGoalsModal;
+window.goalCompletion = createGoalCompletion;
 window.goalToggleManager = createGoalToggleManager;
 window.habitForm = createHabitForm;
 window.habitFormWithGoalToggle = createHabitFormWithGoalToggle;

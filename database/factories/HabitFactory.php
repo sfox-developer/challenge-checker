@@ -27,7 +27,7 @@ class HabitFactory extends Factory
     {
         return [
             'user_id' => UserFactory::new(),
-            'goal_id' => GoalLibraryFactory::new(),
+            'goal_id' => GoalFactory::new(),
             'frequency_type' => FrequencyType::DAILY,
             'frequency_count' => 1,
             'frequency_config' => null,

@@ -6,7 +6,7 @@ use App\Domain\User\Models\User;
 use App\Domain\Goal\Models\Goal;
 use Illuminate\Auth\Access\Response;
 
-class GoalPolicyLibraryPolicy
+class GoalPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,9 +19,9 @@ class GoalPolicyLibraryPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Goal $goalLibrary): bool
+    public function view(User $user, Goal $goal): bool
     {
-        return $goalLibrary->user_id === $user->id;
+        return $goal->user_id === $user->id;
     }
 
     /**
@@ -35,32 +35,32 @@ class GoalPolicyLibraryPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Goal $goalLibrary): bool
+    public function update(User $user, Goal $goal): bool
     {
-        return $goalLibrary->user_id === $user->id;
+        return $goal->user_id === $user->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Goal $goalLibrary): bool
+    public function delete(User $user, Goal $goal): bool
     {
-        return $goalLibrary->user_id === $user->id;
+        return $goal->user_id === $user->id;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Goal $goalLibrary): bool
+    public function restore(User $user, Goal $goal): bool
     {
-        return $goalLibrary->user_id === $user->id;
+        return $goal->user_id === $user->id;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Goal $goalLibrary): bool
+    public function forceDelete(User $user, Goal $goal): bool
     {
-        return $goalLibrary->user_id === $user->id;
+        return $goal->user_id === $user->id;
     }
 }

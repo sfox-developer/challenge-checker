@@ -67,6 +67,22 @@ Alpine.plugin(intersect);
 Alpine.plugin(collapse);
 initLottie(Alpine);
 
+// Provide fallback highlight function for Laravel's error renderer
+// This prevents console errors when error content is displayed in modals
+if (!window.highlight) {
+    window.highlight = function(code, language, truncate = false, editor = false, startingLine = 1, highlightedLine = null) {
+        // Fallback: just return the code in a simple pre/code block
+        const escapedCode = code
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+        
+        return `<pre class="bg-gray-100 dark:bg-gray-800 p-4 rounded text-sm overflow-auto"><code>${escapedCode}</code></pre>`;
+    };
+}
+
 // Register global stores before starting Alpine
 registerStores(Alpine);
 

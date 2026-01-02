@@ -73,7 +73,7 @@ class HabitController extends Controller
         $categories = Category::active()->ordered()->get();
         $frequencyTypes = FrequencyType::options();
 
-        return view('dashboard.habits.create', compact('goalsLibrary', 'categories', 'frequencyTypes'));
+        return view('dashboard.habits.create', compact('goals', 'categories', 'frequencyTypes'));
     }
 
     /**
@@ -95,14 +95,14 @@ class HabitController extends Controller
 
         // Create new goal if needed
         if ($request->filled('new_goal_name')) {
-            $goalLibrary = Goal::create([
+            $goal = Goal::create([
                 'user_id' => auth()->id(),
                 'name' => $validated['new_goal_name'],
                 'description' => $validated['new_goal_description'] ?? null,
                 'category_id' => $validated['new_goal_category_id'] ?? null,
                 'icon' => $validated['new_goal_icon'] ?? null,
             ]);
-            $validated['goal_id'] = $goalLibrary->id;
+            $validated['goal_id'] = $goal->id;
         }
 
         // Prepare frequency config
@@ -168,7 +168,7 @@ class HabitController extends Controller
 
         $frequencyTypes = FrequencyType::options();
 
-        return view('dashboard.habits.edit', compact('habit', 'goalsLibrary', 'frequencyTypes'));
+        return view('dashboard.habits.edit', compact('habit', 'goals', 'frequencyTypes'));
     }
 
     /**
@@ -246,22 +246,30 @@ class HabitController extends Controller
             ->get()
             ->filter(fn($habit) => $habit->goal && $habit->goal->name);
         
-        // Get completion status for today
+        // Get completion status for today - get ALL completions
         $completedToday = GoalCompletion::query()
             ->where('user_id', $user->id)
-            ->where('date', $today)
+            ->whereDate('date', $today)
             ->whereIn('goal_id', $activeHabits->pluck('goal_id'))
-            ->get()
-            ->keyBy('goal_id');
+            ->get();
         
         // Map to simple format with completion status
         $habitGoals = $activeHabits->map(function($habit) use ($completedToday) {
             $goalId = $habit->goal_id;
-            $isCompleted = isset($completedToday[$goalId]);
+            $sourceType = 'habit';
+            $sourceId = $habit->id;
+            
+            // Check if THIS SPECIFIC goal+source combination is completed
+            $isCompleted = $completedToday->first(function($completion) use ($goalId, $sourceType, $sourceId) {
+                return $completion->goal_id == $goalId 
+                    && $completion->source_type == $sourceType
+                    && $completion->source_id == $sourceId;
+            }) !== null;
             
             return [
                 'goal_id' => $goalId,
                 'goal_name' => $habit->goal->name,
+                'goal_description' => $habit->goal->description ?? null,
                 'source_type' => 'habit',
                 'source_id' => $habit->id,
                 'source_name' => 'Habit',

@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/challenges/{challenge}/daily-progress', [ChallengeController::class, 'updateDailyProgress'])->name('challenges.updateDailyProgress');
     
     // Goal tracking routes
-    Route::post('/challenges/{challenge}/goals/{goalLibrary}/toggle', [GoalController::class, 'toggle'])->name('goals.toggle');
+    Route::post('/challenges/{challenge}/goals/{goal}/toggle', [GoalController::class, 'toggle'])->name('goals.toggle');
     
     // Habit routes
     Route::get('/habits/today', [HabitController::class, 'today'])->name('habits.today');
@@ -83,12 +83,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/habits/{habit}/completion', [HabitController::class, 'updateCompletion'])->name('habits.updateCompletion');
     
     // Goal Library routes
-    Route::get('/goals', [GoalLibraryController::class, 'index'])->name('goals.index');
-    Route::get('/goals/{goal}', [GoalLibraryController::class, 'show'])->name('goals.show');
-    Route::post('/goals', [GoalLibraryController::class, 'store'])->name('goals.store');
-    Route::put('/goals/{goal}', [GoalLibraryController::class, 'update'])->name('goals.update');
-    Route::delete('/goals/{goal}', [GoalLibraryController::class, 'destroy'])->name('goals.destroy');
-    Route::get('/api/goals/search', [GoalLibraryController::class, 'search'])->name('goals.search');
+    Route::get('/goals', [GoalController::class, 'index'])->name('goals.index');
+    Route::get('/goals/{goal}', [GoalController::class, 'show'])->name('goals.show');
+    Route::post('/goals', [GoalController::class, 'store'])->name('goals.store');
+    Route::put('/goals/{goal}', [GoalController::class, 'update'])->name('goals.update');
+    Route::delete('/goals/{goal}', [GoalController::class, 'destroy'])->name('goals.destroy');
+    Route::get('/api/goals/search', [GoalController::class, 'search'])->name('goals.search');
     
     // API routes for quick goals and habits
     Route::get('/api/quick-goals', [QuickGoalsController::class, 'index']);

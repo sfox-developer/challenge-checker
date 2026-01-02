@@ -21,6 +21,7 @@
  */
 
 import { registerUserDiscoveryStore } from './userDiscovery.js';
+import { registerQuickCompleteStore } from './quickComplete.js';
 
 /**
  * Register all Alpine.js stores
@@ -30,6 +31,7 @@ import { registerUserDiscoveryStore } from './userDiscovery.js';
  */
 export function registerStores(Alpine) {
     registerUserDiscoveryStore(Alpine);
+    registerQuickCompleteStore(Alpine);
     
     // Add more stores here as needed:
     // registerChallengeStore(Alpine);

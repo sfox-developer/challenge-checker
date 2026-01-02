@@ -7,12 +7,28 @@
  */
 
 export function initializeAnalyticsCharts() {
+    // First check if any chart elements exist on the page
+    const monthlyChartCanvas = document.getElementById('monthly-trend-chart');
+    const milestoneChartCanvas = document.getElementById('milestone-progress-chart');
+    
+    if (!monthlyChartCanvas && !milestoneChartCanvas) {
+        // No chart elements found, silently return without logging
+        return;
+    }
+    
     console.log('Chart initialization started...');
     console.log('Chart.js available:', typeof Chart !== 'undefined');
     
     // Verify Chart.js is loaded
     if (typeof Chart === 'undefined') {
         console.error('Chart.js not available. Make sure it\'s loaded.');
+        return;
+    }
+    
+    // Get chart data from global window object (set by Blade template)
+    const chartData = window.analyticsChartData;
+    if (!chartData) {
+        console.error('Chart data not found. Make sure analyticsChartData is set.');
         return;
     }
     
@@ -48,15 +64,8 @@ export function initializeAnalyticsCharts() {
         }
     }
     
-    // Get chart data from global window object (set by Blade template)
-    const chartData = window.analyticsChartData;
-    if (!chartData) {
-        console.error('Chart data not found. Make sure analyticsChartData is set.');
-        return;
-    }
-    
     // Monthly Trend Chart
-    if (chartData.monthly_trend) {
+    if (chartData.monthly_trend && monthlyChartCanvas) {
         const monthlyData = chartData.monthly_trend;
         console.log('Monthly data:', monthlyData);
         
@@ -92,11 +101,11 @@ export function initializeAnalyticsCharts() {
     }
 
     // Milestone Progress Chart
-    if (chartData.milestone_progress) {
+    if (chartData.milestone_progress && milestoneChartCanvas) {
         const milestoneData = chartData.milestone_progress;
         console.log('Milestone data:', milestoneData);
         
-        createChart('milestone-chart', {
+        createChart('milestone-progress-chart', {
             type: 'doughnut',
             data: {
                 labels: milestoneData.labels,
