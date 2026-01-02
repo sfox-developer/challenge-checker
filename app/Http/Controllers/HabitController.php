@@ -251,31 +251,20 @@ class HabitController extends Controller
             ->where('user_id', $user->id)
             ->whereDate('date', $today)
             ->whereIn('goal_id', $activeHabits->pluck('goal_id'))
-            ->get();
+            ->pluck('goal_id');
         
         // Map to simple format with completion status
         $habitGoals = $activeHabits->map(function($habit) use ($completedToday) {
-            $goalId = $habit->goal_id;
-            $sourceType = 'habit';
-            $sourceId = $habit->id;
-            
-            // Check if THIS SPECIFIC goal+source combination is completed
-            $isCompleted = $completedToday->first(function($completion) use ($goalId, $sourceType, $sourceId) {
-                return $completion->goal_id == $goalId 
-                    && $completion->source_type == $sourceType
-                    && $completion->source_id == $sourceId;
-            }) !== null;
-            
             return [
-                'goal_id' => $goalId,
+                'goal_id' => $habit->goal_id,
                 'goal_name' => $habit->goal->name,
                 'goal_description' => $habit->goal->description ?? null,
-                'source_type' => 'habit',
-                'source_id' => $habit->id,
                 'source_name' => 'Habit',
-                'is_completed_today' => $isCompleted,
+                'is_completed_today' => $completedToday->contains($habit->goal_id),
             ];
-        })->sortBy(function($goal) {
+        })
+        ->unique('goal_id') // Ensure each goal only appears once
+        ->sortBy(function($goal) {
             // Sort: pending first, then completed
             return $goal['is_completed_today'] ? 1 : 0;
         })->values();

@@ -12,16 +12,12 @@ export function createGoalCompletion() {
         // Store data from attributes
         goalId: null,
         date: null,
-        sourceType: null,
-        sourceId: null,
 
         // Initialize component
         init() {
             // Store data attributes in component properties
             this.goalId = this.$el.dataset.goalId;
             this.date = this.$el.dataset.date;
-            this.sourceType = this.$el.dataset.sourceType;
-            this.sourceId = this.$el.dataset.sourceId;
             this.isCompleted = this.$el.dataset.completed === '1';
         },
 
@@ -87,9 +83,7 @@ export function createGoalCompletion() {
             if (!this.goalId || !this.date) {
                 console.error('Missing goal data:', {
                     goalId: this.goalId,
-                    date: this.date,
-                    sourceType: this.sourceType,
-                    sourceId: this.sourceId
+                    date: this.date
                 });
                 throw new Error('Missing required goal or date information');
             }
@@ -101,23 +95,13 @@ export function createGoalCompletion() {
                 case 'POST':
                     // Complete goal
                     body = {
-                        date: this.date,
-                        source_type: this.sourceType || null,
-                        source_id: this.sourceId ? parseInt(this.sourceId) : null
+                        date: this.date
                     };
                     break;
                     
                 case 'DELETE':
                     // Undo completion - add date to URL
                     url += `/${this.date}`;
-                    // Send source info as query parameters instead of body for DELETE
-                    if (this.sourceType) {
-                        const params = new URLSearchParams({
-                            source_type: this.sourceType,
-                            source_id: this.sourceId || ''
-                        });
-                        url += `?${params.toString()}`;
-                    }
                     break;
                     
                 default:
@@ -143,16 +127,12 @@ export function createGoalCompletion() {
 
         /**
          * Sync completion state across all tabs
-         * Finds all goal cards with matching goal+source+date and updates their state
+         * Finds all goal cards with matching goal+date and updates their state
          */
         syncCompletionStateAcrossTabs() {
             // Find all matching goal completion components across all tabs
-            const selector = `[data-goal-id="${this.goalId}"][data-date="${this.date}"][data-source-type="${this.sourceType}"]`;
-            
-            // Handle null sourceId properly in selector
-            const matchingElements = this.sourceId 
-                ? document.querySelectorAll(`${selector}[data-source-id="${this.sourceId}"]`)
-                : document.querySelectorAll(selector + ':not([data-source-id])');
+            const selector = `[data-goal-id="${this.goalId}"][data-date="${this.date}"]`;
+            const matchingElements = document.querySelectorAll(selector);
             
             // Update each matching element's Alpine component state
             matchingElements.forEach(el => {

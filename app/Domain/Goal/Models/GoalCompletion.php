@@ -16,8 +16,6 @@ class GoalCompletion extends Model
         'goal_id',
         'date',
         'completed_at',
-        'source_type',
-        'source_id',
         'notes',
         'duration_minutes',
         'mood',
@@ -47,14 +45,6 @@ class GoalCompletion extends Model
     }
 
     /**
-     * Get the source (challenge or habit) that triggered this completion
-     */
-    public function source(): MorphTo
-    {
-        return $this->morphTo();
-    }
-
-    /**
      * Scope: Filter by user
      */
     public function scopeForUser($query, int $userId)
@@ -76,13 +66,5 @@ class GoalCompletion extends Model
     public function scopeBetweenDates($query, $startDate, $endDate)
     {
         return $query->whereBetween('date', [$startDate, $endDate]);
-    }
-
-    /**
-     * Scope: Filter by source type
-     */
-    public function scopeFromSource($query, string $sourceType)
-    {
-        return $query->where('source_type', $sourceType);
     }
 }

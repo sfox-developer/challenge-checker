@@ -20,8 +20,6 @@ class GoalCompletionFactory extends Factory
             'goal_id' => Goal::factory(),
             'date' => $this->faker->dateTimeBetween('-30 days', 'now')->format('Y-m-d'),
             'completed_at' => $this->faker->dateTimeBetween('-30 days', 'now'),
-            'source_type' => $this->faker->randomElement(['challenge', 'habit', 'manual']),
-            'source_id' => null, // Set explicitly when creating
             'notes' => $this->faker->optional(0.3)->sentence(),
             'duration_minutes' => $this->faker->optional(0.2)->numberBetween(5, 120),
             'mood' => $this->faker->optional(0.2)->randomElement(['great', 'good', 'okay', 'bad']),
@@ -36,8 +34,6 @@ class GoalCompletionFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'user_id' => $challenge->user_id,
-            'source_type' => 'challenge',
-            'source_id' => $challenge->id,
         ]);
     }
 
@@ -49,19 +45,6 @@ class GoalCompletionFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'user_id' => $habit->user_id,
             'goal_id' => $habit->goal_id,
-            'source_type' => 'habit',
-            'source_id' => $habit->id,
-        ]);
-    }
-
-    /**
-     * Indicate that this completion is manual (not from a challenge or habit).
-     */
-    public function manual(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'source_type' => 'manual',
-            'source_id' => null,
         ]);
     }
 

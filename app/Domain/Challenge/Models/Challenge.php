@@ -68,12 +68,16 @@ class Challenge extends Model
     }
 
     /**
-     * Get all goal completions for this challenge.
+     * Get all goal completions for goals in this challenge.
+     * Note: Completions are shared across all sources (challenges, habits).
+     * This returns a query builder, not a relationship.
      */
-    public function completions(): HasMany
+    public function completions()
     {
-        return $this->hasMany(GoalCompletion::class, 'source_id')
-            ->where('source_type', 'challenge');
+        $goalIds = $this->goals()->pluck('goals.id');
+        
+        return GoalCompletion::whereIn('goal_id', $goalIds)
+            ->where('user_id', $this->user_id);
     }
 
     /**

@@ -146,7 +146,7 @@ class ChallengeController extends Controller
         // Store current URL as potential back URL for edit
         session(['challenge_back_url' => url()->previous()]);
 
-        $challenge->load(['goals', 'completions']);
+        $challenge->load(['goals']);
         
         // Calculate progress statistics
         $totalDays = $challenge->days_duration;
@@ -338,11 +338,9 @@ class ChallengeController extends Controller
             if ($isCompleted) {
                 if (!$completion) {
                     // Create new completion entry
-                    $challenge->completions()->create([
+                    GoalCompletion::create([
                         'user_id' => $challenge->user_id,
                         'goal_id' => $goalId,
-                        'source_type' => 'challenge',
-                        'source_id' => $challenge->id,
                         'date' => $date,
                         'completed_at' => now(),
                     ]);

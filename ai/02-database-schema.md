@@ -227,9 +227,71 @@ Reusable goal templates.
 - `category_id` - For filtering by category
 
 **Usage:**
-- Referenced by `goals.goal_id`
+- Referenced by `challenge_goals.goal_id`
 - Referenced by `habits.goal_id`
+- Referenced by `goal_completions.goal_id`
 - Can track usage count via relationships
+
+### goal_completions
+**Last Updated:** January 2, 2026  
+**Status:** ✅ Simplified - No source tracking
+
+Unified completion tracking for all goals (replaces `daily_progress` and `habit_completions`).
+
+**Columns:**
+- `id` - Primary key
+- `user_id` - Foreign key to users (cascade delete)
+- `goal_id` - Foreign key to goals (cascade delete)
+- `date` - Completion date (DATE type)
+- `completed_at` - Timestamp when marked complete
+- `notes` - Optional text notes (nullable)
+- `duration_minutes` - Optional duration tracking (nullable)
+- `mood` - Optional mood tracking (nullable)
+- `metadata` - JSON for flexible future features (nullable)
+- `created_at`, `updated_at` - Timestamps
+
+**Unique Constraint:**
+- Composite unique: `(user_id, goal_id, date)`
+- **One completion per user per goal per day** (regardless of source)
+
+**Indexes:**
+- `(user_id, date)` - User's daily completions
+- `(goal_id, date)` - Goal completion history
+
+**Key Design Decision:**
+- ✅ **Shared completions** - Completing a goal counts for ALL challenges and habits using that goal
+- ❌ **No source tracking** - Does not track which specific challenge/habit triggered completion
+- ✅ **Simplified queries** - Just check if goal is completed for date
+
+**Example:**
+User has "Gym" goal in:
+- Challenge A (30-day fitness)
+- Challenge B (summer challenge)
+- Habit X (3x per week)
+
+When user completes "Gym" once → creates ONE completion → counts toward all three.
+
+---
+
+## Challenge-Goal Junction
+
+### challenge_goals
+Many-to-many relationship between challenges and goals.
+
+**Columns:**
+- `id` - Primary key
+- `challenge_id` - Foreign key to challenges (cascade delete)
+- `goal_id` - Foreign key to goals (cascade delete)
+- `order` - Display order within challenge (default 0)
+- `created_at`, `updated_at` - Timestamps
+
+**Unique Constraint:**
+- Composite unique: `(challenge_id, goal_id)`
+- Same goal cannot be added twice to same challenge
+
+**Indexes:**
+- `challenge_id` - Fast lookups for challenge's goals
+- `goal_id` - Fast lookups for goal usage
 
 ---
 

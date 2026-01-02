@@ -54,12 +54,13 @@ class Habit extends Model
     }
 
     /**
-     * Get all completions for this habit.
+     * Get all completions for this habit's goal.
+     * Note: Completions are shared across all sources (challenges, habits).
      */
     public function completions(): HasMany
     {
-        return $this->hasMany(GoalCompletion::class, 'source_id')
-            ->where('source_type', 'habit');
+        return $this->hasMany(GoalCompletion::class, 'goal_id', 'goal_id')
+            ->where('user_id', $this->user_id);
     }
 
     /**

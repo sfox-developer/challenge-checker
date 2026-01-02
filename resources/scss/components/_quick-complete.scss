@@ -1,0 +1,28 @@
+// ============================================================================
+// QUICK COMPLETE - Quick goal completion modal components
+// ============================================================================
+
+// Completion checkbox/circle button
+.completion-checkbox {
+    @apply flex-shrink-0 w-7 h-7 rounded-full border-2;
+    @apply flex items-center justify-center;
+    @apply transition-all duration-200;
+    @apply border-gray-300 dark:border-gray-500;
+    
+    &--completed {
+        @apply bg-green-600 border-green-600;
+    }
+    
+    // Icon inside checkbox
+    &__icon {
+        @apply w-4 h-4;
+        
+        &--check {
+            @apply text-white;
+        }
+        
+        &--loading {
+            @apply text-gray-400 animate-spin;
+        }
+    }
+}

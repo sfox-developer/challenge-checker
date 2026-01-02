@@ -21,9 +21,7 @@ class ChallengeService
         $start = $frequencyType->periodStart($date);
         $end = $frequencyType->periodEnd($date);
 
-        return GoalCompletion::where('source_type', 'challenge')
-            ->where('source_id', $challenge->id)
-            ->where('goal_id', $goal->id)
+        return GoalCompletion::where('goal_id', $goal->id)
             ->where('user_id', $challenge->user_id)
             ->whereBetween('date', [
                 $start->format('Y-m-d'),
@@ -44,9 +42,7 @@ class ChallengeService
         
         // For daily frequency, only one completion per day
         if ($frequencyType === FrequencyType::DAILY) {
-            return !GoalCompletion::where('source_type', 'challenge')
-                ->where('source_id', $challenge->id)
-                ->where('goal_id', $goal->id)
+            return !GoalCompletion::where('goal_id', $goal->id)
                 ->where('user_id', $challenge->user_id)
                 ->where('date', $date->format('Y-m-d'))
                 ->whereNotNull('completed_at')

@@ -21,34 +21,21 @@ class QuickGoalsController extends Controller
         // Get challenge goals only
         $goalSources = $this->aggregateGoalSources($user, $today, 'challenge');
         
-        // Get completion status for today - get ALL completions
+        // Get completion status for today
         $completedToday = GoalCompletion::query()
             ->where('user_id', $user->id)
             ->whereDate('date', $today)
             ->whereIn('goal_id', $goalSources->pluck('goal_id'))
-            ->get();
+            ->pluck('goal_id');
         
         // Map to simple format with completion status
         $challengeGoals = $goalSources->map(function($goal) use ($completedToday) {
-            $goalId = $goal['goal_id'];
-            $sourceType = $goal['source_type'];
-            $sourceId = $goal['source_id'] ?? null;
-            
-            // Check if THIS SPECIFIC goal+source combination is completed
-            $isCompleted = $completedToday->first(function($completion) use ($goalId, $sourceType, $sourceId) {
-                return $completion->goal_id == $goalId 
-                    && $completion->source_type == $sourceType
-                    && $completion->source_id == $sourceId;
-            }) !== null;
-            
             return [
-                'goal_id' => $goalId,
+                'goal_id' => $goal['goal_id'],
                 'goal_name' => $goal['goal_name'],
                 'goal_description' => $goal['goal_description'] ?? null,
-                'source_type' => $goal['source_type'],
-                'source_id' => $goal['source_id'] ?? null,
                 'source_name' => $goal['source_name'] ?? null,
-                'is_completed_today' => $isCompleted,
+                'is_completed_today' => $completedToday->contains($goal['goal_id']),
             ];
         })->sortBy(function($goal) {
             // Sort: pending first, then completed
@@ -69,34 +56,21 @@ class QuickGoalsController extends Controller
         // Get all goal sources
         $goalSources = $this->aggregateGoalSources($user, $today);
         
-        // Get completion status for today - get ALL completions (not just one per goal)
+        // Get completion status for today
         $completedToday = GoalCompletion::query()
             ->where('user_id', $user->id)
             ->whereDate('date', $today)
             ->whereIn('goal_id', $goalSources->pluck('goal_id'))
-            ->get();
+            ->pluck('goal_id');
         
         // Map to simple format with completion status
         $allGoals = $goalSources->map(function($goal) use ($completedToday) {
-            $goalId = $goal['goal_id'];
-            $sourceType = $goal['source_type'];
-            $sourceId = $goal['source_id'] ?? null;
-            
-            // Check if THIS SPECIFIC goal+source combination is completed
-            $isCompleted = $completedToday->first(function($completion) use ($goalId, $sourceType, $sourceId) {
-                return $completion->goal_id == $goalId 
-                    && $completion->source_type == $sourceType
-                    && $completion->source_id == $sourceId;
-            }) !== null;
-            
             return [
-                'goal_id' => $goalId,
+                'goal_id' => $goal['goal_id'],
                 'goal_name' => $goal['goal_name'],
                 'goal_description' => $goal['goal_description'] ?? null,
-                'source_type' => $goal['source_type'],
-                'source_id' => $goal['source_id'] ?? null,
                 'source_name' => $goal['source_name'] ?? null,
-                'is_completed_today' => $isCompleted,
+                'is_completed_today' => $completedToday->contains($goal['goal_id']),
             ];
         })->sortBy(function($goal) {
             // Sort: pending first, then completed
@@ -135,8 +109,6 @@ class QuickGoalsController extends Controller
                         'goal_id' => $goal->id,
                         'goal_name' => $goal->name,
                         'goal_description' => $goal->description ?? '',
-                        'source_type' => 'challenge',
-                        'source_id' => $challenge->id,
                         'source_name' => $challenge->name,
                         'context' => "Challenge: {$challenge->name}",
                         'frequency_info' => $this->getFrequencyInfo($challenge),
@@ -164,8 +136,6 @@ class QuickGoalsController extends Controller
                     'goal_id' => $habit->goal_id,
                     'goal_name' => $habit->goal->name,
                     'goal_description' => $habit->goal->description,
-                    'source_type' => 'habit',
-                    'source_id' => $habit->id,
                     'source_name' => 'Habit',
                     'context' => $this->getHabitFrequencyText($habit),
                     'frequency_info' => $this->getFrequencyInfo($habit),
@@ -196,8 +166,6 @@ class QuickGoalsController extends Controller
                     'goal_id' => $goal->id,
                     'goal_name' => $goal->name,
                     'goal_description' => $goal->description,
-                    'source_type' => 'standalone',
-                    'source_id' => $goal->id,
                     'source_name' => 'Personal Goal',
                     'context' => 'From your goal library',
                     'frequency_info' => 'Any time',
@@ -206,11 +174,8 @@ class QuickGoalsController extends Controller
             }
         }
         
-        // Make unique by combination of goal_id + source_type + source_id
-        // This allows the same goal to appear in multiple contexts (challenge + habit)
-        return $goalSources->unique(function($item) {
-            return $item['goal_id'] . '-' . $item['source_type'] . '-' . ($item['source_id'] ?? 'null');
-        });
+        // Make unique by goal_id (same goal only appears once)
+        return $goalSources->unique('goal_id');
     }
     
     /**

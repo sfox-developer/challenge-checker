@@ -6,8 +6,6 @@
                 x-data="goalCompletion()"
                 data-goal-id="{{ $goal['goal_id'] }}"
                 data-date="{{ now()->format('Y-m-d') }}"
-                data-source-type="{{ $goal['source_type'] }}"
-                data-source-id="{{ $goal['source_id'] ?? '' }}"
                 data-completed="{{ $goal['is_completed_today'] ? '1' : '0' }}"
                 @click="toggleCompletion()"
                 :class="isLoading ? 'cursor-wait' : 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/30'"
@@ -26,28 +24,25 @@
                 
                 <x-slot:subtitle>
                     <p class="goal-display-card-description">
-                        <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300">
-                            Habit
-                        </span>
                         @if(!empty($goal['goal_description']))
-                            <span class="ml-1">{{ $goal['goal_description'] }}</span>
+                            {{ $goal['goal_description'] }}
                         @endif
                     </p>
                 </x-slot:subtitle>
                 
                 <x-slot:rightAction>
-                    <div class="flex-shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all duration-200"
-                         :class="isCompleted ? 'bg-green-600 border-green-600' : 'border-gray-300 dark:border-gray-500'">
+                    <div class="completion-checkbox"
+                         :class="isCompleted ? 'completion-checkbox--completed' : ''">
                         <!-- Completed state -->
                         <svg x-show="isCompleted && !isLoading"
-                             class="w-4 h-4 text-white"
+                             class="completion-checkbox__icon completion-checkbox__icon--check"
                              fill="currentColor"
                              viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
                         <!-- Loading state -->
                         <svg x-show="isLoading"
-                             class="animate-spin w-4 h-4 text-gray-400"
+                             class="completion-checkbox__icon completion-checkbox__icon--loading"
                              fill="none"
                              viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -59,15 +54,16 @@
         @endforeach
     </div>
 @else
-    <div class="text-center py-12">
+    <div class="empty-state">
         <div class="text-6xl mb-4">📋</div>
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Habit Goals</h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-4">
-            Create habits to track your daily goals
+        <h3 class="empty-state-title">No Habit Goals</h3>
+        <p class="empty-state-text">
+            Create a habit to track daily goals
         </p>
-        <a href="{{ route('habits.create') }}" 
-           class="inline-flex items-center px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
-            Create Habit
-        </a>
+        <div class="empty-state-action">
+            <a href="{{ route('habits.create') }}" class="btn btn-primary">
+                Create Habit
+            </a>
+        </div>
     </div>
 @endif

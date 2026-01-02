@@ -21,10 +21,6 @@ return new class extends Migration
             $table->date('date'); // Completion date
             $table->timestamp('completed_at'); // Exact timestamp
             
-            // Track what triggered this completion
-            $table->enum('source_type', ['challenge', 'habit', 'manual'])->default('manual');
-            $table->unsignedBigInteger('source_id')->nullable(); // challenge_id or habit_id
-            
             // Additional metadata
             $table->text('notes')->nullable();
             $table->integer('duration_minutes')->nullable();
@@ -33,13 +29,12 @@ return new class extends Migration
             
             $table->timestamps();
             
-            // One completion per user per goal per date
+            // One completion per user per goal per date (regardless of source)
             $table->unique(['user_id', 'goal_id', 'date'], 'unique_user_goal_date');
             
             // Indexes for common queries
             $table->index(['user_id', 'date']);
             $table->index(['goal_id', 'date']);
-            $table->index(['source_type', 'source_id']);
         });
     }
 

@@ -5,8 +5,6 @@
             <x-goal-card x-data="goalCompletion()"
                          data-goal-id="{{ $goal['goal_id'] }}"
                          data-date="{{ now()->format('Y-m-d') }}"
-                         data-source-type="{{ $goal['source_type'] }}"
-                         data-source-id="{{ $goal['source_id'] ?? '' }}"
                          data-completed="{{ $goal['is_completed_today'] ? '1' : '0' }}"
                          @click="toggleCompletion()"
                          :class="isLoading ? 'cursor-wait' : 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/30'"
@@ -24,31 +22,25 @@
                 
                 <x-slot:subtitle>
                     <p class="goal-display-card-description">
-                        <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium rounded-full
-                            {{ $goal['source_type'] === 'challenge' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300' : 
-                               ($goal['source_type'] === 'habit' ? 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300' : 
-                               'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300') }}">
-                            {{ ucfirst($goal['source_type']) }}
-                        </span>
                         @if(!empty($goal['goal_description']))
-                            <span class="ml-1">{{ $goal['goal_description'] }}</span>
+                            {{ $goal['goal_description'] }}
                         @endif
                     </p>
                 </x-slot:subtitle>
                 
                 <x-slot:rightAction>
-                    <div class="flex-shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all duration-200"
-                         :class="isCompleted ? 'bg-green-600 border-green-600' : 'border-gray-300 dark:border-gray-500'">
+                    <div class="completion-checkbox"
+                         :class="isCompleted ? 'completion-checkbox--completed' : ''">
                         <!-- Completed state -->
                         <svg x-show="isCompleted && !isLoading"
-                             class="w-4 h-4 text-white"
+                             class="completion-checkbox__icon completion-checkbox__icon--check"
                              fill="currentColor"
                              viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
                         <!-- Loading state -->
                         <svg x-show="isLoading"
-                             class="animate-spin w-4 h-4 text-gray-400"
+                             class="completion-checkbox__icon completion-checkbox__icon--loading"
                              fill="none"
                              viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -67,7 +59,7 @@
             </svg>
         </div>
         <h3 class="empty-state-title">No Goals Available</h3>
-        <p class="empty-state-message">You don't have any active goals right now. Start by creating a challenge or habit.</p>
+        <p class="empty-state-text">You don't have any active goals right now. Start by creating a challenge or habit.</p>
         <div class="empty-state-action space-x-3">
             <x-ui.app-button href="{{ route('challenges.create') }}" variant="primary">
                 <x-slot name="icon">

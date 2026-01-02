@@ -61,8 +61,6 @@ class HabitService
                 ],
                 [
                     'completed_at' => now(),
-                    'source_type' => 'habit',
-                    'source_id' => $habit->id,
                     'notes' => $notes,
                     'duration_minutes' => $durationMinutes,
                     'mood' => $mood,
@@ -101,17 +99,16 @@ class HabitService
     public function deleteCompletion(GoalCompletion $completion): void
     {
         DB::transaction(function () use ($completion) {
-            // Get habit from source if it's a habit completion
-            if ($completion->source_type === 'habit') {
-                $habit = $completion->source; // Uses dynamic source() relationship
-                $completion->delete();
-                
-                // Recalculate statistics
-                if ($habit) {
-                    $this->updateStatistics($habit);
-                }
-            } else {
-                $completion->delete();
+            // Find habits using this goal for this user
+            $habits = Habit::where('goal_id', $completion->goal_id)
+                ->where('user_id', $completion->user_id)
+                ->get();
+            
+            $completion->delete();
+            
+            // Recalculate statistics for all affected habits
+            foreach ($habits as $habit) {
+                $this->updateStatistics($habit);
             }
         });
     }

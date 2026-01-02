@@ -286,26 +286,12 @@ class GoalController extends Controller
             $completions = $goal->completions()
                 ->where('date', $date->toDateString())
                 ->whereNotNull('completed_at')
-                ->with('source') // Eager load the source relationship
                 ->get();
             
             $completedCount = $completions->count();
             
-            // Group by source (challenge/habit) with names
+            // Completions are now unified (no source tracking)
             $sources = [];
-            foreach ($completions as $completion) {
-                $sourceName = '';
-                if ($completion->source) {
-                    $sourceName = $completion->source->name ?? '';
-                }
-                
-                $sources[] = [
-                    'type' => $completion->source_type,
-                    'id' => $completion->source_id,
-                    'name' => $sourceName,
-                    'completed_at' => $completion->completed_at,
-                ];
-            }
 
             $calendar[] = [
                 'day' => $day,

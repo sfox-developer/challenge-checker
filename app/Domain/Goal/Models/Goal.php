@@ -98,39 +98,13 @@ class Goal extends Model
 
     /**
      * Check if this goal is completed for a specific date and user.
-     * Optionally filter by source (challenge or habit).
      */
-    public function isCompletedForDate(string $date, int $userId, ?string $sourceType = null, ?int $sourceId = null): bool
+    public function isCompletedForDate(string $date, int $userId): bool
     {
-        $query = $this->completions()
+        return $this->completions()
             ->where('user_id', $userId)
             ->where('date', $date)
-            ->whereNotNull('completed_at');
-        
-        if ($sourceType) {
-            $query->where('source_type', $sourceType);
-        }
-        
-        if ($sourceId) {
-            $query->where('source_id', $sourceId);
-        }
-        
-        return $query->exists();
-    }
-
-    /**
-     * Check if this goal is completed for a specific date within a challenge context.
-     */
-    public function isCompletedForChallenge(int $challengeId, string $date, int $userId): bool
-    {
-        return $this->isCompletedForDate($date, $userId, 'challenge', $challengeId);
-    }
-
-    /**
-     * Check if this goal is completed for a specific date within a habit context.
-     */
-    public function isCompletedForHabit(int $habitId, string $date, int $userId): bool
-    {
-        return $this->isCompletedForDate($date, $userId, 'habit', $habitId);
+            ->whereNotNull('completed_at')
+            ->exists();
     }
 }
